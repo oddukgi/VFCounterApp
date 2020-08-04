@@ -1,0 +1,60 @@
+//
+//  VFTabBarController.swift
+//  DrinkCounter
+//
+//  Created by Sunmi on 2020/07/21.
+//  Copyright © 2020 creativeSun. All rights reserved.
+//
+
+import UIKit
+
+class VFTabBarController: UITabBarController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tabBar.barTintColor = .white
+        tabBar.isTranslucent = false
+        UITabBar.appearance().tintColor = ColorHex.darkGreen
+        UITabBar.appearance().clipsToBounds = true
+        viewControllers = [createHomeVC(), createChartVC()]
+     
+    }
+    
+    // MARK: - Child View Controller
+    func createHomeVC() -> UINavigationController {
+        let homeVC = HomeVC()
+        let selectedHomeImg = UIImage(named: "selected home")?.withRenderingMode(.alwaysOriginal) // select image
+        let homeImg = UIImage(named: "home")?.withRenderingMode(.alwaysOriginal)
+        homeVC.tabBarItem = UITabBarItem(title: "홈", image: homeImg, selectedImage: selectedHomeImg)
+        homeVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
+        return UINavigationController(rootViewController: homeVC)
+    }
+    
+    func createChartVC() -> UINavigationController {
+        let chartVC = ChartVC()
+        let selectedChartImg = UIImage(named: "selected chart")?.withRenderingMode(.alwaysOriginal) // select image
+        let chartImg = UIImage(named: "chart")?.withRenderingMode(.alwaysOriginal)
+        chartVC.tabBarItem = UITabBarItem(title: "차트", image: chartImg, selectedImage: selectedChartImg)
+        chartVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
+        return UINavigationController(rootViewController: chartVC)
+    }
+
+//    func createCalendar() -> UINavigationController {
+//        let boardVC = CalendarVC()
+//        let selectedBoardImg = UIImage(named: "selected calendar")?.withRenderingMode(.alwaysOriginal) // select image
+//        let boardImg = UIImage(named: "calendar")?.withRenderingMode(.alwaysOriginal)
+//        boardVC.tabBarItem = UITabBarItem(title: "달력", image: boardImg, selectedImage: selectedBoardImg)
+//        boardVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
+//        return UINavigationController(rootViewController: boardVC)
+//    }
+    
+//    func createUserVC() -> UINavigationController {
+//        let userVC = UserVC()
+//        let selectedUserImg = UIImage(named: "selected user")?.withRenderingMode(.alwaysOriginal) // select image
+//        let userImg = UIImage(named: "user")?.withRenderingMode(.alwaysOriginal)
+//        userVC.tabBarItem = UITabBarItem(title: "MY", image: userImg, selectedImage: selectedUserImg)
+//        userVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
+//        return UINavigationController(rootViewController: userVC)
+//
+//    }
+}
