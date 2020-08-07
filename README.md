@@ -14,6 +14,11 @@ Calcurate how much take some vegie or fruits in a day
 - 일주일에 먹은 양을 그래프로 보여준다.
 
 
+### Reference for development
+[CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
+[Deboogger for tableSettings](https://github.com/rosberry/Deboogger)\
+[SwfitRulerView](https://github.com/DanielYK/SwiftRulerView)
+
 
 
 
