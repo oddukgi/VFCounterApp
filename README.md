@@ -14,7 +14,8 @@ Calcurate how much take some vegie or fruits in a day
 - 일주일에 먹은 양을 그래프로 보여준다.
 ---
 ### Reference for development
-[SwfitRulerView](https://github.com/DanielYK/SwiftRulerView)
+[SwfitRulerView](https://github.com/DanielYK/SwiftRulerView)\
+[JTCalendarCustom](https://github.com/lamkjbo/JTCalendarCustom)
 
 ### Swift Package
 [HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
@@ -22,3 +23,5 @@ Calcurate how much take some vegie or fruits in a day
 
 ### Cocoapods
 [OKit for Settings view](https://github.com/oklemenz/OKit)
+
+
