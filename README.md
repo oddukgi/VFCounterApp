@@ -15,9 +15,9 @@ Calcurate how much take some vegie or fruits in a day
 
 
 ### Reference for development
-[CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
+[HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
 [Deboogger for tableSettings](https://github.com/rosberry/Deboogger)\
-[SwfitRulerView](https://github.com/DanielYK/SwiftRulerView)
+[SwfitRulerView for Measurment](https://github.com/DanielYK/SwiftRulerView)
 
 
 
