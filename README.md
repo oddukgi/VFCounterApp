@@ -2,7 +2,7 @@
 Calcurate how much take some vegie or fruits in a day
 
 ### Project Start
-2020.07.22(수) ~ in progress
+2020.07.22 (Wed) ~ in progress
 
 ### 핵심 목표
 사용자가 야채나 과일을 지속적으로 섭취할 수 있도록 도와준다.
@@ -15,10 +15,11 @@ Calcurate how much take some vegie or fruits in a day
 
 
 ### Reference for development
-[HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
 [Deboogger for tableSettings](https://github.com/rosberry/Deboogger)\
 [SwfitRulerView for Measurment](https://github.com/DanielYK/SwiftRulerView)
 
-
+### Swift Package
+[HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
+[SnapKit](http://snapkit.io/)
 
 
