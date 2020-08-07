@@ -15,7 +15,6 @@ Calcurate how much take some vegie or fruits in a day
 
 
 ### Reference for development
-[Deboogger for tableSettings](https://github.com/rosberry/Deboogger)\
 [SwfitRulerView for Measurment](https://github.com/DanielYK/SwiftRulerView)
 
 ### Swift Package
