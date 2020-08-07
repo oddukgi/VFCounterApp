@@ -15,10 +15,11 @@ Calcurate how much take some vegie or fruits in a day
 
 
 ### Reference for development
-[SwfitRulerView for Measurment](https://github.com/DanielYK/SwiftRulerView)
+[SwfitRulerView](https://github.com/DanielYK/SwiftRulerView)
 
 ### Swift Package
 [HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
 [SnapKit](http://snapkit.io/)
 
-
+### Cocoapods
+[OKit for Settings view](https://github.com/oklemenz/OKit)
