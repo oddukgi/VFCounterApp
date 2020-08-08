@@ -37,6 +37,15 @@ struct ColorHex {
     static let dimmedBlack    = UIColor(white: 0.0, alpha: 0.1)
     static let lightlightGrey = UIColor(hexString: "DADADA")
     static let orangeyRed     = UIColor(hexString: "FF5722")
+    
+    
+}
+
+struct SliderColor {
+    static let greenishTeal      = UIColor(hexString: "27D158")
+    static let orangeyRed        = UIColor(red: 1.0, green: 87.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
+    static let maximumTrackTint  = UIColor(red: 205.0 / 255.0, green: 206.0 / 255.0, blue: 208.0 / 255.0, alpha: 1.0)
+
 }
 
 struct RulerColor {

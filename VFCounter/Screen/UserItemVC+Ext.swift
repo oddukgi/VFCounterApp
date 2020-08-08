@@ -105,9 +105,7 @@ extension UserItemVC {
                 let category = snapshot.sectionIdentifiers[indexPath.section]
                 
                 titleSupplementary.btnPlus.tag = indexPath.section
-                print(indexPath.section)
                 titleSupplementary.btnPlus.addTarget(self, action: #selector(self.addItems(sender:)), for: .touchUpInside)
-            
                 titleSupplementary.updateTitles(title: category.title, subtitle: category.subtitle)
                 
                 return titleSupplementary
@@ -125,6 +123,8 @@ extension UserItemVC {
              currentSnapshot.appendItems(collection.item)
          }
          dataSource.apply(currentSnapshot, animatingDifferences: true)
+        
+        // NotificationCenter Item 보내기 ( AlarmSettingVC)
     }
     
     // MARK: show vegie, fruit dialog

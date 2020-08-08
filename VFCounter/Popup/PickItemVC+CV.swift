@@ -112,7 +112,7 @@ extension PickItemVC: UICollectionViewDelegate {
         
         let cell = collectionView.cellForItem(at: indexPath) as! PickItemCell
         
-        print("\(indexPath.row), \(indexPath.section)")
+//        print("\(indexPath.row), \(indexPath.section)")
     
         if checkedIndexPath.contains(indexPath) {
             checkedIndexPath.remove(indexPath)

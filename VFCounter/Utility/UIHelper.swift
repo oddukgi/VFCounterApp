@@ -13,7 +13,6 @@ enum UIHelper {
     
     
    // MARK: CollectionLayout
-  
     static func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(30))
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -54,5 +53,14 @@ enum UIHelper {
        layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
 
        return layoutSection
+    }
+    
+    // MARK: UIViewController
+    static func backToPreviousScreen(_ view: UIViewController){
+        if view.navigationController != nil{
+            view.navigationController?.popViewController(animated: true)
+        }else{
+            view.dismiss(animated: true, completion: nil)
+        }
     }
 }

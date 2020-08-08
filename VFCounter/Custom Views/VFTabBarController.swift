@@ -16,7 +16,7 @@ class VFTabBarController: UITabBarController {
         tabBar.isTranslucent = false
         UITabBar.appearance().tintColor = ColorHex.darkGreen
         UITabBar.appearance().clipsToBounds = true
-        viewControllers = [createHomeVC(), createChartVC()]
+        viewControllers = [createHomeVC(), createChartVC(),createSettings()]
      
     }
     
@@ -38,23 +38,14 @@ class VFTabBarController: UITabBarController {
         chartVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
         return UINavigationController(rootViewController: chartVC)
     }
-
-//    func createCalendar() -> UINavigationController {
-//        let boardVC = CalendarVC()
-//        let selectedBoardImg = UIImage(named: "selected calendar")?.withRenderingMode(.alwaysOriginal) // select image
-//        let boardImg = UIImage(named: "calendar")?.withRenderingMode(.alwaysOriginal)
-//        boardVC.tabBarItem = UITabBarItem(title: "달력", image: boardImg, selectedImage: selectedBoardImg)
-//        boardVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
-//        return UINavigationController(rootViewController: boardVC)
-//    }
     
-//    func createUserVC() -> UINavigationController {
-//        let userVC = UserVC()
-//        let selectedUserImg = UIImage(named: "selected user")?.withRenderingMode(.alwaysOriginal) // select image
-//        let userImg = UIImage(named: "user")?.withRenderingMode(.alwaysOriginal)
-//        userVC.tabBarItem = UITabBarItem(title: "MY", image: userImg, selectedImage: selectedUserImg)
-//        userVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
-//        return UINavigationController(rootViewController: userVC)
-//
-//    }
+    func createSettings() -> UINavigationController {
+        let settingsVC = SettingVC()
+        let selectedSettingsImg = UIImage(named: "selected setting")?.withRenderingMode(.alwaysOriginal) // select image
+        let userImg = UIImage(named: "setting")?.withRenderingMode(.alwaysOriginal)
+        settingsVC.tabBarItem = UITabBarItem(title: "설정", image: userImg, selectedImage: selectedSettingsImg)
+        settingsVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
+        return UINavigationController(rootViewController: settingsVC)
+
+    }
 }
