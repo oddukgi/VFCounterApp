@@ -105,16 +105,14 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
     }
     
     
-    @objc func changedSwitch(sender: UISwitch) {
+    @objc func changedSwitch(_ sender: UISwitch) {
 
         let tag = sender.tag
-        let actionType: PersistenceActionType?
 
         switch tag {
         case 0:
             vegieSettings.alarmOn = sender.isOn
-            (vegieDataFlag == true) ? (actionType = .update) : (actionType = .add)
-            addUserSettings(userSettings: vegieSettings, actionType: actionType)
+            addUserSettings(userSettings: vegieSettings, actionType: .update)
 
         default:
             fruitsSettings.alarmOn = sender.isOn
@@ -167,8 +165,7 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
     
 }
 
-extension AlarmSettingVC {
-    
+extension AlarmSettingVC { 
     
     func initialize() {
         vegieSlider.values(min: 0, max: 100, current: 0)
@@ -179,7 +176,6 @@ extension AlarmSettingVC {
         vegieSlider.minimumTrackTintColor(SliderColor.greenishTeal)
         vegieSlider.maximumTrackTintColor(SliderColor.maximumTrackTint)
         vegieSlider.isContinuous = true
-        vegieSlider.values(min: 0, max: 100, current: 10)
 
         fruitsSlider.frame = CGRect(x: 0, y: 0, width: width, height: 57)
         fruitsSlider.delegate = self
@@ -187,8 +183,10 @@ extension AlarmSettingVC {
         fruitsSlider.minimumTrackTintColor(SliderColor.orangeyRed)
         fruitsSlider.maximumTrackTintColor(SliderColor.maximumTrackTint)
         fruitsSlider.isContinuous = true
-        fruitsSlider.values(min: 0, max: 100, current: 10)
-
+        fruitsSlider.values(min: 0, max: 100, current: 0)
+        
+        vegieSwitch.addTarget(self, action: #selector(changedSwitch(_:)), for: .valueChanged)
+        fruitsSwitch.addTarget(self, action: #selector(changedSwitch(_:)), for: .valueChanged)
     }
 
     

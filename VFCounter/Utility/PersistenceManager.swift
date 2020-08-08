@@ -9,7 +9,7 @@
 import Foundation
 
 enum PersistenceActionType {
-    case add, update, remove
+    case update, remove
 }
 
 enum PersistenceManager {
@@ -28,26 +28,18 @@ enum PersistenceManager {
             switch result {
             case .success(var retrieveUserSettings):
                 switch actionType {
-                case .add:
-                    guard !retrieveUserSettings.contains(items) else {
-//                        completed(.alreadyInItems)
-                       let index = retrieveUserSettings.firstIndex { ($0.alarmOn == items.alarmOn
-                                            || $0.taskPercent == items.taskPercent)}!
-                                        
-                        retrieveUserSettings[index] = items
-                        
-                        return
-                    }
-                    
-                    retrieveUserSettings.append(items)
-                    
+                
                 case .update:
                 
+                    if !retrieveUserSettings.isEmpty {
                     let index = retrieveUserSettings.firstIndex { ($0.alarmOn == items.alarmOn
                         || $0.taskPercent == items.taskPercent)}!
-                    
-                    retrieveUserSettings[index] = items
-       
+                        
+                        retrieveUserSettings[index] = items
+                    } else {
+                        retrieveUserSettings.append(items)
+                    }
+
                 case .remove:
                     retrieveUserSettings.removeAll()
          
