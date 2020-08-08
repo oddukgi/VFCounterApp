@@ -90,10 +90,8 @@ extension SettingVC {
 extension SettingVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigateVC(to: indexPath.item)
-        
+        if indexPath.item == 0 {
+            navigateVC(to: indexPath.item)
+        }
     }
-    
-    
-
 }
