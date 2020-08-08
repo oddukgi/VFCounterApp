@@ -21,7 +21,4 @@ Calcurate how much take some vegie or fruits in a day
 [HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
 [SnapKit](http://snapkit.io/)
 
-### Cocoapods
-[OKit for Settings view](https://github.com/oklemenz/OKit)
-
 
