@@ -39,7 +39,7 @@ extension PickItemVC {
  
         collectionView.layer.borderWidth = 1
         collectionView.delegate = self
-   }
+  }
 
    func configureDataSource() {
  
@@ -111,16 +111,14 @@ extension PickItemVC: UICollectionViewDelegate {
         self.collectionView.deselectItem(at: indexPath, animated: true)
         
         let cell = collectionView.cellForItem(at: indexPath) as! PickItemCell
-        
-//        print("\(indexPath.row), \(indexPath.section)")
-    
+      
         if checkedIndexPath.contains(indexPath) {
             checkedIndexPath.remove(indexPath)
             cell.isChecked = false
+            
         } else {
             checkedIndexPath.insert(indexPath)
             cell.isChecked = true
-
         }
         
         let name = cell.lblName.text!

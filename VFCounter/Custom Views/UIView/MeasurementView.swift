@@ -41,7 +41,6 @@ class MeasurementView: UIView {
         return textField
     }()
     
-    
     lazy var lblUnit: VFBodyLabel = {
         let label = VFBodyLabel(textAlignment: .center, fontSize: 0, fontColor: ColorHex.MilkChocolate.origin)
         label.font = NanumSquareRound.regular.style(sizeOffset: 15)

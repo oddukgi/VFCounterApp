@@ -39,6 +39,10 @@ class PickItemVC: UIViewController {
     var amount: Int = 0
     var pickDate: String = ""
     var measurementView: MeasurementView!
+    let btnClose = VFButton()
+    let btnTime = VFButton()
+    var btnAdd = VFButton()
+    
 
     init(delegate: PickItemVCProtocol, tag: Int) {
         super.init(nibName: nil, bundle: nil)
@@ -54,6 +58,7 @@ class PickItemVC: UIViewController {
         super.viewDidLoad()
   
         setLayout()
+        setStyle()
         configureHierarchy()
         setMeasurementView()
         configureDataSource()
@@ -100,21 +105,46 @@ class PickItemVC: UIViewController {
 
     }
     
+    func setStyle() {
+        btnClose.addImage(imageName: "close")
+        btnClose.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
+
+        btnTime.layer.cornerRadius = 10
+        btnTime.backgroundColor    = ColorHex.dimmedBlack
+        btnTime.setFont(clr: ColorHex.MilkChocolate.origin, font: NanumSquareRound.extrabold.style(sizeOffset: 13))
+
+        btnAdd.setTitle("Add", for: .normal)
+        btnAdd.backgroundColor    = ColorHex.orangeyRed
+        btnAdd.setFont(clr: .white, font: NanumSquareRound.extrabold.style(sizeOffset: 16))
+        btnAdd.layer.cornerRadius = 18
+        btnAdd.setRadiusWithShadow(18)
+        btnAdd.isUserInteractionEnabled = true
+        btnAdd.addTarget(self, action: #selector(pressedAdd), for: .touchUpInside)
+    
+    }
     
     func setMeasurementView() {
         
         measurementView = MeasurementView(delegate: self)
-        view.addSubViews(measurementView)        
+        view.addSubview(measurementView)
         measurementView.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(30)
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(250)
+            make.bottom.equalTo(btnAdd.snp.top).offset(-20)
         }
     }
 
     @objc func dismissVC() {
         dismiss(animated: true)
     }
+    
+    @objc func pressedAdd() {
+        guard vfItems.count > 0 else { return }
+    
+        delegate?.displayPickItems(for: vfItems)
+        dismissVC()
+    }
+    
     
     func setCurrentTime() {
         
@@ -140,41 +170,5 @@ class PickItemVC: UIViewController {
         
     }
   
-    @objc func tappedAddItem() {
-        guard vfItems.count > 0 else { return }
-        
-        
-        delegate?.displayPickItems(for: vfItems)
-        dismissVC()
-    }
-    
-    
-    lazy var btnClose: VFButton = {
-        let button = VFButton()
-        button.addImage(imageName: "close")
-        button.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var btnTime: VFButton = {
-        let button = VFButton()
-        button.layer.cornerRadius = 10
-        button.backgroundColor    = ColorHex.dimmedBlack
-        button.setFont(clr: ColorHex.MilkChocolate.origin, font: NanumSquareRound.extrabold.style(sizeOffset: 13))
-        return button
-    }()
-    
-    lazy var btnAdd: VFButton = {
-        let button = VFButton()
-        button.setTitle("Add", for: .normal)
-        button.backgroundColor    = ColorHex.orangeyRed
-        button.setFont(clr: .white, font: NanumSquareRound.extrabold.style(sizeOffset: 16))
-        button.layer.cornerRadius = 18
-        button.setRadiusWithShadow(18)
-        button.addTarget(self, action: #selector(tappedAddItem), for: .touchUpInside)
-        return button
-    }()
-    
-      
 }
 

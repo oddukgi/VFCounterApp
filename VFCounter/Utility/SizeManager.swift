@@ -130,7 +130,7 @@ class SizeManager {
             return -200
         }
         else {
-            return -178
+            return -150
         }
     }
     
