@@ -11,10 +11,10 @@ import UIKit
 extension VFCircularView {
     
     func setCircularView() {
+    
         addSubview(outerSlider)
         addSubview(insideSlider)
-        // MARK: slider
-      
+
         let sliderSize = SizeManager().sliderSize()
         outerSlider.snp.makeConstraints { make in
 
@@ -37,10 +37,6 @@ extension VFCircularView {
             horizontalStackView.append(stackview)
             
         }
-        
-//        outerSlider.layer.borderWidth = 1
-//        insideSlider.layer.borderWidth = 1
-//
     }
            
     func setsubviewLayout() {

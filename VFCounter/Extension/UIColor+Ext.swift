@@ -31,14 +31,17 @@ struct ColorHex {
     static let lemon          = UIColor(hexString: "DFCC39")
     static let brownGrey      = UIColor(hexString: "959595")
     static let lightKhaki     = UIColor(hexString: "E1E6A9")
-    
-    static let milkChocolate  = UIColor(hexString: "603519")
+
     static let pineGreen      = UIColor(hexString: "3a594d")
     static let dimmedBlack    = UIColor(white: 0.0, alpha: 0.1)
     static let lightlightGrey = UIColor(hexString: "DADADA")
     static let orangeyRed     = UIColor(hexString: "FF5722")
-    
-    
+
+    struct MilkChocolate {
+        static let origin  = UIColor(hexString: "603519")
+        static let alpha60 = UIColor(red: 96.0 / 255.0, green: 53.0 / 255.0, blue: 25.0 / 255.0, alpha: 0.6)
+        static let button  = UIColor(hexString: "60371A")
+    }
 }
 
 struct SliderColor {

@@ -52,11 +52,16 @@ class CustomSlider: UISlider {
     }
     
     weak var delegate: SliderUpdateDelegate?
+    private var step: Float = 1
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configure()
+    }
+    
+    convenience init(step: Float) {
+        self.init()
+        self.step = step
     }
     
     required init?(coder: NSCoder) {
@@ -111,14 +116,18 @@ class CustomSlider: UISlider {
     }
 
     @objc func valueChangedSlider(_ sender: UISlider) {
+     
+        //round : 소수점 이하 반올림
+        let roundedValue = round(sender.value / step) * step
+        sender.value = roundedValue
+        
+        print("Slider Value: \(roundedValue)")      
         delegate?.sliderValueChanged(value: sender.value, tag: sender.tag)
     }
     
     @objc func tocuhSlider(_ sender: UISlider) {
         delegate?.sliderTouch(value: sender.value, tag: sender.tag)
     }
-    
-
 }
 
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VFAlertContainerView: UIView {
+class VFContainerView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,7 +22,7 @@ class VFAlertContainerView: UIView {
     
     private func configure() {
         backgroundColor      = .systemBackground
-        layer.cornerRadius   = 16
+        layer.cornerRadius   = 10
         layer.borderWidth    = 2
         layer.borderColor    = UIColor.white.cgColor
         translatesAutoresizingMaskIntoConstraints = false

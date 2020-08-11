@@ -8,49 +8,69 @@
 
 import Foundation
 
-
 class TimeFormatter {
-    
-    
+
+    var timeformat: String
     lazy var getTimeForm = self.getTimeFormatter()
+    
+    init(timeformat: String) {
+        self.timeformat = timeformat
+    }
     
     private func getTimeFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "h:mm a"
+        formatter.dateFormat = timeformat
         return formatter
+    }
+    
+    func getCurrentTime(date: Date) -> String {
+        return getTimeForm.string(from: Date())
     }
 }
 
 class DateConverter {
     
     var date: Date
-    lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.setLocalizedDateFormatFromTemplate("yyyy.MM.dd EEE")
-        
-        return formatter
-    }()
+    let dateFormatter = DateFormatter()
 
     init(date: Date) {
         self.date = date
+    }
+  
+    var stringDT: String {
+        return getCurrentDT().string(from: date)
+    }
+    
+    var dateTime: Date {
+        let datetime = getCurrentDT().date(from: stringDT)
+        return datetime!
+    }
+    
+    func getCurrentDT() -> DateFormatter {
         
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "M월 d일 EEE a h시 m분"
+        
+        dateFormatter.amSymbol = "오전"
+        dateFormatter.pmSymbol = "오후"
+        return dateFormatter
     }
 
     func convertDate() -> String {
-        let currentDate = dateFormatter.string(from: date)
-        // remove bracket ( )
-        let trimmedBracket = currentDate.replacingOccurrences(of: "(", with: "", options:
-          NSString.CompareOptions.literal, range: nil).replacingOccurrences(of: ")", with: "", options:
-        NSString.CompareOptions.literal, range: nil)
-        
-        // remove whitespace
-        var newDate = trimmedBracket.replacingOccurrences(of: " ", with: "")
-        let index = newDate.index(newDate.startIndex, offsetBy: 10)
-        newDate.replaceSubrange(index...index, with: "  ")
+        let component = date.get(.year,.month,.day,.weekday)
+        let year  = component.year ?? 1900
+        let month = component.month ?? 1
+        let day   = component.day   ?? 1
+        let index = component.weekday!
+        let weekdays = [1:"일", 2:"월", 3:"화", 4:"수",
+                        5:"목", 6:"금", 7:"토"]
+        let weekday = weekdays[index]!
+
+        let newDate = "\(year).\(month).\(day) \(weekday)"
+        print(newDate)
         return newDate
     }
-
-
 }
+

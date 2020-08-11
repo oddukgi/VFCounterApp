@@ -19,7 +19,6 @@ class VFButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     convenience init(backgroundColor: UIColor, title: String) {
         self.init(frame: .zero)
         self.backgroundColor = backgroundColor
@@ -30,10 +29,9 @@ class VFButton: UIButton {
     // MARK: - custom methods
        
     private func configure() {
-        //layer.cornerRadius      = 10
+    
         titleLabel!.font = UIFont.preferredFont(forTextStyle: .headline)
         setTitleColor(ColorHex.greyBlue, for: .normal)
-        //translatesAutoresizingMaskIntoConstraints = false
     }
     
     func set(backgroundColor: UIColor, title: String = "") {
@@ -83,9 +81,9 @@ class VFButton: UIButton {
     }
 
     func makeCircle(borderColor: UIColor, borderWidth: CGFloat,name: String ) {
+    
         layer.cornerRadius = 0.5 * self.bounds.size.width
         layer.borderColor = borderColor.cgColor
-        layer.borderWidth = 1
         clipsToBounds = true
         let image = UIImage(named: name)?.transparentImageBackgroundToWhite(color: ColorHex.iceBlue)
         
@@ -104,6 +102,5 @@ class VFButton: UIButton {
     func setFont(clr: UIColor, font: UIFont) {
          titleLabel!.font = font
          setTitleColor(clr, for: .normal)
-    }
-    
+    }   
 }

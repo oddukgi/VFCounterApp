@@ -34,12 +34,12 @@ class PickItemVC: UIViewController {
     var timer: Timer?
     var vfItems: [VFItemController.Items] = []
     weak var delegate: PickItemVCProtocol?
-    var scrollRulerView: DYScrollRulerView!
     var tag: Int = 0
     var checkedIndexPath = Set<IndexPath>()
     var amount: Int = 0
-    // 모달 창이 아닌 전체화면으로 재배치
-    
+    var pickDate: String = ""
+    var measurementView: MeasurementView!
+
     init(delegate: PickItemVCProtocol, tag: Int) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
@@ -55,7 +55,7 @@ class PickItemVC: UIViewController {
   
         setLayout()
         configureHierarchy()
-        setScrollerRulerView()
+        setMeasurementView()
         configureDataSource()
         updateData()
         setCurrentTime()
@@ -99,6 +99,18 @@ class PickItemVC: UIViewController {
         btnClose.setShadow()
 
     }
+    
+    
+    func setMeasurementView() {
+        
+        measurementView = MeasurementView(delegate: self)
+        view.addSubViews(measurementView)        
+        measurementView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(30)
+            make.leading.trailing.equalTo(view)
+            make.height.equalTo(250)
+        }
+    }
 
     @objc func dismissVC() {
         dismiss(animated: true)
@@ -113,8 +125,8 @@ class PickItemVC: UIViewController {
         RunLoop.current.add(timer!, forMode: RunLoop.Mode.default)
         
         if btnTime.titleLabel!.text == nil {
-            let timeFormatter = TimeFormatter()
-            let time = timeFormatter.getTimeForm.string(from: Date())
+            let timeFormatter = TimeFormatter(timeformat: "h:mm a")
+            let time = timeFormatter.getCurrentTime(date: Date())
             btnTime.setTitle(time, for: .normal)
         }
         
@@ -122,14 +134,16 @@ class PickItemVC: UIViewController {
     
     @objc func updateTime() {
 
-        let timeFormatter = TimeFormatter()
-        let time = timeFormatter.getTimeForm.string(from: Date())
+        let timeFormatter = TimeFormatter(timeformat: "h:mm a")
+        let time = timeFormatter.getCurrentTime(date: Date())
         btnTime.setTitle(time, for: .normal)
         
     }
   
     @objc func tappedAddItem() {
         guard vfItems.count > 0 else { return }
+        
+        
         delegate?.displayPickItems(for: vfItems)
         dismissVC()
     }
@@ -146,7 +160,7 @@ class PickItemVC: UIViewController {
         let button = VFButton()
         button.layer.cornerRadius = 10
         button.backgroundColor    = ColorHex.dimmedBlack
-        button.setFont(clr: ColorHex.milkChocolate, font: NanumSquareRound.extrabold.style(sizeOffset: 13))
+        button.setFont(clr: ColorHex.MilkChocolate.origin, font: NanumSquareRound.extrabold.style(sizeOffset: 13))
         return button
     }()
     

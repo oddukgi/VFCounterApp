@@ -41,7 +41,7 @@ class SectionHeader: UICollectionReusableView, SelfConfigCell {
         let subFont = NanumSquareRound.bold.style(sizeOffset: 19.0)
         
         lblTitle.setSubTextColor(basefont: baseFont, subfont: subFont, text: "오늘 먹은 채소 선택하기",
-                                 baseColor: ColorHex.milkChocolate, specificColor: ColorHex.pineGreen, location: 6,length: 2)
+                                 baseColor: ColorHex.MilkChocolate.origin, specificColor: ColorHex.pineGreen, location: 6,length: 2)
     }
     
 

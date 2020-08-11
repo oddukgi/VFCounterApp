@@ -10,6 +10,20 @@ import Foundation
 
 extension Date {
     
+    /// get month, year, day
+    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+        return calendar.dateComponents(Set(components), from: self)
+    }
+    
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return calendar.component(component, from: self)
+    }
+
+    var localizedDescription: String {
+        return description(with: .current)
+    }
+    
+
     func startOfMonth(in calendar: Calendar = .current) -> Date {
         return calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
     }

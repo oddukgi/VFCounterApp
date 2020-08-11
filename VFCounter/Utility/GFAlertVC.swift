@@ -10,7 +10,7 @@ import UIKit
 
 class GFAlertVC: UIViewController {
 
-    let containerView    = VFAlertContainerView()
+    let containerView    = VFContainerView()
     let titleLabel       = VFTitleLabel(textAlignment: .center, fontSize: 20)
     let messageLabel     = VFBodyLabel(textAlignment: .center, fontSize: 11, fontColor: .white)
     let actionButton     = VFButton(backgroundColor: .systemPink, title: "Ok")
@@ -33,8 +33,9 @@ class GFAlertVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+ 
     override func viewDidLoad() {
+    
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubViews(containerView, titleLabel, actionButton, messageLabel)

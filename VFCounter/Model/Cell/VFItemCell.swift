@@ -57,9 +57,8 @@ class VFItemCell: UICollectionViewCell {
         lblName.font = NanumSquareRound.bold.style(sizeOffset: 13)
         lblAmount.font = NanumSquareRound.regular.style(sizeOffset: 12)
         
-        
         lblTime.textColor = .black
-        lblName.textColor = ColorHex.milkChocolate
+        lblName.textColor = ColorHex.MilkChocolate.origin
         lblAmount.textColor = ColorHex.darkGreen
         
         lblAmount.layer.cornerRadius = 8
@@ -69,7 +68,6 @@ class VFItemCell: UICollectionViewCell {
         lblTime.textAlignment = .center
         lblName.textAlignment = .center
         lblAmount.textAlignment = .center        
-        
 
     }
     
@@ -82,17 +80,3 @@ class VFItemCell: UICollectionViewCell {
     }
 }
 
-
-/*
- imageView.layer.borderWidth = 1
- imageView.layer.borderColor = UIColor.gray.cgColor
-
- lblTime.layer.borderWidth = 1
- lblTime.layer.borderColor = UIColor.gray.cgColor
-
- lblName.layer.borderWidth = 1
- lblName.layer.borderColor = UIColor.gray.cgColor
-
- lblAmount.layer.borderWidth = 1
- lblAmount.layer.borderColor = UIColor.gray.cgColor
- */
