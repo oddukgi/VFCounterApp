@@ -9,8 +9,8 @@
 import UIKit
 
 extension PickItemVC {
-    // MARK: Set Layout for collection View
 
+    // MARK: Set Layout for collection View
     func createCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout(section: UIHelper.createColumnsLayout())
         let config = UICollectionViewCompositionalLayoutConfiguration()
@@ -111,16 +111,14 @@ extension PickItemVC: UICollectionViewDelegate {
         self.collectionView.deselectItem(at: indexPath, animated: true)
         
         let cell = collectionView.cellForItem(at: indexPath) as! PickItemCell
-      
-        if checkedIndexPath.contains(indexPath) {
-            checkedIndexPath.remove(indexPath)
-            cell.isChecked = false
-            
-        } else {
-            checkedIndexPath.insert(indexPath)
-            cell.isChecked = true
-        }
+     
+        checkedIndexPath.removeAll()
+        cell.isChecked = false
+        updateData()
         
+        checkedIndexPath.insert(indexPath)
+        cell.isChecked = true
+   
         let name = cell.lblName.text!
         let time = btnTime.titleLabel!.text ?? ""
         let image = cell.vegieImage.image
@@ -147,7 +145,6 @@ extension PickItemVC: MeasurementViewDelegate {
     }
     
 }
-
 
 extension PickItemVC: DatePickerVCDelegate {
     
