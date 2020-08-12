@@ -140,16 +140,13 @@ extension UserItemVC {
         }
     }
 }
-// A,B,C, [New]
+
 extension UserItemVC: PickItemVCProtocol {
     
-    func displayPickItems(for items: [VFItemController.Items]) {
+    func displayPickItems(name: String, time: String, image: UIImage?, amount: Int) {
         
-        for item in items {
-            
-            tag == 0 ? vfitemController.collections[0].item.append(item) : vfitemController.collections[1].item.append(item)
-        }
-        
+        let item = VFItemController.Items(name: name, time: time, image: image, amount: amount)
+        tag == 0 ? vfitemController.collections[0].item.append(item) : vfitemController.collections[1].item.append(item)
         updateData()
     }
 

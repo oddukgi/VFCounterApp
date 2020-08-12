@@ -11,7 +11,7 @@ import SnapKit
 
 
 protocol MeasurementViewDelegate: class {
-    func setAmount(amount: Int)
+
     func showDatePickerVC()
 }
 
@@ -21,12 +21,13 @@ class MeasurementView: UIView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
+        stackView.spacing = 8
 
        return stackView
     }()
     
     lazy var gramTF: VFTextField = {
-        let textField = VFTextField(frame: CGRect(x: 0, y: 0, width: 95, height: 30))
+        let textField = VFTextField(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
 //        textField.cornerRadius(8)
         textField.borderWidth(1)
         textField.borderColor(ColorHex.MilkChocolate.alpha60)
@@ -37,35 +38,16 @@ class MeasurementView: UIView {
         textField.isUserInteractionEnabled  = true
         textField.textAlignment = NSTextAlignment.center
         textField.returnKeyType = UIReturnKeyType.done
-        
+        textField.layer.cornerRadius = 8
         return textField
     }()
     
     lazy var lblUnit: VFBodyLabel = {
         let label = VFBodyLabel(textAlignment: .center, fontSize: 0, fontColor: ColorHex.MilkChocolate.origin)
-        label.font = NanumSquareRound.regular.style(sizeOffset: 15)
+        label.font = NanumSquareRound.bold.style(sizeOffset: 15)
         return label
     }()
-    
-    lazy var btnStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-       return stackView
-    }()
-    
-    lazy var btnPlus: VFButton = {
-        let button = VFButton(frame: CGRect(x: 0, y: 0, width: 26, height: 26))
-        button.makeCircle(borderColor: ColorHex.MilkChocolate.button, borderWidth: 1.0,name: "sliderPlus")
-        return button
-    }()
-    
-    lazy var btnMinus: VFButton = {
-        let button = VFButton(frame: CGRect(x: 0, y: 0, width: 26, height: 26))
-        button.makeCircle(borderColor: ColorHex.MilkChocolate.button, borderWidth: 1.0,name: "sliderMinus")
-        return button
-    }()
-    
+
     let slider = CustomSlider(step: 10)
     
     lazy var btnDateTime: VFButton = {
@@ -85,7 +67,6 @@ class MeasurementView: UIView {
         super.init(frame: frame)
         setSlider()
         setLayout()
-        createAction()
     }
     
     convenience init(delegate: MeasurementViewDelegate) {
@@ -115,7 +96,7 @@ class MeasurementView: UIView {
 
     func setLayout() {
         
-        addSubViews(labelStackView, btnStackView, slider, btnDateTime)
+        addSubViews(labelStackView, slider)
 
         gramTF.placeholderText("100")
         lblUnit.text = "g"
@@ -124,67 +105,22 @@ class MeasurementView: UIView {
         labelStackView.addArrangedSubview(lblUnit)
     
         labelStackView.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(20)
-            make.centerX.equalTo(self)
-            make.width.equalTo(120)
-            make.height.equalTo(30)
-        }
+              make.top.equalTo(self).offset(20)
+              make.leading.equalTo(self).offset(36)
+              make.width.equalTo(105)
+              make.height.equalTo(30)
+          }
         
-        let spacing = sliderWidth - 30
-
-        btnStackView.addArrangedSubview(btnMinus)
-        btnStackView.addArrangedSubview(btnPlus)
-        btnStackView.spacing = spacing
-
-        let yPos = labelStackView.frame.maxY
-        let padding = yPos + 70
-        btnStackView.snp.makeConstraints { make in
-           make.top.equalTo(self).offset(padding)
-           make.centerX.equalTo(self)
-        }
-
         slider.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(padding - 10)
-            make.centerX.equalTo(self.snp.centerX)
-            make.width.equalTo(spacing  - 25)
-            make.height.equalTo(42)
+            make.top.equalTo(self).offset(20)
+            make.leading.equalTo(labelStackView.snp.trailing).offset(18)
+            make.width.equalTo(180)
+            make.height.equalTo(30)
+            
         }
         
-        btnDateTime.snp.makeConstraints { make in
-            make.top.equalTo(slider.snp.bottom).offset(17)
-            make.centerX.equalTo(self)
-           
-        }
-        
-        let dateConverter = DateConverter(date: Date())
+        gramTF.text = "\(Int(slider.value))"
 
-        if btnDateTime.titleLabel?.text == nil {
-
-            let selectedDate = dateConverter.stringDT
-            btnDateTime.setTitle(selectedDate, for: .normal)
-        }
-
-    }
-
-    
-    func createAction() {
-        btnMinus.addTarget(self, action: #selector(makeDownAmount), for: .touchUpInside)
-        btnPlus.addTarget(self, action: #selector(makeUpAmount), for: .touchUpInside)
-        btnDateTime.addTarget(self, action: #selector(didChangeDate), for: .touchUpInside)
-    }
-    
-    
-    @objc func makeDownAmount() {
-        
-        let value = slider.value
-        slider.value = value - 10
-        updateTextField()
-    }
-    
-    @objc func makeUpAmount() {
-        let value = slider.value
-        slider.value = value + 10
-        updateTextField()
     }
     
     @objc func didChangeDate(sender: UIButton) {
@@ -212,26 +148,27 @@ class MeasurementView: UIView {
             return
         }
         gramTF.resignFirstResponder()
-        
+       
         let amount = currentText.floatValue
         if slider.minimumValue <= amount && slider.maximumValue >= amount {
 
         let roundedValue = round(amount / step) * step
             slider.value = roundedValue
-            print("Slider Value: \(roundedValue)")
             gramTF.text = String(Int(roundedValue))
-                 
             
         } else {
             gramTF.text = "0"
             slider.value = 0
+   
         }
+        
 
     }
 }
 
 
 extension MeasurementView: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.checkAmountTF()
         return true
@@ -244,8 +181,6 @@ extension MeasurementView: SliderUpdateDelegate {
     }
     
     func sliderValueChanged(value: Float, tag: Int) {
-        let amount = Int(value)
-        delegate?.setAmount(amount: amount)
         updateTextField()
     }
 

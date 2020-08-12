@@ -9,9 +9,8 @@
 import UIKit
 import SnapKit
 
-
 protocol PickItemVCProtocol: class {
-    func displayPickItems(for items: [VFItemController.Items])
+    func displayPickItems(name: String, time: String, image: UIImage?, amount: Int)
 }
 
 class PickItemVC: UIViewController {
@@ -32,7 +31,7 @@ class PickItemVC: UIViewController {
     let pickItems = PickItems()
  
     var timer: Timer?
-    var vfItems: [VFItemController.Items] = []
+    var vfItems: VFItemController.Items!
     weak var delegate: PickItemVCProtocol?
     var tag: Int = 0
     var checkedIndexPath = Set<IndexPath>()
@@ -138,13 +137,14 @@ class PickItemVC: UIViewController {
         dismiss(animated: true)
     }
     
+    // MARK: Add Button
     @objc func pressedAdd() {
-        guard vfItems.count > 0 else { return }
-    
-        delegate?.displayPickItems(for: vfItems)
+   
+        pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
+        delegate?.displayPickItems(name: pickItems.item.name, time: pickItems.item.time,
+                                       image: pickItems.item.image, amount: pickItems.item.amount)
         dismissVC()
     }
-    
     
     func setCurrentTime() {
         

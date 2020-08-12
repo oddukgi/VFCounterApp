@@ -90,18 +90,11 @@ extension PickItemVC {
         }
     }
 
-    func storeItems(name: String, time: String, image: UIImage?, isChecked: Bool) {
-
-       if isChecked {
-        let item = VFItemController.Items(name: name, time: time, image: image, amount: amount)
-            vfItems.append(item)
-        }
-        else {
-            vfItems = vfItems.filter { $0.name != name }
-        }
-        
-    }
-        
+    func storeItems(name: String, time: String, image: UIImage?) {
+        pickItems.item.name  = name
+        pickItems.item.image = image
+        pickItems.item.time = time
+    }      
 }
 
 extension PickItemVC: UICollectionViewDelegate {
@@ -122,12 +115,10 @@ extension PickItemVC: UICollectionViewDelegate {
         let name = cell.lblName.text!
         let time = btnTime.titleLabel!.text ?? ""
         let image = cell.vegieImage.image
-        let isChecked = cell.isChecked
-        
-        storeItems(name: name, time: time, image: image, isChecked: isChecked)
+ 
+        storeItems(name: name, time: time, image: image)
     }
 }
-
 
 extension PickItemVC: MeasurementViewDelegate {
 
@@ -138,10 +129,6 @@ extension PickItemVC: MeasurementViewDelegate {
         datePickerVC.modalTransitionStyle    = .crossDissolve
         datePickerVC.view.layoutIfNeeded() 
         self.present(datePickerVC, animated: true)
-    }
-    
-    func setAmount(amount: Int) {
-        self.amount = amount
     }
     
 }

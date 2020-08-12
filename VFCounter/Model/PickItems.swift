@@ -27,6 +27,21 @@ class PickItems {
         
         
     }
+    
+    struct SinglePick: Hashable {
+        var name: String
+        var image: UIImage?
+        var amount: Int
+        var time : String
+        
+        init() {
+            name = ""
+            image = nil
+            time  = ""
+            amount = 0
+        }
+    }
+    
     var collections: [Collections] {
           
         get {
@@ -37,13 +52,24 @@ class PickItems {
         }
      }
 
-   
+   var item: SinglePick {
+         
+       get {
+           return onePick
+       }
+       set(newItem) {
+           self.onePick = newItem
+       }
+    }
+
+    
     init() {
         generateVegies()
-        generateFruits()
+        generateFruits()      
     }
     
     fileprivate var _collections = [Collections]()
+    fileprivate var onePick = SinglePick()
 }
 
 extension PickItems {
