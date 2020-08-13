@@ -13,12 +13,10 @@ Calcurate how much take some vegie or fruits in a day
 - 야채와 과일을 먹은양은 링을 채우며, 달성하도록 한다.
 - 일주일에 먹은 양을 그래프로 보여준다.
 ---
-### Reference for development
-[SwfitRulerView](https://github.com/DanielYK/SwiftRulerView)\
-[JTCalendarCustom](https://github.com/lamkjbo/JTCalendarCustom)
-
 ### Swift Package
 [HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
-[SnapKit](http://snapkit.io/)
+[SnapKit](http://snapkit.io/)\
+[Charts](https://github.com/danielgindi/Charts)\
+[JTCalendarCustom](https://github.com/lamkjbo/JTCalendarCustom)
 
 
