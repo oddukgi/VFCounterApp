@@ -50,10 +50,10 @@ class ChartVC: ChartBaseVC {
         }
         
         if segmentControl.selectedSegmentIndex == 0 {
-            chartDataModel.veggies = Array(repeating: nil, count: 7)
+            
             
         } else {
-            chartDataModel.veggies = Array(repeating: nil, count: 31)
+            
         }
 //        insertData()
         
