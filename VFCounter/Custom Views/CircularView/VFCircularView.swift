@@ -97,13 +97,6 @@ class VFCircularView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    /*
-     convenience init(message: String) {
-         self.init(frame: .zero)
-         messageLabel.text = message
-     }
-     
-    */
+
 
 }

@@ -32,3 +32,34 @@ extension AlarmSettingVC: UITableViewDataSource {
     }
 }
 
+extension AlarmSettingVC: SliderUpdateDelegate {
+    
+    
+    func sliderTouch(value: Float, tag: Int) {
+        
+    }
+    
+    func sliderValueChanged(value: Float, tag: Int) {
+        
+        switch tag {
+        case 1:
+            veggieSettings.taskPercent = value
+            
+            let cell = tableView.cellForRow(at: IndexPath(row: tag, section: 0))
+            print(veggieSettings.taskPercent)
+            cell?.textLabel?.text = "\(Int(veggieSettings.taskPercent))%"
+            addUserSettings(userSettings: veggieSettings, actionType: .update)
+
+        default:
+            
+            fruitsSettings.taskPercent = value
+            let cell = tableView.cellForRow(at: IndexPath(row: tag, section: 1))
+            
+            print(fruitsSettings.taskPercent)
+            cell?.textLabel?.text = "\(Int(fruitsSettings.taskPercent))%"
+            //  addUserSettings(userSettings: fruitsSettings, actionType: .update)
+        }
+    }
+       
+
+}

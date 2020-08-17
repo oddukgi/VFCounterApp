@@ -22,6 +22,7 @@ class UserItemVC: UIViewController {
     var tag: Int = 0
     var height: CGFloat = 0
     var chartVC: ChartVC!
+    var userSettings = [UserSettings]()
     
 
     var userData =  [
@@ -38,6 +39,7 @@ class UserItemVC: UIViewController {
         configureDataSource()
         configureTitleDataSource()
         updateData()
+        getTaskPercent()
 
     }
     
@@ -54,6 +56,11 @@ class UserItemVC: UIViewController {
 //        circularView.layer.borderWidth = 1
     }
 
+    func getTaskPercent() {
+        PersistenceManager.getTaskPercent { data in
+            self.userSettings = data
+        }
+    }
 }
 
 

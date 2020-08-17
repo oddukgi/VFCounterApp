@@ -9,5 +9,6 @@
 import Foundation
 
 extension Notification.Name {
-    static let UpdateUserItem = Notification.Name("UpdateUserItem")
+    static let updateTaskPercent = Notification.Name("updateTaskPercent")
+
 }

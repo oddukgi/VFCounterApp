@@ -16,6 +16,8 @@ class ChartVC: ChartBaseVC {
     let barChartView = BarChartView()
     var chartDataModel = ChartDataModel()
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground

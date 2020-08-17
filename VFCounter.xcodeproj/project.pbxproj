@@ -78,7 +78,6 @@
 		12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CFF24E0F8D100677D5A /* VFTextField.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
 		12F5780824E697AE00E8131C /* ChartDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F5780724E697AE00E8131C /* ChartDataModel.swift */; };
-		12F5780A24E6A13000E8131C /* CoreDataBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F5780924E6A13000E8131C /* CoreDataBaseVC.swift */; };
 		12FD255024CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */; };
 		12FD255124CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */; };
 		12FD255224CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254924CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf */; };
@@ -778,7 +777,6 @@
 				1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */,
 				12FE1E3324EA10EB0089FD5A /* Fruits+CoreDataProperties.swift in Sources */,
 				12FE1E3724EA10EB0089FD5A /* DataType+CoreDataProperties.swift in Sources */,
-				12F5780A24E6A13000E8131C /* CoreDataBaseVC.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
 				12FE1E3524EA10EB0089FD5A /* Veggies+CoreDataProperties.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,

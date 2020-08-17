@@ -18,7 +18,7 @@
         <memberEntity name="DataType"/>
     </configuration>
     <elements>
-        <element name="DataType" positionX="-366.5703125" positionY="-46.88671875" width="128" height="118"/>
+        <element name="DataType" positionX="-362.44921875" positionY="200.3984375" width="128" height="118"/>
         <element name="Fruits" positionX="-431.66015625" positionY="-121.421875" width="128" height="43"/>
         <element name="Veggies" positionX="-255.87109375" positionY="-120.08203125" width="128" height="43"/>
     </elements>

@@ -20,6 +20,8 @@ enum PersistenceManager {
         static let userSettings = "VFCounterSettings"
 
     }
+    
+    
  
     static func updateWith(items: UserSettings, actionType: PersistenceActionType,
                             completed: @escaping(VFError?) -> Void) {
@@ -80,5 +82,23 @@ enum PersistenceManager {
         } catch {
             return .updateError
         }
+    }
+    
+    static func getTaskPercent(completed: @escaping([UserSettings]) -> Void) {
+        
+         guard let userSettings = defaults.object(forKey: Keys.userSettings) as? Data else {
+            return
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            let usersettingData = try decoder.decode([UserSettings].self, from: userSettings)
+            completed(usersettingData)
+            
+        } catch {
+            print(error.localizedDescription)
+         
+        }
+      
     }
 }
