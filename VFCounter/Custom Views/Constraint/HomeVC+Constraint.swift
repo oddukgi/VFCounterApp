@@ -39,7 +39,7 @@ extension HomeVC {
         childVC.didMove(toParent: self)
     }
     
-    /// contentView is showing the number of vegies or fruits
+    /// contentView is showing the number of veggies or fruits
     func setContentView() {
         view.addSubview(contentView)
 

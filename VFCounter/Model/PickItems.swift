@@ -64,7 +64,7 @@ class PickItems {
 
     
     init() {
-        generateVegies()
+        generateveggies()
         generateFruits()      
     }
     
@@ -74,7 +74,7 @@ class PickItems {
 
 extension PickItems {
     
-    func generateVegies() {
+    func generateveggies() {
     
         var elements: [Element] = []
         let images = [
@@ -82,7 +82,7 @@ extension PickItems {
                         UIImage(named: "broccoli"),UIImage(named: "paprika"),
                         UIImage(named:"cabbage"),
                         UIImage(named: "carrot"),   UIImage(named:"corn"),
-                        UIImage(named: "cucumber"), UIImage(named:"custom vegie"),
+                        UIImage(named: "cucumber"), UIImage(named:"custom veggie"),
                         UIImage(named: "eggplant"), UIImage(named:"garlic"),
                         UIImage(named: "kohlrabi"), UIImage(named:"leek"),
                         UIImage(named: "lettuce"),  UIImage(named:"mushroom"),

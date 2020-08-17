@@ -42,8 +42,8 @@ extension VFCircularView {
     func setsubviewLayout() {
         
         addSubview(horizontalStackView[0])
-        horizontalStackView[0].addArrangedSubview(vegieCircle)
-        horizontalStackView[0].addArrangedSubview(lbVegie)
+        horizontalStackView[0].addArrangedSubview(veggieCircle)
+        horizontalStackView[0].addArrangedSubview(lbveggie)
         horizontalStackView[0].snp.makeConstraints { make in
             make.top.equalTo(outerSlider.snp.top).offset(20)
             make.leading.equalTo(self).offset(20)

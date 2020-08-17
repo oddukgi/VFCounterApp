@@ -63,16 +63,28 @@ extension UserItemVC {
             make.leading.trailing.equalTo(view)
             make.height.equalTo(padding)
         }
+        
+        collectionView.delegate = self
         collectionView.register(VFItemCell.self, forCellWithReuseIdentifier: VFItemCell.reuseIdentifier)
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: titleElementKind,
                                      withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
+        
     }
     
+    func trimmingTime(userTime: String) -> String {
+        var time = userTime
+        let start = time.index(time.startIndex, offsetBy: 4)
+        let end = time.index(time.endIndex, offsetBy: -3)
+        let range = start..<end
+        time.removeSubrange(range)
+        
+        return time
+    }
     // MARK: create collectionView datasource
     func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<VFItemController.VFCollections, VFItemController.Items>(collectionView: collectionView) {
+        dataSource = UICollectionViewDiffableDataSource<VFItemController.VFCollections, DataType>(collectionView: collectionView) {
             (collectionView: UICollectionView,  indexPath: IndexPath,
-            collections: VFItemController.Items) -> UICollectionViewCell? in
+            data: DataType) -> UICollectionViewCell? in
             
             // Get a cell of the desired kind.
             guard let cell = collectionView.dequeueReusableCell(
@@ -86,13 +98,25 @@ extension UserItemVC {
             cell.layer.borderWidth = 1
             cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
             
-            cell.updateContents(image: collections.image, time: collections.time, name: collections.name, amount: collections.amount)
+//            var dataObject: DataType
+//
+//            if indexPath.section == 0 {
+//                dataObject = self.userData[0][indexPath.row]
+//            } else {
+//                dataObject = self.userData[1][indexPath.row]
+//            }
+            let image = UIImage(data: data.image!)
+            let amount = Int(data.amount)
+            let time = self.trimmingTime(userTime: data.time!)
+            cell.updateContents(image: image, time: time, name: data.name!, amount: amount)
             // Return the cell.
             return cell
 
         }
         
     }
+    
+    
     func configureTitleDataSource() {
         dataSource.supplementaryViewProvider = { [weak self]
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -116,38 +140,89 @@ extension UserItemVC {
     }
     
     func updateData() {
-        currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, VFItemController.Items>()
-        vfitemController.collections.forEach {
-             let collection = $0
-             currentSnapshot.appendSections([collection])
-             currentSnapshot.appendItems(collection.item)
-         }
-         dataSource.apply(currentSnapshot, animatingDifferences: true)
+        currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
         
-        // NotificationCenter Item 보내기 ( AlarmSettingVC)
+        for i in 0..<2 {
+            currentSnapshot.appendSections([vfitemController.collections[i]])
+            currentSnapshot.appendItems(userData[i]!)
+        }
+         dataSource.apply(self.currentSnapshot, animatingDifferences: true)
+         collectionView.reloadData()
     }
     
-    // MARK: show vegie, fruit dialog
+    
+    func reloadData(section: Int) {
+        
+        currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
+        
+        if section == 0 {
+            let veggies = UserDataManager.getEntity(Veggies.self,section: section)
+            userData[0]!.append(veggies!)
+            userData[0] = UserDataManager.sortEntity(Veggies.self,section: section)!
+//
+    
+        } else {
+            let fruits = UserDataManager.getEntity(Fruits.self,section: section)
+            userData[1]!.append(fruits!)
+            userData[1] = UserDataManager.sortEntity(Fruits.self,section: section)!
+        }
+    
+        for i in 0..<2 {
+            currentSnapshot.appendSections([vfitemController.collections[i]])
+            currentSnapshot.appendItems(userData[i]!)
+        }
+        dataSource.apply(self.currentSnapshot, animatingDifferences: true)
+    }
+           
+    
+    // MARK: show veggie, fruit dialog
     @objc func addItems(sender: VFButton) {
    
         DispatchQueue.main.async {
             self.tag = sender.tag
-            let vegiePickVC = PickItemVC(delegate: self, tag: sender.tag)
-            let navController = UINavigationController(rootViewController: vegiePickVC)
+            let veggiePickVC = PickItemVC(delegate: self, tag: sender.tag)
+            let navController = UINavigationController(rootViewController: veggiePickVC)
             navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated: false)
             
         }
     }
+    
+    
+    
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+    let indexPathsForVisibleRows = collectionView.indexPathsForVisibleItems
+      let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+      return Array(indexPathsIntersection)
+    }
+
 }
 
 extension UserItemVC: PickItemVCProtocol {
     
-    func displayPickItems(name: String, time: String, image: UIImage?, amount: Int) {
+    func addItems(item: VFItemController.Items) {
+
+        if tag == 0 {
+            UserDataManager.createEntity(item: item, tag: 0)
         
-        let item = VFItemController.Items(name: name, time: time, image: image, amount: amount)
-        tag == 0 ? vfitemController.collections[0].item.append(item) : vfitemController.collections[1].item.append(item)
-        updateData()
+        } else {
+            UserDataManager.createEntity(item: item, tag: 1)
+           
+        }
+        reloadData(section: tag)
     }
 
+}
+extension UserItemVC: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 아이템을 선택하면, 홈화면으로 이동
+        self.collectionView.deselectItem(at: indexPath, animated: true)
+//        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
+        
+        // show speechbubble
+        
+     
+  
+    }
 }

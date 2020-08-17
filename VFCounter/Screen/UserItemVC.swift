@@ -7,18 +7,28 @@
 //
 
 import UIKit
+import CoreStore
+
 
 class UserItemVC: UIViewController {
 
     let vfitemController = VFItemController()
     let circularView = VFCircularView()
     var collectionView: UICollectionView! = nil
-    var dataSource: UICollectionViewDiffableDataSource<VFItemController.VFCollections,VFItemController.Items>! = nil
-    var currentSnapshot: NSDiffableDataSourceSnapshot<VFItemController.VFCollections,VFItemController.Items>! = nil
+ 
+    var dataSource: UICollectionViewDiffableDataSource<VFItemController.VFCollections,DataType>! = nil
+    var currentSnapshot: NSDiffableDataSourceSnapshot<VFItemController.VFCollections,DataType>! = nil
     let titleElementKind = "titleElementKind"
     var tag: Int = 0
     var height: CGFloat = 0
+    var chartVC: ChartVC!
     
+
+    var userData =  [
+        try? UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration).orderBy(.descending(\.time))),
+        try? UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).orderBy(.descending(\.time))) ]
+                     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +38,7 @@ class UserItemVC: UIViewController {
         configureDataSource()
         configureTitleDataSource()
         updateData()
+
     }
     
     func setupLayout() {
@@ -41,8 +52,16 @@ class UserItemVC: UIViewController {
         }
         
 //        circularView.layer.borderWidth = 1
-
     }
-    
+
 }
 
+
+/*
+
+ Delete AllEntity
+ DispatchQueue.main.async {
+     UserDataManager.deleteAllEntity()
+     self.updateData()
+ }
+*/

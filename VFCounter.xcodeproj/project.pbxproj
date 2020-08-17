@@ -17,6 +17,8 @@
 		121A909A24D18F6000AE0780 /* SelfConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121A909924D18F6000AE0780 /* SelfConfigCell.swift */; };
 		121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B197324CC198500CC6EEF /* PickItemVC.swift */; };
 		122625E224DA549900AC2962 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122625E124DA549900AC2962 /* SettingVC.swift */; };
+		1226FEC924E790270092BDAF /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 1226FEC824E790270092BDAF /* CoreStore */; };
+		1228222D24E51340002A3F5A /* ChartLabel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1228222F24E51340002A3F5A /* ChartLabel.strings */; };
 		12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283AFE24CFB73400AE93E6 /* UIHelper.swift */; };
 		12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */; };
 		12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0424CFBDA900AE93E6 /* PickItems.swift */; };
@@ -36,6 +38,15 @@
 		126AE55124C6C6B6000BCF7E /* VFCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE55024C6C6B6000BCF7E /* VFCounterTests.swift */; };
 		126AE55C24C6C6B6000BCF7E /* VFCounterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE55B24C6C6B6000BCF7E /* VFCounterUITests.swift */; };
 		126AE56B24C6C78C000BCF7E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 126AE56A24C6C78C000BCF7E /* SnapKit */; };
+		127ADC1724E4DF5900E8F3B7 /* UISegmentControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */; };
+		127ADC1924E4E4CF00E8F3B7 /* CustomSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */; };
+		127ADC1B24E4F4BA00E8F3B7 /* ChartVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */; };
+		127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127BF74324E52FB90066AC7D /* BalloonMarker.swift */; };
+		127BF74624E530050066AC7D /* code garbage in Resources */ = {isa = PBXBuildFile; fileRef = 127BF74524E530050066AC7D /* code garbage */; };
+		12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B5D24E50607001586EA /* ChartBaseVC.swift */; };
+		12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */; };
+		12885B6324E50FBC001586EA /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 12885B6224E50FBC001586EA /* Localize_Swift */; };
+		12885B6524E51044001586EA /* LocalizeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B6424E51044001586EA /* LocalizeConstant.swift */; };
 		1290EE5C24C6ED45008DB339 /* VFTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5B24C6ED45008DB339 /* VFTabBarController.swift */; };
 		1290EE5E24C6EDE5008DB339 /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5D24C6EDE5008DB339 /* ChartVC.swift */; };
 		1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */; };
@@ -51,16 +62,23 @@
 		129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129C7FB924D54C4C00E5A719 /* SizeManager.swift */; };
 		12A655D624DD45FC00B0E042 /* CircleLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A655D524DD45FC00B0E042 /* CircleLine.swift */; };
 		12A655D824DD578900B0E042 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A655D724DD578900B0E042 /* Date+Ext.swift */; };
+		12AAC70D24E7DE60000B16E7 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */; };
+		12ACE9BD24E4D179007EBC2F /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 12ACE9BC24E4D179007EBC2F /* Charts */; };
+		12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */; };
 		12B3733D24DE498A00491FBB /* AlarmSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B3733B24DE498A00491FBB /* AlarmSettingVC.swift */; };
 		12B3733E24DE498A00491FBB /* AlarmSettingVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B3733C24DE498A00491FBB /* AlarmSettingVC+Ext.swift */; };
 		12B50CFE24C6EBB700C87956 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */; };
 		12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */; };
 		12B50D0024C6EBB700C87956 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */; };
+		12BBEF5124E7F2D7008D1FD4 /* URL+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBEF5024E7F2D7008D1FD4 /* URL+Ext.swift */; };
 		12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92524CAB08200C11ECD /* UserItemVC.swift */; };
 		12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92824CABE7B00C11ECD /* VFItemController.swift */; };
+		12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12C066C124E9624600745B79 /* VFCounterDB.xcdatamodeld */; };
 		12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CF824E0F7D400677D5A /* MeasurementView.swift */; };
 		12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CFF24E0F8D100677D5A /* VFTextField.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
+		12F5780824E697AE00E8131C /* ChartDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F5780724E697AE00E8131C /* ChartDataModel.swift */; };
+		12F5780A24E6A13000E8131C /* CoreDataBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F5780924E6A13000E8131C /* CoreDataBaseVC.swift */; };
 		12FD255024CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */; };
 		12FD255124CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */; };
 		12FD255224CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254924CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf */; };
@@ -68,6 +86,12 @@
 		12FD255424CEF6BB00E3D5E0 /* I18N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD254B24CEF6BB00E3D5E0 /* I18N.swift */; };
 		12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD255824CEF94F00E3D5E0 /* UILabel+Ext.swift */; };
 		12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD255A24CEFBD700E3D5E0 /* UIFont+Ext.swift */; };
+		12FE1E3224EA10EB0089FD5A /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FE1E2C24EA10EB0089FD5A /* Fruits+CoreDataClass.swift */; };
+		12FE1E3324EA10EB0089FD5A /* Fruits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FE1E2D24EA10EB0089FD5A /* Fruits+CoreDataProperties.swift */; };
+		12FE1E3424EA10EB0089FD5A /* Veggies+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FE1E2E24EA10EB0089FD5A /* Veggies+CoreDataClass.swift */; };
+		12FE1E3524EA10EB0089FD5A /* Veggies+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FE1E2F24EA10EB0089FD5A /* Veggies+CoreDataProperties.swift */; };
+		12FE1E3624EA10EB0089FD5A /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FE1E3024EA10EB0089FD5A /* DataType+CoreDataClass.swift */; };
+		12FE1E3724EA10EB0089FD5A /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FE1E3124EA10EB0089FD5A /* DataType+CoreDataProperties.swift */; };
 		12FF76DA24DE7118009542FE /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76D924DE7118009542FE /* UserSettings.swift */; };
 		12FF76DC24DE71DB009542FE /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76DB24DE71DB009542FE /* PersistenceManager.swift */; };
 		12FF76DE24DE72C6009542FE /* VFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76DD24DE72C6009542FE /* VFError.swift */; };
@@ -107,6 +131,8 @@
 		122625E124DA549900AC2962 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		1227DD6B24DC0E0F005EEBE1 /* Deboogger.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Deboogger.framework.dSYM; path = Carthage/Build/iOS/Deboogger.framework.dSYM; sourceTree = "<group>"; };
 		1227DD6C24DC0E28005EEBE1 /* Deboogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Deboogger.framework; path = Carthage/Build/iOS/Deboogger.framework; sourceTree = "<group>"; };
+		1228222E24E51340002A3F5A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ChartLabel.strings; sourceTree = "<group>"; };
+		1228223524E5142B002A3F5A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ChartLabel.strings; sourceTree = "<group>"; };
 		12283AFE24CFB73400AE93E6 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickItemVC+CV.swift"; sourceTree = "<group>"; };
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
@@ -131,6 +157,14 @@
 		126AE55724C6C6B6000BCF7E /* VFCounterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VFCounterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		126AE55B24C6C6B6000BCF7E /* VFCounterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFCounterUITests.swift; sourceTree = "<group>"; };
 		126AE55D24C6C6B6000BCF7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+Ext.swift"; sourceTree = "<group>"; };
+		127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentControl.swift; sourceTree = "<group>"; };
+		127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartVC+Ext.swift"; sourceTree = "<group>"; };
+		127BF74324E52FB90066AC7D /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
+		127BF74524E530050066AC7D /* code garbage */ = {isa = PBXFileReference; lastKnownFileType = text; path = "code garbage"; sourceTree = "<group>"; };
+		12885B5D24E50607001586EA /* ChartBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartBaseVC.swift; sourceTree = "<group>"; };
+		12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayAxisValueFormatter.swift; sourceTree = "<group>"; };
+		12885B6424E51044001586EA /* LocalizeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizeConstant.swift; sourceTree = "<group>"; };
 		1290EE5B24C6ED45008DB339 /* VFTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFTabBarController.swift; sourceTree = "<group>"; };
 		1290EE5D24C6EDE5008DB339 /* ChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVC.swift; sourceTree = "<group>"; };
 		1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Constraint.swift"; sourceTree = "<group>"; };
@@ -145,16 +179,22 @@
 		129C7FB924D54C4C00E5A719 /* SizeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeManager.swift; sourceTree = "<group>"; };
 		12A655D524DD45FC00B0E042 /* CircleLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLine.swift; sourceTree = "<group>"; };
 		12A655D724DD578900B0E042 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
+		12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthAxisValueFormatter.swift; sourceTree = "<group>"; };
 		12B3733B24DE498A00491FBB /* AlarmSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmSettingVC.swift; sourceTree = "<group>"; };
 		12B3733C24DE498A00491FBB /* AlarmSettingVC+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlarmSettingVC+Ext.swift"; sourceTree = "<group>"; };
 		12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		12BBEF5024E7F2D7008D1FD4 /* URL+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Ext.swift"; sourceTree = "<group>"; };
 		12BBF92524CAB08200C11ECD /* UserItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemVC.swift; sourceTree = "<group>"; };
 		12BBF92824CABE7B00C11ECD /* VFItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFItemController.swift; sourceTree = "<group>"; };
+		12C066C224E9624600745B79 /* VFCounterDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VFCounterDB.xcdatamodel; sourceTree = "<group>"; };
 		12C64CF824E0F7D400677D5A /* MeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementView.swift; sourceTree = "<group>"; };
 		12C64CFF24E0F8D100677D5A /* VFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFTextField.swift; sourceTree = "<group>"; };
 		12CC426824D7D9CC0086B3AE /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		12F5780724E697AE00E8131C /* ChartDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDataModel.swift; sourceTree = "<group>"; };
+		12F5780924E6A13000E8131C /* CoreDataBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBaseVC.swift; sourceTree = "<group>"; };
 		12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
 		12FD254924CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundL.ttf; sourceTree = "<group>"; };
@@ -162,6 +202,12 @@
 		12FD254B24CEF6BB00E3D5E0 /* I18N.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = I18N.swift; sourceTree = "<group>"; };
 		12FD255824CEF94F00E3D5E0 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		12FD255A24CEFBD700E3D5E0 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
+		12FE1E2C24EA10EB0089FD5A /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12FE1E2D24EA10EB0089FD5A /* Fruits+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		12FE1E2E24EA10EB0089FD5A /* Veggies+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12FE1E2F24EA10EB0089FD5A /* Veggies+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		12FE1E3024EA10EB0089FD5A /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12FE1E3124EA10EB0089FD5A /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		12FF76D924DE7118009542FE /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		12FF76DB24DE71DB009542FE /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		12FF76DD24DE72C6009542FE /* VFError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFError.swift; sourceTree = "<group>"; };
@@ -177,6 +223,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				126AE56B24C6C78C000BCF7E /* SnapKit in Frameworks */,
+				12885B6324E50FBC001586EA /* Localize_Swift in Frameworks */,
+				1226FEC924E790270092BDAF /* CoreStore in Frameworks */,
+				12ACE9BD24E4D179007EBC2F /* Charts in Frameworks */,
 				1291B19424C9842900625BE6 /* HGCircularSlider in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +250,7 @@
 		12143CD424CA93F00080ADFE /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				12000DBB24C7D8F7005C49D2 /* DateConverter.swift */,
 				12143CD524CA93F80080ADFE /* Constants.swift */,
 				12FF76E124DE85DE009542FE /* GFAlertVC.swift */,
 				12283AFE24CFB73400AE93E6 /* UIHelper.swift */,
@@ -208,6 +258,7 @@
 				129C7FB924D54C4C00E5A719 /* SizeManager.swift */,
 				12FF76DB24DE71DB009542FE /* PersistenceManager.swift */,
 				12FF76DD24DE72C6009542FE /* VFError.swift */,
+				12885B6424E51044001586EA /* LocalizeConstant.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -238,6 +289,28 @@
 				1227DD6B24DC0E0F005EEBE1 /* Deboogger.framework.dSYM */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1228222A24E512D9002A3F5A /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				1228222F24E51340002A3F5A /* ChartLabel.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		1240D3D624E642C100A7EAD4 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				12FE1E2C24EA10EB0089FD5A /* Fruits+CoreDataClass.swift */,
+				12FE1E2D24EA10EB0089FD5A /* Fruits+CoreDataProperties.swift */,
+				12FE1E2E24EA10EB0089FD5A /* Veggies+CoreDataClass.swift */,
+				12FE1E2F24EA10EB0089FD5A /* Veggies+CoreDataProperties.swift */,
+				12FE1E3024EA10EB0089FD5A /* DataType+CoreDataClass.swift */,
+				12FE1E3124EA10EB0089FD5A /* DataType+CoreDataProperties.swift */,
+				12C066C124E9624600745B79 /* VFCounterDB.xcdatamodeld */,
+			);
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 		124B918024CACD5D009616A7 /* Cell */ = {
@@ -275,6 +348,9 @@
 		126AE53824C6C6B4000BCF7E /* VFCounter */ = {
 			isa = PBXGroup;
 			children = (
+				1240D3D624E642C100A7EAD4 /* Core Data */,
+				1228222A24E512D9002A3F5A /* Localization */,
+				12885B5C24E505E9001586EA /* Chart */,
 				127A497B24CC152D0032194E /* Popup */,
 				12BBF92724CABE4700C11ECD /* Model */,
 				12143CD424CA93F00080ADFE /* Utility */,
@@ -287,6 +363,7 @@
 				121A909524D18C9300AE0780 /* Assets */,
 				126AE54424C6C6B6000BCF7E /* LaunchScreen.storyboard */,
 				126AE54724C6C6B6000BCF7E /* Info.plist */,
+				127BF74524E530050066AC7D /* code garbage */,
 			);
 			path = VFCounter;
 			sourceTree = "<group>";
@@ -316,6 +393,19 @@
 				12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */,
 			);
 			path = Popup;
+			sourceTree = "<group>";
+		};
+		12885B5C24E505E9001586EA /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				127BF74324E52FB90066AC7D /* BalloonMarker.swift */,
+				12885B5D24E50607001586EA /* ChartBaseVC.swift */,
+				1290EE5D24C6EDE5008DB339 /* ChartVC.swift */,
+				127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */,
+				12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */,
+				12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */,
+			);
+			path = Chart;
 			sourceTree = "<group>";
 		};
 		1290EE5A24C6ED37008DB339 /* Custom Views */ = {
@@ -354,14 +444,14 @@
 		12B50CF924C6EB2200C87956 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				12BBF92524CAB08200C11ECD /* UserItemVC.swift */,
+				124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */,
 				1243A89924E1487F0040AA5B /* DatePickerVC.swift */,
 				12B3733B24DE498A00491FBB /* AlarmSettingVC.swift */,
 				12B3733C24DE498A00491FBB /* AlarmSettingVC+Ext.swift */,
 				126AE53D24C6C6B4000BCF7E /* HomeVC.swift */,
-				1290EE5D24C6EDE5008DB339 /* ChartVC.swift */,
-				12BBF92524CAB08200C11ECD /* UserItemVC.swift */,
-				124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */,
 				122625E124DA549900AC2962 /* SettingVC.swift */,
+				12F5780924E6A13000E8131C /* CoreDataBaseVC.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -369,7 +459,6 @@
 		12B50CFA24C6EBA800C87956 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				12000DBB24C7D8F7005C49D2 /* DateConverter.swift */,
 				12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */,
 				12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */,
 				12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */,
@@ -381,6 +470,8 @@
 				12A655D724DD578900B0E042 /* Date+Ext.swift */,
 				12FF76DF24DE7EA8009542FE /* UIViewController+Ext.swift */,
 				12FF76E524DE97CE009542FE /* Struct+Ext.swift */,
+				127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */,
+				12BBEF5024E7F2D7008D1FD4 /* URL+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -394,6 +485,8 @@
 				12283B0424CFBDA900AE93E6 /* PickItems.swift */,
 				1217CE3C24DA792C00521D49 /* SettingController.swift */,
 				12FF76D924DE7118009542FE /* UserSettings.swift */,
+				12F5780724E697AE00E8131C /* ChartDataModel.swift */,
+				12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -439,6 +532,7 @@
 				1291B19024C983F400625BE6 /* Ring.swift */,
 				1290EE6324C6F91F008DB339 /* DateView.swift */,
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
+				127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -489,6 +583,9 @@
 			packageProductDependencies = (
 				126AE56A24C6C78C000BCF7E /* SnapKit */,
 				1291B19324C9842900625BE6 /* HGCircularSlider */,
+				12ACE9BC24E4D179007EBC2F /* Charts */,
+				12885B6224E50FBC001586EA /* Localize_Swift */,
+				1226FEC824E790270092BDAF /* CoreStore */,
 			);
 			productName = VFCounter;
 			productReference = 126AE53624C6C6B4000BCF7E /* VFCounter.app */;
@@ -560,11 +657,15 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 126AE52D24C6C6B4000BCF7E;
 			packageReferences = (
 				126AE56924C6C78C000BCF7E /* XCRemoteSwiftPackageReference "SnapKit" */,
 				1291B19224C9842900625BE6 /* XCRemoteSwiftPackageReference "HGCircularSlider" */,
+				12ACE9BB24E4D179007EBC2F /* XCRemoteSwiftPackageReference "Charts" */,
+				12885B6124E50FBC001586EA /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+				1226FEC724E790270092BDAF /* XCRemoteSwiftPackageReference "CoreStore" */,
 			);
 			productRefGroup = 126AE53724C6C6B4000BCF7E /* Products */;
 			projectDirPath = "";
@@ -584,11 +685,13 @@
 			files = (
 				121A909424D18C8C00AE0780 /* Fruits.xcassets in Resources */,
 				126AE54624C6C6B6000BCF7E /* LaunchScreen.storyboard in Resources */,
+				127BF74624E530050066AC7D /* code garbage in Resources */,
 				12FD255324CEF6BB00E3D5E0 /* NanumSquareRoundEB.ttf in Resources */,
 				126AE54324C6C6B6000BCF7E /* Assets.xcassets in Resources */,
 				12FD255024CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf in Resources */,
 				12FD255124CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf in Resources */,
 				12FD255224CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf in Resources */,
+				1228222D24E51340002A3F5A /* ChartLabel.strings in Resources */,
 				121A909224D18BF500AE0780 /* Vegies.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -616,24 +719,34 @@
 			files = (
 				12FF76E424DE8658009542FE /* VFAlertContainerView.swift in Sources */,
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
+				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
 				126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */,
 				1290EE6224C6F725008DB339 /* VFButton.swift in Sources */,
 				12B50CFE24C6EBB700C87956 /* UIImage+Ext.swift in Sources */,
 				1291B19124C983F400625BE6 /* Ring.swift in Sources */,
+				12AAC70D24E7DE60000B16E7 /* UserDataManager.swift in Sources */,
 				1217CE3D24DA792C00521D49 /* SettingController.swift in Sources */,
+				12FE1E3424EA10EB0089FD5A /* Veggies+CoreDataClass.swift in Sources */,
 				12FD255424CEF6BB00E3D5E0 /* I18N.swift in Sources */,
 				1291B19624C9851800625BE6 /* VFCircularView+Ext.swift in Sources */,
 				12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */,
 				1290EE6424C6F91F008DB339 /* DateView.swift in Sources */,
+				12FE1E3224EA10EB0089FD5A /* Fruits+CoreDataClass.swift in Sources */,
 				12FF76DE24DE72C6009542FE /* VFError.swift in Sources */,
 				12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */,
 				129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */,
 				12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */,
 				1290EE5E24C6EDE5008DB339 /* ChartVC.swift in Sources */,
+				127ADC1724E4DF5900E8F3B7 /* UISegmentControl+Ext.swift in Sources */,
 				12FF76E624DE97CE009542FE /* Struct+Ext.swift in Sources */,
 				12FF76DA24DE7118009542FE /* UserSettings.swift in Sources */,
+				12F5780824E697AE00E8131C /* ChartDataModel.swift in Sources */,
+				12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */,
 				12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */,
+				12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */,
+				127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */,
+				12FE1E3624EA10EB0089FD5A /* DataType+CoreDataClass.swift in Sources */,
 				1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */,
 				12B50D0024C6EBB700C87956 /* UIColor+Ext.swift in Sources */,
 				126AE53A24C6C6B4000BCF7E /* AppDelegate.swift in Sources */,
@@ -650,25 +763,34 @@
 				12B3733D24DE498A00491FBB /* AlarmSettingVC.swift in Sources */,
 				12A655D624DD45FC00B0E042 /* CircleLine.swift in Sources */,
 				1290EE6A24C6FA14008DB339 /* VFBodyLabel.swift in Sources */,
+				12BBEF5124E7F2D7008D1FD4 /* URL+Ext.swift in Sources */,
 				1290EE5C24C6ED45008DB339 /* VFTabBarController.swift in Sources */,
 				124F561724DED284006CE413 /* CustomSlider.swift in Sources */,
 				12143CD324CA8F800080ADFE /* DateView+Constraint.swift in Sources */,
 				12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */,
 				1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */,
 				121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */,
+				12885B6524E51044001586EA /* LocalizeConstant.swift in Sources */,
 				12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */,
 				121A909A24D18F6000AE0780 /* SelfConfigCell.swift in Sources */,
 				12143CD624CA93F80080ADFE /* Constants.swift in Sources */,
 				124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */,
 				1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */,
+				12FE1E3324EA10EB0089FD5A /* Fruits+CoreDataProperties.swift in Sources */,
+				12FE1E3724EA10EB0089FD5A /* DataType+CoreDataProperties.swift in Sources */,
+				12F5780A24E6A13000E8131C /* CoreDataBaseVC.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
+				12FE1E3524EA10EB0089FD5A /* Veggies+CoreDataProperties.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,
 				12FF76E224DE85DE009542FE /* GFAlertVC.swift in Sources */,
 				1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */,
 				124B917E24CACC35009616A7 /* VFItemCell.swift in Sources */,
+				12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */,
 				12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */,
+				127ADC1B24E4F4BA00E8F3B7 /* ChartVC+Ext.swift in Sources */,
 				12000DBC24C7D8F7005C49D2 /* DateConverter.swift in Sources */,
+				127ADC1924E4E4CF00E8F3B7 /* CustomSegmentControl.swift in Sources */,
 				1217CE3F24DA832800521D49 /* SettingItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -705,6 +827,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1228222F24E51340002A3F5A /* ChartLabel.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1228222E24E51340002A3F5A /* en */,
+				1228223524E5142B002A3F5A /* ko */,
+			);
+			name = ChartLabel.strings;
+			sourceTree = "<group>";
+		};
 		126AE54424C6C6B6000BCF7E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -720,6 +851,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -780,6 +912,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -995,12 +1128,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1226FEC724E790270092BDAF /* XCRemoteSwiftPackageReference "CoreStore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnEstropia/CoreStore.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.2.0;
+			};
+		};
 		126AE56924C6C78C000BCF7E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.1;
+			};
+		};
+		12885B6124E50FBC001586EA /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
 			};
 		};
 		1291B19224C9842900625BE6 /* XCRemoteSwiftPackageReference "HGCircularSlider" */ = {
@@ -1011,20 +1160,56 @@
 				minimumVersion = 2.2.1;
 			};
 		};
+		12ACE9BB24E4D179007EBC2F /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1226FEC824E790270092BDAF /* CoreStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1226FEC724E790270092BDAF /* XCRemoteSwiftPackageReference "CoreStore" */;
+			productName = CoreStore;
+		};
 		126AE56A24C6C78C000BCF7E /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 126AE56924C6C78C000BCF7E /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		12885B6224E50FBC001586EA /* Localize_Swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12885B6124E50FBC001586EA /* XCRemoteSwiftPackageReference "Localize-Swift" */;
+			productName = Localize_Swift;
 		};
 		1291B19324C9842900625BE6 /* HGCircularSlider */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1291B19224C9842900625BE6 /* XCRemoteSwiftPackageReference "HGCircularSlider" */;
 			productName = HGCircularSlider;
 		};
+		12ACE9BC24E4D179007EBC2F /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12ACE9BB24E4D179007EBC2F /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		12C066C124E9624600745B79 /* VFCounterDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				12C066C224E9624600745B79 /* VFCounterDB.xcdatamodel */,
+			);
+			currentVersion = 12C066C224E9624600745B79 /* VFCounterDB.xcdatamodel */;
+			path = VFCounterDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 126AE52E24C6C6B4000BCF7E /* Project object */;
 }

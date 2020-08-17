@@ -25,7 +25,7 @@ class SettingController {
     }
 
     private let settings = [ Settings(name: "알림설정", image: UIImage(named: "alarm")),
-                             Settings(name: "공유",    image: UIImage(named: "share")) ]
+                             Settings(name: "언어설정", image: UIImage(named: "globe")) ]
 
 }
 

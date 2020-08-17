@@ -13,6 +13,7 @@ class VFItemController {
     struct Items: Hashable {
         var name: String
         var time: String
+        var date: Date
         var image: UIImage?
         var amount: Int
         let identifiable = UUID()
@@ -27,7 +28,6 @@ class VFItemController {
 
         let title: String
         let subtitle: String
-        var item: [Items]
     }
 
     var collections: [VFCollections] {
@@ -50,8 +50,8 @@ extension VFItemController {
     
     func generateSections() {
         _collections = [
-                         VFCollections(title: "야채", subtitle: "야채음식,생야채가 해당됩니다.", item: []),
-                         VFCollections(title: "과일", subtitle: "과일음식,주스,생과일이 해당됩니다.", item: [])
+                            VFCollections(title: "야채", subtitle: "야채음식,생야채가 해당됩니다."),
+                            VFCollections(title: "과일", subtitle: "과일음식,주스,생과일이 해당됩니다.")
                        ]
     }
     

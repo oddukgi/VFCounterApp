@@ -13,10 +13,10 @@ class VFCircularView: UIView {
     
     // TODO: create circular view & calculate the value of each item
       
-    lazy var vegieCircle: Ring = {
+    lazy var veggieCircle: Ring = {
         let view = Ring(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        view.mainColor = ColorHex.vegieGreen
-        view.ringColor = ColorHex.vegieGreen
+        view.mainColor = ColorHex.veggieGreen
+        view.ringColor = ColorHex.veggieGreen
         return view
     }()
     
@@ -27,7 +27,7 @@ class VFCircularView: UIView {
         return view
     }()
 
-    lazy var lbVegie: UILabel = {
+    lazy var lbveggie: UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.textAlignment = .center
         lbl.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
@@ -53,7 +53,7 @@ class VFCircularView: UIView {
         slider.lineWidth = SizeManager().sliderWidth
         slider.diskFillColor = UIColor.clear
         slider.diskColor = UIColor.clear
-        slider.trackFillColor = ColorHex.vegieGreen
+        slider.trackFillColor = ColorHex.veggieGreen
         slider.trackColor = UIColor.clear
         slider.backgroundColor = .clear
         slider.thumbRadius = 8

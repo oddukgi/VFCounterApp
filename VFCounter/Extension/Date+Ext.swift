@@ -47,4 +47,15 @@ extension Date {
     func endOfDay(in calendar: Calendar = .current) -> Date {
         return calendar.date(bySettingHour: 23, minute: 59, second: 59, of: self)!
     }
+    
+    // Start Of Week, End Of Week
+    func startOfWeek(in calendar: Calendar = .current) -> Date {
+        let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
+        return calendar.date(byAdding: .day, value: 1, to: startDate)!
+    }
+    
+    func endOfWeek(in calendar: Calendar = .current) -> Date {
+        let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
+        return calendar.date(byAdding: .day, value: 7, to: startDate)!
+    }
 }

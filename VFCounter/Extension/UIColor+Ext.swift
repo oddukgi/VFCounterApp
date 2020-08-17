@@ -26,13 +26,17 @@ struct ColorHex {
     static let greyBlue       = UIColor(hexString: "78ACA3")
     static let iceBlue        = UIColor(hexString: "EFF8F8")
     static let dimmedGrey     = UIColor(hexString: "D0D3D9")
+    static let lightGreyBlue  = UIColor(hexString: "B3B8B7")
  
-    static let vegieGreen     = UIColor(hexString: "2FB549")
+    static let veggieGreen     = UIColor(hexString: "2FB549")
     static let lemon          = UIColor(hexString: "DFCC39")
     static let brownGrey      = UIColor(hexString: "959595")
     static let lightKhaki     = UIColor(hexString: "E1E6A9")
 
-    static let pineGreen      = UIColor(hexString: "3a594d")
+    static let pineGreen      = UIColor(hexString: "3A594D")
+    static let jadeGreen      = UIColor(hexString: "2DAD64")
+    static let weirdGreen     = UIColor(hexString: "4BD185")
+    
     static let dimmedBlack    = UIColor(white: 0.0, alpha: 0.1)
     static let lightlightGrey = UIColor(hexString: "DADADA")
     static let orangeyRed     = UIColor(hexString: "FF5722")

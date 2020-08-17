@@ -30,7 +30,7 @@ extension PickItemVC {
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                        withReuseIdentifier: SectionHeader.reuseIdentifier)
   
-        let halfheight = (view.bounds.height / 2) - SizeManager().vegiePickCVHeight
+        let halfheight = (view.bounds.height / 2) - SizeManager().veggiePickCVHeight
         collectionView.snp.makeConstraints {
             $0.top.equalTo(btnClose.snp.bottom).offset(20)
             $0.leading.trailing.equalTo(view)
@@ -52,10 +52,10 @@ extension PickItemVC {
         cell.contentView.layer.cornerRadius = 10
         cell.setRadiusWithShadow(10)
         
-        // vegie, fruit
+        // veggie, fruit
         cell.set(items.image, items.name)
     
-        // cell.set(vegies.image, vegies.name)
+        // cell.set(veggies.image, veggies.name)
         cell.isChecked = self.checkedIndexPath.contains(indexPath)
         
         return cell
@@ -76,7 +76,7 @@ extension PickItemVC {
         var snapshot = NSDiffableDataSourceSnapshot<Section, PickItems.Element>()
        
         if tag == 0 {
-            snapshot.appendSections([.vegie])
+            snapshot.appendSections([.veggie])
             snapshot.appendItems(pickItems.collections.first!.elements)
       
         } else {
@@ -113,8 +113,10 @@ extension PickItemVC: UICollectionViewDelegate {
         cell.isChecked = true
    
         let name = cell.lblName.text!
-        let time = btnTime.titleLabel!.text ?? ""
-        let image = cell.vegieImage.image
+        
+        let timeFormatter = TimeFormatter(timeformat: "h:mm:ss a")
+        let time = timeFormatter.getCurrentTime(date: Date())
+        let image = cell.veggieImage.image
  
         storeItems(name: name, time: time, image: image)
     }

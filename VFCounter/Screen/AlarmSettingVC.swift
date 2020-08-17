@@ -17,11 +17,11 @@ import UIKit
 class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
     
     enum Section: Int {
-        case vegies = 0, fruits
+        case veggies = 0, fruits
         
         func description() -> String {
             switch self {
-            case .vegies:
+            case .veggies:
                 return "야채"
             case .fruits:
                 return "과일"
@@ -34,15 +34,15 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
     let reuseIdentifer = "AlarmSettings"
     var tableView: UITableView!
     
-    var vegieSwitch = UISwitch()
-    var vegieSlider = CustomSlider()
+    var veggieSwitch = UISwitch()
+    var veggieSlider = CustomSlider()
     var fruitsSwitch = UISwitch()
     var fruitsSlider = CustomSlider()
     
-    var vegieSettings = UserSettings(title: "야채", alarmOn: false, taskPercent: 0)
+    var veggieSettings = UserSettings(title: "야채", alarmOn: false, taskPercent: 0)
     var fruitsSettings = UserSettings(title: "과일", alarmOn: false, taskPercent: 0)
     
-    private var vegieDataFlag = false
+    private var veggieDataFlag = false
     private var fruitsDataFlag = false
 
     
@@ -50,7 +50,7 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
         super.viewDidLoad()
         configureTableView()
         initialize()
-//        addUserSettings(userSettings: vegieSettings, actionType: .remove)
+//        addUserSettings(userSettings: veggieSettings, actionType: .remove)
         getSettingValue()
        
     }
@@ -92,13 +92,13 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
                     
                     return
                 }
-                vegieSwitch.isOn = data[0].alarmOn
-                vegieSettings.alarmOn = data[0].alarmOn
+                veggieSwitch.isOn = data[0].alarmOn
+                veggieSettings.alarmOn = data[0].alarmOn
                 
-                vegieSlider.value = data[0].taskPercent
-                vegieSettings.taskPercent = data[0].taskPercent
+                veggieSlider.value = data[0].taskPercent
+                veggieSettings.taskPercent = data[0].taskPercent
            
-                vegieDataFlag = true
+                veggieDataFlag = true
             }
         }
 
@@ -111,8 +111,8 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
 
         switch tag {
         case 0:
-            vegieSettings.alarmOn = sender.isOn
-            addUserSettings(userSettings: vegieSettings, actionType: .update)
+            veggieSettings.alarmOn = sender.isOn
+            addUserSettings(userSettings: veggieSettings, actionType: .update)
 
         default:
             fruitsSettings.alarmOn = sender.isOn
@@ -130,12 +130,12 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
         
         switch tag {
         case 1:
-            vegieSettings.taskPercent = value
+            veggieSettings.taskPercent = value
            
             let cell = tableView.cellForRow(at: IndexPath(row: tag, section: 0))
-            print(vegieSettings.taskPercent)
-            cell?.textLabel?.text = "\(Int(vegieSettings.taskPercent))%"
-            addUserSettings(userSettings: vegieSettings, actionType: .update)
+            print(veggieSettings.taskPercent)
+            cell?.textLabel?.text = "\(Int(veggieSettings.taskPercent))%"
+            addUserSettings(userSettings: veggieSettings, actionType: .update)
 
         default:
         
@@ -168,14 +168,14 @@ class AlarmSettingVC: UIViewController, SliderUpdateDelegate {
 extension AlarmSettingVC { 
     
     func initialize() {
-        vegieSlider.values(min: 0, max: 100, current: 0)
+        veggieSlider.values(min: 0, max: 100, current: 0)
         let width = (view.frame.width / 2) + 80
-        vegieSlider.frame = CGRect(x: 0, y: 0, width: width, height: 57)
-        vegieSlider.delegate = self
-        vegieSlider.thumbTintColor(.white)
-        vegieSlider.minimumTrackTintColor(SliderColor.greenishTeal)
-        vegieSlider.maximumTrackTintColor(SliderColor.maximumTrackTint)
-        vegieSlider.isContinuous = true
+        veggieSlider.frame = CGRect(x: 0, y: 0, width: width, height: 57)
+        veggieSlider.delegate = self
+        veggieSlider.thumbTintColor(.white)
+        veggieSlider.minimumTrackTintColor(SliderColor.greenishTeal)
+        veggieSlider.maximumTrackTintColor(SliderColor.maximumTrackTint)
+        veggieSlider.isContinuous = true
 
         fruitsSlider.frame = CGRect(x: 0, y: 0, width: width, height: 57)
         fruitsSlider.delegate = self
@@ -185,7 +185,7 @@ extension AlarmSettingVC {
         fruitsSlider.isContinuous = true
         fruitsSlider.values(min: 0, max: 100, current: 0)
         
-        vegieSwitch.addTarget(self, action: #selector(changedSwitch(_:)), for: .valueChanged)
+        veggieSwitch.addTarget(self, action: #selector(changedSwitch(_:)), for: .valueChanged)
         fruitsSwitch.addTarget(self, action: #selector(changedSwitch(_:)), for: .valueChanged)
     }
 
@@ -210,13 +210,13 @@ extension AlarmSettingVC {
         case 0:
             if indexPath.item == 0 {
                 cell.textLabel?.text = "알림설정"
-                cell.accessoryView = vegieSwitch
-                vegieSwitch.tag = 0
+                cell.accessoryView = veggieSwitch
+                veggieSwitch.tag = 0
            } else {
                 
-                cell.textLabel?.text = "\(Int(vegieSettings.taskPercent))%"
-                cell.accessoryView = vegieSlider
-                vegieSlider.tag = 1
+                cell.textLabel?.text = "\(Int(veggieSettings.taskPercent))%"
+                cell.accessoryView = veggieSlider
+                veggieSlider.tag = 1
             }
         
         default:

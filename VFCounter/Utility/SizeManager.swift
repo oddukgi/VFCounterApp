@@ -100,7 +100,7 @@ class SizeManager {
         return userItemHeight
     }
     
-    var vegiePickCVHeight: CGFloat {
+    var veggiePickCVHeight: CGFloat {
         return  DeviceTypes.isiPhone8Standard ? 90 : 120
     }
     

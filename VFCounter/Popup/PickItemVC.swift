@@ -10,14 +10,14 @@ import UIKit
 import SnapKit
 
 protocol PickItemVCProtocol: class {
-    func displayPickItems(name: String, time: String, image: UIImage?, amount: Int)
+    func addItems(item: VFItemController.Items) 
 }
 
 class PickItemVC: UIViewController {
 
     enum Section: String {
       
-        case vegie = "오늘 먹은 야채 선택하기"
+        case veggie = "오늘 먹은 야채 선택하기"
         case fruit = "오늘 먹은 과일 선택하기"
             
         var sectionTitle: String {
@@ -41,6 +41,7 @@ class PickItemVC: UIViewController {
     let btnClose = VFButton()
     let btnTime = VFButton()
     var btnAdd = VFButton()
+    let now = Date()
     
 
     init(delegate: PickItemVCProtocol, tag: Int) {
@@ -76,7 +77,6 @@ class PickItemVC: UIViewController {
         timer?.invalidate()
     }
     
-
     // close button, time button
     func setLayout() {
       
@@ -141,10 +141,15 @@ class PickItemVC: UIViewController {
     @objc func pressedAdd() {
    
         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
-        delegate?.displayPickItems(name: pickItems.item.name, time: pickItems.item.time,
-                                       image: pickItems.item.image, amount: pickItems.item.amount)
+        let item = VFItemController.Items(name: pickItems.item.name, time: pickItems.item.time,
+                                          date: now, image: pickItems.item.image, amount: pickItems.item.amount)
+        
+        delegate?.addItems(item: item)
+
+        // save data to context
         dismissVC()
     }
+
     
     func setCurrentTime() {
         
@@ -165,7 +170,7 @@ class PickItemVC: UIViewController {
     @objc func updateTime() {
 
         let timeFormatter = TimeFormatter(timeformat: "h:mm a")
-        let time = timeFormatter.getCurrentTime(date: Date())
+        let time = timeFormatter.getCurrentTime(date: now)
         btnTime.setTitle(time, for: .normal)
         
     }

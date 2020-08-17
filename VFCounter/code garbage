@@ -1,0 +1,100 @@
+
+
+
+
+open override func draw(context: CGContext, point: CGPoint)
+{
+    guard let label = label else { return }
+    
+    let offset = self.offsetForDrawing(atPoint: point)
+    let size = self.size
+    
+    var rect = CGRect(
+        origin: CGPoint(
+            x: point.x + offset.x,
+            y: point.y + offset.y),
+        size: size)
+    rect.origin.x -= size.width / 2.0
+    rect.origin.y -= size.height
+    
+    context.saveGState()
+
+    context.setFillColor(color.cgColor)
+
+    if offset.y > 0
+    {
+        context.beginPath()
+        context.move(to: CGPoint(
+            x: rect.origin.x,
+            y: rect.origin.y + arrowSize.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + (rect.size.width - arrowSize.width) / 2.0,
+            y: rect.origin.y + arrowSize.height))
+        //arrow vertex
+        context.addLine(to: CGPoint(
+            x: point.x,
+            y: point.y))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + (rect.size.width + arrowSize.width) / 2.0,
+            y: rect.origin.y + arrowSize.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + rect.size.width,
+            y: rect.origin.y + arrowSize.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + rect.size.width,
+            y: rect.origin.y + rect.size.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x,
+            y: rect.origin.y + rect.size.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x,
+            y: rect.origin.y + arrowSize.height))
+        context.fillPath()
+    }
+    else
+    {
+        context.beginPath()
+        context.move(to: CGPoint(
+            x: rect.origin.x,
+            y: rect.origin.y))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + rect.size.width,
+            y: rect.origin.y))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + rect.size.width,
+            y: rect.origin.y + rect.size.height - arrowSize.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + (rect.size.width + arrowSize.width) / 2.0,
+            y: rect.origin.y + rect.size.height - arrowSize.height))
+        //arrow vertex
+        context.addLine(to: CGPoint(
+            x: point.x,
+            y: point.y))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x + (rect.size.width - arrowSize.width) / 2.0,
+            y: rect.origin.y + rect.size.height - arrowSize.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x,
+            y: rect.origin.y + rect.size.height - arrowSize.height))
+        context.addLine(to: CGPoint(
+            x: rect.origin.x,
+            y: rect.origin.y))
+        context.fillPath()
+    }
+    
+    if offset.y > 0 {
+        rect.origin.y += self.insets.top + arrowSize.height
+    } else {
+        rect.origin.y += self.insets.top
+    }
+
+    rect.size.height -= self.insets.top + self.insets.bottom
+    
+    UIGraphicsPushContext(context)
+    
+    label.draw(in: rect, withAttributes: _drawAttributes)
+    
+    UIGraphicsPopContext()
+    
+    context.restoreGState()
+}

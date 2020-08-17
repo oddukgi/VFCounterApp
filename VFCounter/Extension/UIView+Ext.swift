@@ -61,4 +61,10 @@ extension UIView {
         self.layer.shadowOpacity = 0.5
         self.layer.shadowPath = shadowPath.cgPath
     }
+    
+    
+    func roundCorners(radius: CGFloat) {
+        layer.cornerRadius = radius
+        self.clipsToBounds = true
+    }
 }
