@@ -16,7 +16,7 @@ class TableHeaderView: UITableViewHeaderFooterView {
         return String(describing: self)
     }
 
-    let lbTitle = VFTitleLabel(textAlignment: .left, fontSize: 14)
+    let lbTitle = VFTitleLabel(textAlignment: .left, fontSize: 15)
 
     
     //MARK: - Init

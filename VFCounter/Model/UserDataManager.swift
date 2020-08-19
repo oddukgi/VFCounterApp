@@ -13,9 +13,11 @@ struct UserDataManager {
     
     static let veggieConfiguration = "Veggies"
     static let fruitsConfiguration = "Fruits"
+    static let monthConfiguration = "Month"
     
     static let userStack = DataStack(xcodeModelName: "VFCounterDB")
    
+    // monthly 1 ~ 12
     static let dataStack: DataStack = {
         try! userStack.addStorageAndWait(
             SQLiteStore(
@@ -48,7 +50,7 @@ struct UserDataManager {
         var entityItem: DataType? =  nil
         
         _ = try? dataStack.perform(synchronous: { (transaction) in
-            
+        
             // create veggies entity
             if tag == 0 {
                 entityItem = getEntity(Veggies.self, transaction: transaction, configuration: veggieConfiguration)
@@ -60,9 +62,9 @@ struct UserDataManager {
             entityItem?.time = item.time
             
             let datetimeConverter = DateConverter(date: item.date)
-            entityItem?.date = datetimeConverter.getEntityDT()
+            entityItem?.date = datetimeConverter.date
             entityItem?.image = item.image?.pngData()
-            entityItem?.amount = Int32(item.amount)
+            entityItem?.amount = Int16(item.amount)
             
         })
      
@@ -86,13 +88,12 @@ struct UserDataManager {
    
                 entity = transaction.edit(entity)!
                 entity?.name = item.name
-                entity?.name = item.name
                 entity?.time = item.time
                 
                 let datetimeConverter = DateConverter(date: item.date)
-                entity?.date = datetimeConverter.getEntityDT()
+                entity?.date = datetimeConverter.date
                 entity?.image = item.image?.pngData()
-                entity?.amount = Int32(item.amount)
+                entity?.amount = Int16(item.amount)
                 return transaction.hasChanges
           })
         } catch {
@@ -101,12 +102,12 @@ struct UserDataManager {
     }
     
     
-    static func deleteAllEntity()  {
+    static func deleteAllEntity() {
        
-        _ = try? dataStack.perform( synchronous: { (transaction) -> Bool in
+        _ = try? dataStack.perform( synchronous: { (transaction) in
             try transaction.deleteAll(From<DataType>())
-            return transaction.hasChanges
         })
+        
     }
     
     static func deleteItemFromEntity(item: VFItemController.Items, tag: Int) {

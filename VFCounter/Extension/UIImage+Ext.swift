@@ -62,3 +62,8 @@ extension UIImage {
         return image
     }
 }
+
+
+// MARK: Create watermark text
+// refer to : https://stackoverflow.com/a/41524358
+

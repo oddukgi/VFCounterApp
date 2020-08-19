@@ -39,7 +39,13 @@ class UserItemVC: UIViewController {
         configureDataSource()
         configureTitleDataSource()
         updateData()
-        getTaskPercent()
+        prepareNotificationAddObserver()
+        setCircularValue()
+        
+        DispatchQueue.main.async {
+            UserDataManager.deleteAllEntity()
+            self.updateData()
+        }
 
     }
     
@@ -52,15 +58,44 @@ class UserItemVC: UIViewController {
             make.width.equalTo(view)
             make.height.equalTo(height)
         }
-        
 //        circularView.layer.borderWidth = 1
-    }
 
-    func getTaskPercent() {
-        PersistenceManager.getTaskPercent { data in
-            self.userSettings = data
+    }
+    
+    
+    func setCircularValue() {
+        if let rate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") {
+            circularView.outerSlider.maximumValue = CGFloat(rate)
+            
+        }
+            
+        if let rate = SettingManager.getTaskValue(keyName: "FruitsTaskRate") {
+            circularView.insideSlider.maximumValue = CGFloat(rate)
+        }
+        
+    }
+    //MARK: - notificationCenter
+    fileprivate func prepareNotificationAddObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)), name: .updateTaskPercent, object: nil)
+    }
+    
+    // MARK: action
+    //AlarSetting 화면에서 최대 복용량 받아서 링 의 최대값을 설정한다.
+    @objc fileprivate func updateTaskRate(_ notification: Notification) {
+     
+        if let veggieAmount = notification.userInfo?["veggieAmount"] as? Int {
+        
+           print(veggieAmount)
+           circularView.outerSlider.maximumValue = CGFloat(veggieAmount)
+        }
+        
+        if let fruitAmount = notification.userInfo?["fruitAmount"] as? Int {
+            
+            print(fruitAmount)
+            circularView.insideSlider.maximumValue = CGFloat(fruitAmount)
         }
     }
+
 }
 
 

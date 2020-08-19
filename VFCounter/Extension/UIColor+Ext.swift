@@ -28,8 +28,7 @@ struct ColorHex {
     static let dimmedGrey     = UIColor(hexString: "D0D3D9")
     static let lightGreyBlue  = UIColor(hexString: "B3B8B7")
  
-    static let veggieGreen     = UIColor(hexString: "2FB549")
-    static let lemon          = UIColor(hexString: "DFCC39")
+   
     static let brownGrey      = UIColor(hexString: "959595")
     static let lightKhaki     = UIColor(hexString: "E1E6A9")
 
@@ -46,6 +45,8 @@ struct ColorHex {
         static let alpha60 = UIColor(red: 96.0 / 255.0, green: 53.0 / 255.0, blue: 25.0 / 255.0, alpha: 0.6)
         static let button  = UIColor(hexString: "60371A")
     }
+    
+    static let switchWhite = UIColor(hexString: "E9E9EB")
 }
 
 struct SliderColor {
@@ -55,10 +56,12 @@ struct SliderColor {
 
 }
 
-struct RulerColor {
-    static let lineColor = UIColor(hexString: "2DAD64")
-    static let bgColor = UIColor(hexString: "1E1E1E")
-    static let triangleColor = UIColor(hexString: "FF5722")
+struct RingColor {
+    static let ringGreen    = UIColor(hexString: "04D48C")
+    static let ringYellow   = UIColor(hexString: "FECD01")
+    static let trackGreen   = UIColor(red: 47.0 / 255.0, green: 181.0 / 255.0, blue: 73.0 / 255.0, alpha: 0.12)
+    static let trackBeige   = UIColor(hexString: "FEF8D8")
+    
 }
 
 

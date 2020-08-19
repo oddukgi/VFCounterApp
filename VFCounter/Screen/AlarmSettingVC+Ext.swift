@@ -9,8 +9,26 @@
 import UIKit
 
 
-extension AlarmSettingVC: UITableViewDataSource {
+extension AlarmSettingVC {
+    
+    func calcurateSlider(slider: CustomSlider, amount: Float, step: Float, cell: UITableViewCell) {
+    
+        if slider.minimumValue <= amount && slider.maximumValue >= amount {
 
+            let roundedValue = round(amount / step) * step
+            slider.value = roundedValue
+            cell.textLabel?.text = String(Int(roundedValue)) + " g"
+            
+        } else {
+            cell.textLabel?.text = "0"
+            slider.value = 0
+        }
+        
+       
+            
+    }
+}
+extension AlarmSettingVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -27,6 +45,7 @@ extension AlarmSettingVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath)
+        cell.selectionStyle = .none
         connectCell(cell, for: indexPath)
         return cell
     }
@@ -47,17 +66,17 @@ extension AlarmSettingVC: SliderUpdateDelegate {
             
             let cell = tableView.cellForRow(at: IndexPath(row: tag, section: 0))
             print(veggieSettings.taskPercent)
-            cell?.textLabel?.text = "\(Int(veggieSettings.taskPercent))%"
-            addUserSettings(userSettings: veggieSettings, actionType: .update)
-
+            calcurateSlider(slider: veggieSlider, amount: value, step: 10.0, cell: cell!)
+            SettingManager.setVeggieTaskRate(percent: value)
+            NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["veggieAmount": Int(veggieSlider.value)])
         default:
             
             fruitsSettings.taskPercent = value
-            let cell = tableView.cellForRow(at: IndexPath(row: tag, section: 1))
-            
+            let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 1))
             print(fruitsSettings.taskPercent)
-            cell?.textLabel?.text = "\(Int(fruitsSettings.taskPercent))%"
-            //  addUserSettings(userSettings: fruitsSettings, actionType: .update)
+            calcurateSlider(slider: fruitsSlider, amount: value, step: 10.0, cell: cell!)
+            SettingManager.setFruitsTaskRate(percent: value)
+            NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["fruitAmount": Int(fruitsSlider.value)])
         }
     }
        

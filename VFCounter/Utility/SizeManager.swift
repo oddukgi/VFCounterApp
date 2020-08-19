@@ -52,12 +52,22 @@ class SizeManager {
     func sliderSize() -> (CGSize, CGSize) {
 
         if DeviceTypes.isiPhone8Standard {
-          outerSliderSize = CGSize(width: 170, height: 170)
-          insideSliderSize = CGSize(width: 110, height: 110)
+            outerSliderSize = CGSize(width: 170, height: 170)
+            insideSliderSize = CGSize(width: 110, height: 110)
  
+        } else if DeviceTypes.isiPhone8PlusStandard {
+            
+            outerSliderSize = CGSize(width: 200, height: 200)
+            insideSliderSize = CGSize(width: 140, height: 140)
+            
+        } else if DeviceTypes.isiPhoneX {
+           
+            outerSliderSize = CGSize(width: 220, height: 220)
+            insideSliderSize = CGSize(width: 160, height: 160)
+        
         } else {
-          outerSliderSize = CGSize(width: 200, height: 200)
-          insideSliderSize = CGSize(width: 140, height: 140)
+            outerSliderSize = CGSize(width: 240, height: 240)
+            insideSliderSize = CGSize(width: 180, height: 180)
         }
 
         return (outerSliderSize, insideSliderSize)
@@ -68,7 +78,7 @@ class SizeManager {
         if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhone8PlusStandard {
             width = 18
         } else {
-            width = 20
+            width = 22
         }
         
         return width

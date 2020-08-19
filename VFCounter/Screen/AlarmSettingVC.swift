@@ -15,7 +15,6 @@ import UIKit
 
 // Show, Hide (DateTimePicker, Percentage)
 
-
 class AlarmSettingVC: UIViewController {
     
     enum Section: Int {
@@ -44,71 +43,45 @@ class AlarmSettingVC: UIViewController {
     var veggieSettings = UserSettings(title: "야채", alarmOn: false, taskPercent: 0)
     var fruitsSettings = UserSettings(title: "과일", alarmOn: false, taskPercent: 0)
     
-    private var veggieDataFlag = false
-    private var fruitsDataFlag = false
+
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
         initialize()
-//        addUserSettings(userSettings: veggieSettings, actionType: .remove)
-        getSettingValue()
-       
+        loadDataFromUserDefaults()
+ 
     }
 
-
-    func getSettingValue() {
-        PersistenceManager.retrieveUserSettings { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let userSettings):
-                
-                if userSettings.count > 0 {
-                   self.updateUI(for: userSettings)
-                }
-                
-            case .failure(let error):
-                   print("Something went wrong \(error.rawValue)")
-            }
-
-        }
-    }
-    
-    func updateUI(for items: [UserSettings]) {
+    func loadDataFromUserDefaults() {
         
-        let data = items
-        
-        for item in items {
-            if !item.hasNilField() {
-                guard item.title == "야채" else {
-                    
-                    fruitsSwitch.isOn = data[1].alarmOn
-                    fruitsSettings.alarmOn = data[1].alarmOn
-                    
-                    fruitsSlider.value = data[1].taskPercent
-                    fruitsSettings.taskPercent = data[1].taskPercent
-      
-                
-                    fruitsDataFlag = true
-                    
-                    return
-                }
-                veggieSwitch.isOn = data[0].alarmOn
-                veggieSettings.alarmOn = data[0].alarmOn
-                
-                veggieSlider.value = data[0].taskPercent
-                veggieSettings.taskPercent = data[0].taskPercent
-           
-                veggieDataFlag = true
-            }
+        if let alarm = SettingManager.getAlarmValue(keyName: "VeggieAlarm") {
+            veggieSettings.alarmOn = alarm
+            veggieSwitch.isOn = alarm
+            
+            veggieSwitch.isOn ? (veggieSlider.isEnabled = true) : (veggieSlider.isEnabled = false)
         }
         
+        if let alarm = SettingManager.getAlarmValue(keyName: "FruitAlarm") {
+            fruitsSettings.alarmOn = alarm
+            fruitsSwitch.isOn = alarm
+            fruitsSwitch.isOn ? (fruitsSlider.isEnabled = true) : (fruitsSlider.isEnabled = false)
+            
+        }
         
+        if let rate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") {
+            veggieSettings.taskPercent = rate
+            veggieSlider.value = rate
+            
+        }
         
-
-    }
+        if let rate = SettingManager.getTaskValue(keyName: "FruitsTaskRate") {
+            fruitsSettings.taskPercent = rate
+            fruitsSlider.value = rate
+        }
     
+    }
     
     @objc func changedSwitch(_ sender: UISwitch) {
 
@@ -117,37 +90,39 @@ class AlarmSettingVC: UIViewController {
         switch tag {
         case 0:
             veggieSettings.alarmOn = sender.isOn
-            addUserSettings(userSettings: veggieSettings, actionType: .update)
-
+            SettingManager.setVeggieAlarm(veggieFlag: sender.isOn)
+            sender.isOn ? (veggieSlider.isEnabled = true) : (veggieSlider.isEnabled = false)
+      
         default:
             fruitsSettings.alarmOn = sender.isOn
-//            addUserSettings(userSettings: fruitsSettings)
+            SettingManager.setFruitsAlarm(fruitsFlag: sender.isOn)
+            sender.isOn ? (fruitsSlider.isEnabled = true) : (fruitsSlider.isEnabled = false)
+            changedColorOfSwitch(sender.isOn)
         }
 
     }
-        
-
- 
-    func addUserSettings( userSettings: UserSettings, actionType: PersistenceActionType? ) {
-
-        PersistenceManager.updateWith(items: userSettings, actionType: actionType!) { error in
+    
+    func changedColorOfSwitch(_ flag: Bool) {
+        if flag == true {
+//            fruitsSwitch.backgroundColor = ColorHex.orangeyRed
+            fruitsSwitch.onTintColor = ColorHex.orangeyRed
+            fruitsSwitch.subviews[0].subviews[0].backgroundColor = ColorHex.orangeyRed
+      
+        } else {
+            fruitsSwitch.backgroundColor = .clear
+            fruitsSwitch.subviews[0].subviews[0].backgroundColor = ColorHex.switchWhite
+        }
   
-            guard let error = error else {
-               print("Success")
-                return
-            }
-            
-            print("Something went wrong \(error.localizedDescription)")
-        }
-        
     }
+
+    
     
 }
 
 extension AlarmSettingVC { 
     
     func initialize() {
-        veggieSlider.values(min: 0, max: 100, current: 0)
+        veggieSlider.values(min: 0, max: 500, current: 0)
         let width = (view.frame.width / 2) + 80
         veggieSlider.frame = CGRect(x: 0, y: 0, width: width, height: 57)
         veggieSlider.delegate = self
@@ -156,16 +131,22 @@ extension AlarmSettingVC {
         veggieSlider.maximumTrackTintColor(SliderColor.maximumTrackTint)
         veggieSlider.isContinuous = true
 
+        fruitsSlider.values(min: 0, max: 500, current: 0)
         fruitsSlider.frame = CGRect(x: 0, y: 0, width: width, height: 57)
         fruitsSlider.delegate = self
         fruitsSlider.thumbTintColor(.white)
         fruitsSlider.minimumTrackTintColor(SliderColor.orangeyRed)
         fruitsSlider.maximumTrackTintColor(SliderColor.maximumTrackTint)
         fruitsSlider.isContinuous = true
-        fruitsSlider.values(min: 0, max: 100, current: 0)
+        
         
         veggieSwitch.addTarget(self, action: #selector(changedSwitch(_:)), for: .valueChanged)
         fruitsSwitch.addTarget(self, action: #selector(changedSwitch(_:)), for: .valueChanged)
+        
+        // set border color when isOn is false
+        fruitsSwitch.tintColor = ColorHex.switchWhite
+        // set border color when isOn is true
+        fruitsSwitch.onTintColor = ColorHex.orangeyRed
     }
 
     
@@ -188,12 +169,12 @@ extension AlarmSettingVC {
 
         case 0:
             if indexPath.item == 0 {
-                cell.textLabel?.text = "알림설정"
+                cell.textLabel?.text = "목표량 설정"
                 cell.accessoryView = veggieSwitch
                 veggieSwitch.tag = 0
            } else {
                 
-                cell.textLabel?.text = "\(Int(veggieSettings.taskPercent))%"
+                cell.textLabel?.text = "\(Int(veggieSettings.taskPercent))g"
                 cell.accessoryView = veggieSlider
                 veggieSlider.tag = 1
             }
@@ -201,13 +182,15 @@ extension AlarmSettingVC {
         default:
         
            if indexPath.item == 0 {
+                cell.textLabel?.text = "목표량 설정"
                 cell.accessoryView = fruitsSwitch
                 fruitsSwitch.tag = 2
            } else {
+            
+                cell.textLabel?.text = "\(Int(fruitsSettings.taskPercent))g"
                 cell.accessoryView = fruitsSlider
                 fruitsSlider.tag = 3
             }
-        
         }
     }
     

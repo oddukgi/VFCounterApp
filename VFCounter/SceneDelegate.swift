@@ -50,6 +50,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     }
 
-
 }
 

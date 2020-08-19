@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DataType" representedClassName="VFCounter.DataType" isAbstract="YES" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="amount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Fruits" representedClassName="VFCounter.Fruits" parentEntity="DataType" syncable="YES"/>
+    <entity name="FruitTotal" representedClassName="VFCounter.FruitTotal" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Veggies" representedClassName="VFCounter.Veggies" parentEntity="DataType" syncable="YES"/>
+    <entity name="VeggieTotal" representedClassName="VFCounter.VeggieTotal" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <configuration name="Fruits">
         <memberEntity name="Fruits"/>
         <memberEntity name="DataType"/>
+    </configuration>
+    <configuration name="FruitTotal">
+        <memberEntity name="FruitTotal"/>
     </configuration>
     <configuration name="Veggies">
         <memberEntity name="Veggies"/>
         <memberEntity name="DataType"/>
     </configuration>
+    <configuration name="VeggieTotal">
+        <memberEntity name="VeggieTotal"/>
+    </configuration>
     <elements>
-        <element name="DataType" positionX="-362.44921875" positionY="200.3984375" width="128" height="118"/>
-        <element name="Fruits" positionX="-431.66015625" positionY="-121.421875" width="128" height="43"/>
+        <element name="DataType" positionX="-369.58984375" positionY="6.6875" width="128" height="118"/>
+        <element name="Fruits" positionX="-499.81640625" positionY="-132.23046875" width="128" height="43"/>
+        <element name="FruitTotal" positionX="-869.19140625" positionY="43.25" width="128" height="73"/>
         <element name="Veggies" positionX="-255.87109375" positionY="-120.08203125" width="128" height="43"/>
+        <element name="VeggieTotal" positionX="-884.7265625" positionY="-43.74609375" width="128" height="73"/>
     </elements>
 </model>

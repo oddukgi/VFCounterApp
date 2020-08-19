@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import CoreStore
 
 class GraphData: CoreStoreObject {
 
+    
 }

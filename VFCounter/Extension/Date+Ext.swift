@@ -23,6 +23,11 @@ extension Date {
         return description(with: .current)
     }
     
+    func getMonth() -> Int {
+        let component = self.get(.year,.month,.day)
+        let month = component.month ?? 1
+        return month
+    }
 
     func startOfMonth(in calendar: Calendar = .current) -> Date {
         return calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
@@ -58,4 +63,5 @@ extension Date {
         let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
         return calendar.date(byAdding: .day, value: 7, to: startDate)!
     }
+    
 }

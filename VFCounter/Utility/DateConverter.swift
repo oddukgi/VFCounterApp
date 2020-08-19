@@ -77,7 +77,7 @@ class DateConverter {
         let weekday = weekdays[index]!
 
         let newDate = "\(year).\(month).\(day) \(weekday)"
-        print(newDate)
+//        print(newDate)
         return newDate
     }
     

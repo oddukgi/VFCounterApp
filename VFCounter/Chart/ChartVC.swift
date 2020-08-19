@@ -9,14 +9,20 @@
 import UIKit
 import Charts
 import SnapKit
+import CoreStore
 
 class ChartVC: ChartBaseVC {
     
     var segmentControl: CustomSegmentControl!
     let barChartView = BarChartView()
-    var chartDataModel = ChartDataModel()
     
-
+    
+//
+//    let sumData =  [
+//        try? TotalDataManager.dataStack.fetchAll(From<VeggieTotal>(TotalDataManager.shared.veggieTotalConfig)),
+//        try? TotalDataManager.dataStack.fetchAll(From<FruitTotal>(UserDataManager.shared.fruitsConfiguration).orderBy(.descending(\.time))) ]
+    
+    var veggieTotal: VeggieTotal?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,52 +55,58 @@ class ChartVC: ChartBaseVC {
             return
         }
         
+        calcurateSumOneDay()
         if segmentControl.selectedSegmentIndex == 0 {
-            
-            
+            setDataCount(count: 7)
         } else {
-            
+            setDataCount(count: 31)
         }
-//        insertData()
-        
-        //fetch data
-//        let veggieCount = UInt32(chartDataModel.veggies.count)
-//        setDataCount(count, range: veggieCount)
         
     }
         
-//    func setDataCount(_ count: Int, range: UInt32) {
-//        let start = 1
-//
-//        var barchartEntry: BarChartDataEntry!
-//
-//        let yVals = (start..<start + count).map { (i) -> BarChartDataEntry in
-//
-//            if let data = chartDataModel.veggies[i - 1] {
-//                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: Double(data.amount))
-//            }
-//            return barchartEntry
-//         }
-//
-//        var set1: BarChartDataSet! = nil
-//        if let set = barChartView.data?.dataSets.first as? BarChartDataSet {
-//            set1 = set
-//            set1.replaceEntries(yVals)
-//            barChartView.data?.notifyDataChanged()
-//            barChartView.notifyDataSetChanged()
-//        } else {
-//            set1 = BarChartDataSet(entries: yVals, label: "Veggie")
-//            set1.colors = ChartColorTemplates.material()
-//            set1.drawValuesEnabled = false
-//
-//            let data = BarChartData(dataSet: set1)
-//            data.setValueFont(UIFont(name: "HelveticaNeue-Light", size: 10)!)
-//            data.barWidth = 0.9
-//            barChartView.data = data
-//        }
-//
+    func setDataCount(count: Int) {
+       
+        let start = 1
+        var barchartEntry: BarChartDataEntry!
 
-//    }
+        let yVals = (start..<start + count).map { (i) -> BarChartDataEntry in
+
+//            if let data = chartDataModel.veggies[i - 1] {
+            
+            let data = Int(veggieTotal!.sum)
+            
+            if i == 1 {
+                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: Double(data))
+            } else {
+                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: 120)
+            }
+            return barchartEntry
+         }
+
+        var set1: BarChartDataSet! = nil
+        if let set = barChartView.data?.dataSets.first as? BarChartDataSet {
+            set1 = set
+            set1.replaceEntries(yVals)
+            barChartView.data?.notifyDataChanged()
+            barChartView.notifyDataSetChanged()
+        } else {
+            set1 = BarChartDataSet(entries: yVals, label: "Veggie")
+            set1.colors = ChartColorTemplates.material()
+            set1.drawValuesEnabled = false
+
+            let data = BarChartData(dataSet: set1)
+            data.setValueFont(UIFont(name: "HelveticaNeue-Light", size: 10)!)
+            data.barWidth = 0.9
+            barChartView.data = data
+        }
+
+
+    }
     
+    
+    func calcurateSumOneDay() {
+        veggieTotal = TotalDataManager.fetchTotalOfVeggies(date: Date())
+        
+    }
    
 }

@@ -147,9 +147,24 @@ extension UserItemVC {
             currentSnapshot.appendItems(userData[i]!)
         }
          dataSource.apply(self.currentSnapshot, animatingDifferences: true)
-         collectionView.reloadData()
+         reloadRing()
     }
     
+    func reloadRing() {
+    
+        var sum = 0
+        userData[0]?.forEach { item in
+            sum += Int(item.amount)
+        }
+        _ = circularView.updateValue(amount: sum, tag: 0)
+        
+        sum = 0
+        userData[1]?.forEach { item in
+            sum += Int(item.amount)
+        }
+    
+        _ = circularView.updateValue(amount: sum, tag: 1)
+    }
     
     func reloadData(section: Int) {
         
@@ -160,11 +175,11 @@ extension UserItemVC {
             userData[0]!.append(veggies!)
             userData[0] = UserDataManager.sortEntity(Veggies.self,section: section)!
 //
-    
         } else {
             let fruits = UserDataManager.getEntity(Fruits.self,section: section)
             userData[1]!.append(fruits!)
             userData[1] = UserDataManager.sortEntity(Fruits.self,section: section)!
+
         }
     
         for i in 0..<2 {
@@ -195,6 +210,7 @@ extension UserItemVC {
       let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
       return Array(indexPathsIntersection)
     }
+    
 
 }
 
@@ -202,27 +218,23 @@ extension UserItemVC: PickItemVCProtocol {
     
     func addItems(item: VFItemController.Items) {
 
-        if tag == 0 {
-            UserDataManager.createEntity(item: item, tag: 0)
-        
-        } else {
-            UserDataManager.createEntity(item: item, tag: 1)
-           
+        if !item.name.isEmpty && circularView.updateValue(amount: item.amount, tag: tag) {
+            UserDataManager.createEntity(item: item, tag: tag)
+            reloadData(section: tag)
         }
-        reloadData(section: tag)
+      
     }
 
 }
+
 extension UserItemVC: UICollectionViewDelegate {
     
+    // 아이템 값 수정 및 삭제
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 아이템을 선택하면, 홈화면으로 이동
         self.collectionView.deselectItem(at: indexPath, animated: true)
 //        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
-        
-        // show speechbubble
-        
-     
+
   
     }
 }
