@@ -1,5 +1,5 @@
 //
-//  Fruits+CoreDataClass.swift
+//  VeggieTotal+CoreDataClass.swift
 //  VFCounter
 //
 //  Created by Sunmi on 2020/08/18.
@@ -11,6 +11,6 @@ import Foundation
 import CoreData
 
 
-public class Fruits: DataType {
+public class VeggieTotal: NSManagedObject {
 
 }
