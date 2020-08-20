@@ -144,6 +144,7 @@
 		12283AFE24CFB73400AE93E6 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickItemVC+CV.swift"; sourceTree = "<group>"; };
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
+		122E073924EE664A00BC8066 /* VFCounter.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
 		1236800424D02DB6004F4AE8 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		123E00FD24ED40CE000457B9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		123E010024ED4215000457B9 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
@@ -382,6 +383,7 @@
 		126AE53824C6C6B4000BCF7E /* VFCounter */ = {
 			isa = PBXGroup;
 			children = (
+				122E073924EE664A00BC8066 /* VFCounter.entitlements */,
 				1240D3D624E642C100A7EAD4 /* Core Data */,
 				1228222A24E512D9002A3F5A /* Localization */,
 				123E00FC24ED40B5000457B9 /* Network */,
