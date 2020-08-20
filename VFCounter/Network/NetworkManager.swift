@@ -8,14 +8,10 @@
 
 import UIKit
 
-
-// https://api.openweathermap.org/data/2.5/weather?lat=37.50041
-// &lon=127.02845&appid=f60d2251a5624e7173372b69aee6d865&units=metric
-
 struct URLManager {
    
     private static let baseURL = "https://api.openweathermap.org/data/2.5/weather?"
-    private static let apiKey = "f60d2251a5624e7173372b69aee6d865"
+    private static let apiKey = "YOUR_API_KEY"
     
     static func openWeatherURL(from lat: String, to lon: String) -> URL {
         var components = URLComponents(string: baseURL)!
@@ -38,16 +34,12 @@ struct URLManager {
     }
     
 }
-    
-    
 
-//
 class NetworkManager {
     
     static let shared = NetworkManager()
     let cache         = NSCache<NSString, UIImage>()
-    
-  
+
     // MARK: get current weather info
     func getAreaWeatherInfo(from lat: String, to lon: String, completion: @escaping (Result<WeatherData, VFError>) -> Void) {
         let endpoint = URLManager.openWeatherURL(from: lat, to: lon)
@@ -64,12 +56,12 @@ class NetworkManager {
                 }
             
             do {
+            
                 let decoder = JSONDecoder()          
                 let weatherData = try decoder.decode(WeatherData.self, from: data)
 
                 completion(.success(weatherData))
-  
-                
+             
             } catch {
                 completion(.failure(.invalidData))
                 
@@ -80,24 +72,21 @@ class NetworkManager {
     
    // MARK: download weather icon
     func downloadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        
-        // set image cache
+
         let cacheKey = NSString(string: urlString)
         
         if let image = cache.object(forKey: cacheKey) {
             completion(image)
             return
         }
-        
-        // don't have image and download from url
+
         guard let url = URL(string: urlString) else {
             completion(nil)
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            
-            // 데이터 있는지 없는지 확인하기
+
             guard let self = self,
                 error == nil,
                 let response = response as? HTTPURLResponse, response.statusCode == 200,
@@ -107,9 +96,6 @@ class NetworkManager {
                     return
             }
             
-            // image cache담기
-            
-            print(String(cacheKey))
             self.cache.setObject(image, forKey: cacheKey)
             completion(image)
         }
