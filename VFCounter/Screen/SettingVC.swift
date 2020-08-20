@@ -91,7 +91,7 @@ extension SettingVC {
             cell.textLabel?.text = settings.name
        
         default:
-            if item == 1 {
+            if item == 0 {
               cell.accessoryView = label
               cell.textLabel?.text = settings.name
               label.text = UIApplication.appVersion!

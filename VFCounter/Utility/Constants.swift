@@ -40,3 +40,6 @@ enum DeviceTypes {
     }
 }
 
+enum Images {
+    static let placeHolder              = UIImage(named: "smilingsun")
+}

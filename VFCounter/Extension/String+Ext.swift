@@ -59,5 +59,21 @@ extension String {
           return nil
     }
 
+}
 
+/*
+ let numberFormatter = NumberFormatter()
+ numberFormatter.roundingMode = .floor         // 형식을 버림으로 지정
+ numberFormatter.minimumSignificantDigits = 2  // 자르길 원하는 자릿수
+ numberFormatter.maximumSignificantDigits = 2
+ let originalNum = 1.6759402                   // 원하는 숫자
+ let newNum = numberFormatter.string(from: originalNum) // result 1.67
+ */
+
+extension Double {
+    
+    // convert double to string
+    func roundValue() -> String {
+        return String(format: "%.5f", self)
+    }
 }

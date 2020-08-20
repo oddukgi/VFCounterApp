@@ -16,6 +16,7 @@
 		121A909424D18C8C00AE0780 /* Fruits.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121A909324D18C8C00AE0780 /* Fruits.xcassets */; };
 		121A909A24D18F6000AE0780 /* SelfConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121A909924D18F6000AE0780 /* SelfConfigCell.swift */; };
 		121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B197324CC198500CC6EEF /* PickItemVC.swift */; };
+		122420A424EE504300729898 /* WeatherIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122420A324EE504300729898 /* WeatherIconView.swift */; };
 		122625E224DA549900AC2962 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122625E124DA549900AC2962 /* SettingVC.swift */; };
 		1226FEC924E790270092BDAF /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 1226FEC824E790270092BDAF /* CoreStore */; };
 		1228222D24E51340002A3F5A /* ChartLabel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1228222F24E51340002A3F5A /* ChartLabel.strings */; };
@@ -23,6 +24,8 @@
 		12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */; };
 		12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0424CFBDA900AE93E6 /* PickItems.swift */; };
 		1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236800424D02DB6004F4AE8 /* SectionHeader.swift */; };
+		123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E00FD24ED40CE000457B9 /* NetworkManager.swift */; };
+		123E010124ED4215000457B9 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E010024ED4215000457B9 /* WeatherData.swift */; };
 		1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1243A89924E1487F0040AA5B /* DatePickerVC.swift */; };
 		1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247F5A224CECB5E00AD34F5 /* PickItemCell.swift */; };
 		124A446024D28DE4003FFF3A /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A445F24D28DE4003FFF3A /* Notification+Ext.swift */; };
@@ -134,6 +137,7 @@
 		121A909324D18C8C00AE0780 /* Fruits.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Fruits.xcassets; sourceTree = "<group>"; };
 		121A909924D18F6000AE0780 /* SelfConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfConfigCell.swift; sourceTree = "<group>"; };
 		121B197324CC198500CC6EEF /* PickItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItemVC.swift; sourceTree = "<group>"; };
+		122420A324EE504300729898 /* WeatherIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconView.swift; sourceTree = "<group>"; };
 		122625E124DA549900AC2962 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		1228222E24E51340002A3F5A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ChartLabel.strings; sourceTree = "<group>"; };
 		1228223524E5142B002A3F5A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ChartLabel.strings; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 		12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickItemVC+CV.swift"; sourceTree = "<group>"; };
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
 		1236800424D02DB6004F4AE8 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		123E00FD24ED40CE000457B9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		123E010024ED4215000457B9 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		1243A89924E1487F0040AA5B /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
 		1247F5A224CECB5E00AD34F5 /* PickItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItemCell.swift; sourceTree = "<group>"; };
 		124A445F24D28DE4003FFF3A /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
@@ -194,7 +200,6 @@
 		12A655D524DD45FC00B0E042 /* CircleLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLine.swift; sourceTree = "<group>"; };
 		12A655D724DD578900B0E042 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
-		12AD3BA324EB631900443803 /* VFCounter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
 		12AD3BA424EB647300443803 /* SettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
 		12AD3BA624EB7B7800443803 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthAxisValueFormatter.swift; sourceTree = "<group>"; };
@@ -309,6 +314,22 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		123E00FC24ED40B5000457B9 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				123E00FD24ED40CE000457B9 /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		123E00FF24ED41E8000457B9 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				123E010024ED4215000457B9 /* WeatherData.swift */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
 		1240D3D624E642C100A7EAD4 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,9 +382,9 @@
 		126AE53824C6C6B4000BCF7E /* VFCounter */ = {
 			isa = PBXGroup;
 			children = (
-				12AD3BA324EB631900443803 /* VFCounter.entitlements */,
 				1240D3D624E642C100A7EAD4 /* Core Data */,
 				1228222A24E512D9002A3F5A /* Localization */,
+				123E00FC24ED40B5000457B9 /* Network */,
 				12885B5C24E505E9001586EA /* Chart */,
 				127A497B24CC152D0032194E /* Popup */,
 				12BBF92724CABE4700C11ECD /* Model */,
@@ -495,6 +516,7 @@
 		12BBF92724CABE4700C11ECD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				123E00FF24ED41E8000457B9 /* Weather */,
 				121A909824D18E3900AE0780 /* UICollectionReusableView */,
 				124B918024CACD5D009616A7 /* Cell */,
 				12AD3BA624EB7B7800443803 /* TableHeaderView.swift */,
@@ -550,6 +572,7 @@
 				1290EE6324C6F91F008DB339 /* DateView.swift */,
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
 				127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */,
+				122420A324EE504300729898 /* WeatherIconView.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -727,6 +750,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				122420A424EE504300729898 /* WeatherIconView.swift in Sources */,
 				12FF76E424DE8658009542FE /* VFAlertContainerView.swift in Sources */,
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
 				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
@@ -744,7 +768,9 @@
 				12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */,
 				1290EE6424C6F91F008DB339 /* DateView.swift in Sources */,
 				12FF76DE24DE72C6009542FE /* VFError.swift in Sources */,
+				123E010124ED4215000457B9 /* WeatherData.swift in Sources */,
 				12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */,
+				123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */,
 				129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */,
 				12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */,
 				12AD3BA524EB647300443803 /* SettingManager.swift in Sources */,
@@ -914,7 +940,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -969,7 +995,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

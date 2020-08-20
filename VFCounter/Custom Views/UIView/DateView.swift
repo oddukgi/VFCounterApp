@@ -13,19 +13,14 @@ class DateView: UIView {
 
     var btnLeftArrow: VFButton!
     var btnRightArrow: VFButton!
+    let weatherIcon = WeatherIconView(frame: .zero)
+  
     var horizontalView: [UIStackView] = []
     let dateLabel = VFTitleLabel(textAlignment: .center, fontSize: 16)
-    let weatherLabel = VFSubTitleLabel(fontSize: 13)
+    let weatherLabel = VFSubTitleLabel(fontSize: 14)
     let commentLabel = VFBodyLabel(textAlignment: .left, fontSize: 13, fontColor: ColorHex.dullOrange)
     
-    lazy var locationIcon: UIImageView = {
-    
-        let image = UIImage(named: "smilingsun")?.imageByMakingWhiteBackgroundTransparent()
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
+
     lazy var btnLocation: VFButton = {
         let button = VFButton()
         button.addImage(imageName: "location")
@@ -55,7 +50,7 @@ class DateView: UIView {
         let dateconverter = DateConverter(date: Date())
         dateLabel.text = dateconverter.convertDate()
         dateLabel.textColor = UIColor.black
-        weatherLabel.text = "27도"
+        weatherLabel.text = ""
         commentLabel.numberOfLines = 0
         commentLabel.text = """
                             좋은 아침!

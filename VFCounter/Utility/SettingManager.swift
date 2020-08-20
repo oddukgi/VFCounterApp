@@ -10,7 +10,7 @@ import Foundation
 
 class SettingManager {
     
-    fileprivate static let userDefaults = UserDefaults(suiteName: "group.vfcounter.settings")
+    fileprivate static let userDefaults = UserDefaults(suiteName: "group.com.creativeSun.vfcounter.settings")
 
     class func setVeggieAlarm(veggieFlag: Bool) {
         userDefaults?.set(veggieFlag, forKey: "VeggieAlarm")
