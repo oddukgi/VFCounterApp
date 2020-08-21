@@ -85,5 +85,10 @@ class DateConverter {
         let component = date.get(.year,.month,.day,.weekday)
         return component.weekday!
     }
+    
+    func convertDayToInt() -> Int {
+        let component = date.get(.year,.month,.day,.weekday)
+        return component.day!
+    }  
 }
 

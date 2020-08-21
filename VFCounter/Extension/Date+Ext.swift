@@ -23,6 +23,12 @@ extension Date {
         return description(with: .current)
     }
     
+    func getYear() -> Int {
+        let component = self.get(.year,.month,.day)
+        let year = component.year ?? 1900
+        return year
+    }
+    
     func getMonth() -> Int {
         let component = self.get(.year,.month,.day)
         let month = component.month ?? 1
@@ -62,6 +68,19 @@ extension Date {
     func endOfWeek(in calendar: Calendar = .current) -> Date {
         let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
         return calendar.date(byAdding: .day, value: 7, to: startDate)!
+    }
+    
+    
+    func getFirstDayMonth() -> Int {
+        let date = startOfMonth()
+        let component = date.get(.year,.month,.day)
+        return component.day ?? 30
+    }
+    
+    func getLastDayMonth() -> Int {
+        let date = endOfMonth()
+        let component = date.get(.year,.month,.day)
+        return component.day ?? 30
     }
     
 }

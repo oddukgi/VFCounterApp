@@ -67,7 +67,11 @@ struct RingColor {
 
 enum ShadowColor {    
     static let black = UIColor(white: 0.0, alpha: 0.24)
-    
+}
+
+struct ChartColor {
+    static let veggieGreen = UIColor(hexString: "2ECC71")
+    static let fruitYellow = UIColor(hexString: "F1C40F")  
 }
 
 extension UIColor {

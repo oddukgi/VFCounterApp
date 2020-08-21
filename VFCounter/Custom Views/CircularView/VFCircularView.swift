@@ -129,27 +129,24 @@ class VFCircularView: UIView {
 
     func updateValue(amount: Int, tag: Int) -> Bool {
         
-        
         switch tag {
-        case 0:
-            
-            if CGFloat(totalVeggies + amount) > outerSlider.maximumValue { return false }
+        case 0:          
             totalVeggies += amount
             outerSlider.endPointValue = CGFloat(totalVeggies)
             totVeggieLabel.text = "\(totalVeggies)g"
-//            print("\(totalVeggies)g")
+//          print("\(totalVeggies)g")
             
-   
-        default:
-          
-            if CGFloat(totalFruits + amount) > insideSlider.maximumValue { return false }
+        default:         
             totalFruits += amount
             insideSlider.endPointValue = CGFloat(totalFruits)
             totFruitLabel.text = "\(totalFruits)g"
-//            print("\(totalFruits)g")
+//          print("\(totalFruits)g")
        }
         
         return true
     }
 
 }
+
+//            if CGFloat(totalVeggies + amount) > outerSlider.maximumValue { return false }
+//            if CGFloat(totalFruits + amount) > insideSlider.maximumValue { return false }

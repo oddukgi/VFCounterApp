@@ -15,14 +15,11 @@ class ChartVC: ChartBaseVC {
     
     var segmentControl: CustomSegmentControl!
     let barChartView = BarChartView()
+    let dataManager = DataManager()
+    let dateConverter = DateConverter(date: Date())
+
+    private var veggieSum: Int16 = 0
     
-    
-//
-//    let sumData =  [
-//        try? TotalDataManager.dataStack.fetchAll(From<VeggieTotal>(TotalDataManager.shared.veggieTotalConfig)),
-//        try? TotalDataManager.dataStack.fetchAll(From<FruitTotal>(UserDataManager.shared.fruitsConfiguration).orderBy(.descending(\.time))) ]
-    
-    var veggieTotal: VeggieTotal?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,57 +52,72 @@ class ChartVC: ChartBaseVC {
             return
         }
         
-        calcurateSumOneDay()
-        if segmentControl.selectedSegmentIndex == 0 {
-            setDataCount(count: 7)
-        } else {
-            setDataCount(count: 31)
-        }
+        getSumOfValueInEntity()
+
         
     }
         
-    func setDataCount(count: Int) {
+    func setDataCount(count: Int, sumVeggie : Int16, sumFruit: Int16) {
        
         let start = 1
         var barchartEntry: BarChartDataEntry!
 
-        let yVals = (start..<start + count).map { (i) -> BarChartDataEntry in
+        let yVeggie = (start..<start + count).map { (i) -> BarChartDataEntry in
 
-//            if let data = chartDataModel.veggies[i - 1] {
+            let index = dateConverter.getWeekDayIndex() + 1
             
-            let data = Int(veggieTotal!.sum)
-            
-            if i == 1 {
-                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: Double(data))
+            if i == index {
+                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: Double(sumVeggie))
             } else {
-                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: 120)
+                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: 0)
             }
             return barchartEntry
-         }
+        }
+        
+        let yFruit = (start..<start + count).map { (i) -> BarChartDataEntry in
 
-        var set1: BarChartDataSet! = nil
-        if let set = barChartView.data?.dataSets.first as? BarChartDataSet {
-            set1 = set
-            set1.replaceEntries(yVals)
-            barChartView.data?.notifyDataChanged()
-            barChartView.notifyDataSetChanged()
-        } else {
-            set1 = BarChartDataSet(entries: yVals, label: "Veggie")
-            set1.colors = ChartColorTemplates.material()
-            set1.drawValuesEnabled = false
-
-            let data = BarChartData(dataSet: set1)
-            data.setValueFont(UIFont(name: "HelveticaNeue-Light", size: 10)!)
-            data.barWidth = 0.9
-            barChartView.data = data
+            let index = dateConverter.getWeekDayIndex() + 1
+            
+            if i == index {
+                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: Double(sumFruit))
+            } else {
+                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: 0)
+            }
+            return barchartEntry
         }
 
+        var veggie: BarChartDataSet! = nil
+        veggie = BarChartDataSet(entries: yVeggie, label: "Veggie")
+        veggie.setColor(ChartColor.veggieGreen)
+        veggie.drawValuesEnabled = false
 
+        var fruit: BarChartDataSet! = nil
+        fruit = BarChartDataSet(entries: yFruit, label: "Fruit")
+        fruit.setColor(ChartColor.fruitYellow)
+     
+        let data = BarChartData(dataSets: [veggie, fruit])
+        data.setValueFont(.systemFont(ofSize: 10, weight: .light))
+        data.barWidth = 0.3
+        data.groupBars(fromX: 0, groupSpace: 0.08, barSpace: 0.03)
+
+        barChartView.data = data
     }
     
     
-    func calcurateSumOneDay() {
-        veggieTotal = TotalDataManager.fetchTotalOfVeggies(date: Date())
+    func getSumOfValueInEntity() {
+      
+        //getSumItems()
+        dataManager.getSumItems(date: Date()) { (veggieSum, fruitSum) in
+            print("\(veggieSum) \(fruitSum)")
+            
+            DispatchQueue.main.async {
+                if self.segmentControl.selectedSegmentIndex == 0 {
+                    self.setDataCount(count: 7, sumVeggie : veggieSum, sumFruit: fruitSum)
+                } else {
+                    self.setDataCount(count: 31,sumVeggie : veggieSum, sumFruit: fruitSum)
+                }
+            }
+        }
         
     }
    

@@ -73,6 +73,7 @@
 		1291B19424C9842900625BE6 /* HGCircularSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 1291B19324C9842900625BE6 /* HGCircularSlider */; };
 		1291B19624C9851800625BE6 /* VFCircularView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B19524C9851800625BE6 /* VFCircularView+Ext.swift */; };
 		129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129C7FB924D54C4C00E5A719 /* SizeManager.swift */; };
+		12A0DCDD24EFC4400002F15F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A0DCDC24EFC4400002F15F /* DataManager.swift */; };
 		12A655D624DD45FC00B0E042 /* CircleLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A655D524DD45FC00B0E042 /* CircleLine.swift */; };
 		12A655D824DD578900B0E042 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A655D724DD578900B0E042 /* Date+Ext.swift */; };
 		12AAC70D24E7DE60000B16E7 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */; };
@@ -107,7 +108,6 @@
 		12FF76E224DE85DE009542FE /* GFAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76E124DE85DE009542FE /* GFAlertVC.swift */; };
 		12FF76E424DE8658009542FE /* VFAlertContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76E324DE8658009542FE /* VFAlertContainerView.swift */; };
 		12FF76E624DE97CE009542FE /* Struct+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76E524DE97CE009542FE /* Struct+Ext.swift */; };
-		12FFC50F24EBDD9200389B4E /* TotalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FFC50E24EBDD9200389B4E /* TotalDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +198,7 @@
 		1291B19024C983F400625BE6 /* Ring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ring.swift; sourceTree = "<group>"; };
 		1291B19524C9851800625BE6 /* VFCircularView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VFCircularView+Ext.swift"; sourceTree = "<group>"; };
 		129C7FB924D54C4C00E5A719 /* SizeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeManager.swift; sourceTree = "<group>"; };
+		12A0DCDC24EFC4400002F15F /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		12A655D524DD45FC00B0E042 /* CircleLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLine.swift; sourceTree = "<group>"; };
 		12A655D724DD578900B0E042 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
@@ -232,7 +233,6 @@
 		12FF76E124DE85DE009542FE /* GFAlertVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFAlertVC.swift; sourceTree = "<group>"; };
 		12FF76E324DE8658009542FE /* VFAlertContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFAlertContainerView.swift; sourceTree = "<group>"; };
 		12FF76E524DE97CE009542FE /* Struct+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Struct+Ext.swift"; sourceTree = "<group>"; };
-		12FFC50E24EBDD9200389B4E /* TotalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -527,7 +527,7 @@
 				1217CE3C24DA792C00521D49 /* SettingController.swift */,
 				12FF76D924DE7118009542FE /* UserSettings.swift */,
 				12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */,
-				12FFC50E24EBDD9200389B4E /* TotalDataManager.swift */,
+				12A0DCDC24EFC4400002F15F /* DataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -798,7 +798,6 @@
 				1272EBD224EBEA7600372839 /* FruitTotal+CoreDataClass.swift in Sources */,
 				12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */,
 				12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */,
-				12FFC50F24EBDD9200389B4E /* TotalDataManager.swift in Sources */,
 				1272EBD524EBEA7600372839 /* VeggieTotal+CoreDataProperties.swift in Sources */,
 				122625E224DA549900AC2962 /* SettingVC.swift in Sources */,
 				1272EBD124EBEA7600372839 /* Fruits+CoreDataProperties.swift in Sources */,
@@ -826,6 +825,7 @@
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,
 				12FF76E224DE85DE009542FE /* GFAlertVC.swift in Sources */,
+				12A0DCDD24EFC4400002F15F /* DataManager.swift in Sources */,
 				1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */,
 				124B917E24CACC35009616A7 /* VFItemCell.swift in Sources */,
 				12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */,

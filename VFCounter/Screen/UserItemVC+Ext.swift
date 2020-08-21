@@ -171,14 +171,9 @@ extension UserItemVC {
         currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
         
         if section == 0 {
-            let veggies = UserDataManager.getEntity(Veggies.self,section: section)
-            userData[0]!.append(veggies!)
-            userData[0] = UserDataManager.sortEntity(Veggies.self,section: section)!
-//
+            userData[0] = dataManager.sortEntity(Veggies.self,section: section)!
         } else {
-            let fruits = UserDataManager.getEntity(Fruits.self,section: section)
-            userData[1]!.append(fruits!)
-            userData[1] = UserDataManager.sortEntity(Fruits.self,section: section)!
+            userData[1] = dataManager.sortEntity(Fruits.self,section: section)!
 
         }
     
@@ -202,24 +197,14 @@ extension UserItemVC {
             
         }
     }
-    
-    
-    
-    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
-    let indexPathsForVisibleRows = collectionView.indexPathsForVisibleItems
-      let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
-      return Array(indexPathsIntersection)
-    }
-    
-
 }
 
 extension UserItemVC: PickItemVCProtocol {
     
     func addItems(item: VFItemController.Items) {
 
-        if !item.name.isEmpty && circularView.updateValue(amount: item.amount, tag: tag) {
-            UserDataManager.createEntity(item: item, tag: tag)
+        if !item.name.isEmpty {
+            dataManager.createEntity(item: item, tag: tag)
             reloadData(section: tag)
         }
       

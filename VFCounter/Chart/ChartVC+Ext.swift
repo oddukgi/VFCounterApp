@@ -14,7 +14,7 @@ extension ChartVC {
     func configure() {
         
         segmentControl = CustomSegmentControl(items: ["주", "월"])
-        segmentControl.selectedSegmentIndex = 0
+        segmentControl.selectedSegmentIndex = 1
         
         let width = 200
         view.addSubview(segmentControl)
@@ -90,7 +90,6 @@ extension ChartVC {
              marker.chartView = barChartView
              marker.minimumSize = CGSize(width: 100, height: 70)
              barChartView.marker = marker
-
     }
     
     func identifyChartSettings(_ xAxis: XAxis) {
@@ -107,7 +106,7 @@ extension ChartVC {
         default:
             barChartView.maxVisibleCount = 31
             xAxis.labelFont = NanumSquareRound.bold.style(sizeOffset: 11)
-            xAxis.valueFormatter = MonthAxisValueFormatter(chart: barChartView)
+            xAxis.valueFormatter = MonthAxisValueFormatter(chart: barChartView,date: Date())
             
         }
     }

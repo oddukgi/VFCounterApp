@@ -19,6 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let path: [AnyObject] = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true) as [AnyObject]
            let folder: String = path[0] as! String
            NSLog("Your NSUserDefaults are stored in this folder: %@/Preferences", folder)
+
+        // SQL File Directory
+        let applicationSupportDirectories = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+         let sqliteDirectory = applicationSupportDirectories.first!
+         
+         print("SQL file: \(sqliteDirectory.absoluteString)")
         
         return true
     }

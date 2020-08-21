@@ -23,17 +23,17 @@ class UserItemVC: UIViewController {
     var height: CGFloat = 0
     var chartVC: ChartVC!
     var userSettings = [UserSettings]()
-    
+    let dataManager = DataManager()
 
+    
     var userData =  [
         try? UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration).orderBy(.descending(\.time))),
         try? UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).orderBy(.descending(\.time))) ]
-                     
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       // view.backgroundColor = .white
+
         setupLayout()
         configureHierarchy()
         configureDataSource()
@@ -41,12 +41,6 @@ class UserItemVC: UIViewController {
         updateData()
         prepareNotificationAddObserver()
         setCircularValue()
-        
-        DispatchQueue.main.async {
-            UserDataManager.deleteAllEntity()
-            self.updateData()
-        }
-
     }
     
     func setupLayout() {
