@@ -16,5 +16,5 @@ Calcurate how much take some vegie or fruits in a day
 ### Swift Package
 [HGCircularSlider for CircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
 [SnapKit](http://snapkit.io/)\
-[Charts](https://github.com/danielgindi/Charts)\
+[Charts](https://github.com/danielgindi/Charts)
 
