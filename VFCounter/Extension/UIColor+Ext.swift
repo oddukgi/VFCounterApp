@@ -47,6 +47,7 @@ struct ColorHex {
     }
     
     static let switchWhite = UIColor(hexString: "E9E9EB")
+    static let separator   = UIColor(white: 0.0, alpha: 0.22)
 }
 
 struct SliderColor {

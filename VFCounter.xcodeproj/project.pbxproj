@@ -24,6 +24,7 @@
 		12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */; };
 		12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0424CFBDA900AE93E6 /* PickItems.swift */; };
 		1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236800424D02DB6004F4AE8 /* SectionHeader.swift */; };
+		1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */; };
 		123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E00FD24ED40CE000457B9 /* NetworkManager.swift */; };
 		123E010124ED4215000457B9 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E010024ED4215000457B9 /* WeatherData.swift */; };
 		1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1243A89924E1487F0040AA5B /* DatePickerVC.swift */; };
@@ -41,16 +42,6 @@
 		126AE55124C6C6B6000BCF7E /* VFCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE55024C6C6B6000BCF7E /* VFCounterTests.swift */; };
 		126AE55C24C6C6B6000BCF7E /* VFCounterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE55B24C6C6B6000BCF7E /* VFCounterUITests.swift */; };
 		126AE56B24C6C78C000BCF7E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 126AE56A24C6C78C000BCF7E /* SnapKit */; };
-		1272EBD024EBEA7600372839 /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBC624EBEA7600372839 /* Fruits+CoreDataClass.swift */; };
-		1272EBD124EBEA7600372839 /* Fruits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBC724EBEA7600372839 /* Fruits+CoreDataProperties.swift */; };
-		1272EBD224EBEA7600372839 /* FruitTotal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBC824EBEA7600372839 /* FruitTotal+CoreDataClass.swift */; };
-		1272EBD324EBEA7600372839 /* FruitTotal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBC924EBEA7600372839 /* FruitTotal+CoreDataProperties.swift */; };
-		1272EBD424EBEA7600372839 /* VeggieTotal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBCA24EBEA7600372839 /* VeggieTotal+CoreDataClass.swift */; };
-		1272EBD524EBEA7600372839 /* VeggieTotal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBCB24EBEA7600372839 /* VeggieTotal+CoreDataProperties.swift */; };
-		1272EBD624EBEA7600372839 /* Veggies+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBCC24EBEA7600372839 /* Veggies+CoreDataClass.swift */; };
-		1272EBD724EBEA7600372839 /* Veggies+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBCD24EBEA7600372839 /* Veggies+CoreDataProperties.swift */; };
-		1272EBD824EBEA7600372839 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBCE24EBEA7600372839 /* DataType+CoreDataClass.swift */; };
-		1272EBD924EBEA7600372839 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1272EBCF24EBEA7600372839 /* DataType+CoreDataProperties.swift */; };
 		127ADC1724E4DF5900E8F3B7 /* UISegmentControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */; };
 		127ADC1924E4E4CF00E8F3B7 /* CustomSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */; };
 		127ADC1B24E4F4BA00E8F3B7 /* ChartVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */; };
@@ -95,6 +86,17 @@
 		12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CFF24E0F8D100677D5A /* VFTextField.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
 		12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */; };
+		12E3DA4D24F0D8CC0081A505 /* Veggies+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4324F0D8CB0081A505 /* Veggies+CoreDataClass.swift */; };
+		12E3DA4E24F0D8CC0081A505 /* Veggies+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4424F0D8CB0081A505 /* Veggies+CoreDataProperties.swift */; };
+		12E3DA4F24F0D8CC0081A505 /* VeggieTotal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4524F0D8CB0081A505 /* VeggieTotal+CoreDataClass.swift */; };
+		12E3DA5024F0D8CC0081A505 /* VeggieTotal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4624F0D8CB0081A505 /* VeggieTotal+CoreDataProperties.swift */; };
+		12E3DA5124F0D8CC0081A505 /* FruitTotal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4724F0D8CB0081A505 /* FruitTotal+CoreDataClass.swift */; };
+		12E3DA5224F0D8CC0081A505 /* FruitTotal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4824F0D8CB0081A505 /* FruitTotal+CoreDataProperties.swift */; };
+		12E3DA5324F0D8CC0081A505 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4924F0D8CB0081A505 /* DataType+CoreDataClass.swift */; };
+		12E3DA5424F0D8CC0081A505 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4A24F0D8CB0081A505 /* DataType+CoreDataProperties.swift */; };
+		12E3DA5524F0D8CC0081A505 /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4B24F0D8CB0081A505 /* Fruits+CoreDataClass.swift */; };
+		12E3DA5624F0D8CC0081A505 /* Fruits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4C24F0D8CC0081A505 /* Fruits+CoreDataProperties.swift */; };
+		12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F81FED24F24B030047804A /* ItemEditView.swift */; };
 		12FD255024CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */; };
 		12FD255124CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */; };
 		12FD255224CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254924CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf */; };
@@ -146,6 +148,7 @@
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
 		122E073924EE664A00BC8066 /* VFCounter.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
 		1236800424D02DB6004F4AE8 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
 		123E00FD24ED40CE000457B9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		123E010024ED4215000457B9 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		1243A89924E1487F0040AA5B /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
@@ -168,16 +171,6 @@
 		126AE55724C6C6B6000BCF7E /* VFCounterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VFCounterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		126AE55B24C6C6B6000BCF7E /* VFCounterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFCounterUITests.swift; sourceTree = "<group>"; };
 		126AE55D24C6C6B6000BCF7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1272EBC624EBEA7600372839 /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1272EBC724EBEA7600372839 /* Fruits+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1272EBC824EBEA7600372839 /* FruitTotal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FruitTotal+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1272EBC924EBEA7600372839 /* FruitTotal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FruitTotal+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1272EBCA24EBEA7600372839 /* VeggieTotal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VeggieTotal+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1272EBCB24EBEA7600372839 /* VeggieTotal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VeggieTotal+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1272EBCC24EBEA7600372839 /* Veggies+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1272EBCD24EBEA7600372839 /* Veggies+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		1272EBCE24EBEA7600372839 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
-		1272EBCF24EBEA7600372839 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+Ext.swift"; sourceTree = "<group>"; };
 		127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentControl.swift; sourceTree = "<group>"; };
 		127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartVC+Ext.swift"; sourceTree = "<group>"; };
@@ -219,7 +212,17 @@
 		12C64CFF24E0F8D100677D5A /* VFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFTextField.swift; sourceTree = "<group>"; };
 		12CC426824D7D9CC0086B3AE /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
-		12F5780924E6A13000E8131C /* CoreDataBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBaseVC.swift; sourceTree = "<group>"; };
+		12E3DA4324F0D8CB0081A505 /* Veggies+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12E3DA4424F0D8CB0081A505 /* Veggies+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		12E3DA4524F0D8CB0081A505 /* VeggieTotal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VeggieTotal+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12E3DA4624F0D8CB0081A505 /* VeggieTotal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VeggieTotal+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		12E3DA4724F0D8CB0081A505 /* FruitTotal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FruitTotal+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12E3DA4824F0D8CB0081A505 /* FruitTotal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FruitTotal+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		12E3DA4924F0D8CB0081A505 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12E3DA4A24F0D8CB0081A505 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		12E3DA4B24F0D8CB0081A505 /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12E3DA4C24F0D8CC0081A505 /* Fruits+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		12F81FED24F24B030047804A /* ItemEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditView.swift; sourceTree = "<group>"; };
 		12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
 		12FD254924CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundL.ttf; sourceTree = "<group>"; };
@@ -334,16 +337,16 @@
 		1240D3D624E642C100A7EAD4 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				1272EBC624EBEA7600372839 /* Fruits+CoreDataClass.swift */,
-				1272EBC724EBEA7600372839 /* Fruits+CoreDataProperties.swift */,
-				1272EBC824EBEA7600372839 /* FruitTotal+CoreDataClass.swift */,
-				1272EBC924EBEA7600372839 /* FruitTotal+CoreDataProperties.swift */,
-				1272EBCA24EBEA7600372839 /* VeggieTotal+CoreDataClass.swift */,
-				1272EBCB24EBEA7600372839 /* VeggieTotal+CoreDataProperties.swift */,
-				1272EBCC24EBEA7600372839 /* Veggies+CoreDataClass.swift */,
-				1272EBCD24EBEA7600372839 /* Veggies+CoreDataProperties.swift */,
-				1272EBCE24EBEA7600372839 /* DataType+CoreDataClass.swift */,
-				1272EBCF24EBEA7600372839 /* DataType+CoreDataProperties.swift */,
+				12E3DA4324F0D8CB0081A505 /* Veggies+CoreDataClass.swift */,
+				12E3DA4424F0D8CB0081A505 /* Veggies+CoreDataProperties.swift */,
+				12E3DA4524F0D8CB0081A505 /* VeggieTotal+CoreDataClass.swift */,
+				12E3DA4624F0D8CB0081A505 /* VeggieTotal+CoreDataProperties.swift */,
+				12E3DA4724F0D8CB0081A505 /* FruitTotal+CoreDataClass.swift */,
+				12E3DA4824F0D8CB0081A505 /* FruitTotal+CoreDataProperties.swift */,
+				12E3DA4924F0D8CB0081A505 /* DataType+CoreDataClass.swift */,
+				12E3DA4A24F0D8CB0081A505 /* DataType+CoreDataProperties.swift */,
+				12E3DA4B24F0D8CB0081A505 /* Fruits+CoreDataClass.swift */,
+				12E3DA4C24F0D8CC0081A505 /* Fruits+CoreDataProperties.swift */,
 				12C066C124E9624600745B79 /* VFCounterDB.xcdatamodeld */,
 			);
 			path = "Core Data";
@@ -449,7 +452,6 @@
 		1290EE5A24C6ED37008DB339 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				129D208E24CAAA4F00E1DB4D /* Constraint */,
 				1290EE6B24C6FA55008DB339 /* Label */,
 				12C64CFA24E0F82300677D5A /* TabBar */,
 				12C64CFE24E0F88B00677D5A /* UIView */,
@@ -470,26 +472,18 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
-		129D208E24CAAA4F00E1DB4D /* Constraint */ = {
-			isa = PBXGroup;
-			children = (
-				12143CD224CA8F800080ADFE /* DateView+Constraint.swift */,
-				1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */,
-			);
-			path = Constraint;
-			sourceTree = "<group>";
-		};
 		12B50CF924C6EB2200C87956 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				12143CD224CA8F800080ADFE /* DateView+Constraint.swift */,
 				12BBF92524CAB08200C11ECD /* UserItemVC.swift */,
 				124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */,
 				1243A89924E1487F0040AA5B /* DatePickerVC.swift */,
 				12B3733B24DE498A00491FBB /* AlarmSettingVC.swift */,
 				12B3733C24DE498A00491FBB /* AlarmSettingVC+Ext.swift */,
 				126AE53D24C6C6B4000BCF7E /* HomeVC.swift */,
+				1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */,
 				122625E124DA549900AC2962 /* SettingVC.swift */,
-				12F5780924E6A13000E8131C /* CoreDataBaseVC.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -511,6 +505,7 @@
 				127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */,
 				12BBEF5024E7F2D7008D1FD4 /* URL+Ext.swift */,
 				12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */,
+				1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -575,6 +570,7 @@
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
 				127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */,
 				122420A324EE504300729898 /* WeatherIconView.swift */,
+				12F81FED24F24B030047804A /* ItemEditView.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -755,19 +751,20 @@
 				122420A424EE504300729898 /* WeatherIconView.swift in Sources */,
 				12FF76E424DE8658009542FE /* VFAlertContainerView.swift in Sources */,
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
+				12E3DA5424F0D8CC0081A505 /* DataType+CoreDataProperties.swift in Sources */,
 				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
-				1272EBD624EBEA7600372839 /* Veggies+CoreDataClass.swift in Sources */,
 				126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */,
 				1290EE6224C6F725008DB339 /* VFButton.swift in Sources */,
 				12B50CFE24C6EBB700C87956 /* UIImage+Ext.swift in Sources */,
+				12E3DA4F24F0D8CC0081A505 /* VeggieTotal+CoreDataClass.swift in Sources */,
 				1291B19124C983F400625BE6 /* Ring.swift in Sources */,
-				1272EBD724EBEA7600372839 /* Veggies+CoreDataProperties.swift in Sources */,
 				12AAC70D24E7DE60000B16E7 /* UserDataManager.swift in Sources */,
 				1217CE3D24DA792C00521D49 /* SettingController.swift in Sources */,
 				12FD255424CEF6BB00E3D5E0 /* I18N.swift in Sources */,
 				1291B19624C9851800625BE6 /* VFCircularView+Ext.swift in Sources */,
 				12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */,
+				12E3DA5224F0D8CC0081A505 /* FruitTotal+CoreDataProperties.swift in Sources */,
 				1290EE6424C6F91F008DB339 /* DateView.swift in Sources */,
 				12FF76DE24DE72C6009542FE /* VFError.swift in Sources */,
 				123E010124ED4215000457B9 /* WeatherData.swift in Sources */,
@@ -782,7 +779,6 @@
 				12FF76DA24DE7118009542FE /* UserSettings.swift in Sources */,
 				12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */,
 				12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */,
-				1272EBD324EBEA7600372839 /* FruitTotal+CoreDataProperties.swift in Sources */,
 				12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */,
 				127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */,
 				1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */,
@@ -792,15 +788,16 @@
 				12B3733E24DE498A00491FBB /* AlarmSettingVC+Ext.swift in Sources */,
 				1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */,
 				12A655D824DD578900B0E042 /* Date+Ext.swift in Sources */,
+				1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */,
+				12E3DA5124F0D8CC0081A505 /* FruitTotal+CoreDataClass.swift in Sources */,
 				12C1AE0F24EBB9C9001CD521 /* GraphData.swift in Sources */,
+				12E3DA5024F0D8CC0081A505 /* VeggieTotal+CoreDataProperties.swift in Sources */,
 				12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */,
 				124B917C24CAC755009616A7 /* UserItemVC+Ext.swift in Sources */,
-				1272EBD224EBEA7600372839 /* FruitTotal+CoreDataClass.swift in Sources */,
 				12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */,
+				12E3DA5624F0D8CC0081A505 /* Fruits+CoreDataProperties.swift in Sources */,
 				12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */,
-				1272EBD524EBEA7600372839 /* VeggieTotal+CoreDataProperties.swift in Sources */,
 				122625E224DA549900AC2962 /* SettingVC.swift in Sources */,
-				1272EBD124EBEA7600372839 /* Fruits+CoreDataProperties.swift in Sources */,
 				12B3733D24DE498A00491FBB /* AlarmSettingVC.swift in Sources */,
 				12A655D624DD45FC00B0E042 /* CircleLine.swift in Sources */,
 				1290EE6A24C6FA14008DB339 /* VFBodyLabel.swift in Sources */,
@@ -809,18 +806,20 @@
 				124F561724DED284006CE413 /* CustomSlider.swift in Sources */,
 				12143CD324CA8F800080ADFE /* DateView+Constraint.swift in Sources */,
 				12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */,
-				1272EBD824EBEA7600372839 /* DataType+CoreDataClass.swift in Sources */,
+				12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */,
 				1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */,
 				121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */,
+				12E3DA5324F0D8CC0081A505 /* DataType+CoreDataClass.swift in Sources */,
 				12885B6524E51044001586EA /* LocalizeConstant.swift in Sources */,
 				12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */,
 				121A909A24D18F6000AE0780 /* SelfConfigCell.swift in Sources */,
-				1272EBD424EBEA7600372839 /* VeggieTotal+CoreDataClass.swift in Sources */,
 				12143CD624CA93F80080ADFE /* Constants.swift in Sources */,
+				12E3DA5524F0D8CC0081A505 /* Fruits+CoreDataClass.swift in Sources */,
 				124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */,
 				1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */,
 				12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */,
 				12AD3BA724EB7B7800443803 /* TableHeaderView.swift in Sources */,
+				12E3DA4D24F0D8CC0081A505 /* Veggies+CoreDataClass.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,
@@ -829,12 +828,11 @@
 				1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */,
 				124B917E24CACC35009616A7 /* VFItemCell.swift in Sources */,
 				12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */,
-				1272EBD924EBEA7600372839 /* DataType+CoreDataProperties.swift in Sources */,
 				12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */,
 				127ADC1B24E4F4BA00E8F3B7 /* ChartVC+Ext.swift in Sources */,
+				12E3DA4E24F0D8CC0081A505 /* Veggies+CoreDataProperties.swift in Sources */,
 				12000DBC24C7D8F7005C49D2 /* DateConverter.swift in Sources */,
 				127ADC1924E4E4CF00E8F3B7 /* CustomSegmentControl.swift in Sources */,
-				1272EBD024EBEA7600372839 /* Fruits+CoreDataClass.swift in Sources */,
 				1217CE3F24DA832800521D49 /* SettingItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

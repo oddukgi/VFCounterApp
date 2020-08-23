@@ -85,6 +85,7 @@ class HomeVC: UIViewController {
         
         
     }
+ 
     
     func requestWeathData(from latitude: Double, to longitude: Double) {
             

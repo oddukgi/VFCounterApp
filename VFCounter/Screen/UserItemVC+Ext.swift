@@ -80,7 +80,9 @@ extension UserItemVC {
         
         return time
     }
+    
     // MARK: create collectionView datasource
+    
     func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<VFItemController.VFCollections, DataType>(collectionView: collectionView) {
             (collectionView: UICollectionView,  indexPath: IndexPath,
@@ -98,25 +100,18 @@ extension UserItemVC {
             cell.layer.borderWidth = 1
             cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
             
-//            var dataObject: DataType
-//
-//            if indexPath.section == 0 {
-//                dataObject = self.userData[0][indexPath.row]
-//            } else {
-//                dataObject = self.userData[1][indexPath.row]
-//            }
             let image = UIImage(data: data.image!)
             let amount = Int(data.amount)
             let time = self.trimmingTime(userTime: data.time!)
-            cell.updateContents(image: image, time: time, name: data.name!, amount: amount)
-            // Return the cell.
+            cell.updateContents(image: image, time: time, name: data.name!, amount: amount, date: data.date!)
+            cell.selectedItem = self.checkedIndexPath.contains(indexPath)
+
             return cell
 
         }
         
     }
-    
-    
+  
     func configureTitleDataSource() {
         dataSource.supplementaryViewProvider = { [weak self]
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -142,49 +137,31 @@ extension UserItemVC {
     func updateData() {
         currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
         
+       
         for i in 0..<2 {
             currentSnapshot.appendSections([vfitemController.collections[i]])
-            currentSnapshot.appendItems(userData[i]!)
-        }
-         dataSource.apply(self.currentSnapshot, animatingDifferences: true)
-         reloadRing()
-    }
     
-    func reloadRing() {
-    
-        var sum = 0
-        userData[0]?.forEach { item in
-            sum += Int(item.amount)
+            let fetchedItem = fetchingItems[i](date)
+            currentSnapshot.appendItems(fetchedItem)
+            
         }
-        _ = circularView.updateValue(amount: sum, tag: 0)
         
-        sum = 0
-        userData[1]?.forEach { item in
-            sum += Int(item.amount)
-        }
-    
-        _ = circularView.updateValue(amount: sum, tag: 1)
-    }
-    
-    func reloadData(section: Int) {
-        
-        currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
-        
-        if section == 0 {
-            userData[0] = dataManager.sortEntity(Veggies.self,section: section)!
-        } else {
-            userData[1] = dataManager.sortEntity(Fruits.self,section: section)!
-
-        }
-    
-        for i in 0..<2 {
-            currentSnapshot.appendSections([vfitemController.collections[i]])
-            currentSnapshot.appendItems(userData[i]!)
-        }
         dataSource.apply(self.currentSnapshot, animatingDifferences: true)
-    }
-           
     
+        reloadRing(date: date!)
+    }
+
+    func reloadRing(date: String) {
+    
+        dataManager.getSumItems(date: date) { (veggieSum, fruitSum) in
+            print("\(veggieSum) \(fruitSum)")
+            self.circularView.updateValue(amount: Int(veggieSum), tag: 0)
+            self.circularView.updateValue(amount: Int(fruitSum), tag: 1)
+            
+        }
+    }
+    
+
     // MARK: show veggie, fruit dialog
     @objc func addItems(sender: VFButton) {
    
@@ -197,6 +174,9 @@ extension UserItemVC {
             
         }
     }
+    
+
+
 }
 
 extension UserItemVC: PickItemVCProtocol {
@@ -205,7 +185,7 @@ extension UserItemVC: PickItemVCProtocol {
 
         if !item.name.isEmpty {
             dataManager.createEntity(item: item, tag: tag)
-            reloadData(section: tag)
+            updateData()
         }
       
     }
@@ -217,9 +197,16 @@ extension UserItemVC: UICollectionViewDelegate {
     // 아이템 값 수정 및 삭제
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 아이템을 선택하면, 홈화면으로 이동
-        self.collectionView.deselectItem(at: indexPath, animated: true)
-//        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
-
-  
+        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
+       
+        if checkedIndexPath.isEmpty {
+            cell.selectedItem = true
+            checkedIndexPath.insert(indexPath)
+        } else {
+            
+            checkedIndexPath.removeAll()
+            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)        
+        }
+        
     }
 }

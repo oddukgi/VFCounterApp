@@ -58,13 +58,7 @@ class DateConverter {
         return dateFormatter
     }
     
-    func getEntityDT() -> String {
-        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy.MM.dd"
-        
-        return dateFormatter.string(from: date)
-    }
+
 
     func convertDate() -> String {
         let component = date.get(.year,.month,.day,.weekday)
@@ -76,9 +70,21 @@ class DateConverter {
                         5:"목", 6:"금", 7:"토"]
         let weekday = weekdays[index]!
 
-        let newDate = "\(year).\(month).\(day) \(weekday)"
+        
+        let newMonth = String(format: "%02d", month)
+        let newDay = String(format: "%02d", day)
+        let newDate = "\(year).\(newMonth).\(newDay) \(weekday)"
 //        print(newDate)
         return newDate
+    }
+    
+    
+    func changeDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = "yyyy.MM.dd E"
+        return dateFormatter.string(from: date)
     }
     
     func getWeekDayIndex() -> Int {

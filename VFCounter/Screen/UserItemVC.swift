@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreStore
+import CoreData
 
 
 class UserItemVC: UIViewController {
@@ -21,16 +22,34 @@ class UserItemVC: UIViewController {
     let titleElementKind = "titleElementKind"
     var tag: Int = 0
     var height: CGFloat = 0
-    var chartVC: ChartVC!
     var userSettings = [UserSettings]()
     let dataManager = DataManager()
+    var date: String?
+    var checkedIndexPath = Set<IndexPath>()
 
     
-    var userData =  [
-        try? UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration).orderBy(.descending(\.time))),
-        try? UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).orderBy(.descending(\.time))) ]
-
-
+     let fetchingItems =  [ { (newDate) -> [DataType] in
+        
+            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
+                .where((\.date) == newDate).orderBy(.descending(\.time)))
+        
+            },
+            { (newDate) -> [DataType] in
+                    return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).where(\.date == newDate).orderBy(.descending(\.time)))
+        
+            } ]
+    
+    
+    init(date: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.date = date
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,9 +59,14 @@ class UserItemVC: UIViewController {
         configureTitleDataSource()
         updateData()
         prepareNotificationAddObserver()
-        setCircularValue()
+//        setCircularValue()
+//        
+//        DispatchQueue.main.async {
+//            self.dataManager.deleteAllEntity()
+//        }
     }
     
+
     func setupLayout() {
         
         view.addSubview(circularView)        
@@ -71,6 +95,8 @@ class UserItemVC: UIViewController {
     //MARK: - notificationCenter
     fileprivate func prepareNotificationAddObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)), name: .updateTaskPercent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)), name: .updateFetchingData, object: nil)
+        
     }
     
     // MARK: action
@@ -89,7 +115,22 @@ class UserItemVC: UIViewController {
             circularView.insideSlider.maximumValue = CGFloat(fruitAmount)
         }
     }
-
+    
+    
+    // MARK: action
+    //AlarSetting 화면에서 최대 복용량 받아서 링 의 최대값을 설정한다.
+    @objc fileprivate func updateFetchingData(_ notification: Notification) {
+        
+        if let createdDate = notification.userInfo?["createdDate"] as? String {
+            var newDate = createdDate
+            newDate.removeLast(2)
+            date = newDate
+            updateData()
+        }
+    }
+     
+    
+    
 }
 
 

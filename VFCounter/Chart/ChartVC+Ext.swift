@@ -54,8 +54,6 @@ extension ChartVC {
 
 extension ChartVC {
     func applyChartOption() {
-        self.title = "Chart"
-        
         self.setup(barLineChartView: barChartView)
         barChartView.delegate = self
         barChartView.drawBarShadowEnabled = false

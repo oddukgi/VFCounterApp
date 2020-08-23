@@ -39,6 +39,7 @@ class MeasurementView: UIView {
         textField.textAlignment = NSTextAlignment.center
         textField.returnKeyType = UIReturnKeyType.done
         textField.layer.cornerRadius = 8
+        textField.delegate = self
         return textField
     }()
     
@@ -67,6 +68,7 @@ class MeasurementView: UIView {
         super.init(frame: frame)
         setSlider()
         setLayout()
+        createDismissKeyboardTapGesture()
     }
     
     convenience init(delegate: MeasurementViewDelegate) {
@@ -78,6 +80,11 @@ class MeasurementView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    func createDismissKeyboardTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
+        addGestureRecognizer(tap)
+    }
 
     func setSlider() {
     
@@ -161,11 +168,8 @@ class MeasurementView: UIView {
             slider.value = 0
    
         }
-        
-
     }
 }
-
 
 extension MeasurementView: UITextFieldDelegate {
     
@@ -174,6 +178,7 @@ extension MeasurementView: UITextFieldDelegate {
         return true
     }
 }
+
 extension MeasurementView: SliderUpdateDelegate {
     
     func sliderTouch(value: Float, tag: Int) {

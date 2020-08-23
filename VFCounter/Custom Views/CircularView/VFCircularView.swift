@@ -71,8 +71,6 @@ class VFCircularView: UIView {
     
     
     var horizontalStackView = Array<UIStackView>()
-    private var totalVeggies = 0
-    private var totalFruits = 0
     
     lazy var outerSlider: CircularSlider = {
         let slider = CircularSlider()
@@ -119,7 +117,9 @@ class VFCircularView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setCircularView()
-        setsubviewLayout()
+        setsubviewLayout()      
+        outerSlider.isUserInteractionEnabled = false
+        insideSlider.isUserInteractionEnabled = false
         
     }
     
@@ -127,23 +127,22 @@ class VFCircularView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func updateValue(amount: Int, tag: Int) -> Bool {
+    func updateValue(amount: Int, tag: Int) {
         
+        
+        if amount > 500 { return }
         switch tag {
         case 0:          
-            totalVeggies += amount
-            outerSlider.endPointValue = CGFloat(totalVeggies)
-            totVeggieLabel.text = "\(totalVeggies)g"
+            outerSlider.endPointValue = CGFloat(amount)
+            totVeggieLabel.text = "\(amount)g"
 //          print("\(totalVeggies)g")
             
         default:         
-            totalFruits += amount
-            insideSlider.endPointValue = CGFloat(totalFruits)
-            totFruitLabel.text = "\(totalFruits)g"
+            insideSlider.endPointValue = CGFloat(amount)
+            totFruitLabel.text = "\(amount)g"
 //          print("\(totalFruits)g")
        }
-        
-        return true
+
     }
 
 }

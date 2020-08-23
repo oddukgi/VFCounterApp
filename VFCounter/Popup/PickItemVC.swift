@@ -27,7 +27,8 @@ class PickItemVC: UIViewController {
     
     var collectionView: UICollectionView! = nil
     var dataSource: UICollectionViewDiffableDataSource<Section, PickItems.Element>! = nil
-
+    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, PickItems.Element>! = nil
+    
     let pickItems = PickItems()
  
     var timer: Timer?
@@ -64,6 +65,7 @@ class PickItemVC: UIViewController {
         configureDataSource()
         updateData()
         setCurrentTime()
+        self.setupToHideKeyboardOnTapOnView()
     }
     
     // hide navigation bar

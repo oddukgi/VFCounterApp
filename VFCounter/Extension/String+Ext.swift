@@ -58,6 +58,7 @@ extension String {
           }
           return nil
     }
+    
 
 }
 
@@ -76,4 +77,6 @@ extension Double {
     func roundValue() -> String {
         return String(format: "%.5f", self)
     }
+    
+    
 }

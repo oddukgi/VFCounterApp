@@ -50,7 +50,10 @@ extension HomeVC {
         }
         
         contentView.addSubview(userItemView)
-        self.add(childVC: UserItemVC(), to: self.userItemView)
+        
+        var newDate = dateView.dateLabel.text
+        newDate?.removeLast(2)
+        self.add(childVC: UserItemVC(date: newDate!), to: self.userItemView)
         
         userItemView.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
@@ -59,3 +62,4 @@ extension HomeVC {
     }
    
 }
+

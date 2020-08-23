@@ -23,8 +23,8 @@ class ChartVC: ChartBaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Chart"
         view.backgroundColor = .systemBackground
-    
         configure()
         configureChart()
         applyChartOption()
@@ -52,7 +52,7 @@ class ChartVC: ChartBaseVC {
             return
         }
         
-        getSumOfValueInEntity()
+//        getSumOfValueInEntity()
 
         
     }
@@ -107,7 +107,7 @@ class ChartVC: ChartBaseVC {
     func getSumOfValueInEntity() {
       
         //getSumItems()
-        dataManager.getSumItems(date: Date()) { (veggieSum, fruitSum) in
+        dataManager.getSumItems(date: "") { (veggieSum, fruitSum) in
             print("\(veggieSum) \(fruitSum)")
             
             DispatchQueue.main.async {

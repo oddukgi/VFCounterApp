@@ -16,10 +16,23 @@ class VFItemCell: UICollectionViewCell {
     let lblTime     =  VFSubTitleLabel()
     let lblName     =  VFSubTitleLabel()
     let lblAmount    =  VFSubTitleLabel()
+    var itemEditView: ItemEditView!
+    
+    // Bool property
+    var selectedItem: Bool = false {
+        didSet{
+          if selectedItem == true {
+            showItemEditView()
+          } else {
+            hideItemEditView()
+          }
+       }
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setLayout()
+        setLayout()    
     }
     
     required init?(coder: NSCoder) {
@@ -67,16 +80,40 @@ class VFItemCell: UICollectionViewCell {
         
         lblTime.textAlignment = .center
         lblName.textAlignment = .center
-        lblAmount.textAlignment = .center        
+        lblAmount.textAlignment = .center
+ 
+    }
+    
+    func showItemEditView() {
+        itemEditView = ItemEditView()
+        contentView.addSubview(itemEditView)
+        itemEditView.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(-7)
+            make.centerX.equalTo(contentView.snp.centerX)
+        }
+     }
+    
+    func hideItemEditView() {
+        
+        DispatchQueue.main.async {
+            if self.itemEditView != nil {
+                self.itemEditView.removeFromSuperview()
+                self.itemEditView = nil
+            }
+        }
 
     }
     
-    func updateContents(image: UIImage?, time: String, name: String, amount: Int) {
+    func updateContents(image: UIImage?, time: String, name: String, amount: Int, date: String) {
         imageView.image = image
         lblTime.text = time
         lblName.text = name
         lblAmount.text = "\(amount)g"
-        
+       
     }
+    
+    
+    
+
 }
 

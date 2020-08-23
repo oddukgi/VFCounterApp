@@ -39,6 +39,7 @@ extension PickItemVC {
  
         collectionView.layer.borderWidth = 1
         collectionView.delegate = self
+        
   }
 
    func configureDataSource() {
@@ -73,20 +74,20 @@ extension PickItemVC {
        
        
     func updateData() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, PickItems.Element>()
+        currentSnapshot = NSDiffableDataSourceSnapshot<Section, PickItems.Element>()
        
         if tag == 0 {
-            snapshot.appendSections([.veggie])
-            snapshot.appendItems(pickItems.collections.first!.elements)
+            currentSnapshot.appendSections([.veggie])
+            currentSnapshot.appendItems(pickItems.collections.first!.elements)
       
         } else {
-            snapshot.appendSections([.fruit])
-            snapshot.appendItems(pickItems.collections.last!.elements)
+            currentSnapshot.appendSections([.fruit])
+            currentSnapshot.appendItems(pickItems.collections.last!.elements)
         }
         
         // UI runs on mainthread
         DispatchQueue.main.async {
-            self.dataSource.apply(snapshot, animatingDifferences: false)
+            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
         }
     }
 
@@ -100,24 +101,26 @@ extension PickItemVC {
 extension PickItemVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 아이템을 선택하면, 홈화면으로 이동
+
         self.collectionView.deselectItem(at: indexPath, animated: true)
-        
         let cell = collectionView.cellForItem(at: indexPath) as! PickItemCell
      
         checkedIndexPath.removeAll()
         cell.isChecked = false
-        updateData()
+
+         DispatchQueue.main.async {
+            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+         }
         
         checkedIndexPath.insert(indexPath)
-        cell.isChecked = true
+        cell.isChecked = true    
    
-        let name = cell.lblName.text!
-        
+        let name = cell.lblName.text!      
         let timeFormatter = TimeFormatter(timeformat: "h:mm:ss a")
         let time = timeFormatter.getCurrentTime(date: Date())
         let image = cell.veggieImage.image
  
+        
         storeItems(name: name, time: time, image: image)
     }
 }

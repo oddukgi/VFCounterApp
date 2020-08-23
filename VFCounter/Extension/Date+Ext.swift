@@ -40,7 +40,8 @@ extension Date {
     }
     
     func endOfMonth(in calendar: Calendar = .current) -> Date {
-        return calendar.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth(in: calendar))!.endOfDay(in: calendar)
+        return calendar.date(byAdding: DateComponents(month: 1, day: -1),
+                             to: self.startOfMonth(in: calendar))!.endOfDay(in: calendar)
     }
     
     func isInSameDay(in calendar: Calendar = .current, date: Date) -> Bool {
@@ -83,4 +84,23 @@ extension Date {
         return component.day ?? 30
     }
     
+    func getEntityDT() -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        return dateFormatter.string(from: self)
+    }
+    
+    
+    var dayBefore: Date {
+        return Calendar.current.date(byAdding: .day, value: -1, to: self)!
+    }
+    
+    var dayAfter: Date {
+        return Calendar.current.date(byAdding: .day, value: +1, to: self)!
+    }
+
+
 }

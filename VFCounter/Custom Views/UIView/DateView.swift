@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 
+
 class DateView: UIView {
 
     var btnLeftArrow: VFButton!
@@ -19,7 +20,9 @@ class DateView: UIView {
     let dateLabel = VFTitleLabel(textAlignment: .center, fontSize: 16)
     let weatherLabel = VFSubTitleLabel(fontSize: 14)
     let commentLabel = VFBodyLabel(textAlignment: .left, fontSize: 13, fontColor: ColorHex.dullOrange)
-    
+    private var date = Date()
+    private var startDate: Date?
+    private var endDate: Date?
 
     lazy var btnLocation: VFButton = {
         let button = VFButton()
@@ -34,6 +37,11 @@ class DateView: UIView {
         return imageView
     }()
     
+    
+    var getDate: Date {
+        return date
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureStackView()
@@ -47,7 +55,7 @@ class DateView: UIView {
     
     func initialize() {
         
-        let dateconverter = DateConverter(date: Date())
+        let dateconverter = DateConverter(date: date)
         dateLabel.text = dateconverter.convertDate()
         dateLabel.textColor = UIColor.black
         weatherLabel.text = ""
@@ -56,6 +64,47 @@ class DateView: UIView {
                             좋은 아침!
                             사과를 섭취하면, 몸이 활력이 생겨요
                             """
+        
+        btnLeftArrow.addTarget(self, action: #selector(changedDateTouched), for: .touchUpInside)
+        btnLeftArrow.tag = 0
+        btnRightArrow.addTarget(self, action: #selector(changedDateTouched), for: .touchUpInside)
+        btnRightArrow.tag = 1
+        
+        startDate = date.startOfMonth().endOfDay()
+        endDate  = Calendar.current.date(byAdding: .month, value: +1, to: date)
+        endDate = endDate?.endOfMonth().endOfDay()
+        
+        print(endDate!)
+    }
+    
+    
+    @objc func changedDateTouched(_ sender: VFButton) {
+    
+    
+        if sender.tag == 0 {
+
+            if date > startDate! {
+                date = date.dayBefore.endOfDay()
+                let beforeDate = DateConverter(date: date).changeDate()
+                dateLabel.text = beforeDate
+                NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": beforeDate])
+                
+            }
+            
+        } else {
+            
+            if date < endDate! {
+                date = date.dayAfter.endOfDay()
+                let afterDate = DateConverter(date: date).changeDate()
+                dateLabel.text = afterDate
+                NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": afterDate])
+               
+
+            }
+
+        }
+//        print(date)
+        
     }
 
 }
