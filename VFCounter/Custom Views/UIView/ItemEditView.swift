@@ -65,10 +65,10 @@ class ItemEditView: UIView {
                 button.widthAnchor.constraint(equalTo: firstButton.widthAnchor).isActive = true
             }
         }
-        
-        itemButton[0].layer.borderWidth = 1
-        itemButton[1].layer.borderWidth = 1
+
     }
 
-    
 }
+
+//        itemButton[0].layer.borderWidth = 1
+//        itemButton[1].layer.borderWidth = 1
