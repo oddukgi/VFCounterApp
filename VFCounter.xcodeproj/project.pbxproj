@@ -452,11 +452,11 @@
 		1290EE5A24C6ED37008DB339 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				12C64CFC24E0F83D00677D5A /* Button */,
 				1290EE6B24C6FA55008DB339 /* Label */,
 				12C64CFA24E0F82300677D5A /* TabBar */,
 				12C64CFE24E0F88B00677D5A /* UIView */,
 				12C64CFB24E0F83600677D5A /* Slider */,
-				12C64CFC24E0F83D00677D5A /* Button */,
 				12C64CFD24E0F84500677D5A /* CircularView */,
 			);
 			path = "Custom Views";
@@ -563,6 +563,7 @@
 		12C64CFE24E0F88B00677D5A /* UIView */ = {
 			isa = PBXGroup;
 			children = (
+				12F81FED24F24B030047804A /* ItemEditView.swift */,
 				12C64CF824E0F7D400677D5A /* MeasurementView.swift */,
 				12FF76E324DE8658009542FE /* VFAlertContainerView.swift */,
 				1291B19024C983F400625BE6 /* Ring.swift */,
@@ -570,7 +571,6 @@
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
 				127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */,
 				122420A324EE504300729898 /* WeatherIconView.swift */,
-				12F81FED24F24B030047804A /* ItemEditView.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";

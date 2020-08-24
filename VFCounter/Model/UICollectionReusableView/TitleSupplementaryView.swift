@@ -9,11 +9,18 @@
 import UIKit
 import SnapKit
 
+
+protocol TitleSupplmentaryViewDelegate: class {
+    func showPickUpViewController(tag: Int)
+}
+
 class TitleSupplementaryView: UICollectionReusableView {
     
     static let reuseIdentifier = "TitleSupplementaryView"
+    
     var lblTitle = VFTitleLabel(textAlignment: .left, fontSize: 14)
     var lblSubtitle = VFSubTitleLabel(fontSize: 13)
+    weak var delegate: TitleSupplmentaryViewDelegate?
     
     lazy var labels: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [lblTitle, lblSubtitle])
@@ -66,15 +73,19 @@ class TitleSupplementaryView: UICollectionReusableView {
         lblTitle.textColor = .black
         lblSubtitle.textColor = .lightGray
         btnPlus.setAllSideShadow()
-//        lblTitle.layer.borderWidth = 1
-//        lblSubtitle.layer.borderWidth = 1
-//        btnPlus.layer.borderWidth = 1
         
     }
     
     func updateTitles(title: String, subtitle: String) {
+ 
         lblTitle.text = title
         lblSubtitle.text = subtitle
+        (title == "야채") ? (btnPlus.tag = 0) : (btnPlus.tag = 1)
+        btnPlus.addTarget(self, action: #selector(self.displayItems(sender:)), for: .touchUpInside)
+    }
+    
+    @objc func displayItems( sender: VFButton) {
+        delegate?.showPickUpViewController(tag: sender.tag)
     }
     
 }

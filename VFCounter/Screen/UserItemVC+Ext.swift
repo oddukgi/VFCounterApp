@@ -13,45 +13,11 @@ import SnapKit
 extension UserItemVC {
     
 // MARK: create collectionView layout
-    
-    func createLayout() -> UICollectionViewCompositionalLayout {
-        let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(SizeManager().getUserItemHeight))
-            let item     = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(top: 14, leading: 0, bottom: 0, trailing: 0)
-            
-            /// group
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.26), heightDimension: .absolute(SizeManager().getUserItemHeight))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            group.interItemSpacing = .fixed(3)
-//            group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0)
-          
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .continuous
-            section.interGroupSpacing = 5
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
 
-            let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .estimated(22))
-            let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: titleSize,
-                elementKind: self.titleElementKind,
-                alignment: .top)
-            section.boundarySupplementaryItems = [titleSupplementary]
-            return section
-        }
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = SizeManager().sectionSpacingForUserItemCV
-
-        let layout = UICollectionViewCompositionalLayout(
-            sectionProvider: sectionProvider, configuration: config)
-        return layout
-        
-    }
     
     // 384 X 104 , item : 74 X 73
     func configureHierarchy() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind))
         collectionView.backgroundColor = ColorHex.iceBlue
         view.addSubview(collectionView)
 
@@ -68,7 +34,6 @@ extension UserItemVC {
         collectionView.register(VFItemCell.self, forCellWithReuseIdentifier: VFItemCell.reuseIdentifier)
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: titleElementKind,
                                      withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
-        
     }
     
     func trimmingTime(userTime: String) -> String {
@@ -102,6 +67,7 @@ extension UserItemVC {
             
             let image = UIImage(data: data.image!)
             let amount = Int(data.amount)
+            
             let time = self.trimmingTime(userTime: data.time!)
             cell.updateContents(image: image, time: time, name: data.name!, amount: amount, date: data.date!)
             cell.selectedItem = self.checkedIndexPath.contains(indexPath)
@@ -117,17 +83,13 @@ extension UserItemVC {
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
             guard let self = self, let snapshot = self.currentSnapshot else { return nil }
             
-            // get a supplementary view of each section
             if let titleSupplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath) as? TitleSupplementaryView {
                 
-                // create section's title and subtitle
                 let category = snapshot.sectionIdentifiers[indexPath.section]
-                
-                titleSupplementary.btnPlus.tag = indexPath.section
-                titleSupplementary.btnPlus.addTarget(self, action: #selector(self.addItems(sender:)), for: .touchUpInside)
+                titleSupplementary.delegate = self
                 titleSupplementary.updateTitles(title: category.title, subtitle: category.subtitle)
-                
                 return titleSupplementary
+                
             } else {
                 fatalError("Cannot create new supplementary")
             }
@@ -135,19 +97,17 @@ extension UserItemVC {
     }
     
     func updateData() {
-        currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
         
-       
+        currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
+    
         for i in 0..<2 {
             currentSnapshot.appendSections([vfitemController.collections[i]])
     
             let fetchedItem = fetchingItems[i](date)
             currentSnapshot.appendItems(fetchedItem)
-            
         }
         
         dataSource.apply(self.currentSnapshot, animatingDifferences: true)
-    
         reloadRing(date: date!)
     }
 
@@ -161,22 +121,10 @@ extension UserItemVC {
         }
     }
     
-
-    // MARK: show veggie, fruit dialog
-    @objc func addItems(sender: VFButton) {
-   
-        DispatchQueue.main.async {
-            self.tag = sender.tag
-            let veggiePickVC = PickItemVC(delegate: self, tag: sender.tag)
-            let navController = UINavigationController(rootViewController: veggiePickVC)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated: false)
-            
-        }
+    func hideItemView() {
+        checkedIndexPath.removeAll()
+        self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
     }
-    
-
-
 }
 
 extension UserItemVC: PickItemVCProtocol {
@@ -202,11 +150,27 @@ extension UserItemVC: UICollectionViewDelegate {
         if checkedIndexPath.isEmpty {
             cell.selectedItem = true
             checkedIndexPath.insert(indexPath)
-        } else {
             
+        } else {
             checkedIndexPath.removeAll()
             self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)        
         }
         
+    }
+}
+
+extension UserItemVC: TitleSupplmentaryViewDelegate {
+    
+    func showPickUpViewController(tag: Int) {
+         DispatchQueue.main.async {
+        
+            self.hideItemView()
+            self.tag = tag
+            let veggiePickVC = PickItemVC(delegate: self, tag: tag)
+            let navController = UINavigationController(rootViewController: veggiePickVC)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: false)
+         
+         }
     }
 }

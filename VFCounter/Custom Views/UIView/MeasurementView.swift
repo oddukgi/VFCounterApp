@@ -62,7 +62,7 @@ class MeasurementView: UIView {
     
     private var sliderWidth: CGFloat = 0
     private var step: Float = 10
-    var delegate: MeasurementViewDelegate?
+    weak var delegate: MeasurementViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

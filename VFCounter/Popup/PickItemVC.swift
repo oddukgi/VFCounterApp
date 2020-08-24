@@ -147,8 +147,6 @@ class PickItemVC: UIViewController {
                                           date: now, image: pickItems.item.image, amount: pickItems.item.amount)
         
         delegate?.addItems(item: item)
-
-        // save data to context
         dismissVC()
     }
 
@@ -176,6 +174,5 @@ class PickItemVC: UIViewController {
         btnTime.setTitle(time, for: .normal)
         
     }
-  
 }
 

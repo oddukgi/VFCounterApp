@@ -12,27 +12,28 @@ import SnapKit
 class VFItemCell: UICollectionViewCell {
  
     static let reuseIdentifier = "VFItemCell"
-    let imageView   = UIImageView()
-    let lblTime     =  VFSubTitleLabel()
-    let lblName     =  VFSubTitleLabel()
+    let imageView    = UIImageView()
+    let lblTime      =  VFSubTitleLabel()
+    let lblName      =  VFSubTitleLabel()
     let lblAmount    =  VFSubTitleLabel()
-    var itemEditView: ItemEditView!
+    let itemEditView = ItemEditView()
     
     // Bool property
     var selectedItem: Bool = false {
         didSet{
           if selectedItem == true {
-            showItemEditView()
+            itemEditView.isHidden = false
           } else {
-            hideItemEditView()
+            itemEditView.isHidden = true
           }
        }
     }
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setLayout()    
+        setLayout()
+        showItemEditView()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -81,28 +82,40 @@ class VFItemCell: UICollectionViewCell {
         lblTime.textAlignment = .center
         lblName.textAlignment = .center
         lblAmount.textAlignment = .center
- 
+       
     }
     
     func showItemEditView() {
-        itemEditView = ItemEditView()
         contentView.addSubview(itemEditView)
         itemEditView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(-7)
-            make.centerX.equalTo(contentView.snp.centerX)
+            make.centerX.equalTo(contentView.snp.centerX).offset(-40)
         }
+        connectedTarget()
      }
+
     
-    func hideItemEditView() {
-        
-        DispatchQueue.main.async {
-            if self.itemEditView != nil {
-                self.itemEditView.removeFromSuperview()
-                self.itemEditView = nil
-            }
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+
+        guard isUserInteractionEnabled else { return nil }
+        guard !isHidden else { return nil }
+        guard alpha >= 0.01 else { return nil }
+
+        guard self.point(inside: point, with: event) else { return nil }
+
+
+        // add one of these blocks for each button in our collection view cell we want to actually work
+        if self.itemEditView.itemButton[0].point(inside: convert(point, to: itemEditView.itemButton[0]), with: event) {
+           return self.itemEditView.itemButton[0]
+        }
+        if self.itemEditView.itemButton[1].point(inside: convert(point, to: itemEditView.itemButton[1]), with: event) {
+           	return self.itemEditView.itemButton[1]
         }
 
+        return super.hitTest(point, with: event)
     }
+    
+  
     
     func updateContents(image: UIImage?, time: String, name: String, amount: Int, date: String) {
         imageView.image = image
@@ -112,8 +125,17 @@ class VFItemCell: UICollectionViewCell {
        
     }
     
-    
-    
+    func connectedTarget() {
+        itemEditView.itemButton[0].addTarget(self, action: #selector(modifyItem(_:)), for: .touchUpInside)
+        itemEditView.itemButton[1].addTarget(self, action: #selector(deleteItem(_:)), for: .touchUpInside)
+    }
 
+    @objc func modifyItem(_ sender: VFButton) {
+        print("tapped modify item")
+    }
+    
+    @objc func deleteItem(_ sender: VFButton) {
+        print("tapped delete item")
+    }
 }
 

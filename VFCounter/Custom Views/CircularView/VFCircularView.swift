@@ -129,8 +129,6 @@ class VFCircularView: UIView {
 
     func updateValue(amount: Int, tag: Int) {
         
-        
-        if amount > 500 { return }
         switch tag {
         case 0:          
             outerSlider.endPointValue = CGFloat(amount)

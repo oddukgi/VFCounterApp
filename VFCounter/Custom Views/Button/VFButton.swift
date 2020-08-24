@@ -10,6 +10,9 @@ import UIKit
 
 class VFButton: UIButton {
     
+    
+    private let targetSize = CGSize(width: 44.0, height: 44.0)
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -25,7 +28,28 @@ class VFButton: UIButton {
         self.setTitle(title, for: .normal)
     }
     
+    
+    // MARK: Tap Area
+    override func setImage(_ image: UIImage?, for state: UIControl.State) {
+        super.setImage(image, for: state)
+        guard let image = image else { return }
+        let verticalMarginToAdd = max(0, (targetSize.height - image.size.height) / 2)
+        let horizontalMarginToAdd = max(0, (targetSize.width - image.size.width) / 2)
+        
+        let insets = UIEdgeInsets(top: verticalMarginToAdd,
+                                  left: horizontalMarginToAdd,
+                                  bottom: verticalMarginToAdd,
+                                  right: horizontalMarginToAdd)
+        
+        contentEdgeInsets = insets
+    }
+    
+    override var alignmentRectInsets: UIEdgeInsets {
+        contentEdgeInsets
+    }
 
+
+    
     // MARK: - custom methods
        
     private func configure() {
@@ -102,5 +126,5 @@ class VFButton: UIButton {
     func setFont(clr: UIColor, font: UIFont) {
          titleLabel!.font = font
          setTitleColor(clr, for: .normal)
-    }   
+    } 
 }

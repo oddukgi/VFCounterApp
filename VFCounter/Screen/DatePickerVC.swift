@@ -28,7 +28,7 @@ class DatePickerVC: UIViewController {
     
 
     let pickerView = UIDatePicker()
-    var delegate: DatePickerVCDelegate?
+    weak var delegate: DatePickerVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
