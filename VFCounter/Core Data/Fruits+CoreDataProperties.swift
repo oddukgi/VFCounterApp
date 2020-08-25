@@ -2,7 +2,7 @@
 //  Fruits+CoreDataProperties.swift
 //  VFCounter
 //
-//  Created by Sunmi on 2020/08/22.
+//  Created by Sunmi on 2020/08/25.
 //  Copyright © 2020 creativeSun. All rights reserved.
 //
 //

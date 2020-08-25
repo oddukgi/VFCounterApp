@@ -59,6 +59,15 @@ extension String {
           return nil
     }
     
+    func trimmingTime(start: Int, end: Int) -> String {
+        var time = self
+        let start = time.index(time.startIndex, offsetBy: start)
+        let end = time.index(time.endIndex, offsetBy: end)
+        let range = start..<end
+        time.removeSubrange(range)
+        return time
+    }
+
 
 }
 

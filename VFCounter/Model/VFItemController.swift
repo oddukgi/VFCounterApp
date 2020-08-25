@@ -10,10 +10,10 @@ import UIKit
 
 class VFItemController {
 
+   
     struct Items: Hashable {
         var name: String
-        var time: String
-        var date: Date
+        var date: String
         var image: UIImage?
         var amount: Int
         let identifiable = UUID()
@@ -43,6 +43,7 @@ class VFItemController {
     init() {
         generateSections()
     }
+    
     fileprivate var _collections = [VFCollections]()
 }
 

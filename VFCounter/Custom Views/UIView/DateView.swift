@@ -56,7 +56,7 @@ class DateView: UIView {
     func initialize() {
         
         let dateconverter = DateConverter(date: date)
-        dateLabel.text = dateconverter.convertDate()
+        dateLabel.text = dateconverter.changeDate(format:"yyyy.MM.dd E", option: 1)
         dateLabel.textColor = UIColor.black
         weatherLabel.text = ""
         commentLabel.numberOfLines = 0
@@ -85,7 +85,7 @@ class DateView: UIView {
 
             if date > startDate! {
                 date = date.dayBefore.endOfDay()
-                let beforeDate = DateConverter(date: date).changeDate()
+                let beforeDate = DateConverter(date: date).changeDate(format: "yyyy.MM.dd E", option: 1)
                 dateLabel.text = beforeDate
                 NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": beforeDate])
                 
@@ -95,7 +95,7 @@ class DateView: UIView {
             
             if date < endDate! {
                 date = date.dayAfter.endOfDay()
-                let afterDate = DateConverter(date: date).changeDate()
+                let afterDate = DateConverter(date: date).changeDate(format: "yyyy.MM.dd E", option: 1)
                 dateLabel.text = afterDate
                 NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": afterDate])
                

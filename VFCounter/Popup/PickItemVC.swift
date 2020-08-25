@@ -36,19 +36,27 @@ class PickItemVC: UIViewController {
     weak var delegate: PickItemVCProtocol?
     var tag: Int = 0
     var checkedIndexPath = Set<IndexPath>()
-    var amount: Int = 0
     var pickDate: String = ""
-    var measurementView: MeasurementView!
     let btnClose = VFButton()
     let btnTime = VFButton()
     var btnAdd = VFButton()
-    let now = Date()
-    
 
-    init(delegate: PickItemVCProtocol, tag: Int) {
+    private let now = Date()
+    private var measurementView: MeasurementView!
+    private var fetchedItem: VFItemController.Items? = nil
+    var dtConverter: DateConverter!
+    
+    var newDT: String {
+       return dtConverter.changeDate(format: "yyyy.MM.dd h:mm:ss a", option: 2)
+
+    }
+
+    init(delegate: PickItemVCProtocol, tag: Int, item: VFItemController.Items? = nil) {
         super.init(nibName: nil, bundle: nil)
-        self.delegate = delegate
-        self.tag      = tag
+        self.delegate        = delegate
+        self.tag             = tag
+        self.fetchedItem     = item
+        self.dtConverter = DateConverter(date: now)
     }
 
     required init?(coder: NSCoder) {
@@ -72,6 +80,11 @@ class PickItemVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        if fetchedItem != nil {
+            // call
+            
+        }
       
     }
     
@@ -143,9 +156,8 @@ class PickItemVC: UIViewController {
     @objc func pressedAdd() {
    
         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
-        let item = VFItemController.Items(name: pickItems.item.name, time: pickItems.item.time,
-                                          date: now, image: pickItems.item.image, amount: pickItems.item.amount)
-        
+    
+        let item = VFItemController.Items(name: pickItems.item.name,date: newDT, image: pickItems.item.image, amount: pickItems.item.amount)
         delegate?.addItems(item: item)
         dismissVC()
     }
@@ -174,5 +186,35 @@ class PickItemVC: UIViewController {
         btnTime.setTitle(time, for: .normal)
         
     }
+    
+    // MARK: modify value
+//    func applyFetchedItem() {
+//
+//        print("\(fetchedItem?.name), \(fetchedItem?.amount), \(fetchedItem?.time)")
+//        measurementView.gramTF = String(fetchedItem?.amount)
+//        measurementView.slider.value = Float(fetchedItem?.amount)
+//        // select collection view
+//
+//        let visibleItems = collectionView.indexPathsForVisibleItems
+//
+//        for indexPath in visibleItems {
+//
+//            if let cell = collectionView.cellForItem(at: indexPath) as? PickItemCell {
+//
+//                if cell.lblName.text? == fetchedItem?.name {
+//                    checkedIndexPath.insert(indexPath)
+//                    updateCollectionView()
+//                }
+//            }
+//        }
+//    }
 }
 
+extension PickItemVC: DatePickerVCDelegate {
+    
+    func selectDate(date: String){
+        measurementView.btnDateTime.setTitle(date,for: .normal)
+        
+    }
+
+}

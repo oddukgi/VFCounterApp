@@ -7,118 +7,78 @@
 //
 
 import UIKit
-import Charts
 import SnapKit
 import CoreStore
 
-class ChartVC: ChartBaseVC {
+class ChartVC: UIViewController {
+
+    enum TabIndex: Int {
+        case firstChildTab = 0
+        case secondChildTab = 1
+    }
     
     var segmentControl: CustomSegmentControl!
-    let barChartView = BarChartView()
-    let dataManager = DataManager()
-    let dateConverter = DateConverter(date: Date())
-
-    private var veggieSum: Int16 = 0
+    let contentView     = UIView()
+    let weeklyChartView = UIView()
+    var monthlyChartView: UIView!
     
+    var currentVC: UIViewController?
+    
+    let dateConverter = DateConverter(date: Date())
+    lazy var weeklyChartVC: UIViewController? = {
+        let date = dateConverter.changeDate(format: "yyyy.MM.dd", option: 1)
+        let weeklyChartVC = WeeklyChartVC(date: date)
+        return weeklyChartVC
+        
+    }()
+    
+    lazy var monthlyChartVC: UIViewController? = {
+        let now = Date()
+        let date = dateConverter.changeDate(format: "yyyy.MM", option: 1)
+        let monthlyChartVC = MontlyChartVC(date: date)
+        
+        return monthlyChartVC
+          
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Chart"
         view.backgroundColor = .systemBackground
         configure()
-        configureChart()
-        applyChartOption()
-        configureMarker()
-        updateChartData()
+        displayCurrentTab(TabIndex.firstChildTab.rawValue)
+     
     }
   
     @objc func changedIndexSegment(sender: UISegmentedControl) {
-        
-        let index = sender.selectedSegmentIndex
+        self.currentVC?.view.removeFromSuperview()
+        self.currentVC?.removeFromParent()
+        displayCurrentTab(sender.selectedSegmentIndex)
+    }
+    
+    func displayCurrentTab(_ index: Int) {
+        if let vc = viewControllerForSelectedIndex(index) {
+            
+            self.addChild(vc)
+            vc.didMove(toParent: self)
+            vc.view.frame = self.contentView.bounds
+            self.contentView.addSubview(vc.view)
+            self.currentVC = vc
+        }
+    }
+    
+    func viewControllerForSelectedIndex(_ index: Int) -> UIViewController? {
+        var vc: UIViewController?
         
         switch index {
-        case 0:
-            print("Tapped \(index)")
-  
+        case TabIndex.firstChildTab.rawValue:
+            vc = weeklyChartVC
         default:
-            print("Tapped \(index)")
- 
-        }
-    }
-    
-    override func updateChartData() {
-        if self.shouldHideData {
-            barChartView.data = nil
-            return
+            vc = monthlyChartVC
         }
         
-//        getSumOfValueInEntity()
-
-        
-    }
-        
-    func setDataCount(count: Int, sumVeggie : Int16, sumFruit: Int16) {
-       
-        let start = 1
-        var barchartEntry: BarChartDataEntry!
-
-        let yVeggie = (start..<start + count).map { (i) -> BarChartDataEntry in
-
-            let index = dateConverter.getWeekDayIndex() + 1
-            
-            if i == index {
-                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: Double(sumVeggie))
-            } else {
-                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: 0)
-            }
-            return barchartEntry
-        }
-        
-        let yFruit = (start..<start + count).map { (i) -> BarChartDataEntry in
-
-            let index = dateConverter.getWeekDayIndex() + 1
-            
-            if i == index {
-                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: Double(sumFruit))
-            } else {
-                barchartEntry = BarChartDataEntry(x: Double(i - 1), y: 0)
-            }
-            return barchartEntry
-        }
-
-        var veggie: BarChartDataSet! = nil
-        veggie = BarChartDataSet(entries: yVeggie, label: "Veggie")
-        veggie.setColor(ChartColor.veggieGreen)
-        veggie.drawValuesEnabled = false
-
-        var fruit: BarChartDataSet! = nil
-        fruit = BarChartDataSet(entries: yFruit, label: "Fruit")
-        fruit.setColor(ChartColor.fruitYellow)
-     
-        let data = BarChartData(dataSets: [veggie, fruit])
-        data.setValueFont(.systemFont(ofSize: 10, weight: .light))
-        data.barWidth = 0.3
-        data.groupBars(fromX: 0, groupSpace: 0.08, barSpace: 0.03)
-
-        barChartView.data = data
-    }
-    
-    
-    func getSumOfValueInEntity() {
-      
-        //getSumItems()
-        dataManager.getSumItems(date: "") { (veggieSum, fruitSum) in
-            print("\(veggieSum) \(fruitSum)")
-            
-            DispatchQueue.main.async {
-                if self.segmentControl.selectedSegmentIndex == 0 {
-                    self.setDataCount(count: 7, sumVeggie : veggieSum, sumFruit: fruitSum)
-                } else {
-                    self.setDataCount(count: 31,sumVeggie : veggieSum, sumFruit: fruitSum)
-                }
-            }
-        }
-        
+        return vc
     }
    
 }
+

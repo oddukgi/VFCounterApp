@@ -35,16 +35,7 @@ extension UserItemVC {
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: titleElementKind,
                                      withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
     }
-    
-    func trimmingTime(userTime: String) -> String {
-        var time = userTime
-        let start = time.index(time.startIndex, offsetBy: 4)
-        let end = time.index(time.endIndex, offsetBy: -3)
-        let range = start..<end
-        time.removeSubrange(range)
-        
-        return time
-    }
+
     
     // MARK: create collectionView datasource
     
@@ -60,7 +51,7 @@ extension UserItemVC {
                 else {
                     fatalError("Cannot create new cell")
                 }
-
+            cell.delegate = self
             cell.layer.cornerRadius = 10
             cell.layer.borderWidth = 1
             cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
@@ -68,8 +59,9 @@ extension UserItemVC {
             let image = UIImage(data: data.image!)
             let amount = Int(data.amount)
             
-            let time = self.trimmingTime(userTime: data.time!)
-            cell.updateContents(image: image, time: time, name: data.name!, amount: amount, date: data.date!)
+            
+        
+            cell.updateContents(image: image,name: data.name!, amount: amount, date: data.createdDate!)
             cell.selectedItem = self.checkedIndexPath.contains(indexPath)
 
             return cell
@@ -102,13 +94,13 @@ extension UserItemVC {
     
         for i in 0..<2 {
             currentSnapshot.appendSections([vfitemController.collections[i]])
-    
-            let fetchedItem = fetchingItems[i](date)
+  
+            let fetchedItem = fetchingItems[i](stringDate!)
             currentSnapshot.appendItems(fetchedItem)
         }
         
         dataSource.apply(self.currentSnapshot, animatingDifferences: true)
-        reloadRing(date: date!)
+//        reloadRing(date: date!)
     }
 
     func reloadRing(date: String) {
@@ -127,18 +119,6 @@ extension UserItemVC {
     }
 }
 
-extension UserItemVC: PickItemVCProtocol {
-    
-    func addItems(item: VFItemController.Items) {
-
-        if !item.name.isEmpty {
-            dataManager.createEntity(item: item, tag: tag)
-            updateData()
-        }
-      
-    }
-
-}
 
 extension UserItemVC: UICollectionViewDelegate {
     
@@ -153,10 +133,27 @@ extension UserItemVC: UICollectionViewDelegate {
             
         } else {
             checkedIndexPath.removeAll()
-            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)        
+            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
         }
         
     }
+}
+
+// MARK: - Protocol Extension
+
+extension UserItemVC: PickItemVCProtocol {
+    
+    func addItems(item: VFItemController.Items) {
+
+        if !item.name.isEmpty {
+
+            dataManager.createEntity(item: item, tag: tag)            
+            stringDate = String(item.date.split(separator: " ").first!)
+            updateData()
+        }
+      
+    }
+
 }
 
 extension UserItemVC: TitleSupplmentaryViewDelegate {
@@ -166,11 +163,27 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
         
             self.hideItemView()
             self.tag = tag
-            let veggiePickVC = PickItemVC(delegate: self, tag: tag)
-            let navController = UINavigationController(rootViewController: veggiePickVC)
+            let itemPickVC = PickItemVC(delegate: self, tag: tag)
+            let navController = UINavigationController(rootViewController: itemPickVC)
             navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated: false)
          
          }
     }
+}
+
+extension UserItemVC: VFItemCellDelegate {
+    
+    // receive data from VFItemCell
+    func updateSelectedItem(item: VFItemController.Items, index: Int) {
+        // display PickItemVC
+        DispatchQueue.main.async {
+            let itemPickVC = PickItemVC(delegate: self, tag: index, item: item)
+            let navController = UINavigationController(rootViewController: itemPickVC)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: false)
+        }
+    }
+    
+    
 }

@@ -24,25 +24,27 @@ class UserItemVC: UIViewController {
     var height: CGFloat = 0
     var userSettings = [UserSettings]()
     let dataManager = DataManager()
-    var date: String?
+    var stringDate: String?
     var checkedIndexPath = Set<IndexPath>()
 
     
      let fetchingItems =  [ { (newDate) -> [DataType] in
         
-            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
-                .where((\.date) == newDate).orderBy(.descending(\.time)))
+                return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
+                    .where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.createdDate),newDate).orderBy(.descending(\.createdDate)))
         
             },
-            { (newDate) -> [DataType] in
-                    return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).where(\.date == newDate).orderBy(.descending(\.time)))
+            {   (newDate) -> [DataType] in
+                
+                return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration)
+                            .where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.createdDate),newDate).orderBy(.descending(\.createdDate)))
         
             } ]
     
     
     init(date: String) {
         super.init(nibName: nil, bundle: nil)
-        self.date = date
+        self.stringDate = date
         
     }
     
@@ -124,7 +126,7 @@ class UserItemVC: UIViewController {
         if let createdDate = notification.userInfo?["createdDate"] as? String {
             var newDate = createdDate
             newDate.removeLast(2)
-            date = newDate
+            stringDate = newDate
             updateData()
         }
     }

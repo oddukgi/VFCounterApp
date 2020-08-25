@@ -37,6 +37,7 @@ class DateConverter {
     init(date: Date) {
         self.date = date
     }
+    
   
     var stringDT: String {
         return getCurrentDT().string(from: date)
@@ -59,31 +60,12 @@ class DateConverter {
     }
     
 
-
-    func convertDate() -> String {
-        let component = date.get(.year,.month,.day,.weekday)
-        let year  = component.year ?? 1900
-        let month = component.month ?? 1
-        let day   = component.day   ?? 1
-        let index = component.weekday!
-        let weekdays = [1:"일", 2:"월", 3:"화", 4:"수",
-                        5:"목", 6:"금", 7:"토"]
-        let weekday = weekdays[index]!
-
-        
-        let newMonth = String(format: "%02d", month)
-        let newDay = String(format: "%02d", day)
-        let newDate = "\(year).\(newMonth).\(newDay) \(weekday)"
-//        print(newDate)
-        return newDate
-    }
     
-    
-    func changeDate() -> String {
+    func changeDate(format: String, option: Int) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = "yyyy.MM.dd E"
+        (option == 1) ? ( dateFormatter.dateStyle = .short ) : ( dateFormatter.dateStyle = .medium)
+        dateFormatter.dateFormat = format
         return dateFormatter.string(from: date)
     }
     

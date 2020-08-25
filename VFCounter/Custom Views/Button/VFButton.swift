@@ -9,9 +9,8 @@
 import UIKit
 
 class VFButton: UIButton {
-    
-    
-    private let targetSize = CGSize(width: 44.0, height: 44.0)
+
+    private let targetSize = CGSize(width: 29.0, height: 29.0)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,8 +98,12 @@ class VFButton: UIButton {
         self.layer.insertSublayer(shape, at: 0)
     }
     
-    func addImage(imageName: String) {
-        let image = UIImage(named: imageName)?.imageByMakingWhiteBackgroundTransparent()
+    func addImage(imageName: String, size: CGFloat = 0.0) {
+        var image = UIImage(named: imageName)?.imageByMakingWhiteBackgroundTransparent()
+        
+        if size > 0 {
+            image = image?.resized(toWidth: 18)
+        }
         self.setImage(image, for: .normal)
     }
 

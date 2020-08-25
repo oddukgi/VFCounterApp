@@ -32,12 +32,12 @@ class PickItems {
         var name: String
         var image: UIImage?
         var amount: Int
-        var time : String
+        var dateTime: String
         
         init() {
             name = ""
             image = nil
-            time  = ""
+            dateTime  = ""
             amount = 0
         }
     }

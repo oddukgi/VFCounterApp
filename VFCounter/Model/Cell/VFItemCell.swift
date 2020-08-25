@@ -9,6 +9,11 @@
 import UIKit
 import SnapKit
 
+
+protocol VFItemCellDelegate: class {
+    func updateSelectedItem(item: VFItemController.Items, index: Int)
+}
+
 class VFItemCell: UICollectionViewCell {
  
     static let reuseIdentifier = "VFItemCell"
@@ -17,6 +22,8 @@ class VFItemCell: UICollectionViewCell {
     let lblName      =  VFSubTitleLabel()
     let lblAmount    =  VFSubTitleLabel()
     let itemEditView = ItemEditView()
+    var date: Date?
+    weak var delegate: VFItemCellDelegate?
     
     // Bool property
     var selectedItem: Bool = false {
@@ -88,7 +95,7 @@ class VFItemCell: UICollectionViewCell {
     func showItemEditView() {
         contentView.addSubview(itemEditView)
         itemEditView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(-7)
+            make.top.equalTo(contentView.snp.top).offset(25)
             make.centerX.equalTo(contentView.snp.centerX).offset(-40)
         }
         connectedTarget()
@@ -105,26 +112,27 @@ class VFItemCell: UICollectionViewCell {
 
 
         // add one of these blocks for each button in our collection view cell we want to actually work
-        if self.itemEditView.itemButton[0].point(inside: convert(point, to: itemEditView.itemButton[0]), with: event) {
+        if  !self.itemEditView.isHidden && self.itemEditView.itemButton[0].point(inside: convert(point, to: itemEditView.itemButton[0]), with: event) {
            return self.itemEditView.itemButton[0]
         }
-        if self.itemEditView.itemButton[1].point(inside: convert(point, to: itemEditView.itemButton[1]), with: event) {
+        if !self.itemEditView.isHidden && self.itemEditView.itemButton[1].point(inside: convert(point, to: itemEditView.itemButton[1]), with: event) {
            	return self.itemEditView.itemButton[1]
         }
 
         return super.hitTest(point, with: event)
     }
     
-  
-    
-    func updateContents(image: UIImage?, time: String, name: String, amount: Int, date: String) {
+
+    func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
         imageView.image = image
+    
+        let time = date.trimmingTime(start: 0, end: -11).trimmingTime(start: 5, end: -3)
         lblTime.text = time
         lblName.text = name
         lblAmount.text = "\(amount)g"
-       
     }
     
+  
     func connectedTarget() {
         itemEditView.itemButton[0].addTarget(self, action: #selector(modifyItem(_:)), for: .touchUpInside)
         itemEditView.itemButton[1].addTarget(self, action: #selector(deleteItem(_:)), for: .touchUpInside)
@@ -132,6 +140,10 @@ class VFItemCell: UICollectionViewCell {
 
     @objc func modifyItem(_ sender: VFButton) {
         print("tapped modify item")
+        
+//        let newDate = date.changeDate()    
+//        let item = VFItemController.Items(name: lblTime.text, time: lblName.text, date: <#T##Date#>(), image: <#T##UIImage?#>, amount: <#T##Int#>)
+//        delegate?.updateSelectedItem(item: <#T##VFItemController.Items#>, index: <#T##Int#>)
     }
     
     @objc func deleteItem(_ sender: VFButton) {

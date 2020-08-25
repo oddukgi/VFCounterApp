@@ -36,9 +36,7 @@ class DataManager {
               }
               
               entityItem?.name = item.name
-              entityItem?.time = item.time
-              
-              entityItem?.date = item.date.getEntityDT()
+              entityItem?.createdDate = item.date
               entityItem?.image = item.image?.pngData()
               entityItem?.amount = Int16(item.amount)
               
@@ -56,7 +54,7 @@ class DataManager {
         tag == 0 ? ( configuration = UserDataManager.veggieConfiguration ) : (configuration = UserDataManager.fruitsConfiguration )
           
         if let existingEntity = try? UserDataManager.dataStack.fetchOne(From<DataType>(configuration)
-              .where(\.name == item.name && \.time == item.time)) {
+            .where(\.name == item.name && \.createdDate == item.date)) {
               
               entity = existingEntity
           }
@@ -66,9 +64,7 @@ class DataManager {
      
                 entity = transaction.edit(entity)!
                 entity?.name = item.name
-                entity?.time = item.time
-                
-                entity?.date = item.date.getEntityDT()
+                entity?.createdDate = item.date
                 entity?.image = item.image?.pngData()
                 entity?.amount = Int16(item.amount)
                 return transaction.hasChanges
@@ -89,12 +85,12 @@ class DataManager {
       }
       
     // MARK: delete single entity
-    func deleteItemFromEntity(name: String, time: String, tag: Int) {
+    func deleteItemFromEntity(name: String, dateTime: String, tag: Int) {
           
-          var configuration = ""
+        var configuration = ""
         tag == 0 ? ( configuration = UserDataManager.veggieConfiguration ) : (configuration = UserDataManager.fruitsConfiguration )
           
-        guard let existingEntity = try? UserDataManager.dataStack.fetchOne(From<DataType>(configuration).where(\.name == name && \.time == time)) else { return }
+        guard let existingEntity = try? UserDataManager.dataStack.fetchOne(From<DataType>(configuration).where(\.name == name && \.createdDate == dateTime)) else { return }
           
           // transaction edit
           do {
@@ -123,31 +119,18 @@ class DataManager {
     func sortEntity<T: DataType>(_ objectType: T.Type, section: Int) -> [T]? {
           var configuration = ""
         section == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
-        guard let entity = try? UserDataManager.dataStack.fetchAll(From<T>(configuration).orderBy(.descending(\.time))) else {
+        guard let entity = try? UserDataManager.dataStack.fetchAll(From<T>(configuration).orderBy(.descending(\.createdDate))) else {
               return nil
           }
           return entity
       }
-      
-    //Select<Int>(.maximum("age"))
-    
-//    let queryingItems: [Any] = [
-//
-//            try! UserDataManager.dataStack.queryValue(
-//                From<Veggies>().select(Int16.self, .count(\.amount))
-//            )!,
-//
-//
-//
-//    ]
-    
     
     func getSumItems(date: String, completion: @escaping (Int16, Int16) -> Void) {
     
         let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
             
-            let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(\.date == date))
-            let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(\.date == date))
+            let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(\.createdDate == date))
+            let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(\.createdDate == date))
             
             completion(veggieSum!, fruitSum!)
         })

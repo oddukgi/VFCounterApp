@@ -41,18 +41,16 @@ extension DateView {
         horizontalView[0].snp.makeConstraints { make in
             make.top.equalTo(self).offset(padding)
             make.centerX.equalTo(self).offset(5)
-            make.height.equalTo(40)
+            make.height.equalTo(50)
         }
         
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(horizontalView[0])
             make.leading.equalTo(btnLeftArrow.snp.trailing)
-            make.width.equalTo(120)
-            
+            make.width.equalTo(120)           
         }
     
         // MARK: - Icon & Label
-
         btnLocation.snp.makeConstraints { make in
             make.top.equalTo(self).offset(12)
             make.leading.equalTo(self).offset(10)

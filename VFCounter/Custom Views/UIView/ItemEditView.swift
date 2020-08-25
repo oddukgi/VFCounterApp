@@ -14,7 +14,7 @@ typealias Item = UIImage?
 
 class ItemEditView: UIView {
 
-    let containerView = VFContainerView(frame: CGRect(x: 0, y: 0, width: 80, height: 25))
+    let containerView = VFContainerView(frame: CGRect(x: 0, y: 0, width: 80, height: 23))
     
     lazy var horizontalStackView: UIStackView = {
        let stackView = UIStackView()
@@ -55,7 +55,7 @@ class ItemEditView: UIView {
                 separator.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor, multiplier: 0.6).isActive = true
             }
             
-            let button = VFButton(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
+            let button = VFButton(frame: CGRect(x: 0, y: 0, width: 13, height: 13))
             button.setImage(item, for: .normal)
             itemButton.append(button)
             
@@ -65,10 +65,12 @@ class ItemEditView: UIView {
                 button.widthAnchor.constraint(equalTo: firstButton.widthAnchor).isActive = true
             }
         }
+        
+
+                itemButton[0].layer.borderWidth = 1
+                itemButton[1].layer.borderWidth = 1
+
 
     }
 
 }
-
-//        itemButton[0].layer.borderWidth = 1
-//        itemButton[1].layer.borderWidth = 1

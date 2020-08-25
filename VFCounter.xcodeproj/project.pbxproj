@@ -34,6 +34,15 @@
 		124B917E24CACC35009616A7 /* VFItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B917D24CACC35009616A7 /* VFItemCell.swift */; };
 		124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B918124CACD85009616A7 /* TitleSupplementaryView.swift */; };
 		124F561724DED284006CE413 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F561624DED284006CE413 /* CustomSlider.swift */; };
+		1251729024F4DB91002B9927 /* WeeklyChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */; };
+		1251729224F4DBA0002B9927 /* MontlyChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1251729124F4DBA0002B9927 /* MontlyChartVC.swift */; };
+		1251729424F4E129002B9927 /* MonthlyChartVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1251729324F4E129002B9927 /* MonthlyChartVC+Ext.swift */; };
+		126AA42724F4AA4300FF4F87 /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */; };
+		126AA42824F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */; };
+		126AA42924F4AA4300FF4F87 /* Veggies+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */; };
+		126AA42A24F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42424F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift */; };
+		126AA43724F4BC2C00FF4F87 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA43524F4BC2C00FF4F87 /* DataType+CoreDataClass.swift */; };
+		126AA43824F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA43624F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift */; };
 		126AE53A24C6C6B4000BCF7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53924C6C6B4000BCF7E /* AppDelegate.swift */; };
 		126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53B24C6C6B4000BCF7E /* SceneDelegate.swift */; };
 		126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53D24C6C6B4000BCF7E /* HomeVC.swift */; };
@@ -81,21 +90,10 @@
 		12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92524CAB08200C11ECD /* UserItemVC.swift */; };
 		12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92824CABE7B00C11ECD /* VFItemController.swift */; };
 		12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12C066C124E9624600745B79 /* VFCounterDB.xcdatamodeld */; };
-		12C1AE0F24EBB9C9001CD521 /* GraphData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C1AE0E24EBB9C9001CD521 /* GraphData.swift */; };
 		12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CF824E0F7D400677D5A /* MeasurementView.swift */; };
 		12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CFF24E0F8D100677D5A /* VFTextField.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
 		12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */; };
-		12E3DA4D24F0D8CC0081A505 /* Veggies+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4324F0D8CB0081A505 /* Veggies+CoreDataClass.swift */; };
-		12E3DA4E24F0D8CC0081A505 /* Veggies+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4424F0D8CB0081A505 /* Veggies+CoreDataProperties.swift */; };
-		12E3DA4F24F0D8CC0081A505 /* VeggieTotal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4524F0D8CB0081A505 /* VeggieTotal+CoreDataClass.swift */; };
-		12E3DA5024F0D8CC0081A505 /* VeggieTotal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4624F0D8CB0081A505 /* VeggieTotal+CoreDataProperties.swift */; };
-		12E3DA5124F0D8CC0081A505 /* FruitTotal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4724F0D8CB0081A505 /* FruitTotal+CoreDataClass.swift */; };
-		12E3DA5224F0D8CC0081A505 /* FruitTotal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4824F0D8CB0081A505 /* FruitTotal+CoreDataProperties.swift */; };
-		12E3DA5324F0D8CC0081A505 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4924F0D8CB0081A505 /* DataType+CoreDataClass.swift */; };
-		12E3DA5424F0D8CC0081A505 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4A24F0D8CB0081A505 /* DataType+CoreDataProperties.swift */; };
-		12E3DA5524F0D8CC0081A505 /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4B24F0D8CB0081A505 /* Fruits+CoreDataClass.swift */; };
-		12E3DA5624F0D8CC0081A505 /* Fruits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E3DA4C24F0D8CC0081A505 /* Fruits+CoreDataProperties.swift */; };
 		12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F81FED24F24B030047804A /* ItemEditView.swift */; };
 		12FD255024CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */; };
 		12FD255124CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */; };
@@ -158,6 +156,15 @@
 		124B917D24CACC35009616A7 /* VFItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFItemCell.swift; sourceTree = "<group>"; };
 		124B918124CACD85009616A7 /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
 		124F561624DED284006CE413 /* CustomSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChartVC.swift; sourceTree = "<group>"; };
+		1251729124F4DBA0002B9927 /* MontlyChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MontlyChartVC.swift; sourceTree = "<group>"; };
+		1251729324F4E129002B9927 /* MonthlyChartVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthlyChartVC+Ext.swift"; sourceTree = "<group>"; };
+		126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
+		126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataClass.swift"; sourceTree = "<group>"; };
+		126AA42424F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		126AA43524F4BC2C00FF4F87 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		126AA43624F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		126AE53624C6C6B4000BCF7E /* VFCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VFCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		126AE53924C6C6B4000BCF7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		126AE53B24C6C6B4000BCF7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -207,21 +214,10 @@
 		12BBF92524CAB08200C11ECD /* UserItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemVC.swift; sourceTree = "<group>"; };
 		12BBF92824CABE7B00C11ECD /* VFItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFItemController.swift; sourceTree = "<group>"; };
 		12C066C224E9624600745B79 /* VFCounterDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VFCounterDB.xcdatamodel; sourceTree = "<group>"; };
-		12C1AE0E24EBB9C9001CD521 /* GraphData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphData.swift; sourceTree = "<group>"; };
 		12C64CF824E0F7D400677D5A /* MeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementView.swift; sourceTree = "<group>"; };
 		12C64CFF24E0F8D100677D5A /* VFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFTextField.swift; sourceTree = "<group>"; };
 		12CC426824D7D9CC0086B3AE /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
-		12E3DA4324F0D8CB0081A505 /* Veggies+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataClass.swift"; sourceTree = "<group>"; };
-		12E3DA4424F0D8CB0081A505 /* Veggies+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		12E3DA4524F0D8CB0081A505 /* VeggieTotal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VeggieTotal+CoreDataClass.swift"; sourceTree = "<group>"; };
-		12E3DA4624F0D8CB0081A505 /* VeggieTotal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VeggieTotal+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		12E3DA4724F0D8CB0081A505 /* FruitTotal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FruitTotal+CoreDataClass.swift"; sourceTree = "<group>"; };
-		12E3DA4824F0D8CB0081A505 /* FruitTotal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FruitTotal+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		12E3DA4924F0D8CB0081A505 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
-		12E3DA4A24F0D8CB0081A505 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		12E3DA4B24F0D8CB0081A505 /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
-		12E3DA4C24F0D8CC0081A505 /* Fruits+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		12F81FED24F24B030047804A /* ItemEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditView.swift; sourceTree = "<group>"; };
 		12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
@@ -337,16 +333,12 @@
 		1240D3D624E642C100A7EAD4 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				12E3DA4324F0D8CB0081A505 /* Veggies+CoreDataClass.swift */,
-				12E3DA4424F0D8CB0081A505 /* Veggies+CoreDataProperties.swift */,
-				12E3DA4524F0D8CB0081A505 /* VeggieTotal+CoreDataClass.swift */,
-				12E3DA4624F0D8CB0081A505 /* VeggieTotal+CoreDataProperties.swift */,
-				12E3DA4724F0D8CB0081A505 /* FruitTotal+CoreDataClass.swift */,
-				12E3DA4824F0D8CB0081A505 /* FruitTotal+CoreDataProperties.swift */,
-				12E3DA4924F0D8CB0081A505 /* DataType+CoreDataClass.swift */,
-				12E3DA4A24F0D8CB0081A505 /* DataType+CoreDataProperties.swift */,
-				12E3DA4B24F0D8CB0081A505 /* Fruits+CoreDataClass.swift */,
-				12E3DA4C24F0D8CC0081A505 /* Fruits+CoreDataProperties.swift */,
+				126AA43524F4BC2C00FF4F87 /* DataType+CoreDataClass.swift */,
+				126AA43624F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift */,
+				126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */,
+				126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */,
+				126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */,
+				126AA42424F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift */,
 				12C066C124E9624600745B79 /* VFCounterDB.xcdatamodeld */,
 			);
 			path = "Core Data";
@@ -444,7 +436,9 @@
 				127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */,
 				12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */,
 				12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */,
-				12C1AE0E24EBB9C9001CD521 /* GraphData.swift */,
+				1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */,
+				1251729124F4DBA0002B9927 /* MontlyChartVC.swift */,
+				1251729324F4E129002B9927 /* MonthlyChartVC+Ext.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -751,22 +745,21 @@
 				122420A424EE504300729898 /* WeatherIconView.swift in Sources */,
 				12FF76E424DE8658009542FE /* VFAlertContainerView.swift in Sources */,
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
-				12E3DA5424F0D8CC0081A505 /* DataType+CoreDataProperties.swift in Sources */,
+				126AA43824F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift in Sources */,
 				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
 				126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */,
 				1290EE6224C6F725008DB339 /* VFButton.swift in Sources */,
 				12B50CFE24C6EBB700C87956 /* UIImage+Ext.swift in Sources */,
-				12E3DA4F24F0D8CC0081A505 /* VeggieTotal+CoreDataClass.swift in Sources */,
 				1291B19124C983F400625BE6 /* Ring.swift in Sources */,
 				12AAC70D24E7DE60000B16E7 /* UserDataManager.swift in Sources */,
 				1217CE3D24DA792C00521D49 /* SettingController.swift in Sources */,
 				12FD255424CEF6BB00E3D5E0 /* I18N.swift in Sources */,
 				1291B19624C9851800625BE6 /* VFCircularView+Ext.swift in Sources */,
 				12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */,
-				12E3DA5224F0D8CC0081A505 /* FruitTotal+CoreDataProperties.swift in Sources */,
 				1290EE6424C6F91F008DB339 /* DateView.swift in Sources */,
 				12FF76DE24DE72C6009542FE /* VFError.swift in Sources */,
+				1251729424F4E129002B9927 /* MonthlyChartVC+Ext.swift in Sources */,
 				123E010124ED4215000457B9 /* WeatherData.swift in Sources */,
 				12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */,
 				123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */,
@@ -778,6 +771,7 @@
 				12FF76E624DE97CE009542FE /* Struct+Ext.swift in Sources */,
 				12FF76DA24DE7118009542FE /* UserSettings.swift in Sources */,
 				12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */,
+				126AA42724F4AA4300FF4F87 /* Fruits+CoreDataClass.swift in Sources */,
 				12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */,
 				12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */,
 				127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */,
@@ -787,15 +781,12 @@
 				124A446024D28DE4003FFF3A /* Notification+Ext.swift in Sources */,
 				12B3733E24DE498A00491FBB /* AlarmSettingVC+Ext.swift in Sources */,
 				1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */,
+				126AA42924F4AA4300FF4F87 /* Veggies+CoreDataClass.swift in Sources */,
 				12A655D824DD578900B0E042 /* Date+Ext.swift in Sources */,
 				1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */,
-				12E3DA5124F0D8CC0081A505 /* FruitTotal+CoreDataClass.swift in Sources */,
-				12C1AE0F24EBB9C9001CD521 /* GraphData.swift in Sources */,
-				12E3DA5024F0D8CC0081A505 /* VeggieTotal+CoreDataProperties.swift in Sources */,
 				12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */,
 				124B917C24CAC755009616A7 /* UserItemVC+Ext.swift in Sources */,
 				12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */,
-				12E3DA5624F0D8CC0081A505 /* Fruits+CoreDataProperties.swift in Sources */,
 				12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */,
 				122625E224DA549900AC2962 /* SettingVC.swift in Sources */,
 				12B3733D24DE498A00491FBB /* AlarmSettingVC.swift in Sources */,
@@ -805,21 +796,23 @@
 				1290EE5C24C6ED45008DB339 /* VFTabBarController.swift in Sources */,
 				124F561724DED284006CE413 /* CustomSlider.swift in Sources */,
 				12143CD324CA8F800080ADFE /* DateView+Constraint.swift in Sources */,
+				126AA42824F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift in Sources */,
+				1251729024F4DB91002B9927 /* WeeklyChartVC.swift in Sources */,
 				12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */,
+				1251729224F4DBA0002B9927 /* MontlyChartVC.swift in Sources */,
 				12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */,
 				1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */,
+				126AA43724F4BC2C00FF4F87 /* DataType+CoreDataClass.swift in Sources */,
 				121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */,
-				12E3DA5324F0D8CC0081A505 /* DataType+CoreDataClass.swift in Sources */,
 				12885B6524E51044001586EA /* LocalizeConstant.swift in Sources */,
 				12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */,
 				121A909A24D18F6000AE0780 /* SelfConfigCell.swift in Sources */,
 				12143CD624CA93F80080ADFE /* Constants.swift in Sources */,
-				12E3DA5524F0D8CC0081A505 /* Fruits+CoreDataClass.swift in Sources */,
 				124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */,
 				1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */,
+				126AA42A24F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift in Sources */,
 				12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */,
 				12AD3BA724EB7B7800443803 /* TableHeaderView.swift in Sources */,
-				12E3DA4D24F0D8CC0081A505 /* Veggies+CoreDataClass.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,
@@ -830,7 +823,6 @@
 				12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */,
 				12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */,
 				127ADC1B24E4F4BA00E8F3B7 /* ChartVC+Ext.swift in Sources */,
-				12E3DA4E24F0D8CC0081A505 /* Veggies+CoreDataProperties.swift in Sources */,
 				12000DBC24C7D8F7005C49D2 /* DateConverter.swift in Sources */,
 				127ADC1924E4E4CF00E8F3B7 /* CustomSegmentControl.swift in Sources */,
 				1217CE3F24DA832800521D49 /* SettingItemCell.swift in Sources */,

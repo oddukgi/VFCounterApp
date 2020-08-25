@@ -39,7 +39,6 @@ extension PickItemVC {
  
         collectionView.layer.borderWidth = 1
         collectionView.delegate = self
-        
   }
 
    func configureDataSource() {
@@ -72,7 +71,6 @@ extension PickItemVC {
     
    }
        
-       
     func updateData() {
         currentSnapshot = NSDiffableDataSourceSnapshot<Section, PickItems.Element>()
        
@@ -85,17 +83,20 @@ extension PickItemVC {
             currentSnapshot.appendItems(pickItems.collections.last!.elements)
         }
         
-        // UI runs on mainthread
+        updateCollectionView()
+    }
+
+    func storeItems(name: String, dateTime: String, image: UIImage?) {
+        pickItems.item.name  = name
+        pickItems.item.image = image
+        pickItems.item.dateTime = dateTime
+    }
+    
+    func updateCollectionView() {
         DispatchQueue.main.async {
             self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
         }
     }
-
-    func storeItems(name: String, time: String, image: UIImage?) {
-        pickItems.item.name  = name
-        pickItems.item.image = image
-        pickItems.item.time = time
-    }      
 }
 
 extension PickItemVC: UICollectionViewDelegate {
@@ -108,20 +109,14 @@ extension PickItemVC: UICollectionViewDelegate {
         checkedIndexPath.removeAll()
         cell.isChecked = false
 
-         DispatchQueue.main.async {
-            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
-         }
-        
+        updateCollectionView()
         checkedIndexPath.insert(indexPath)
         cell.isChecked = true    
    
         let name = cell.lblName.text!      
-        let timeFormatter = TimeFormatter(timeformat: "h:mm:ss a")
-        let time = timeFormatter.getCurrentTime(date: Date())
         let image = cell.veggieImage.image
- 
         
-        storeItems(name: name, time: time, image: image)
+        storeItems(name: name, dateTime: newDT, image: image)
     }
 }
 
@@ -138,10 +133,3 @@ extension PickItemVC: MeasurementViewDelegate {
     
 }
 
-extension PickItemVC: DatePickerVCDelegate {
-    
-    func selectDate(date: String){
-        measurementView.btnDateTime.setTitle(date,for: .normal)
-    }
-
-}
