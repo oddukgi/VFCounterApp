@@ -24,7 +24,7 @@ class UserItemVC: UIViewController {
     var height: CGFloat = 0
     var userSettings = [UserSettings]()
     let dataManager = DataManager()
-    var stringDate: String?
+    var stringDate: String = ""
     var checkedIndexPath = Set<IndexPath>()
 
     

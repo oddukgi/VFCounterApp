@@ -41,24 +41,18 @@ class PickItemVC: UIViewController {
     let btnClose = VFButton()
     let btnTime = VFButton()
     var btnAdd = VFButton()
-
-    private var userdate = Date()
+    var userdate: String = ""
     private var measurementView: MeasurementView!
     private var fetchedItem: VFItemController.Items? = nil
-    var dtConverter: DateConverter!
-    
-    var newDT: String {
-       return dtConverter.changeDate(format: "yyyy.MM.dd h:mm:ss a", option: 2)
 
-    }
-
-    init(delegate: PickItemVCProtocol, tag: Int, date: Date,item: VFItemController.Items? = nil) {
+    init(delegate: PickItemVCProtocol, tag: Int, date: String,
+    item: VFItemController.Items? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.delegate        = delegate
         self.tag             = tag
         self.fetchedItem     = item
         self.userdate        = date
-        self.dtConverter = DateConverter(date: userdate)
+      
     }
 
     required init?(coder: NSCoder) {
@@ -159,7 +153,7 @@ class PickItemVC: UIViewController {
    
         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
     
-        let item = VFItemController.Items(name: pickItems.item.name,date: newDT, image: pickItems.item.image, amount: pickItems.item.amount)
+        let item = VFItemController.Items(name: pickItems.item.name,date: userdate, image: pickItems.item.image, amount: pickItems.item.amount)
         delegate?.addItems(item: item)
         dismissVC()
     }
@@ -184,7 +178,7 @@ class PickItemVC: UIViewController {
     @objc func updateTime() {
 
         let timeFormatter = TimeFormatter(timeformat: "h:mm a")
-        let time = timeFormatter.getCurrentTime(date: userdate)
+        let time = timeFormatter.getCurrentTime(date: Date())
         btnTime.setTitle(time, for: .normal)
         
     }

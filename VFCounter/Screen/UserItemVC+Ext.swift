@@ -95,7 +95,7 @@ extension UserItemVC {
         for i in 0..<2 {
             currentSnapshot.appendSections([vfitemController.collections[i]])
   
-            let fetchedItem = fetchingItems[i](stringDate!)
+            let fetchedItem = fetchingItems[i](stringDate)
             currentSnapshot.appendItems(fetchedItem)
 
         }
@@ -104,7 +104,7 @@ extension UserItemVC {
             self.dataSource.apply(self.currentSnapshot, animatingDifferences: true)
         }
 
-        reloadRing(date: stringDate!)
+        reloadRing(date: stringDate)
     }
 
     func reloadRing(date: String) {
@@ -137,7 +137,9 @@ extension UserItemVC: UICollectionViewDelegate {
             
         } else {
             checkedIndexPath.removeAll()
-            updateData()
+            DispatchQueue.main.async {
+                self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+            }
         }
         
     }
@@ -168,8 +170,8 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
             self.hideItemView()
             self.tag = tag
             
-            let date = self.stringDate?.changeTextToDate(format: "yyyy.MM.dd")
-            let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date!)
+            let date = self.stringDate + Date().changeDateTimeKR(format: " h:mm:ss a")
+            let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date)
             let navController = UINavigationController(rootViewController: itemPickVC)
             navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated: false)
@@ -184,7 +186,7 @@ extension UserItemVC: VFItemCellDelegate {
     func updateSelectedItem(item: VFItemController.Items, index: Int) {
         // display PickItemVC
         DispatchQueue.main.async {
-            let itemPickVC = PickItemVC(delegate: self, tag: index, date: Date(), item: item)
+            let itemPickVC = PickItemVC(delegate: self, tag: index, date: "", item: item)
             let navController = UINavigationController(rootViewController: itemPickVC)
             navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated: false)

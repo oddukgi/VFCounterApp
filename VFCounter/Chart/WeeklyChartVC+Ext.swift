@@ -53,7 +53,7 @@ extension WeeklyChartVC {
         leftAxis.drawAxisLineEnabled = true
         leftAxis.drawGridLinesEnabled = true
         leftAxis.labelFont = Seoulnamsan.medium.style(offset: 13)
-        leftAxis.labelCount = 8
+        leftAxis.labelCount = 10
         leftAxis.labelPosition = .outsideChart
         leftAxis.spaceTop = 0.2
         leftAxis.axisMinimum = 0

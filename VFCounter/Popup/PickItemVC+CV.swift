@@ -116,7 +116,7 @@ extension PickItemVC: UICollectionViewDelegate {
         let name = cell.lblName.text!      
         let image = cell.veggieImage.image
         
-        storeItems(name: name, dateTime: newDT, image: image)
+        storeItems(name: name, dateTime: userdate, image: image)
     }
 }
 
