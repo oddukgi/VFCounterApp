@@ -37,11 +37,12 @@ class PickItemVC: UIViewController {
     var tag: Int = 0
     var checkedIndexPath = Set<IndexPath>()
     var pickDate: String = ""
+    
     let btnClose = VFButton()
     let btnTime = VFButton()
     var btnAdd = VFButton()
 
-    private let now = Date()
+    private var userdate = Date()
     private var measurementView: MeasurementView!
     private var fetchedItem: VFItemController.Items? = nil
     var dtConverter: DateConverter!
@@ -51,12 +52,13 @@ class PickItemVC: UIViewController {
 
     }
 
-    init(delegate: PickItemVCProtocol, tag: Int, item: VFItemController.Items? = nil) {
+    init(delegate: PickItemVCProtocol, tag: Int, date: Date,item: VFItemController.Items? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.delegate        = delegate
         self.tag             = tag
         self.fetchedItem     = item
-        self.dtConverter = DateConverter(date: now)
+        self.userdate        = date
+        self.dtConverter = DateConverter(date: userdate)
     }
 
     required init?(coder: NSCoder) {
@@ -182,7 +184,7 @@ class PickItemVC: UIViewController {
     @objc func updateTime() {
 
         let timeFormatter = TimeFormatter(timeformat: "h:mm a")
-        let time = timeFormatter.getCurrentTime(date: now)
+        let time = timeFormatter.getCurrentTime(date: userdate)
         btnTime.setTitle(time, for: .normal)
         
     }

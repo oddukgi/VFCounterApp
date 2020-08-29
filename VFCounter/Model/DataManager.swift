@@ -13,6 +13,8 @@ import CoreStore
 class DataManager {
     
     // MARK: create entity
+    
+    private var configuration = ""
     func configureEntity<T: DataType>(_ objectType: T.Type, transaction: SynchronousDataTransaction,
           configuration: String) -> T {
           let entityItem = transaction.create(Into<T>(configuration))
@@ -125,16 +127,23 @@ class DataManager {
           return entity
       }
     
+    
     func getSumItems(date: String, completion: @escaping (Int16, Int16) -> Void) {
     
         let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
             
-            let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(\.createdDate == date))
-            let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(\.createdDate == date))
+            let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.createdDate),date))
+            let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.createdDate),date))
             
             completion(veggieSum!, fruitSum!)
         })
 
     }
     
+    func sortByTime<T: DataType>(_ objectType: T.Type, section:Int) -> [T]? {
+        section == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
+        let orderBy = OrderBy<T>(.descending(\.createdDate))
+        guard let mostRecentData = try? UserDataManager.dataStack.fetchAll(From<T>(configuration),orderBy) else { return nil }
+        return mostRecentData
+    }
 }

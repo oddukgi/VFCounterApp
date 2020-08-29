@@ -21,3 +21,18 @@ enum NanumSquareRound: String {
     }
 
 }
+
+//SeN-CM, SeN-CBL, SeN-CEB, SeN-CB,SeN-CL
+enum Seoulnamsan: String {
+    
+    case light      = "SeN-CL"
+    case medium     = "SeN-CM"
+    case bold       = "SeN-CB"
+    case boldlight  = "SeN-CBL"
+    case extrabold  = "SeN-CEB"
+    
+    func style(offset: CGFloat = 0) -> UIFont {
+        let size = offset
+        return UIFont(name: rawValue, size: size)!
+    }
+}

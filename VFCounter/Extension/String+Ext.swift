@@ -67,18 +67,24 @@ extension String {
         time.removeSubrange(range)
         return time
     }
-
-
+    
+    // convert time to date
+    func changeTextToDate(format: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = format
+        
+        return dateFormatter.date(from: self)!
+    }
+    
+    func getWeekdayIndex() -> Int {
+        
+        let days = ["월", "화", "수", "목", "금", "토", "일"]
+        return days.firstIndex(of: self)!
+    }
 }
 
-/*
- let numberFormatter = NumberFormatter()
- numberFormatter.roundingMode = .floor         // 형식을 버림으로 지정
- numberFormatter.minimumSignificantDigits = 2  // 자르길 원하는 자릿수
- numberFormatter.maximumSignificantDigits = 2
- let originalNum = 1.6759402                   // 원하는 숫자
- let newNum = numberFormatter.string(from: originalNum) // result 1.67
- */
 
 extension Double {
     
@@ -89,3 +95,13 @@ extension Double {
     
     
 }
+
+
+/*
+ let numberFormatter = NumberFormatter()
+ numberFormatter.roundingMode = .floor         // 형식을 버림으로 지정
+ numberFormatter.minimumSignificantDigits = 2  // 자르길 원하는 자릿수
+ numberFormatter.maximumSignificantDigits = 2
+ let originalNum = 1.6759402                   // 원하는 숫자
+ let newNum = numberFormatter.string(from: originalNum) // result 1.67
+ */

@@ -22,13 +22,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // SQL File Directory
         let applicationSupportDirectories = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-         let sqliteDirectory = applicationSupportDirectories.first!
+        let _ = applicationSupportDirectories.first!
          
-         print("SQL file: \(sqliteDirectory.absoluteString)")
-        
+//        print("SQL file: \(sqliteDirectory.absoluteString)")
+//        printFonts()
         return true
     }
 
+    
+    // get custom font on app
+    // https://stackoverflow.com/a/55487252/13275605
+    func printFonts() {
+    let fontFamilyNames = UIFont.familyNames
+    for familyName in fontFamilyNames {
+        print("------------------------------")
+        print("Font Family Name = [\(familyName)]")
+        let names = UIFont.fontNames(forFamilyName: familyName)
+        print("Font Names = [\(names)]")
+      }
+    }
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

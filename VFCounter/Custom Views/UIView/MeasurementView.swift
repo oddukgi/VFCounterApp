@@ -93,7 +93,7 @@ class MeasurementView: UIView {
         let padding: CGFloat = (btnWidt * 2.0) + CGFloat(25)
         
         sliderWidth = width - padding
-        slider.values(min: 0, max: 1500, current: 100)
+        slider.values(min: 0, max: 500, current: 10)
         slider.delegate = self
         slider.thumbTintColor(.white)
         slider.minimumTrackTintColor(ColorHex.MilkChocolate.origin)

@@ -63,17 +63,16 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
         chartView.drawHoleEnabled = true
         chartView.rotationAngle = 0
         chartView.rotationEnabled = true
-        chartView.highlightPerTapEnabled = true
+        chartView.highlightPerTapEnabled = false
         
         let l = chartView.legend
         l.horizontalAlignment = .right
         l.verticalAlignment = .top
         l.orientation = .vertical
-        l.drawInside = false
+        l.drawInside = true
         l.xEntrySpace = 7
         l.yEntrySpace = 0
         l.yOffset = 0
-//        chartView.legend = l
     }
     
     func setup(radarChartView chartView: RadarChartView) {
@@ -83,8 +82,8 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
     func setup(barLineChartView chartView: BarLineChartViewBase) {
         chartView.chartDescription?.enabled = false
                 
-        chartView.dragEnabled = true
-        chartView.setScaleEnabled(true)
+        chartView.dragEnabled = false
+        chartView.setScaleEnabled(false)
         chartView.pinchZoomEnabled = false
         
         // ChartYAxis *leftAxis = chartView.leftAxis;
@@ -98,6 +97,11 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
     //extension DemoBaseViewController: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         NSLog("chartValueSelected");
+        
+        if entry.y == 0.0{
+            chartView.highlightValue(nil, callDelegate: false)
+        }
+
     }
     
     func chartValueNothingSelected(_ chartView: ChartViewBase) {

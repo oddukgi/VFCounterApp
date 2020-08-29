@@ -23,8 +23,8 @@ class ChartVC: UIViewController {
     var monthlyChartView: UIView!
     
     var currentVC: UIViewController?
-    
     let dateConverter = DateConverter(date: Date())
+    
     lazy var weeklyChartVC: UIViewController? = {
         let date = dateConverter.changeDate(format: "yyyy.MM.dd", option: 1)
         let weeklyChartVC = WeeklyChartVC(date: date)

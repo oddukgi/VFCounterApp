@@ -28,6 +28,7 @@ open class BalloonMarker: MarkerImage
     fileprivate var _labelSize: CGSize = CGSize()
     fileprivate var _paragraphStyle: NSMutableParagraphStyle?
     fileprivate var _drawAttributes = [NSAttributedString.Key : Any]()
+    let shadowColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     
     @objc public init(color: UIColor, font: UIFont, textColor: UIColor, insets: UIEdgeInsets)
     {
@@ -104,8 +105,9 @@ open class BalloonMarker: MarkerImage
         rect.origin.y -= size.height
         
         context.saveGState()
-        
         context.setFillColor(color.cgColor)
+        
+        setShadow(context: context, color: shadowColor, width: 0, height: 2, blur: 3.0)
         
         if offset.y > 0 {
             
@@ -120,12 +122,14 @@ open class BalloonMarker: MarkerImage
             context.beginPath()
             let p1 = CGPoint(x: rect.origin.x + rect.size.width / 2.0 - arrowSize.width / 2.0, y: rect.origin.y + arrowSize.height + 1)
             context.move(to: p1)
+            
             context.addLine(to: CGPoint(x: p1.x + arrowSize.width, y: p1.y))
             context.addLine(to: CGPoint(x: point.x, y: point.y))
             context.addLine(to: p1)
 
             context.fillPath()
-            
+            setShadow(context: context, color: .clear)
+              
         } else {
             context.beginPath()
             let rect2 = CGRect(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height - arrowSize.height)
@@ -133,7 +137,7 @@ open class BalloonMarker: MarkerImage
             context.addPath(clipPath)
             context.closePath()
             context.fillPath()
-
+            
             // arraow vertex
             context.beginPath()
             let p1 = CGPoint(x: rect.origin.x + rect.size.width / 2.0 - arrowSize.width / 2.0, y: rect.origin.y + rect.size.height - arrowSize.height - 1)
@@ -143,6 +147,8 @@ open class BalloonMarker: MarkerImage
             context.addLine(to: p1)
 
             context.fillPath()
+            setShadow(context: context, color: shadowColor, width: 0, height: 2, blur: 3.0)
+
         }
         
         if offset.y > 0 {
@@ -164,17 +170,22 @@ open class BalloonMarker: MarkerImage
 
     open override func refreshContent(entry: ChartDataEntry, highlight: Highlight)
     {
-        setLabel(String(entry.y))
+        let value = Int(entry.y)
+        setLabel(String("\(value) g"))
     }
     
     @objc open func setLabel(_ newLabel: String)
     {
         label = newLabel
         
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.white
+        
         _drawAttributes.removeAll()
         _drawAttributes[.font] = self.font
         _drawAttributes[.paragraphStyle] = _paragraphStyle
         _drawAttributes[.foregroundColor] = self.textColor
+        _drawAttributes[.shadow] = shadow   // remove font shadow
         
         _labelSize = label?.size(withAttributes: _drawAttributes) ?? CGSize.zero
         
@@ -183,7 +194,20 @@ open class BalloonMarker: MarkerImage
         size.height = _labelSize.height + self.insets.top + self.insets.bottom
         size.width = max(minimumSize.width, size.width)
         size.height = max(minimumSize.height, size.height)
+
+        
         self.size = size
+    }
+    
+    func setShadow(context: CGContext, color: UIColor, width: CGFloat = 0,
+                   height: CGFloat = 0, blur: CGFloat = 0) {
+        
+        // set shadow
+        let shadowColor = color
+        context.setShadow(
+        offset: CGSize(width: 0, height: 2),
+        blur: blur,
+        color: shadowColor.cgColor)
     }
 }
 

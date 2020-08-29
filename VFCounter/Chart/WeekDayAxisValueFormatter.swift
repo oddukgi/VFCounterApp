@@ -12,18 +12,17 @@ import Charts
 // we'll put label on weekdays from SUN to SAT
 class WeekDayAxisValueFormatter: NSObject, IAxisValueFormatter {
        
-    weak var chart: BarLineChartViewBase?
-
-    init(chart: BarLineChartViewBase) {
-        self.chart = chart
+    var weekdays = [String]()
+    
+    init(weekdays: [String]) {
+        self.weekdays = weekdays
     }
     
+    
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        
-        let day = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
-        let index = Int(value)
-        return day[index]
+       
+        let index = Int(value.rounded())
+        guard weekdays.indices.contains(index), index == Int(value) else { return "" }
+        return weekdays[ index % (weekdays.count)]
     }
-
-
 }

@@ -35,13 +35,16 @@ extension ChartVC {
         segmentControl.selectedConfiguration(font: defaultFont, color: .white)
         segmentControl.addTarget(self, action: #selector(changedIndexSegment), for: .valueChanged)
         
+
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
             $0.top.equalTo(segmentControl.snp.bottom).offset(22)
             $0.leading.equalTo(view)
             $0.width.equalTo(view.bounds.width)
-            $0.bottom.equalTo(view).offset(-210)
+            $0.bottom.equalTo(view)
         }
+        
+//        contentView.layer.borderWidth = 1
     }
         
 }

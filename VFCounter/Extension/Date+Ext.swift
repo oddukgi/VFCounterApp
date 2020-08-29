@@ -34,6 +34,12 @@ extension Date {
         let month = component.month ?? 1
         return month
     }
+    
+    func getDay() -> Int {
+        let component = self.get(.year,.month,.day)
+        let day = component.day ?? 31
+        return day
+    }
 
     func startOfMonth(in calendar: Calendar = .current) -> Date {
         return calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
@@ -61,16 +67,15 @@ extension Date {
     }
     
     // Start Of Week, End Of Week
-    func startOfWeek(in calendar: Calendar = .current) -> Date {
+    func getStartOfWeek(in calendar: Calendar = .current, value: Int = 1) -> Date {
         let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
-        return calendar.date(byAdding: .day, value: 1, to: startDate)!
+        return calendar.date(byAdding: .day, value: value, to: startDate)!
     }
     
-    func endOfWeek(in calendar: Calendar = .current) -> Date {
+    func getEndOfWeek(in calendar: Calendar = .current, value: Int = 7) -> Date {
         let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
-        return calendar.date(byAdding: .day, value: 7, to: startDate)!
+        return calendar.date(byAdding: .day, value: value, to: startDate)!
     }
-    
     
     func getFirstDayMonth() -> Int {
         let date = startOfMonth()
@@ -84,12 +89,12 @@ extension Date {
         return component.day ?? 30
     }
     
-    func getEntityDT() -> String {
+    func changeDateTimeKR(format: String) -> String {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.timeZone = TimeZone.current
         dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy.MM.dd"
+        dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
     
@@ -102,5 +107,45 @@ extension Date {
         return Calendar.current.date(byAdding: .day, value: +1, to: self)!
     }
 
+    var aDayInLastWeek: Date {
+        return Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self)!
+    }
+    
+    var aDayInNextWeek: Date {
+        return Calendar.current.date(byAdding: .weekOfYear, value: +1, to: self)!
+    }
 
+    func getWeekDates() -> [Date] {
+        
+        var arrThisWeek: [Date] = []
+        for i in 0..<7 {
+            arrThisWeek.append(Calendar.current.date(byAdding: .day, value: i, to: self)!)
+        }
+        
+        return arrThisWeek
+    }
 }
+
+
+// Time Comparison (included seconds)
+
+extension Date {
+    func secondsFromBeginningOfTheDay() -> TimeInterval {
+        let calendar = Calendar.current
+        //omitting fractions of seconds for simplicity
+        let dateComponents = calendar.dateComponents([.hour, .minute,.second], from: self)
+        // calcurate seconds
+        let dateSeconds = dateComponents.hour! * 3600 + dateComponents.minute! * 60 + dateComponents.second!
+       
+        return TimeInterval(dateSeconds)
+    }
+    
+    // Interval between two times of the day in seconds
+    func timeOfDayInterval(toDate date: Date) -> TimeInterval {
+        let date1Seconds = self.secondsFromBeginningOfTheDay()
+        let date2Seconds = date.secondsFromBeginningOfTheDay()
+        return date2Seconds - date1Seconds
+    }
+}
+// get next week
+

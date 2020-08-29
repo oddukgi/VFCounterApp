@@ -18,7 +18,7 @@ class MontlyChartVC: ChartBaseVC {
     
     lazy var btnLeftArrow: VFButton = {
         let button = VFButton()
-        button.addImage(imageName: "month arrow")
+        button.addImage(imageName: "chartL")
         button.contentMode = .scaleAspectFit
         
         return button

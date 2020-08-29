@@ -14,7 +14,6 @@ extension UserItemVC {
     
 // MARK: create collectionView layout
 
-    
     // 384 X 104 , item : 74 X 73
     func configureHierarchy() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind))
@@ -51,6 +50,7 @@ extension UserItemVC {
                 else {
                     fatalError("Cannot create new cell")
                 }
+            
             cell.delegate = self
             cell.layer.cornerRadius = 10
             cell.layer.borderWidth = 1
@@ -97,10 +97,14 @@ extension UserItemVC {
   
             let fetchedItem = fetchingItems[i](stringDate!)
             currentSnapshot.appendItems(fetchedItem)
+
         }
         
-        dataSource.apply(self.currentSnapshot, animatingDifferences: true)
-//        reloadRing(date: date!)
+        DispatchQueue.main.async {
+            self.dataSource.apply(self.currentSnapshot, animatingDifferences: true)
+        }
+
+        reloadRing(date: stringDate!)
     }
 
     func reloadRing(date: String) {
@@ -115,7 +119,7 @@ extension UserItemVC {
     
     func hideItemView() {
         checkedIndexPath.removeAll()
-        self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+        updateData()
     }
 }
 
@@ -133,7 +137,7 @@ extension UserItemVC: UICollectionViewDelegate {
             
         } else {
             checkedIndexPath.removeAll()
-            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+            updateData()
         }
         
     }
@@ -163,7 +167,9 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
         
             self.hideItemView()
             self.tag = tag
-            let itemPickVC = PickItemVC(delegate: self, tag: tag)
+            
+            let date = self.stringDate?.changeTextToDate(format: "yyyy.MM.dd")
+            let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date!)
             let navController = UINavigationController(rootViewController: itemPickVC)
             navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated: false)
@@ -178,7 +184,7 @@ extension UserItemVC: VFItemCellDelegate {
     func updateSelectedItem(item: VFItemController.Items, index: Int) {
         // display PickItemVC
         DispatchQueue.main.async {
-            let itemPickVC = PickItemVC(delegate: self, tag: index, item: item)
+            let itemPickVC = PickItemVC(delegate: self, tag: index, date: Date(), item: item)
             let navController = UINavigationController(rootViewController: itemPickVC)
             navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated: false)

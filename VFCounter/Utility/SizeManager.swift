@@ -21,6 +21,9 @@ class SizeManager {
         insideSliderSize = CGSize()
         userItemSection = 0
         userItemHeight = 0
+        itemTopPadding = 0
+        groupTopPadding = 0
+       
     }
     var getHeaderviewHeight: CGFloat {
         
@@ -100,10 +103,31 @@ class SizeManager {
         return userItemSection
     }
 
+    var itemTopPaddingCV: CGFloat {
+        if DeviceTypes.isiPhone8Standard {
+            itemTopPadding = 5
+        } else {
+            itemTopPadding = 5
+        }
+        
+        return itemTopPadding
+    }
+    
+    var groupTopPaddingCV: CGFloat {
+        if DeviceTypes.isiPhone8Standard {
+            groupTopPadding = 8
+        } else {
+            groupTopPadding = 10
+        }
+       
+        return groupTopPadding
+    }
+    
+    
     var getUserItemHeight: CGFloat {
 
         if DeviceTypes.isiPhone8Standard {
-            userItemHeight = 105
+            userItemHeight = 98
         } else {
             userItemHeight = 108
         }
@@ -159,11 +183,32 @@ class SizeManager {
     }
     
 
+    /// chartview height by device screen size
+    //let height = view.bounds.height - 250
+    var chartHeight: CGFloat {
+      
+        var height: CGFloat = 0.0
+        if DeviceTypes.isiPhone8Standard {
+            height = ScreenSize.height - 250
+        } else if DeviceTypes.isiPhone8PlusStandard {
+            height = ScreenSize.height - 300
+        } else if DeviceTypes.isiPhoneXsMaxAndXr {
+            height = ScreenSize.height - 400
+        }
+        
+        return height
+    }
+
+    
     fileprivate var headerViewHeight: CGFloat
     fileprivate var circularViewHeight: CGFloat
     fileprivate var outerSliderSize: CGSize
     fileprivate var insideSliderSize: CGSize
     fileprivate var userItemSection: CGFloat 
     fileprivate var userItemHeight: CGFloat
+    
+    fileprivate var itemTopPadding: CGFloat
+    fileprivate var groupTopPadding: CGFloat
+  
 
 }

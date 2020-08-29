@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		12000DBC24C7D8F7005C49D2 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12000DBB24C7D8F7005C49D2 /* DateConverter.swift */; };
+		12024F7D24F7A58000A91FDA /* WeeklyChartVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12024F7C24F7A58000A91FDA /* WeeklyChartVC+Ext.swift */; };
+		120E97FB24F8A9DD0095D765 /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E97FA24F8A9DD0095D765 /* Typealias.swift */; };
+		120E97FD24F8AA650095D765 /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E97FC24F8AA650095D765 /* DateProvider.swift */; };
 		12143CD324CA8F800080ADFE /* DateView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143CD224CA8F800080ADFE /* DateView+Constraint.swift */; };
 		12143CD624CA93F80080ADFE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143CD524CA93F80080ADFE /* Constants.swift */; };
 		1217CE3D24DA792C00521D49 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217CE3C24DA792C00521D49 /* SettingController.swift */; };
@@ -68,6 +71,11 @@
 		1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6524C6FA14008DB339 /* VFSubTitleLabel.swift */; };
 		1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6624C6FA14008DB339 /* VFTitleLabel.swift */; };
 		1290EE6A24C6FA14008DB339 /* VFBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6724C6FA14008DB339 /* VFBodyLabel.swift */; };
+		129116D624F616F700BEF3B2 /* SeoulnamsanB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D524F6160C00BEF3B2 /* SeoulnamsanB.otf */; };
+		129116D724F616F700BEF3B2 /* SeoulnamsanBL.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D124F6160B00BEF3B2 /* SeoulnamsanBL.otf */; };
+		129116D824F616F700BEF3B2 /* SeoulnamsanEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D324F6160B00BEF3B2 /* SeoulnamsanEB.otf */; };
+		129116D924F616F700BEF3B2 /* SeoulnamsanL.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D224F6160B00BEF3B2 /* SeoulnamsanL.otf */; };
+		129116DA24F616F700BEF3B2 /* SeoulnamsanM.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D424F6160C00BEF3B2 /* SeoulnamsanM.otf */; };
 		1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B18D24C9834600625BE6 /* VFCircularView.swift */; };
 		1291B19124C983F400625BE6 /* Ring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B19024C983F400625BE6 /* Ring.swift */; };
 		1291B19424C9842900625BE6 /* HGCircularSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 1291B19324C9842900625BE6 /* HGCircularSlider */; };
@@ -90,6 +98,7 @@
 		12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92524CAB08200C11ECD /* UserItemVC.swift */; };
 		12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92824CABE7B00C11ECD /* VFItemController.swift */; };
 		12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12C066C124E9624600745B79 /* VFCounterDB.xcdatamodeld */; };
+		12C2FA4024F65A74001CEC30 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C2FA3F24F65A74001CEC30 /* UIButton+Ext.swift */; };
 		12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CF824E0F7D400677D5A /* MeasurementView.swift */; };
 		12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CFF24E0F8D100677D5A /* VFTextField.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
@@ -129,6 +138,9 @@
 
 /* Begin PBXFileReference section */
 		12000DBB24C7D8F7005C49D2 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
+		12024F7C24F7A58000A91FDA /* WeeklyChartVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyChartVC+Ext.swift"; sourceTree = "<group>"; };
+		120E97FA24F8A9DD0095D765 /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
+		120E97FC24F8AA650095D765 /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
 		12143CD224CA8F800080ADFE /* DateView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateView+Constraint.swift"; sourceTree = "<group>"; };
 		12143CD524CA93F80080ADFE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1217CE3C24DA792C00521D49 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
@@ -194,6 +206,11 @@
 		1290EE6524C6FA14008DB339 /* VFSubTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFSubTitleLabel.swift; sourceTree = "<group>"; };
 		1290EE6624C6FA14008DB339 /* VFTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFTitleLabel.swift; sourceTree = "<group>"; };
 		1290EE6724C6FA14008DB339 /* VFBodyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFBodyLabel.swift; sourceTree = "<group>"; };
+		129116D124F6160B00BEF3B2 /* SeoulnamsanBL.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanBL.otf; sourceTree = "<group>"; };
+		129116D224F6160B00BEF3B2 /* SeoulnamsanL.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanL.otf; sourceTree = "<group>"; };
+		129116D324F6160B00BEF3B2 /* SeoulnamsanEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanEB.otf; sourceTree = "<group>"; };
+		129116D424F6160C00BEF3B2 /* SeoulnamsanM.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanM.otf; sourceTree = "<group>"; };
+		129116D524F6160C00BEF3B2 /* SeoulnamsanB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanB.otf; sourceTree = "<group>"; };
 		1291B18D24C9834600625BE6 /* VFCircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFCircularView.swift; sourceTree = "<group>"; };
 		1291B19024C983F400625BE6 /* Ring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ring.swift; sourceTree = "<group>"; };
 		1291B19524C9851800625BE6 /* VFCircularView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VFCircularView+Ext.swift"; sourceTree = "<group>"; };
@@ -214,6 +231,7 @@
 		12BBF92524CAB08200C11ECD /* UserItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemVC.swift; sourceTree = "<group>"; };
 		12BBF92824CABE7B00C11ECD /* VFItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFItemController.swift; sourceTree = "<group>"; };
 		12C066C224E9624600745B79 /* VFCounterDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VFCounterDB.xcdatamodel; sourceTree = "<group>"; };
+		12C2FA3F24F65A74001CEC30 /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		12C64CF824E0F7D400677D5A /* MeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementView.swift; sourceTree = "<group>"; };
 		12C64CFF24E0F8D100677D5A /* VFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFTextField.swift; sourceTree = "<group>"; };
 		12CC426824D7D9CC0086B3AE /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
@@ -276,6 +294,7 @@
 				12FF76DD24DE72C6009542FE /* VFError.swift */,
 				12885B6424E51044001586EA /* LocalizeConstant.swift */,
 				12AD3BA424EB647300443803 /* SettingManager.swift */,
+				120E97FA24F8A9DD0095D765 /* Typealias.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -386,9 +405,9 @@
 				127A497B24CC152D0032194E /* Popup */,
 				12BBF92724CABE4700C11ECD /* Model */,
 				12143CD424CA93F00080ADFE /* Utility */,
-				12B50CF924C6EB2200C87956 /* Screen */,
 				1290EE5A24C6ED37008DB339 /* Custom Views */,
 				12B50CFA24C6EBA800C87956 /* Extension */,
+				12B50CF924C6EB2200C87956 /* Screen */,
 				12FD254524CEF6BB00E3D5E0 /* Support Files */,
 				126AE53924C6C6B4000BCF7E /* AppDelegate.swift */,
 				126AE53B24C6C6B4000BCF7E /* SceneDelegate.swift */,
@@ -437,6 +456,7 @@
 				12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */,
 				12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */,
 				1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */,
+				12024F7C24F7A58000A91FDA /* WeeklyChartVC+Ext.swift */,
 				1251729124F4DBA0002B9927 /* MontlyChartVC.swift */,
 				1251729324F4E129002B9927 /* MonthlyChartVC+Ext.swift */,
 			);
@@ -466,6 +486,18 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
+		129116D024F615E600BEF3B2 /* Seoulnamsan */ = {
+			isa = PBXGroup;
+			children = (
+				129116D524F6160C00BEF3B2 /* SeoulnamsanB.otf */,
+				129116D124F6160B00BEF3B2 /* SeoulnamsanBL.otf */,
+				129116D324F6160B00BEF3B2 /* SeoulnamsanEB.otf */,
+				129116D224F6160B00BEF3B2 /* SeoulnamsanL.otf */,
+				129116D424F6160C00BEF3B2 /* SeoulnamsanM.otf */,
+			);
+			path = Seoulnamsan;
+			sourceTree = "<group>";
+		};
 		12B50CF924C6EB2200C87956 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -485,6 +517,7 @@
 		12B50CFA24C6EBA800C87956 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				12C2FA3F24F65A74001CEC30 /* UIButton+Ext.swift */,
 				12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */,
 				12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */,
 				12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */,
@@ -517,6 +550,7 @@
 				12FF76D924DE7118009542FE /* UserSettings.swift */,
 				12AAC70C24E7DE60000B16E7 /* UserDataManager.swift */,
 				12A0DCDC24EFC4400002F15F /* DataManager.swift */,
+				120E97FC24F8AA650095D765 /* DateProvider.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -572,6 +606,7 @@
 		12FD254524CEF6BB00E3D5E0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				129116D024F615E600BEF3B2 /* Seoulnamsan */,
 				12FD254624CEF6BB00E3D5E0 /* NanumSquareRound */,
 				12FD254B24CEF6BB00E3D5E0 /* I18N.swift */,
 			);
@@ -708,6 +743,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				129116D624F616F700BEF3B2 /* SeoulnamsanB.otf in Resources */,
+				129116D724F616F700BEF3B2 /* SeoulnamsanBL.otf in Resources */,
+				129116D824F616F700BEF3B2 /* SeoulnamsanEB.otf in Resources */,
+				129116D924F616F700BEF3B2 /* SeoulnamsanL.otf in Resources */,
+				129116DA24F616F700BEF3B2 /* SeoulnamsanM.otf in Resources */,
 				121A909424D18C8C00AE0780 /* Fruits.xcassets in Resources */,
 				126AE54624C6C6B6000BCF7E /* LaunchScreen.storyboard in Resources */,
 				127BF74624E530050066AC7D /* code garbage in Resources */,
@@ -762,6 +802,7 @@
 				1251729424F4E129002B9927 /* MonthlyChartVC+Ext.swift in Sources */,
 				123E010124ED4215000457B9 /* WeatherData.swift in Sources */,
 				12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */,
+				12C2FA4024F65A74001CEC30 /* UIButton+Ext.swift in Sources */,
 				123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */,
 				129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */,
 				12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */,
@@ -797,10 +838,12 @@
 				124F561724DED284006CE413 /* CustomSlider.swift in Sources */,
 				12143CD324CA8F800080ADFE /* DateView+Constraint.swift in Sources */,
 				126AA42824F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift in Sources */,
+				12024F7D24F7A58000A91FDA /* WeeklyChartVC+Ext.swift in Sources */,
 				1251729024F4DB91002B9927 /* WeeklyChartVC.swift in Sources */,
 				12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */,
 				1251729224F4DBA0002B9927 /* MontlyChartVC.swift in Sources */,
 				12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */,
+				120E97FD24F8AA650095D765 /* DateProvider.swift in Sources */,
 				1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */,
 				126AA43724F4BC2C00FF4F87 /* DataType+CoreDataClass.swift in Sources */,
 				121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */,
@@ -818,6 +861,7 @@
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,
 				12FF76E224DE85DE009542FE /* GFAlertVC.swift in Sources */,
 				12A0DCDD24EFC4400002F15F /* DataManager.swift in Sources */,
+				120E97FB24F8A9DD0095D765 /* Typealias.swift in Sources */,
 				1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */,
 				124B917E24CACC35009616A7 /* VFItemCell.swift in Sources */,
 				12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */,
