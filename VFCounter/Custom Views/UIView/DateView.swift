@@ -37,11 +37,7 @@ class DateView: UIView {
         return imageView
     }()
     
-    
-    var getDate: Date {
-        return date
-    }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureStackView()
@@ -70,11 +66,9 @@ class DateView: UIView {
         btnRightArrow.addTarget(self, action: #selector(changedDateTouched), for: .touchUpInside)
         btnRightArrow.tag = 1
         
-        startDate = date.startOfMonth().endOfDay()
-        endDate  = Calendar.current.date(byAdding: .month, value: +1, to: date)
-        endDate = endDate?.endOfMonth().endOfDay()
-        
-        print(endDate!)
+        startDate = date.getFirstMonthDate()
+        endDate = date.addDaysToday(days: 0)
+
     }
     
     
@@ -107,4 +101,17 @@ class DateView: UIView {
         
     }
 
+    
+    func updateDate(userdate: String) {
+        
+        date = userdate.changeDateTime(format: .date)
+        if date > startDate! {
+             changedDateTouched(btnLeftArrow)
+        }
+        
+        if date < endDate! {
+            changedDateTouched(btnRightArrow)
+        }
+        
+    }
 }

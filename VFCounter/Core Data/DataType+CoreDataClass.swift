@@ -2,7 +2,7 @@
 //  DataType+CoreDataClass.swift
 //  VFCounter
 //
-//  Created by Sunmi on 2020/08/25.
+//  Created by Sunmi on 2020/09/01.
 //  Copyright © 2020 creativeSun. All rights reserved.
 //
 //

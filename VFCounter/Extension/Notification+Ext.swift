@@ -11,5 +11,6 @@ import Foundation
 extension Notification.Name {
     static let updateTaskPercent = Notification.Name("updateTaskPercent")
     static let updateFetchingData = Notification.Name("updateFetchingData")
+    static let updateDateTime = Notification.Name("updateDateTime")
 
 }

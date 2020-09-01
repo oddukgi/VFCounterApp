@@ -103,7 +103,7 @@ class WeeklyChartVC: ChartBaseVC {
     }
     
     func getCurrentWeek() {
-        let newDate = date?.changeTextToDate(format: "yyyy.MM.dd")
+        let newDate = date?.changeDateTime(format: .date)
         let startWeekDate = newDate?.getStartOfWeek()
         aDayWeek = startWeekDate
         changeDate()

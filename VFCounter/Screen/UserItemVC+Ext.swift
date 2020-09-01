@@ -59,9 +59,9 @@ extension UserItemVC {
             let image = UIImage(data: data.image!)
             let amount = Int(data.amount)
             
-            
+            let dateTime = data.createdDate?.changeDateTime(format: .dateTime)
         
-            cell.updateContents(image: image,name: data.name!, amount: amount, date: data.createdDate!)
+            cell.updateContents(image: image,name: data.name!, amount: amount, date: dateTime!)
             cell.selectedItem = self.checkedIndexPath.contains(indexPath)
 
             return cell
@@ -94,7 +94,6 @@ extension UserItemVC {
     
         for i in 0..<2 {
             currentSnapshot.appendSections([vfitemController.collections[i]])
-  
             let fetchedItem = fetchingItems[i](stringDate)
             currentSnapshot.appendItems(fetchedItem)
 
@@ -110,7 +109,7 @@ extension UserItemVC {
     func reloadRing(date: String) {
     
         dataManager.getSumItems(date: date) { (veggieSum, fruitSum) in
-            print("\(veggieSum) \(fruitSum)")
+//            print("\(veggieSum) \(fruitSum)")
             self.circularView.updateValue(amount: Int(veggieSum), tag: 0)
             self.circularView.updateValue(amount: Int(fruitSum), tag: 1)
             
@@ -152,10 +151,10 @@ extension UserItemVC: PickItemVCProtocol {
     func addItems(item: VFItemController.Items) {
 
         if !item.name.isEmpty {
-
-            dataManager.createEntity(item: item, tag: tag)            
             stringDate = String(item.date.split(separator: " ").first!)
-            updateData()
+            NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
+            dataManager.createEntity(item: item, tag: tag)            
+		    updateData() 
         }
       
     }
@@ -170,7 +169,7 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
             self.hideItemView()
             self.tag = tag
             
-            let date = self.stringDate + Date().changeDateTimeKR(format: " h:mm:ss a")
+            let date = self.stringDate + Date().changeDateTime(format: .onlyTime)    
             let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date)
             let navController = UINavigationController(rootViewController: itemPickVC)
             navController.modalPresentationStyle = .fullScreen

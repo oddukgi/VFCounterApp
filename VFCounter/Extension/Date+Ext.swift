@@ -10,6 +10,14 @@ import Foundation
 
 extension Date {
     
+    
+    enum Format: String {
+        case date = "yyyy.MM.dd"
+        case dateTime = "yyyy.MM.dd h:mm:ss a"
+        case longDate = "yyyy.MM.dd EEE"
+        case onlyTime = " h:mm:ss a"
+    }
+    
     /// get month, year, day
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
         return calendar.dateComponents(Set(components), from: self)
@@ -50,14 +58,7 @@ extension Date {
                              to: self.startOfMonth(in: calendar))!.endOfDay(in: calendar)
     }
     
-    func isInSameDay(in calendar: Calendar = .current, date: Date) -> Bool {
-        return calendar.isDate(self, equalTo: date, toGranularity: .day)
-    }
-    
-    func isInSameMonth(in calendar: Calendar = .current, date: Date) -> Bool {
-        return calendar.component(.month, from: self) == calendar.component(.month, from: date)
-    }
-      
+  
     func startOfDay(in calendar: Calendar = .current) -> Date {
         return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
     }
@@ -89,13 +90,14 @@ extension Date {
         return component.day ?? 30
     }
     
-    func changeDateTimeKR(format: String) -> String {
+    
+    func changeDateTime(format: Format) -> String {
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: self)
+        let formatter = DateFormatter()
+        formatter.dateFormat = format.rawValue
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(secondsFromGMT: 9)
+        return formatter.string(from: self)
     }
     
     
@@ -124,28 +126,28 @@ extension Date {
         
         return arrThisWeek
     }
-}
+    
+    func addDaysToday(days: Int) -> Date? {
+        var dateComponents = DateComponents()
+        dateComponents.day = days
 
-
-// Time Comparison (included seconds)
-
-extension Date {
-    func secondsFromBeginningOfTheDay() -> TimeInterval {
-        let calendar = Calendar.current
-        //omitting fractions of seconds for simplicity
-        let dateComponents = calendar.dateComponents([.hour, .minute,.second], from: self)
-        // calcurate seconds
-        let dateSeconds = dateComponents.hour! * 3600 + dateComponents.minute! * 60 + dateComponents.second!
-       
-        return TimeInterval(dateSeconds)
+        return Calendar.current.date(byAdding: dateComponents, to: self) //you can return your own Date here.
     }
     
-    // Interval between two times of the day in seconds
-    func timeOfDayInterval(toDate date: Date) -> TimeInterval {
-        let date1Seconds = self.secondsFromBeginningOfTheDay()
-        let date2Seconds = date.secondsFromBeginningOfTheDay()
-        return date2Seconds - date1Seconds
+    func dayOfWeek() -> String? {
+         let dateFormatter = DateFormatter()
+         dateFormatter.timeZone = TimeZone.current
+         dateFormatter.locale = Locale(identifier: "ko_KR")
+         dateFormatter.dateFormat = "EEE"
+         return dateFormatter.string(from: self)
+     }
+    
+    func getFirstMonthDate(in calendar: Calendar = .current) -> Date? {
+        var minDateComponent = calendar.dateComponents([.year, .month, .day], from: self)
+        minDateComponent.month = 1
+        minDateComponent.day = 1 
+        return calendar.date(from: minDateComponent)?.endOfDay()
     }
+
 }
-// get next week
 

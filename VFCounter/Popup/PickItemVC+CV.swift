@@ -37,7 +37,7 @@ extension PickItemVC {
             $0.height.equalTo(halfheight)
         }
  
-        collectionView.layer.borderWidth = 1
+//        collectionView.layer.borderWidth = 1
         collectionView.delegate = self
   }
 
@@ -122,14 +122,7 @@ extension PickItemVC: UICollectionViewDelegate {
 
 extension PickItemVC: MeasurementViewDelegate {
 
-    func showDatePickerVC() {
-        let datePickerVC = DatePickerVC(delegate: self)
-        
-        datePickerVC.modalPresentationStyle  = .overFullScreen
-        datePickerVC.modalTransitionStyle    = .crossDissolve
-        datePickerVC.view.layoutIfNeeded() 
-        self.present(datePickerVC, animated: true)
-    }
+
     
 }
 

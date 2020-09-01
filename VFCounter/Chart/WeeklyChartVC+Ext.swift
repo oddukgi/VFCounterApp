@@ -15,7 +15,7 @@ extension WeeklyChartVC {
         view.addSubview(chartView)
         
         let height = SizeManager().chartHeight
-        print("Size: \(view.bounds.width) \(view.bounds.height)")
+//        print("Size: \(view.bounds.width) \(view.bounds.height)")
         chartView.snp.makeConstraints { make in
             make.top.equalTo(weekStackView.snp.bottom).offset(10)
             make.width.equalTo(view.bounds.width)

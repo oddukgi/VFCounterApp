@@ -23,36 +23,29 @@ enum UIHelper {
         
        let itemSize = NSCollectionLayoutSize(
         widthDimension: .fractionalWidth(1.0),
-        heightDimension: .absolute(200)
+        heightDimension: .absolute(80)
        )
 
        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
        layoutItem.contentInsets = NSDirectionalEdgeInsets(
-          top: 5,
-          leading: 5,
-          bottom: 5,
-          trailing: 5
+          top: 3,
+          leading: 2,
+          bottom: 3,
+          trailing: 2
        )
         
-    let layoutGroupSize = NSCollectionLayoutSize(
-        widthDimension: .fractionalWidth(0.3),
-        heightDimension: .absolute(200)
-       )
-       let layoutGroup = NSCollectionLayoutGroup.vertical(
-          layoutSize: layoutGroupSize,
-          subitem: layoutItem,
-          count: 2
-       )
-
-       let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-       layoutSection.orthogonalScrollingBehavior = .continuous
-
-       layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(80))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                             subitem: layoutItem, count: 5)
+//        group.interItemSpacing = .fixed(3.5)
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-       let layoutSectionHeader = createSectionHeader()
-       layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
+       let sectionHeader = createSectionHeader()
+       section.boundarySupplementaryItems = [sectionHeader]
 
-       return layoutSection
+       return section
     }
     
     static func createHorizontalLayout(titleElemendKind: String) -> UICollectionViewCompositionalLayout {

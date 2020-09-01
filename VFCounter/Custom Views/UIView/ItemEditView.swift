@@ -67,8 +67,8 @@ class ItemEditView: UIView {
         }
         
 
-                itemButton[0].layer.borderWidth = 1
-                itemButton[1].layer.borderWidth = 1
+//        itemButton[0].layer.borderWidth = 1
+//        itemButton[1].layer.borderWidth = 1
 
 
     }

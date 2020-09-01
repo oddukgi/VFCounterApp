@@ -68,14 +68,12 @@ extension String {
         return time
     }
     
-    // convert time to date
-    func changeTextToDate(format: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = format
-        
-        return dateFormatter.date(from: self)!
+    func changeDateTime(format: Date.Format) -> Date {
+       let formatter = DateFormatter()
+        formatter.dateFormat = format.rawValue
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(secondsFromGMT: 9)
+        return formatter.date(from: self)!
     }
     
     func getWeekdayIndex() -> Int {

@@ -26,6 +26,8 @@
 		12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283AFE24CFB73400AE93E6 /* UIHelper.swift */; };
 		12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */; };
 		12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0424CFBDA900AE93E6 /* PickItems.swift */; };
+		122D3BC624FE8D08003629A9 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D3BC424FE8D08003629A9 /* DataType+CoreDataClass.swift */; };
+		122D3BC724FE8D08003629A9 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D3BC524FE8D08003629A9 /* DataType+CoreDataProperties.swift */; };
 		1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236800424D02DB6004F4AE8 /* SectionHeader.swift */; };
 		1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */; };
 		123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E00FD24ED40CE000457B9 /* NetworkManager.swift */; };
@@ -44,8 +46,6 @@
 		126AA42824F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */; };
 		126AA42924F4AA4300FF4F87 /* Veggies+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */; };
 		126AA42A24F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42424F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift */; };
-		126AA43724F4BC2C00FF4F87 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA43524F4BC2C00FF4F87 /* DataType+CoreDataClass.swift */; };
-		126AA43824F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA43624F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift */; };
 		126AE53A24C6C6B4000BCF7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53924C6C6B4000BCF7E /* AppDelegate.swift */; };
 		126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53B24C6C6B4000BCF7E /* SceneDelegate.swift */; };
 		126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53D24C6C6B4000BCF7E /* HomeVC.swift */; };
@@ -101,6 +101,7 @@
 		12C2FA4024F65A74001CEC30 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C2FA3F24F65A74001CEC30 /* UIButton+Ext.swift */; };
 		12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CF824E0F7D400677D5A /* MeasurementView.swift */; };
 		12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C64CFF24E0F8D100677D5A /* VFTextField.swift */; };
+		12CBCF0B24FCD9C100529535 /* UserDateTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
 		12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */; };
 		12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F81FED24F24B030047804A /* ItemEditView.swift */; };
@@ -156,6 +157,8 @@
 		12283AFE24CFB73400AE93E6 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickItemVC+CV.swift"; sourceTree = "<group>"; };
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
+		122D3BC424FE8D08003629A9 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		122D3BC524FE8D08003629A9 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		122E073924EE664A00BC8066 /* VFCounter.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
 		1236800424D02DB6004F4AE8 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
@@ -175,8 +178,6 @@
 		126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataClass.swift"; sourceTree = "<group>"; };
 		126AA42424F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		126AA43524F4BC2C00FF4F87 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
-		126AA43624F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		126AE53624C6C6B4000BCF7E /* VFCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VFCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		126AE53924C6C6B4000BCF7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		126AE53B24C6C6B4000BCF7E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,6 +235,7 @@
 		12C2FA3F24F65A74001CEC30 /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
 		12C64CF824E0F7D400677D5A /* MeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementView.swift; sourceTree = "<group>"; };
 		12C64CFF24E0F8D100677D5A /* VFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFTextField.swift; sourceTree = "<group>"; };
+		12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDateTimeView.swift; sourceTree = "<group>"; };
 		12CC426824D7D9CC0086B3AE /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		12F81FED24F24B030047804A /* ItemEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditView.swift; sourceTree = "<group>"; };
@@ -352,8 +354,8 @@
 		1240D3D624E642C100A7EAD4 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				126AA43524F4BC2C00FF4F87 /* DataType+CoreDataClass.swift */,
-				126AA43624F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift */,
+				122D3BC424FE8D08003629A9 /* DataType+CoreDataClass.swift */,
+				122D3BC524FE8D08003629A9 /* DataType+CoreDataProperties.swift */,
 				126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */,
 				126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */,
 				126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */,
@@ -599,6 +601,7 @@
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
 				127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */,
 				122420A324EE504300729898 /* WeatherIconView.swift */,
+				12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -785,7 +788,6 @@
 				122420A424EE504300729898 /* WeatherIconView.swift in Sources */,
 				12FF76E424DE8658009542FE /* VFAlertContainerView.swift in Sources */,
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
-				126AA43824F4BC2C00FF4F87 /* DataType+CoreDataProperties.swift in Sources */,
 				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
 				126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */,
@@ -814,6 +816,7 @@
 				12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */,
 				126AA42724F4AA4300FF4F87 /* Fruits+CoreDataClass.swift in Sources */,
 				12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */,
+				122D3BC624FE8D08003629A9 /* DataType+CoreDataClass.swift in Sources */,
 				12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */,
 				127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */,
 				1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */,
@@ -829,6 +832,7 @@
 				124B917C24CAC755009616A7 /* UserItemVC+Ext.swift in Sources */,
 				12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */,
 				12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */,
+				12CBCF0B24FCD9C100529535 /* UserDateTimeView.swift in Sources */,
 				122625E224DA549900AC2962 /* SettingVC.swift in Sources */,
 				12B3733D24DE498A00491FBB /* AlarmSettingVC.swift in Sources */,
 				12A655D624DD45FC00B0E042 /* CircleLine.swift in Sources */,
@@ -845,7 +849,6 @@
 				12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */,
 				120E97FD24F8AA650095D765 /* DateProvider.swift in Sources */,
 				1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */,
-				126AA43724F4BC2C00FF4F87 /* DataType+CoreDataClass.swift in Sources */,
 				121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */,
 				12885B6524E51044001586EA /* LocalizeConstant.swift in Sources */,
 				12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */,
@@ -855,6 +858,7 @@
 				1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */,
 				126AA42A24F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift in Sources */,
 				12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */,
+				122D3BC724FE8D08003629A9 /* DataType+CoreDataProperties.swift in Sources */,
 				12AD3BA724EB7B7800443803 /* TableHeaderView.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,

@@ -38,7 +38,8 @@ class DataManager {
               }
               
               entityItem?.name = item.name
-              entityItem?.createdDate = item.date
+              entityItem?.date = String(item.date.split(separator: " ").first!)
+              entityItem?.createdDate = item.date.changeDateTime(format: .dateTime)
               entityItem?.image = item.image?.pngData()
               entityItem?.amount = Int16(item.amount)
               
@@ -47,36 +48,6 @@ class DataManager {
        
        }
 
-    // MARK: edit entity
-    func updateVeggiesEntity(item: VFItemController.Items, tag: Int) {
-          // check DataType existing or not
-          var configuration = ""
-          var entity: DataType? = nil
-          
-        tag == 0 ? ( configuration = UserDataManager.veggieConfiguration ) : (configuration = UserDataManager.fruitsConfiguration )
-          
-        if let existingEntity = try? UserDataManager.dataStack.fetchOne(From<DataType>(configuration)
-            .where(\.name == item.name && \.createdDate == item.date)) {
-              
-              entity = existingEntity
-          }
-          
-          do {
-            let _ = try UserDataManager.dataStack.perform(synchronous: { transaction -> Bool in
-     
-                entity = transaction.edit(entity)!
-                entity?.name = item.name
-                entity?.createdDate = item.date
-                entity?.image = item.image?.pngData()
-                entity?.amount = Int16(item.amount)
-                return transaction.hasChanges
-            })
-          } catch {
-              print(error.localizedDescription)
-          }
-      }
-      
-      
     // MARK: delete all entities
     func deleteAllEntity() {
          
@@ -86,26 +57,7 @@ class DataManager {
           
       }
       
-    // MARK: delete single entity
-    func deleteItemFromEntity(name: String, dateTime: String, tag: Int) {
-          
-        var configuration = ""
-        tag == 0 ? ( configuration = UserDataManager.veggieConfiguration ) : (configuration = UserDataManager.fruitsConfiguration )
-          
-        guard let existingEntity = try? UserDataManager.dataStack.fetchOne(From<DataType>(configuration).where(\.name == name && \.createdDate == dateTime)) else { return }
-          
-          // transaction edit
-          do {
-            let _ = try UserDataManager.dataStack.perform(synchronous: { (transaction) -> Bool in
-                  transaction.delete(existingEntity)
-                  return transaction.hasChanges
-               })
-              
-          } catch {
-              print(error.localizedDescription)
-          }
-      }
-      
+
       
     func getEntity<T: DataType>(_ objectType: T.Type, section: Int) -> T? {
           
@@ -117,23 +69,14 @@ class DataManager {
 
           return entity
       }
-    
-    func sortEntity<T: DataType>(_ objectType: T.Type, section: Int) -> [T]? {
-          var configuration = ""
-        section == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
-        guard let entity = try? UserDataManager.dataStack.fetchAll(From<T>(configuration).orderBy(.descending(\.createdDate))) else {
-              return nil
-          }
-          return entity
-      }
-    
+
     
     func getSumItems(date: String, completion: @escaping (Int16, Int16) -> Void) {
     
         let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
             
-            let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.createdDate),date))
-            let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.createdDate),date))
+            let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
+            let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
             
             completion(veggieSum!, fruitSum!)
         })

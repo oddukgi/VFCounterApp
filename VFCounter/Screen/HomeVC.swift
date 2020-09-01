@@ -33,6 +33,7 @@ class HomeVC: UIViewController {
         setupConstraints()
         setContentView()
         settings()
+        prepareNotificationAddObserver()
     }
 
     // hide navigation bar
@@ -46,6 +47,14 @@ class HomeVC: UIViewController {
 //        dateView.btnPlus.addTarget(self, action: #selector(addItem), for: .touchUpInside)
   
     }
+    
+    //MARK: - notificationCenter
+    fileprivate func prepareNotificationAddObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)), name: .updateDateTime, object: nil)
+
+        
+    }
+    
     
     @objc func retrieveLocation() {
         
@@ -100,7 +109,7 @@ class HomeVC: UIViewController {
                 self.updateUI(weatherData)
                 
             case .failure(let error):
-                self.presentAlertVC(title: "데이터 요청에 실패하였습니다.", message: "Wifi나 데이터를 연결해주세요.",buttonTitle: "OK")
+//                self.presentAlertVC(title: "데이터 요청에 실패하였습니다.", message: "Wifi나 데이터를 연결해주세요.",buttonTitle: "OK")
                 
                 print(error.rawValue)
                 
@@ -120,6 +129,17 @@ class HomeVC: UIViewController {
             self.dateView.weatherIcon.downloadWeatherIcon(from: urlStr!)
         }
     }
+    
+    // MARK: action
+    @objc fileprivate func updateDateTime(_ notification: Notification) {
+        
+        if let userDate = notification.userInfo?["userdate"] as? String {
+            print(userDate)
+            dateView.updateDate(userdate: userDate)
+            
+        }
+    }
+     
     
 }
 

@@ -33,7 +33,7 @@ class PickItemCell: UICollectionViewCell {
     let uncheckImage = UIImage(named: "uncheck")?.imageByMakingWhiteBackgroundTransparent()
     let checkImage = UIImage(named: "check")?.imageByMakingWhiteBackgroundTransparent()
     
-    let lblName = VFSubTitleLabel(fontSize: 14)
+    let lblName = VFSubTitleLabel(fontSize: 12)
     
     let amountLabel = VFBodyLabel()
     var veggieDict: [String: Any] = [:]
@@ -66,19 +66,21 @@ class PickItemCell: UICollectionViewCell {
         veggieImage.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(4)
             $0.leading.equalTo(contentView).offset(11)
-            $0.size.equalTo(CGSize(width: 53, height: 57.8))
+            $0.size.equalTo(CGSize(width: 39, height: 37))
        }
         
         lblName.snp.makeConstraints {
-            $0.leading.equalTo(contentView).offset(11)
+            $0.centerX.equalTo(contentView.snp.centerX)
             $0.bottom.equalTo(contentView.snp.bottom).offset(-10)
             $0.height.equalTo(20)
         }
         
+        lblName.textAlignment = .center
+        
         checkImageView.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(20)
             $0.trailing.equalTo(contentView).offset(-5)
-            $0.size.equalTo(CGSize(width: 31, height: 31))
+            $0.size.equalTo(CGSize(width: 20, height: 20))
         }
     }
     

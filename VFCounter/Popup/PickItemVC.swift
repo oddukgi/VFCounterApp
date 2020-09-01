@@ -31,7 +31,6 @@ class PickItemVC: UIViewController {
     
     let pickItems = PickItems()
  
-    var timer: Timer?
     var vfItems: VFItemController.Items!
     weak var delegate: PickItemVCProtocol?
     var tag: Int = 0
@@ -39,7 +38,6 @@ class PickItemVC: UIViewController {
     var pickDate: String = ""
     
     let btnClose = VFButton()
-    let btnTime = VFButton()
     var btnAdd = VFButton()
     var userdate: String = ""
     private var measurementView: MeasurementView!
@@ -68,7 +66,6 @@ class PickItemVC: UIViewController {
         setMeasurementView()
         configureDataSource()
         updateData()
-        setCurrentTime()
         self.setupToHideKeyboardOnTapOnView()
     }
     
@@ -85,14 +82,14 @@ class PickItemVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        timer?.invalidate()
+    
     }
     
     // close button, time button
     func setLayout() {
       
         view.backgroundColor = ColorHex.lightKhaki
-        view.addSubViews(btnClose, btnTime, btnAdd)
+        view.addSubViews(btnClose, btnAdd)
         
         btnClose.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(25)
@@ -100,12 +97,6 @@ class PickItemVC: UIViewController {
             make.size.equalTo(CGSize(width: 29, height: 29))
         }
       
-        btnTime.snp.makeConstraints { make in
-             make.top.equalTo(view.safeAreaLayoutGuide).offset(24)
-             make.leading.equalTo(view).offset(26)
-             make.size.equalTo(CGSize(width: 81, height: 30))
-         }
-        
         btnAdd.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom).offset(SizeManager().pickItemVCPadding)
             make.centerX.equalTo(view.snp.centerX)
@@ -118,10 +109,6 @@ class PickItemVC: UIViewController {
     func setStyle() {
         btnClose.addImage(imageName: "close")
         btnClose.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
-
-        btnTime.layer.cornerRadius = 10
-        btnTime.backgroundColor    = ColorHex.dimmedBlack
-        btnTime.setFont(clr: ColorHex.MilkChocolate.origin, font: NanumSquareRound.extrabold.style(sizeOffset: 13))
 
         btnAdd.setTitle("Add", for: .normal)
         btnAdd.backgroundColor    = ColorHex.orangeyRed
@@ -138,10 +125,12 @@ class PickItemVC: UIViewController {
         measurementView = MeasurementView(delegate: self)
         view.addSubview(measurementView)
         measurementView.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(30)
+            make.top.equalTo(collectionView.snp.bottom).offset(5)
             make.leading.trailing.equalTo(view)
             make.bottom.equalTo(btnAdd.snp.top).offset(-20)
         }
+    
+//        measurementView.layer.borderWidth = 1
     }
 
     @objc func dismissVC() {
@@ -152,6 +141,7 @@ class PickItemVC: UIViewController {
     @objc func pressedAdd() {
    
         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
+        userdate = measurementView.userDTView.dateTime
     
         let item = VFItemController.Items(name: pickItems.item.name,date: userdate, image: pickItems.item.image, amount: pickItems.item.amount)
         delegate?.addItems(item: item)
@@ -159,29 +149,6 @@ class PickItemVC: UIViewController {
     }
 
     
-    func setCurrentTime() {
-        
-        timer?.invalidate()
-        let seconds = Date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 60)
-        let fireAt = Date(timeIntervalSinceNow: 60 - seconds)
-        timer = Timer(fireAt: fireAt, interval: 60, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-        RunLoop.current.add(timer!, forMode: RunLoop.Mode.default)
-        
-        if btnTime.titleLabel!.text == nil {
-            let timeFormatter = TimeFormatter(timeformat: "h:mm a")
-            let time = timeFormatter.getCurrentTime(date: Date())
-            btnTime.setTitle(time, for: .normal)
-        }
-        
-    }
-    
-    @objc func updateTime() {
-
-        let timeFormatter = TimeFormatter(timeformat: "h:mm a")
-        let time = timeFormatter.getCurrentTime(date: Date())
-        btnTime.setTitle(time, for: .normal)
-        
-    }
     
     // MARK: modify value
 //    func applyFetchedItem() {
@@ -204,13 +171,4 @@ class PickItemVC: UIViewController {
 //            }
 //        }
 //    }
-}
-
-extension PickItemVC: DatePickerVCDelegate {
-    
-    func selectDate(date: String){
-        measurementView.btnDateTime.setTitle(date,for: .normal)
-        
-    }
-
 }

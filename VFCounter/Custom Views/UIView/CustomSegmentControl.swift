@@ -45,7 +45,7 @@ class CustomSegmentControl: UISegmentedControl {
          layer.masksToBounds = true
         //corner radius
         
-        print(bounds.height)
+//        print(bounds.height)
         let maskedCorners: CACornerMask = [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         //background
         clipsToBounds = true

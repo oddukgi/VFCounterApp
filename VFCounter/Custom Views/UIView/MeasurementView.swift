@@ -12,7 +12,6 @@ import SnapKit
 
 protocol MeasurementViewDelegate: class {
 
-    func showDatePickerVC()
 }
 
 class MeasurementView: UIView {
@@ -28,7 +27,6 @@ class MeasurementView: UIView {
     
     lazy var gramTF: VFTextField = {
         let textField = VFTextField(frame: CGRect(x: 0, y: 0, width: 80, height: 30))
-//        textField.cornerRadius(8)
         textField.borderWidth(1)
         textField.borderColor(ColorHex.MilkChocolate.alpha60)
         textField.textColor(ColorHex.MilkChocolate.origin)
@@ -49,16 +47,9 @@ class MeasurementView: UIView {
         return label
     }()
 
-    let slider = CustomSlider(step: 10)
     
-    lazy var btnDateTime: VFButton = {
-        let button = VFButton(frame: CGRect(x: 0, y: 0, width: 160, height: 55))
-        button.layer.cornerRadius = 5
-        button.backgroundColor    = ColorHex.dimmedBlack
-        button.setFont(clr: ColorHex.MilkChocolate.origin, font: NanumSquareRound.bold.style(sizeOffset: 14))
-        return button
-    }()
-
+    let slider = CustomSlider(step: 10)
+    let userDTView = UserDateTimeView()
     
     private var sliderWidth: CGFloat = 0
     private var step: Float = 10
@@ -103,7 +94,7 @@ class MeasurementView: UIView {
 
     func setLayout() {
         
-        addSubViews(labelStackView, slider)
+        addSubViews(labelStackView, slider, userDTView)
 
         gramTF.placeholderText("100")
         lblUnit.text = "g"
@@ -126,14 +117,16 @@ class MeasurementView: UIView {
             
         }
         
+        userDTView.snp.makeConstraints { make in
+            make.top.equalTo(slider.snp.bottom).offset(20)
+            make.leading.equalTo(self).offset(20)
+            make.trailing.equalTo(self).offset(-20)
+            make.bottom.equalTo(self).offset(-30)
+        }
+        
+//        userDTView.layer.borderWidth = 1
         gramTF.text = "\(Int(slider.value))"
 
-    }
-    
-    @objc func didChangeDate(sender: UIButton) {
-        // delegate로 PickItemVC의 메소드 호출
-        delegate?.showDatePickerVC()
-        
     }
     
     func updateTextField() {

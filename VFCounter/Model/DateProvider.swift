@@ -10,9 +10,9 @@ import Foundation
 
 class DateProvider {
     
-    class func updateDateMap(date: Date, format: String = "yyyy.MM.dd EEE", _ completion: DateMaps) {
+    class func updateDateMap(date: Date, _ completion: DateMaps) {
         let mDate = date.getWeekDates()
-        let arrDates = mDate.map { $0.changeDateTimeKR(format: format)}
+        let arrDates = mDate.map { $0.changeDateTime(format: .longDate)}
         completion(arrDates)        
     }
     

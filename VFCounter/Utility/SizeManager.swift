@@ -135,7 +135,7 @@ class SizeManager {
     }
     
     var veggiePickCVHeight: CGFloat {
-        return  DeviceTypes.isiPhone8Standard ? 90 : 120
+        return  DeviceTypes.isiPhone8Standard ? 190 : 130
     }
     
     var paddingForRulerView: CGFloat {
@@ -209,6 +209,4 @@ class SizeManager {
     
     fileprivate var itemTopPadding: CGFloat
     fileprivate var groupTopPadding: CGFloat
-  
-
 }
