@@ -49,28 +49,27 @@ class MeasurementView: UIView {
 
     
     let slider = CustomSlider(step: 10)
-    let userDTView = UserDateTimeView()
+    var userDTView: UserDateTimeView!
     
     private var sliderWidth: CGFloat = 0
     private var step: Float = 10
+    private var dateTime: String = ""
     weak var delegate: MeasurementViewDelegate?
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    init(delegate: MeasurementViewDelegate, dateTime: String) {
+        super.init(frame: .zero)
+        self.delegate = delegate
+        self.dateTime = dateTime
+        
         setSlider()
         setLayout()
         createDismissKeyboardTapGesture()
     }
     
-    convenience init(delegate: MeasurementViewDelegate) {
-        self.init()
-        self.delegate = delegate
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
+    }  
     
     func createDismissKeyboardTapGesture() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
@@ -94,6 +93,7 @@ class MeasurementView: UIView {
 
     func setLayout() {
         
+        userDTView = UserDateTimeView(dateTime: dateTime)
         addSubViews(labelStackView, slider, userDTView)
 
         gramTF.placeholderText("100")
@@ -116,14 +116,14 @@ class MeasurementView: UIView {
             make.height.equalTo(30)
             
         }
-        
+
         userDTView.snp.makeConstraints { make in
             make.top.equalTo(slider.snp.bottom).offset(20)
             make.leading.equalTo(self).offset(20)
             make.trailing.equalTo(self).offset(-20)
             make.bottom.equalTo(self).offset(-30)
         }
-        
+
 //        userDTView.layer.borderWidth = 1
         gramTF.text = "\(Int(slider.value))"
 

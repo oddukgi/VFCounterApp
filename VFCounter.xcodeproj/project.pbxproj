@@ -30,6 +30,7 @@
 		122D3BC724FE8D08003629A9 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D3BC524FE8D08003629A9 /* DataType+CoreDataProperties.swift */; };
 		1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236800424D02DB6004F4AE8 /* SectionHeader.swift */; };
 		1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */; };
+		1239011724FF8B4A001865DD /* UIDatePicker+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */; };
 		123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E00FD24ED40CE000457B9 /* NetworkManager.swift */; };
 		123E010124ED4215000457B9 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E010024ED4215000457B9 /* WeatherData.swift */; };
 		1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1243A89924E1487F0040AA5B /* DatePickerVC.swift */; };
@@ -162,6 +163,7 @@
 		122E073924EE664A00BC8066 /* VFCounter.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
 		1236800424D02DB6004F4AE8 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
+		1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+Ext.swift"; sourceTree = "<group>"; };
 		123E00FD24ED40CE000457B9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		123E010024ED4215000457B9 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		1243A89924E1487F0040AA5B /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 				12BBEF5024E7F2D7008D1FD4 /* URL+Ext.swift */,
 				12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */,
 				1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */,
+				1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -826,6 +829,7 @@
 				12B3733E24DE498A00491FBB /* AlarmSettingVC+Ext.swift in Sources */,
 				1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */,
 				126AA42924F4AA4300FF4F87 /* Veggies+CoreDataClass.swift in Sources */,
+				1239011724FF8B4A001865DD /* UIDatePicker+Ext.swift in Sources */,
 				12A655D824DD578900B0E042 /* Date+Ext.swift in Sources */,
 				1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */,
 				12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */,

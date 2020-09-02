@@ -16,6 +16,8 @@ extension Date {
         case dateTime = "yyyy.MM.dd h:mm:ss a"
         case longDate = "yyyy.MM.dd EEE"
         case onlyTime = " h:mm:ss a"
+        case pickerTime = " HH:mm:ss"
+        case selectedDT = "yyyy-MM-dd HH:mm:ss"
     }
     
     /// get month, year, day
@@ -96,7 +98,7 @@ extension Date {
         let formatter = DateFormatter()
         formatter.dateFormat = format.rawValue
         formatter.locale = Locale(identifier: "ko_KR")
-        formatter.timeZone = TimeZone(secondsFromGMT: 9)
+        formatter.timeZone = TimeZone.current
         return formatter.string(from: self)
     }
     

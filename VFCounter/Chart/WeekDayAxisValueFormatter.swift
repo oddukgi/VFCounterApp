@@ -12,12 +12,16 @@ import Charts
 // we'll put label on weekdays from SUN to SAT
 class WeekDayAxisValueFormatter: NSObject, IAxisValueFormatter {
        
-    var weekdays = [String]()
+    private var calendar: Calendar = .current
+    private var weekdays = [String]()
     
-    init(weekdays: [String]) {
-        self.weekdays = weekdays
+    override init() {
+        super.init()
+        calendar.locale = Locale(identifier: "ko_KR")
+        calendar.timeZone = TimeZone.current
+        weekdays = calendar.shortWeekdaySymbols
+        weekdays.append(weekdays.remove(at: 0))
     }
-    
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
        

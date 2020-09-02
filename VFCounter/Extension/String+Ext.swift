@@ -72,7 +72,7 @@ extension String {
        let formatter = DateFormatter()
         formatter.dateFormat = format.rawValue
         formatter.locale = Locale(identifier: "ko_KR")
-        formatter.timeZone = TimeZone(secondsFromGMT: 9)
+        formatter.timeZone = TimeZone.current
         return formatter.date(from: self)!
     }
     

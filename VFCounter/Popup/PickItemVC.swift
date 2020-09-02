@@ -122,14 +122,14 @@ class PickItemVC: UIViewController {
     
     func setMeasurementView() {
         
-        measurementView = MeasurementView(delegate: self)
+        measurementView = MeasurementView(delegate: self, dateTime: userdate)
         view.addSubview(measurementView)
         measurementView.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(5)
             make.leading.trailing.equalTo(view)
             make.bottom.equalTo(btnAdd.snp.top).offset(-20)
         }
-    
+
 //        measurementView.layer.borderWidth = 1
     }
 

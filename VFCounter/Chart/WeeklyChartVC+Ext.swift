@@ -36,7 +36,7 @@ extension WeeklyChartVC {
         xAxis.labelPosition = .bottom
         xAxis.centerAxisLabelsEnabled = true
         xAxis.labelFont = NanumSquareRound.regular.style(sizeOffset: 12)
-        xAxis.valueFormatter = WeekDayAxisValueFormatter(weekdays: [ "월","화","수","목","금","토","일" ])
+        xAxis.valueFormatter = WeekDayAxisValueFormatter()
         xAxis.axisMinimum = 0
         xAxis.axisMaximum = 7
         xAxis.drawAxisLineEnabled = true

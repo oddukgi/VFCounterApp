@@ -10,15 +10,33 @@ import UIKit
 
 class UserDateTimeView: UIView {
 
+    private var now = Date()
+    private var userDateTime: String = ""
+    
     let containerView = UIView()
     let dtPickerView = UIDatePicker()
-    private var now = Date()
-    var dateTime: String = ""
-    var dateConverter: DateConverter!
-    
+
+    var dateTime: String {
+        
+        get {
+            return userDateTime
+        }
+        
+        set (newDT) {
+            userDateTime = newDT
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
+        
+    }
+    
+    convenience init(dateTime: String) {
+        self.init()
+        self.userDateTime = dateTime
+        compareDate()
     }
     
     required init?(coder: NSCoder) {
@@ -28,10 +46,7 @@ class UserDateTimeView: UIView {
     func configure() {
         self.addSubViews(containerView, dtPickerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalTo(self)
-            make.leading.equalTo(self)
-            make.trailing.equalTo(self)
-            make.bottom.equalTo(self)
+            make.edges.equalToSuperview()
         }
        
         dtPickerView.snp.makeConstraints { make in
@@ -43,15 +58,28 @@ class UserDateTimeView: UIView {
         dtPickerView.locale =  Locale(identifier: "ko_KR")
         dtPickerView.maximumDate = now.addDaysToday(days: 0)
         dtPickerView.addTarget(self, action: #selector(changedDateTime), for: .valueChanged)
-        
-        dateConverter = DateConverter(date: dtPickerView.date)
-        let textTime = dateConverter.changeDate(format: "yyyy.MM.dd h:mm:ss a", option: 2)
-        dateTime = textTime
     }
 
     @objc func changedDateTime(sender: UIDatePicker) {
-        dateConverter = DateConverter(date: sender.date)
-        let textTime = dateConverter.changeDate(format: "yyyy.MM.dd h:mm:ss a", option: 2)
-        dateTime = textTime
+        
+        let textTime = sender.date.changeDateTime(format: .dateTime)
+        userDateTime = textTime
+    }
+    
+    func compareDate() {
+        
+        let pickerViewDT = dtPickerView.date.changeDateTime(format: .dateTime)
+        let date = pickerViewDT.components(separatedBy: " ").first!
+        let selectedDate = String(userDateTime.split(separator: " ").first!)
+        let time = now.changeDateTime(format: .pickerTime)
+        let newDT = selectedDate.replacingOccurrences(of: ".", with: "-")
+    
+        if date != selectedDate {
+            let userDT = newDT + time
+            dtPickerView.setDate(from: userDT, format: "yyyy-MM-dd HH:mm:ss")
+        } else {
+            dtPickerView.date = now
+        }
+        
     }
 }

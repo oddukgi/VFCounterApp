@@ -20,6 +20,7 @@ class TimeFormatter {
     private func getTimeFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.current
+        formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = timeformat
         return formatter
     }
