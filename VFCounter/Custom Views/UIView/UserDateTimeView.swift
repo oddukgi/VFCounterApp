@@ -15,7 +15,8 @@ class UserDateTimeView: UIView {
     
     let containerView = UIView()
     let dtPickerView = UIDatePicker()
-
+    var entityDT: Date?
+    private var flag: Bool = false
     var dateTime: String {
         
         get {
@@ -26,6 +27,7 @@ class UserDateTimeView: UIView {
             userDateTime = newDT
         }
     }
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,9 +35,10 @@ class UserDateTimeView: UIView {
         
     }
     
-    convenience init(dateTime: String) {
+    convenience init(dateTime: String, entityTime: Date?) {
         self.init()
         self.userDateTime = dateTime
+        self.entityDT = entityTime
         compareDate()
     }
     
@@ -64,22 +67,29 @@ class UserDateTimeView: UIView {
         
         let textTime = sender.date.changeDateTime(format: .dateTime)
         userDateTime = textTime
+        
+        print(sender.date)
+        dtPickerView.date = sender.date
     }
     
     func compareDate() {
-        
-        let pickerViewDT = dtPickerView.date.changeDateTime(format: .dateTime)
-        let date = pickerViewDT.components(separatedBy: " ").first!
-        let selectedDate = String(userDateTime.split(separator: " ").first!)
-        let time = now.changeDateTime(format: .pickerTime)
-        let newDT = selectedDate.replacingOccurrences(of: ".", with: "-")
-    
-        if date != selectedDate {
-            let userDT = newDT + time
-            dtPickerView.setDate(from: userDT, format: "yyyy-MM-dd HH:mm:ss")
+
+        if self.entityDT != nil {
+            dtPickerView.date = entityDT!
+            
         } else {
-            dtPickerView.date = now
+           dtPickerView.date = now
         }
-        
+      
     }
 }
+
+/*
+ 
+ let getDate = String(userDateTime.split(separator: " ").first!)
+        var time = ""
+        
+ time = getDate + String(userDateTime.dropFirst(10))
+  let newDT = time.replacingOccurrences(of: ".", with: "-")
+  dtPickerView.date = newDT.changeDateTime(format: .dateTime)
+ */

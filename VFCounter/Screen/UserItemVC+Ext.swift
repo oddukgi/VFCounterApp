@@ -59,8 +59,9 @@ extension UserItemVC {
             let image = UIImage(data: data.image!)
             let amount = Int(data.amount)
             
+            print("\(data.name!) \(data.createdDate!)")
             let dateTime = data.createdDate?.changeDateTime(format: .dateTime)
-        
+
             cell.updateContents(image: image,name: data.name!, amount: amount, date: dateTime!)
             cell.selectedItem = self.checkedIndexPath.contains(indexPath)
 
@@ -88,19 +89,20 @@ extension UserItemVC {
         }
     }
     
-    func updateData() {
+    func updateData(flag: Bool = true) {
         
         currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
     
         for i in 0..<2 {
             currentSnapshot.appendSections([vfitemController.collections[i]])
             let fetchedItem = fetchingItems[i](stringDate)
+
             currentSnapshot.appendItems(fetchedItem)
 
         }
         
-        DispatchQueue.main.async {
-            self.dataSource.apply(self.currentSnapshot, animatingDifferences: true)
+        OperationQueue.main.addOperation {
+            self.dataSource.apply(self.currentSnapshot, animatingDifferences: flag)
         }
 
         reloadRing(date: stringDate)
@@ -133,10 +135,11 @@ extension UserItemVC: UICollectionViewDelegate {
         if checkedIndexPath.isEmpty {
             cell.selectedItem = true
             checkedIndexPath.insert(indexPath)
+            cell.selectedIndexPath(indexPath)
             
         } else {
             checkedIndexPath.removeAll()
-            DispatchQueue.main.async {
+             OperationQueue.main.addOperation {
                 self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
             }
         }
@@ -158,13 +161,24 @@ extension UserItemVC: PickItemVCProtocol {
         }
       
     }
+    
+    func updateItems(item: VFItemController.Items, time: Date?) {
+        if tag == 0 {
+            dataManager.modfiyEntity(item: item,originTime: time!, tag: tag, Veggies.self)
+        } else {
+            dataManager.modfiyEntity(item: item,originTime: time!, tag: tag, Fruits.self)
+        }
+        
+         self.hideItemView()
+        updateData(flag: false)
+    }
 
 }
 
 extension UserItemVC: TitleSupplmentaryViewDelegate {
     
     func showPickUpViewController(tag: Int) {
-         DispatchQueue.main.async {
+         OperationQueue.main.addOperation {
         
             self.hideItemView()
             self.tag = tag
@@ -172,7 +186,6 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
             let date = self.stringDate + Date().changeDateTime(format: .onlyTime)    
             let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date)
             let navController = UINavigationController(rootViewController: itemPickVC)
-//            navController.modalPresentationStyle = .fullScreen
             self.present(navController, animated: true)
          
          }
@@ -185,10 +198,10 @@ extension UserItemVC: VFItemCellDelegate {
     func updateSelectedItem(item: VFItemController.Items, index: Int) {
         // display PickItemVC
         DispatchQueue.main.async {
-            let itemPickVC = PickItemVC(delegate: self, tag: index, date: "", item: item)
-            let navController = UINavigationController(rootViewController: itemPickVC)
-//            navController.modalPresentationStyle = .overFullScreen
+            let itemPickVC = PickItemVC(delegate: self, tag: index)
             
+            itemPickVC.items = item.copy() as? VFItemController.Items
+            let navController = UINavigationController(rootViewController: itemPickVC)
             self.present(navController, animated: true)
         }
     }

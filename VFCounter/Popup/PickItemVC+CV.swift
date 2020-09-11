@@ -64,10 +64,11 @@ extension PickItemVC {
     }
     
     func updateCollectionView() {
-        
-        DispatchQueue.main.async {
+    
+         OperationQueue.main.addOperation {
             self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
         }
+    
     }
 }
 

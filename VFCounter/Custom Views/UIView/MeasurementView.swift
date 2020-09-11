@@ -92,7 +92,6 @@ class MeasurementView: UIView {
 
     func setLayout() {
         
-//        userDTView = UserDateTimeView(dateTime: dateTime)
         addSubViews(labelStackView, slider)
 
         gramTF.placeholderText("100")

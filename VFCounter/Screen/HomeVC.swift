@@ -44,7 +44,6 @@ class HomeVC: UIViewController {
     
     func settings() {
         dateView.btnLocation.addTarget(self, action: #selector(retrieveLocation), for: .touchUpInside)
-//        dateView.btnPlus.addTarget(self, action: #selector(addItem), for: .touchUpInside)
   
     }
     
@@ -88,13 +87,6 @@ class HomeVC: UIViewController {
         locationManager.startUpdatingLocation()
     }
     
-    @objc func addItem() {
-        print("Plus Button: add item")
-        // show itemVC
-        
-        
-    }
- 
     
     func requestWeathData(from latitude: Double, to longitude: Double) {
             
@@ -119,7 +111,7 @@ class HomeVC: UIViewController {
     
     func updateUI(_ jsonResult: WeatherData) {
         
-        DispatchQueue.main.async {
+        OperationQueue.main.addOperation {
             
             let temp = Int(jsonResult.main?.temp ?? 0)
             self.dateView.weatherLabel.text = String(temp) + "도"

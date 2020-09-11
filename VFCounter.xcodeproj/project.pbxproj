@@ -26,8 +26,6 @@
 		12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283AFE24CFB73400AE93E6 /* UIHelper.swift */; };
 		12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */; };
 		12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0424CFBDA900AE93E6 /* PickItems.swift */; };
-		122D3BC624FE8D08003629A9 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D3BC424FE8D08003629A9 /* DataType+CoreDataClass.swift */; };
-		122D3BC724FE8D08003629A9 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122D3BC524FE8D08003629A9 /* DataType+CoreDataProperties.swift */; };
 		1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236800424D02DB6004F4AE8 /* SectionHeader.swift */; };
 		1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */; };
 		1239011724FF8B4A001865DD /* UIDatePicker+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */; };
@@ -104,6 +102,8 @@
 		12CBCF0B24FCD9C100529535 /* UserDateTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
 		12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */; };
+		12E41642250B995100409251 /* DataType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E41640250B995100409251 /* DataType+CoreDataClass.swift */; };
+		12E41643250B995100409251 /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E41641250B995100409251 /* DataType+CoreDataProperties.swift */; };
 		12F2EE582509C88B00D0E5FB /* CalendarValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE552509C88B00D0E5FB /* CalendarValue.swift */; };
 		12F2EE592509C88B00D0E5FB /* CalendarShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE562509C88B00D0E5FB /* CalendarShortcut.swift */; };
 		12F2EE632509C8A400D0E5FB /* MonthSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */; };
@@ -168,8 +168,6 @@
 		12283AFE24CFB73400AE93E6 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickItemVC+CV.swift"; sourceTree = "<group>"; };
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
-		122D3BC424FE8D08003629A9 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
-		122D3BC524FE8D08003629A9 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		122E073924EE664A00BC8066 /* VFCounter.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
 		1236800424D02DB6004F4AE8 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
@@ -249,6 +247,8 @@
 		12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDateTimeView.swift; sourceTree = "<group>"; };
 		12CC426824D7D9CC0086B3AE /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
+		12E41640250B995100409251 /* DataType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		12E41641250B995100409251 /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		12F2EE552509C88B00D0E5FB /* CalendarValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarValue.swift; sourceTree = "<group>"; };
 		12F2EE562509C88B00D0E5FB /* CalendarShortcut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarShortcut.swift; sourceTree = "<group>"; };
 		12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthSelectView.swift; sourceTree = "<group>"; };
@@ -378,8 +378,8 @@
 		1240D3D624E642C100A7EAD4 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				122D3BC424FE8D08003629A9 /* DataType+CoreDataClass.swift */,
-				122D3BC524FE8D08003629A9 /* DataType+CoreDataProperties.swift */,
+				12E41640250B995100409251 /* DataType+CoreDataClass.swift */,
+				12E41641250B995100409251 /* DataType+CoreDataProperties.swift */,
 				126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */,
 				126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */,
 				126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */,
@@ -628,6 +628,7 @@
 		12C64CFE24E0F88B00677D5A /* UIView */ = {
 			isa = PBXGroup;
 			children = (
+				12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */,
 				12F81FED24F24B030047804A /* ItemEditView.swift */,
 				12C64CF824E0F7D400677D5A /* MeasurementView.swift */,
 				12FF76E324DE8658009542FE /* VFAlertContainerView.swift */,
@@ -636,7 +637,6 @@
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
 				127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */,
 				122420A324EE504300729898 /* WeatherIconView.swift */,
-				12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -882,6 +882,7 @@
 				123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */,
 				129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */,
 				12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */,
+				12E41642250B995100409251 /* DataType+CoreDataClass.swift in Sources */,
 				12AD3BA524EB647300443803 /* SettingManager.swift in Sources */,
 				1290EE5E24C6EDE5008DB339 /* ChartVC.swift in Sources */,
 				127ADC1724E4DF5900E8F3B7 /* UISegmentControl+Ext.swift in Sources */,
@@ -891,7 +892,6 @@
 				126AA42724F4AA4300FF4F87 /* Fruits+CoreDataClass.swift in Sources */,
 				12F2EE672509C8A400D0E5FB /* CalendarController.swift in Sources */,
 				12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */,
-				122D3BC624FE8D08003629A9 /* DataType+CoreDataClass.swift in Sources */,
 				12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */,
 				127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */,
 				1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */,
@@ -940,7 +940,6 @@
 				1243A89A24E1487F0040AA5B /* DatePickerVC.swift in Sources */,
 				126AA42A24F4AA4300FF4F87 /* Veggies+CoreDataProperties.swift in Sources */,
 				12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */,
-				122D3BC724FE8D08003629A9 /* DataType+CoreDataProperties.swift in Sources */,
 				12AD3BA724EB7B7800443803 /* TableHeaderView.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,
@@ -950,6 +949,7 @@
 				120E97FB24F8A9DD0095D765 /* Typealias.swift in Sources */,
 				1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */,
 				124B917E24CACC35009616A7 /* VFItemCell.swift in Sources */,
+				12E41643250B995100409251 /* DataType+CoreDataProperties.swift in Sources */,
 				12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */,
 				12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */,
 				127ADC1B24E4F4BA00E8F3B7 /* ChartVC+Ext.swift in Sources */,

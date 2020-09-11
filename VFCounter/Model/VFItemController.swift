@@ -16,10 +16,16 @@ class VFItemController {
         var date: String
         var image: UIImage?
         var amount: Int
-        let identifiable = UUID()
+        var entityDT: Date?
+//        let identifiable = UUID()
      
-        func hash(into hasher: inout Hasher){
-            hasher.combine(identifiable)
+//        func hash(into hasher: inout Hasher){
+//            hasher.combine(identifiable)
+//        }
+
+        func copy(with zone: NSZone? = nil) -> Any {
+            let copy = Items(name: name, date: date, image: image, amount: amount, entityDT: entityDT)
+            return copy
         }
     }
     
@@ -55,5 +61,6 @@ extension VFItemController {
                             VFCollections(title: "과일", subtitle: "과일음식,주스,생과일이 해당됩니다.")
                        ]
     }
-    
+
 }
+

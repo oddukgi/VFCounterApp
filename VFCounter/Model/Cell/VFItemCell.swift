@@ -22,9 +22,11 @@ class VFItemCell: UICollectionViewCell {
     let lblName      =  VFSubTitleLabel()
     let lblAmount    =  VFSubTitleLabel()
     let itemEditView = ItemEditView()
-    var date: Date?
+    private var date     = ""
     weak var delegate: VFItemCellDelegate?
-    
+    private let dataManager = DataManager()
+    private var row = 0
+    private var section = 0
     // Bool property
     var selectedItem: Bool = false {
         didSet{
@@ -126,6 +128,7 @@ class VFItemCell: UICollectionViewCell {
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
         imageView.image = image
     
+        self.date = String(date.split(separator: " ").first!)
         let time = date.trimmingTime(start: 0, end: -11).trimmingTime(start: 5, end: -3)
         lblTime.text = time
         lblName.text = name
@@ -137,13 +140,39 @@ class VFItemCell: UICollectionViewCell {
         itemEditView.itemButton[0].addTarget(self, action: #selector(modifyItem(_:)), for: .touchUpInside)
         itemEditView.itemButton[1].addTarget(self, action: #selector(deleteItem(_:)), for: .touchUpInside)
     }
+    
+    
+    func selectedIndexPath(_ indexPath: IndexPath) {
+
+        row = indexPath.row
+        section = indexPath.section
+         //Do your business here.
+     }
 
     @objc func modifyItem(_ sender: VFButton) {
         print("tapped modify item")
+   
+        var datetime: Date?
+        var datatype: DataType.Type!
+    
         
-//        let newDate = date.changeDate()    
-//        let item = VFItemController.Items(name: lblTime.text, time: lblName.text, date: <#T##Date#>(), image: <#T##UIImage?#>, amount: <#T##Int#>)
-//        delegate?.updateSelectedItem(item: <#T##VFItemController.Items#>, index: <#T##Int#>)
+        section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
+         dataManager.getData(tag: section, index: row, datatype, newDate: date) { (result) in
+             
+             
+             datetime = result
+             let name     = self.lblName.text!
+             let image    = self.imageView.image!
+             let amount   = String(self.lblAmount.text!.dropLast())
+
+             let item = VFItemController.Items(name: name, date: "", image: image, amount: Int(amount) ?? 0, entityDT: datetime!)
+             self.delegate?.updateSelectedItem(item: item, index: self.section)
+         }
+        
+        
+        
+
+ 
     }
     
     @objc func deleteItem(_ sender: VFButton) {

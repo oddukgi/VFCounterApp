@@ -10,7 +10,8 @@ import UIKit
 import SnapKit
 
 protocol PickItemVCProtocol: class {
-    func addItems(item: VFItemController.Items) 
+    func addItems(item: VFItemController.Items)
+    func updateItems(item: VFItemController.Items, time: Date?)
 }
 
 class PickItemVC: UIViewController {
@@ -37,22 +38,25 @@ class PickItemVC: UIViewController {
     var vfItems: VFItemController.Items!
     weak var delegate: PickItemVCProtocol?
     var tag: Int = 0
-    var checkedIndexPath = Set<IndexPath>()
     var userdate: String = ""
+    var checkedIndexPath = Set<IndexPath>()
     
     private var btnAdd = VFButton()
     private var measurementView: MeasurementView!
     private var userDTView: UserDateTimeView!
-    private var fetchedItem: VFItemController.Items? = nil
+    private var fetchedItem: VFItemController.Items?
 
-    init(delegate: PickItemVCProtocol, tag: Int, date: String,
-    item: VFItemController.Items? = nil) {
+    init(delegate: PickItemVCProtocol, tag: Int, date: String? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.delegate        = delegate
         self.tag             = tag
-        self.fetchedItem     = item
-        self.userdate        = date
-      
+        self.userdate        = date ?? ""
+    }
+    
+    var items: VFItemController.Items? {
+        didSet {
+            self.fetchedItem = self.items
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -68,7 +72,9 @@ class PickItemVC: UIViewController {
         configureSubview()
         configureDataSource()
         updateData()
-        self.setupToHideKeyboardOnTapOnView()
+        applyFetchedItem()
+       
+        
     }
     
     func configureBarItem() {
@@ -79,7 +85,7 @@ class PickItemVC: UIViewController {
     
         tag == 0 ? (navigationItem.title = NavTitle.veggie.text) : (navigationItem.title = NavTitle.fruit.text)
         navigationItem.rightBarButtonItem = doneButton
-    
+        self.setupToHideKeyboardOnTapOnView()
     }
     
     @objc func dismissVC() {
@@ -95,17 +101,16 @@ class PickItemVC: UIViewController {
             make.leading.trailing.equalTo(view)
             make.height.equalTo(70)
         }
-
-//        measurementView.layer.borderWidth = 1
     }
 
     func configureHierarchy() {
         
+   
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.register(PickItemCell.self, forCellWithReuseIdentifier: PickItemCell.reuseIdentifier)
         view.addSubview(collectionView)
         collectionView.backgroundColor = ColorHex.lightKhaki
-        collectionView.register(PickItemCell.self, forCellWithReuseIdentifier: PickItemCell.reuseIdentifier)
         
         let _ = (view.bounds.height / 2) - SizeManager().veggiePickCVHeight
         collectionView.snp.makeConstraints {
@@ -113,22 +118,24 @@ class PickItemVC: UIViewController {
             $0.leading.trailing.equalTo(view)
             $0.height.equalTo(100)
         }
-
-//        collectionView.layer.borderWidth = 1
         collectionView.delegate = self
     }
      // close button, time button
      func configureSubview() {
-        userDTView = UserDateTimeView(dateTime: userdate)
+        
+
+        if fetchedItem != nil {
+            userdate = fetchedItem!.date
+        }
+        userDTView = UserDateTimeView(dateTime: userdate, entityTime: fetchedItem?.entityDT)
         view.addSubViews(btnAdd,userDTView)
+
         userDTView.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(15)
             make.leading.equalTo(view).offset(20)
             make.trailing.equalTo(view).offset(-20)
             make.bottom.equalTo(view).offset(-180)
         }
-
-//        userDTView.layer.borderWidth = 1
         
         btnAdd.snp.makeConstraints { make in
             make.top.equalTo(userDTView.snp.bottom).offset(14)
@@ -148,35 +155,51 @@ class PickItemVC: UIViewController {
     // MARK: Add Button
     @objc func pressedAdd() {
    
-        pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
-        userdate = userDTView.dateTime
-    
-        let item = VFItemController.Items(name: pickItems.item.name,date: userdate, image: pickItems.item.image, amount: pickItems.item.amount)
-        delegate?.addItems(item: item)
+       
+        guard  !checkedIndexPath.isEmpty else { return }
+            
+        let indexPath = checkedIndexPath.first!
+        let row = indexPath.row
+        let item = currentSnapshot.itemIdentifiers[row]
+        
+         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
+         userdate = userDTView.dateTime
+        
+         print(userDTView.dtPickerView.date)
+   
+        let selectedItem = VFItemController.Items(name: item.name, date: userdate, image: item.image, amount: pickItems.item.amount, entityDT: userDTView.dtPickerView.date)
+        
+        if fetchedItem != nil {
+            delegate?.updateItems(item: selectedItem, time: fetchedItem?.entityDT)
+        } else {
+            delegate?.addItems(item: selectedItem)
+        }
+       
         dismissVC()
     }
 
     
     
     // MARK: modify value
-//    func applyFetchedItem() {
-//
-//        print("\(fetchedItem?.name), \(fetchedItem?.amount), \(fetchedItem?.time)")
-//        measurementView.gramTF = String(fetchedItem?.amount)
-//        measurementView.slider.value = Float(fetchedItem?.amount)
-//        // select collection view
-//
-//        let visibleItems = collectionView.indexPathsForVisibleItems
-//
-//        for indexPath in visibleItems {
-//
-//            if let cell = collectionView.cellForItem(at: indexPath) as? PickItemCell {
-//
-//                if cell.lblName.text? == fetchedItem?.name {
-//                    checkedIndexPath.insert(indexPath)
-//                    updateCollectionView()
-//                }
-//            }
-//        }
-//    }
+    func applyFetchedItem() {
+        guard let fetchedItem = fetchedItem else { return }
+   
+        measurementView.gramTF.text = String(fetchedItem.amount)
+        measurementView.slider.value = Float(fetchedItem.amount)
+
+        let totalCount = currentSnapshot.numberOfItems
+        
+        for i in 0..<totalCount {
+            let item = currentSnapshot.itemIdentifiers[i]
+            
+            if item.name == fetchedItem.name {
+              checkedIndexPath.insert(IndexPath(row: i, section: 0))
+              OperationQueue.main.addOperation {
+                self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+                self.collectionView.scrollToItem(at: IndexPath(row: i, section: 0), at: .centeredHorizontally, animated: false)
+              }
+            
+            }
+        }
+    }
 }

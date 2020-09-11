@@ -13,8 +13,7 @@ import CoreStore
 class DataManager {
     
     // MARK: create entity
-    
-    private var configuration = ""
+
     func configureEntity<T: DataType>(_ objectType: T.Type, transaction: SynchronousDataTransaction,
           configuration: String) -> T {
           let entityItem = transaction.create(Into<T>(configuration))
@@ -28,6 +27,9 @@ class DataManager {
           
           var entityItem: DataType? 
           
+        let date = item.entityDT?.changeDateTime(format: .selectedDT)
+        let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
+           
         _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
           
               // create veggies entity
@@ -38,10 +40,11 @@ class DataManager {
               }
               
               entityItem?.name = item.name
-              entityItem?.date = String(item.date.split(separator: " ").first!)
-              entityItem?.createdDate = item.date.changeDateTime(format: .dateTime)
+              entityItem?.date = newDate[0]
+              entityItem?.createdDate = item.entityDT
               entityItem?.image = item.image?.pngData()
               entityItem?.amount = Int16(item.amount)
+            
               
           })
           
@@ -61,7 +64,7 @@ class DataManager {
       
     func getEntity<T: DataType>(_ objectType: T.Type, section: Int) -> T? {
           
-          var configuration = ""
+        var configuration = ""
         section == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
         guard let entity = try? UserDataManager.dataStack.fetchOne(From<T>(configuration)) else {
               return nil
@@ -85,7 +88,60 @@ class DataManager {
 
     }
     
+    func modfiyEntity<T: DataType>(item: VFItemController.Items, originTime: Date?,
+                                   tag: Int,_ objectType: T.Type) {
+ 
+        var configuration = ""
+        
+        let date = item.entityDT?.changeDateTime(format: .selectedDT)
+        let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
+        
+        print(item.entityDT!, newDate[0])
+        
+        
+        tag == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
+        
+        guard let existingEntity = try? UserDataManager.dataStack.fetchOne(From<T>(configuration)
+            .where(\.date == newDate[0] && \.createdDate == originTime!)) else { return  }
+
+        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+          
+              // create veggies entity
+             let updateEntity = transaction.edit(existingEntity)!
+              updateEntity.name = item.name
+              updateEntity.date = newDate[0]
+              updateEntity.createdDate = item.entityDT!
+              updateEntity.image = item.image?.pngData()
+              updateEntity.amount = Int16(item.amount)
+            
+            print(">>\(updateEntity.createdDate!)")
+          })
+          
+    }
+
+    func getData<T: DataType>(tag: Int, index: Int, _ objectType: T.Type, newDate: String,
+                              completion: @escaping (Date) -> Void) {
+
+        var configuration = ""
+        tag == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
+        let orderBy = OrderBy<T>(.descending(\.createdDate))
+    
+        let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+                
+            let entity = try transaction.queryAttributes(
+                From<T>(configuration),Select("createdDate"), Where<T>("%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate),orderBy
+               
+            )
+            
+            let date = entity[index]["createdDate"] as? Date
+            completion(date!)
+
+         })
+    
+    }
+    
     func sortByTime<T: DataType>(_ objectType: T.Type, section:Int) -> [T]? {
+        var configuration = ""
         section == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
         let orderBy = OrderBy<T>(.descending(\.createdDate))
         guard let mostRecentData = try? UserDataManager.dataStack.fetchAll(From<T>(configuration),orderBy) else { return nil }
