@@ -9,9 +9,9 @@ Calcurate how much take some vegie or fruits in a day
 
 ### 기능
 - 사용자가 야채나 과일 아이템을 선택하면 몇시에 얼마나 먹었는지 볼 수 있다.
-- 야채는 권장양까지 먹을 수 있도록, 알려준다. (푸쉬알림)
+- 야채는 권장양까지 먹을 수 있도록, 알려준다. (미정)
 - 야채와 과일을 먹은양은 링을 채우며, 달성하도록 한다.
-- 일주일에 먹은 양을 그래프로 보여준다.
+- 주간 데이터는 차트로, 월간 데이터는 달력으로 보여준다.
 ---
 ### Swift Package
 [HGCircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
@@ -19,4 +19,7 @@ Calcurate how much take some vegie or fruits in a day
 [Charts](https://github.com/danielgindi/Charts)\
 [CoreStore](https://github.com/JohnEstropia/CoreStore)\
 [Localize-Swift](https://github.com/marmelroy/Localize-Swift)
+[Calendar by Fastis](https://github.com/retailcrm/Fastis)
+
+
 
