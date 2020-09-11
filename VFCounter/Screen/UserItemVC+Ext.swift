@@ -172,8 +172,8 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
             let date = self.stringDate + Date().changeDateTime(format: .onlyTime)    
             let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date)
             let navController = UINavigationController(rootViewController: itemPickVC)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated: false)
+//            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated: true)
          
          }
     }
@@ -187,8 +187,9 @@ extension UserItemVC: VFItemCellDelegate {
         DispatchQueue.main.async {
             let itemPickVC = PickItemVC(delegate: self, tag: index, date: "", item: item)
             let navController = UINavigationController(rootViewController: itemPickVC)
-            navController.modalPresentationStyle = .fullScreen
-            self.present(navController, animated: false)
+//            navController.modalPresentationStyle = .overFullScreen
+            
+            self.present(navController, animated: true)
         }
     }
     

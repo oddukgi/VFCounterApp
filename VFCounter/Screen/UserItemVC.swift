@@ -31,8 +31,7 @@ class UserItemVC: UIViewController {
      let fetchingItems =  [ { (newDate) -> [DataType] in
         
                 return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
-                   .where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
-        
+                .where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
             },
             { (newDate) -> [DataType] in
                 

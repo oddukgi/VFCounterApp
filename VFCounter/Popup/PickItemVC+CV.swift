@@ -20,26 +20,7 @@ extension PickItemVC {
         return layout
     }
     
-    func configureHierarchy() {
-       
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(collectionView)
-        collectionView.backgroundColor = ColorHex.lightKhaki
-        collectionView.register(PickItemCell.self, forCellWithReuseIdentifier: PickItemCell.reuseIdentifier)
-        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                       withReuseIdentifier: SectionHeader.reuseIdentifier)
-  
-        let halfheight = (view.bounds.height / 2) - SizeManager().veggiePickCVHeight
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(btnClose.snp.bottom).offset(20)
-            $0.leading.trailing.equalTo(view)
-            $0.height.equalTo(halfheight)
-        }
- 
-//        collectionView.layer.borderWidth = 1
-        collectionView.delegate = self
-  }
+
 
    func configureDataSource() {
  
@@ -60,26 +41,16 @@ extension PickItemVC {
         
         return cell
     })
-    // MARK: Header DataSource
-    dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-        guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier:SectionHeader.reuseIdentifier, for: indexPath) as? SectionHeader else { return nil }
-        
-        let section = self?.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-        sectionHeader.lblTitle.text = section?.sectionTitle
-        return sectionHeader
-    }
-    
    }
        
     func updateData() {
         currentSnapshot = NSDiffableDataSourceSnapshot<Section, PickItems.Element>()
        
+        currentSnapshot.appendSections([.main])
         if tag == 0 {
-            currentSnapshot.appendSections([.veggie])
             currentSnapshot.appendItems(pickItems.collections.first!.elements)
       
         } else {
-            currentSnapshot.appendSections([.fruit])
             currentSnapshot.appendItems(pickItems.collections.last!.elements)
         }
         
@@ -93,6 +64,7 @@ extension PickItemVC {
     }
     
     func updateCollectionView() {
+        
         DispatchQueue.main.async {
             self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
         }

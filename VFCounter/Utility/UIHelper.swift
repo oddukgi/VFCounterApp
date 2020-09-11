@@ -42,8 +42,8 @@ enum UIHelper {
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-       let sectionHeader = createSectionHeader()
-       section.boundarySupplementaryItems = [sectionHeader]
+//       let sectionHeader = createSectionHeader()
+//       section.boundarySupplementaryItems = [sectionHeader]
 
        return section
     }

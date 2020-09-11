@@ -49,18 +49,17 @@ class MeasurementView: UIView {
 
     
     let slider = CustomSlider(step: 10)
-    var userDTView: UserDateTimeView!
+
     
     private var sliderWidth: CGFloat = 0
     private var step: Float = 10
-    private var dateTime: String = ""
+  
     weak var delegate: MeasurementViewDelegate?
 
     
-    init(delegate: MeasurementViewDelegate, dateTime: String) {
+    init(delegate: MeasurementViewDelegate) {
         super.init(frame: .zero)
         self.delegate = delegate
-        self.dateTime = dateTime
         
         setSlider()
         setLayout()
@@ -93,8 +92,8 @@ class MeasurementView: UIView {
 
     func setLayout() {
         
-        userDTView = UserDateTimeView(dateTime: dateTime)
-        addSubViews(labelStackView, slider, userDTView)
+//        userDTView = UserDateTimeView(dateTime: dateTime)
+        addSubViews(labelStackView, slider)
 
         gramTF.placeholderText("100")
         lblUnit.text = "g"
@@ -117,14 +116,6 @@ class MeasurementView: UIView {
             
         }
 
-        userDTView.snp.makeConstraints { make in
-            make.top.equalTo(slider.snp.bottom).offset(20)
-            make.leading.equalTo(self).offset(20)
-            make.trailing.equalTo(self).offset(-20)
-            make.bottom.equalTo(self).offset(-30)
-        }
-
-//        userDTView.layer.borderWidth = 1
         gramTF.text = "\(Int(slider.value))"
 
     }

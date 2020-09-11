@@ -19,7 +19,7 @@ extension ChartVC {
         view.addSubview(segmentControl)
         
         segmentControl.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15)
             make.centerX.equalTo(view.safeAreaLayoutGuide.snp.centerX)
             make.width.equalTo(width)
             make.height.equalTo(30)
@@ -38,7 +38,7 @@ extension ChartVC {
 
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
-            $0.top.equalTo(segmentControl.snp.bottom).offset(22)
+            $0.top.equalTo(segmentControl.snp.bottom).offset(10)
             $0.leading.equalTo(view)
             $0.width.equalTo(view.bounds.width)
             $0.bottom.equalTo(view)

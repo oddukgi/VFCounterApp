@@ -41,8 +41,6 @@
 		124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B918124CACD85009616A7 /* TitleSupplementaryView.swift */; };
 		124F561724DED284006CE413 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F561624DED284006CE413 /* CustomSlider.swift */; };
 		1251729024F4DB91002B9927 /* WeeklyChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */; };
-		1251729224F4DBA0002B9927 /* MontlyChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1251729124F4DBA0002B9927 /* MontlyChartVC.swift */; };
-		1251729424F4E129002B9927 /* MonthlyChartVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1251729324F4E129002B9927 /* MonthlyChartVC+Ext.swift */; };
 		126AA42724F4AA4300FF4F87 /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */; };
 		126AA42824F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */; };
 		126AA42924F4AA4300FF4F87 /* Veggies+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */; };
@@ -95,6 +93,7 @@
 		12B50CFE24C6EBB700C87956 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */; };
 		12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */; };
 		12B50D0024C6EBB700C87956 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */; };
+		12B7B98D250A4F020089BA56 /* UICollectionViewCell+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B7B98C250A4F020089BA56 /* UICollectionViewCell+Ext.swift */; };
 		12BBEF5124E7F2D7008D1FD4 /* URL+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBEF5024E7F2D7008D1FD4 /* URL+Ext.swift */; };
 		12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92524CAB08200C11ECD /* UserItemVC.swift */; };
 		12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92824CABE7B00C11ECD /* VFItemController.swift */; };
@@ -105,6 +104,17 @@
 		12CBCF0B24FCD9C100529535 /* UserDateTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */; };
 		12CC426924D7D9CC0086B3AE /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CC426824D7D9CC0086B3AE /* String+Ext.swift */; };
 		12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */; };
+		12F2EE582509C88B00D0E5FB /* CalendarValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE552509C88B00D0E5FB /* CalendarValue.swift */; };
+		12F2EE592509C88B00D0E5FB /* CalendarShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE562509C88B00D0E5FB /* CalendarShortcut.swift */; };
+		12F2EE632509C8A400D0E5FB /* MonthSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */; };
+		12F2EE642509C8A400D0E5FB /* RingItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5D2509C8A300D0E5FB /* RingItemButton.swift */; };
+		12F2EE652509C8A400D0E5FB /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5E2509C8A300D0E5FB /* DayCell.swift */; };
+		12F2EE662509C8A400D0E5FB /* RingItemGrouopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5F2509C8A400D0E5FB /* RingItemGrouopView.swift */; };
+		12F2EE672509C8A400D0E5FB /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE602509C8A400D0E5FB /* CalendarController.swift */; };
+		12F2EE682509C8A400D0E5FB /* CalendarSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE612509C8A400D0E5FB /* CalendarSettings.swift */; };
+		12F2EE692509C8A400D0E5FB /* WeekdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE622509C8A400D0E5FB /* WeekdayView.swift */; };
+		12F2EE6B2509C96E00D0E5FB /* MKRingProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F2EE6A2509C96E00D0E5FB /* MKRingProgressView.framework */; };
+		12F2EE6F2509C9F000D0E5FB /* JTAppleCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 12F2EE6E2509C9F000D0E5FB /* JTAppleCalendar */; };
 		12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F81FED24F24B030047804A /* ItemEditView.swift */; };
 		12FD255024CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */; };
 		12FD255124CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */; };
@@ -174,8 +184,6 @@
 		124B918124CACD85009616A7 /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
 		124F561624DED284006CE413 /* CustomSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChartVC.swift; sourceTree = "<group>"; };
-		1251729124F4DBA0002B9927 /* MontlyChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MontlyChartVC.swift; sourceTree = "<group>"; };
-		1251729324F4E129002B9927 /* MonthlyChartVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MonthlyChartVC+Ext.swift"; sourceTree = "<group>"; };
 		126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
 		126AA42224F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		126AA42324F4AA4300FF4F87 /* Veggies+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -230,6 +238,7 @@
 		12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		12B7B98C250A4F020089BA56 /* UICollectionViewCell+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Ext.swift"; sourceTree = "<group>"; };
 		12BBEF5024E7F2D7008D1FD4 /* URL+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Ext.swift"; sourceTree = "<group>"; };
 		12BBF92524CAB08200C11ECD /* UserItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemVC.swift; sourceTree = "<group>"; };
 		12BBF92824CABE7B00C11ECD /* VFItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFItemController.swift; sourceTree = "<group>"; };
@@ -240,6 +249,16 @@
 		12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDateTimeView.swift; sourceTree = "<group>"; };
 		12CC426824D7D9CC0086B3AE /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
+		12F2EE552509C88B00D0E5FB /* CalendarValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarValue.swift; sourceTree = "<group>"; };
+		12F2EE562509C88B00D0E5FB /* CalendarShortcut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarShortcut.swift; sourceTree = "<group>"; };
+		12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthSelectView.swift; sourceTree = "<group>"; };
+		12F2EE5D2509C8A300D0E5FB /* RingItemButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RingItemButton.swift; sourceTree = "<group>"; };
+		12F2EE5E2509C8A300D0E5FB /* DayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
+		12F2EE5F2509C8A400D0E5FB /* RingItemGrouopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RingItemGrouopView.swift; sourceTree = "<group>"; };
+		12F2EE602509C8A400D0E5FB /* CalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarController.swift; sourceTree = "<group>"; };
+		12F2EE612509C8A400D0E5FB /* CalendarSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSettings.swift; sourceTree = "<group>"; };
+		12F2EE622509C8A400D0E5FB /* WeekdayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekdayView.swift; sourceTree = "<group>"; };
+		12F2EE6A2509C96E00D0E5FB /* MKRingProgressView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MKRingProgressView.framework; path = Carthage/Build/iOS/MKRingProgressView.framework; sourceTree = "<group>"; };
 		12F81FED24F24B030047804A /* ItemEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditView.swift; sourceTree = "<group>"; };
 		12FD254724CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundB.ttf; sourceTree = "<group>"; };
 		12FD254824CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundR.ttf; sourceTree = "<group>"; };
@@ -266,6 +285,8 @@
 				1226FEC924E790270092BDAF /* CoreStore in Frameworks */,
 				12ACE9BD24E4D179007EBC2F /* Charts in Frameworks */,
 				1291B19424C9842900625BE6 /* HGCircularSlider in Frameworks */,
+				12F2EE6F2509C9F000D0E5FB /* JTAppleCalendar in Frameworks */,
+				12F2EE6B2509C96E00D0E5FB /* MKRingProgressView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +346,7 @@
 		1227DD6A24DC0E0F005EEBE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				12F2EE6A2509C96E00D0E5FB /* MKRingProgressView.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -377,6 +399,16 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		12699FDF2509C7DA008872FB /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				12F2EE5B2509C89900D0E5FB /* view */,
+				12F2EE562509C88B00D0E5FB /* CalendarShortcut.swift */,
+				12F2EE552509C88B00D0E5FB /* CalendarValue.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
 		126AE52D24C6C6B4000BCF7E = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +437,7 @@
 				1240D3D624E642C100A7EAD4 /* Core Data */,
 				1228222A24E512D9002A3F5A /* Localization */,
 				123E00FC24ED40B5000457B9 /* Network */,
+				12699FDF2509C7DA008872FB /* Calendar */,
 				12885B5C24E505E9001586EA /* Chart */,
 				127A497B24CC152D0032194E /* Popup */,
 				12BBF92724CABE4700C11ECD /* Model */,
@@ -461,8 +494,6 @@
 				12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */,
 				1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */,
 				12024F7C24F7A58000A91FDA /* WeeklyChartVC+Ext.swift */,
-				1251729124F4DBA0002B9927 /* MontlyChartVC.swift */,
-				1251729324F4E129002B9927 /* MonthlyChartVC+Ext.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -538,6 +569,7 @@
 				12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */,
 				1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */,
 				1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */,
+				12B7B98C250A4F020089BA56 /* UICollectionViewCell+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -609,6 +641,20 @@
 			path = UIView;
 			sourceTree = "<group>";
 		};
+		12F2EE5B2509C89900D0E5FB /* view */ = {
+			isa = PBXGroup;
+			children = (
+				12F2EE602509C8A400D0E5FB /* CalendarController.swift */,
+				12F2EE612509C8A400D0E5FB /* CalendarSettings.swift */,
+				12F2EE5E2509C8A300D0E5FB /* DayCell.swift */,
+				12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */,
+				12F2EE5D2509C8A300D0E5FB /* RingItemButton.swift */,
+				12F2EE5F2509C8A400D0E5FB /* RingItemGrouopView.swift */,
+				12F2EE622509C8A400D0E5FB /* WeekdayView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		12FD254524CEF6BB00E3D5E0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,6 +686,7 @@
 				126AE53224C6C6B4000BCF7E /* Sources */,
 				126AE53324C6C6B4000BCF7E /* Frameworks */,
 				126AE53424C6C6B4000BCF7E /* Resources */,
+				12F2EE6C2509C97700D0E5FB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -652,6 +699,7 @@
 				12ACE9BC24E4D179007EBC2F /* Charts */,
 				12885B6224E50FBC001586EA /* Localize_Swift */,
 				1226FEC824E790270092BDAF /* CoreStore */,
+				12F2EE6E2509C9F000D0E5FB /* JTAppleCalendar */,
 			);
 			productName = VFCounter;
 			productReference = 126AE53624C6C6B4000BCF7E /* VFCounter.app */;
@@ -732,6 +780,7 @@
 				12ACE9BB24E4D179007EBC2F /* XCRemoteSwiftPackageReference "Charts" */,
 				12885B6124E50FBC001586EA /* XCRemoteSwiftPackageReference "Localize-Swift" */,
 				1226FEC724E790270092BDAF /* XCRemoteSwiftPackageReference "CoreStore" */,
+				12F2EE6D2509C9F000D0E5FB /* XCRemoteSwiftPackageReference "JTAppleCalendar" */,
 			);
 			productRefGroup = 126AE53724C6C6B4000BCF7E /* Products */;
 			projectDirPath = "";
@@ -783,6 +832,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		12F2EE6C2509C97700D0E5FB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/MKRingProgressView.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		126AE53224C6C6B4000BCF7E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -792,6 +862,7 @@
 				12FF76E424DE8658009542FE /* VFAlertContainerView.swift in Sources */,
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
 				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
+				12B7B98D250A4F020089BA56 /* UICollectionViewCell+Ext.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
 				126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */,
 				1290EE6224C6F725008DB339 /* VFButton.swift in Sources */,
@@ -804,10 +875,10 @@
 				12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */,
 				1290EE6424C6F91F008DB339 /* DateView.swift in Sources */,
 				12FF76DE24DE72C6009542FE /* VFError.swift in Sources */,
-				1251729424F4E129002B9927 /* MonthlyChartVC+Ext.swift in Sources */,
 				123E010124ED4215000457B9 /* WeatherData.swift in Sources */,
 				12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */,
 				12C2FA4024F65A74001CEC30 /* UIButton+Ext.swift in Sources */,
+				12F2EE662509C8A400D0E5FB /* RingItemGrouopView.swift in Sources */,
 				123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */,
 				129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */,
 				12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */,
@@ -818,14 +889,17 @@
 				12FF76DA24DE7118009542FE /* UserSettings.swift in Sources */,
 				12C066C324E9624600745B79 /* VFCounterDB.xcdatamodeld in Sources */,
 				126AA42724F4AA4300FF4F87 /* Fruits+CoreDataClass.swift in Sources */,
+				12F2EE672509C8A400D0E5FB /* CalendarController.swift in Sources */,
 				12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */,
 				122D3BC624FE8D08003629A9 /* DataType+CoreDataClass.swift in Sources */,
 				12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */,
 				127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */,
 				1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */,
 				12B50D0024C6EBB700C87956 /* UIColor+Ext.swift in Sources */,
+				12F2EE582509C88B00D0E5FB /* CalendarValue.swift in Sources */,
 				126AE53A24C6C6B4000BCF7E /* AppDelegate.swift in Sources */,
 				124A446024D28DE4003FFF3A /* Notification+Ext.swift in Sources */,
+				12F2EE692509C8A400D0E5FB /* WeekdayView.swift in Sources */,
 				12B3733E24DE498A00491FBB /* AlarmSettingVC+Ext.swift in Sources */,
 				1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */,
 				126AA42924F4AA4300FF4F87 /* Veggies+CoreDataClass.swift in Sources */,
@@ -834,6 +908,7 @@
 				1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */,
 				12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */,
 				124B917C24CAC755009616A7 /* UserItemVC+Ext.swift in Sources */,
+				12F2EE592509C88B00D0E5FB /* CalendarShortcut.swift in Sources */,
 				12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */,
 				12C64CF924E0F7D400677D5A /* MeasurementView.swift in Sources */,
 				12CBCF0B24FCD9C100529535 /* UserDateTimeView.swift in Sources */,
@@ -848,11 +923,14 @@
 				126AA42824F4AA4300FF4F87 /* Fruits+CoreDataProperties.swift in Sources */,
 				12024F7D24F7A58000A91FDA /* WeeklyChartVC+Ext.swift in Sources */,
 				1251729024F4DB91002B9927 /* WeeklyChartVC.swift in Sources */,
+				12F2EE682509C8A400D0E5FB /* CalendarSettings.swift in Sources */,
+				12F2EE632509C8A400D0E5FB /* MonthSelectView.swift in Sources */,
 				12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */,
-				1251729224F4DBA0002B9927 /* MontlyChartVC.swift in Sources */,
 				12F81FEE24F24B030047804A /* ItemEditView.swift in Sources */,
 				120E97FD24F8AA650095D765 /* DateProvider.swift in Sources */,
 				1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */,
+				12F2EE642509C8A400D0E5FB /* RingItemButton.swift in Sources */,
+				12F2EE652509C8A400D0E5FB /* DayCell.swift in Sources */,
 				121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */,
 				12885B6524E51044001586EA /* LocalizeConstant.swift in Sources */,
 				12C64D0024E0F8D100677D5A /* VFTextField.swift in Sources */,
@@ -1056,6 +1134,10 @@
 				CODE_SIGN_ENTITLEMENTS = VFCounter/VFCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = VFCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1076,7 +1158,10 @@
 				CODE_SIGN_ENTITLEMENTS = VFCounter/VFCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = VFCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1256,6 +1341,14 @@
 				minimumVersion = 3.5.0;
 			};
 		};
+		12F2EE6D2509C9F000D0E5FB /* XCRemoteSwiftPackageReference "JTAppleCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/patchthecode/JTAppleCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1283,6 +1376,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 12ACE9BB24E4D179007EBC2F /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = Charts;
+		};
+		12F2EE6E2509C9F000D0E5FB /* JTAppleCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12F2EE6D2509C9F000D0E5FB /* XCRemoteSwiftPackageReference "JTAppleCalendar" */;
+			productName = JTAppleCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -86,7 +86,6 @@ class DatePickerVC: UIViewController {
         }
 
         pickerView.layer.borderWidth = 1
-        
     }
 
     func createDismissGesture() {

@@ -168,10 +168,8 @@ class WeeklyChartVC: ChartBaseVC {
         let dateArray = date.components(separatedBy: [" "])
         dataManager.getSumItems(date: dateArray.first!) { (veggieSum, fruitSum) in
 //            print("\(veggieSum) \(fruitSum)")
-            
-            DispatchQueue.main.async {
-                self.setDataCount(sumVeggie : veggieSum, sumFruit: fruitSum, day: dateArray.last!)
-            }
+            self.setDataCount(sumVeggie : veggieSum, sumFruit: fruitSum, day: dateArray.last!)
+    
         }
     }
     

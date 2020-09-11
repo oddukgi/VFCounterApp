@@ -23,23 +23,29 @@ class ChartVC: UIViewController {
     var monthlyChartView: UIView!
     
     var currentVC: UIViewController?
-    let dateConverter = DateConverter(date: Date())
     
+    let now = Date()
+
     lazy var weeklyChartVC: UIViewController? = {
-        let date = dateConverter.changeDate(format: "yyyy.MM.dd", option: 1)
+        let date = now.changeDateTime(format: .date)
         let weeklyChartVC = WeeklyChartVC(date: date)
         return weeklyChartVC
         
     }()
     
-    lazy var monthlyChartVC: UIViewController? = {
-        let now = Date()
-        let date = dateConverter.changeDate(format: "yyyy.MM", option: 1)
-        let monthlyChartVC = MontlyChartVC(date: date)
-        
-        return monthlyChartVC
-          
-    }()
+    
+    let calendarConroller = CalendarController(mode: .single)
+    
+    var currentValue: CalendarValue? {
+        didSet {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy.MM.dd"
+            formatter.locale = Locale(identifier: "ko_KR")
+            if let date = self.currentValue as? Date {
+                print(formatter.string(from: date))
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +62,15 @@ class ChartVC: UIViewController {
         displayCurrentTab(sender.selectedSegmentIndex)
     }
     
+    func configureCalendar() {
+        calendarConroller.initialValue = self.currentValue as? Date
+        calendarConroller.minimumDate = now.getLast12Month()
+        calendarConroller.maximumDate = now
+    }
+    
     func displayCurrentTab(_ index: Int) {
-        if let vc = viewControllerForSelectedIndex(index) {
-            
+        
+        if let vc = viewControllerForSelectedIndex(index) , index == 0{
             self.addChild(vc)
             vc.didMove(toParent: self)
             vc.view.frame = self.contentView.bounds
@@ -67,6 +79,7 @@ class ChartVC: UIViewController {
         }
     }
     
+    
     func viewControllerForSelectedIndex(_ index: Int) -> UIViewController? {
         var vc: UIViewController?
         
@@ -74,11 +87,13 @@ class ChartVC: UIViewController {
         case TabIndex.firstChildTab.rawValue:
             vc = weeklyChartVC
         default:
-            vc = monthlyChartVC
+            configureCalendar()
+            calendarConroller.present(above: self, contentView: contentView)
         }
         
         return vc
     }
-   
+
+
 }
 

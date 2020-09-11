@@ -33,19 +33,19 @@ extension Date {
         return description(with: .current)
     }
     
-    func getYear() -> Int {
+    var getYear: Int {
         let component = self.get(.year,.month,.day)
         let year = component.year ?? 1900
         return year
     }
     
-    func getMonth() -> Int {
+    var getMonth: Int {
         let component = self.get(.year,.month,.day)
         let month = component.month ?? 1
         return month
     }
     
-    func getDay() -> Int {
+    var getDay: Int {
         let component = self.get(.year,.month,.day)
         let day = component.day ?? 31
         return day
@@ -60,6 +60,13 @@ extension Date {
                              to: self.startOfMonth(in: calendar))!.endOfDay(in: calendar)
     }
     
+    func isInSameDay(in calendar: Calendar = .current, date: Date) -> Bool {
+        return calendar.isDate(self, equalTo: date, toGranularity: .month)
+    }
+    
+    func isInSameMonth(in calendar: Calendar = .current, date: Date) -> Bool {
+        return calendar.component(.month, from: self) == calendar.component(.month, from: date)
+    }
   
     func startOfDay(in calendar: Calendar = .current) -> Date {
         return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self)!
@@ -92,6 +99,19 @@ extension Date {
         return component.day ?? 30
     }
     
+    // This Month Start
+    func getThisMonthStart() -> Date? {
+        let components = Calendar.current.dateComponents([.year, .month], from: self)
+        return Calendar.current.date(from: components)!
+    }
+    
+    func getThisMonthEnd() -> Date? {
+        let components:NSDateComponents = Calendar.current.dateComponents([.year, .month], from: self) as NSDateComponents
+        components.month += 1
+        components.day = 1
+        components.day -= 1
+        return Calendar.current.date(from: components as DateComponents)!
+    }
     
     func changeDateTime(format: Format) -> String {
         
@@ -128,6 +148,14 @@ extension Date {
         
         return arrThisWeek
     }
+
+    
+}
+    
+
+
+extension Date {
+        
     
     func addDaysToday(days: Int) -> Date? {
         var dateComponents = DateComponents()
@@ -149,6 +177,10 @@ extension Date {
         minDateComponent.month = 1
         minDateComponent.day = 1 
         return calendar.date(from: minDateComponent)?.endOfDay()
+    }
+    
+    func getLast12Month() -> Date? {
+        return Calendar.current.date(byAdding: .month, value: -12, to: self)
     }
 
 }

@@ -26,7 +26,7 @@ class DataManager {
 
     func createEntity(item: VFItemController.Items, tag: Int) {
           
-          var entityItem: DataType? =  nil
+          var entityItem: DataType? 
           
         _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
           
@@ -78,7 +78,9 @@ class DataManager {
             let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
             let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
             
-            completion(veggieSum!, fruitSum!)
+            OperationQueue.main.addOperation {
+                completion(veggieSum!, fruitSum!)
+            }
         })
 
     }
