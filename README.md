@@ -24,5 +24,5 @@ Calcurate how much take some vegie or fruits in a day
 **Modify Opensource**\
 [Calendar by Fastis](https://github.com/retailcrm/Fastis)
 
-**Carthage **\
+**Carthage**\
 [MKRingProgressView](https://github.com/maxkonovalov/MKRingProgressView)
