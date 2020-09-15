@@ -42,7 +42,7 @@ class CustomSegmentControl: UISegmentedControl {
 //            tintColor = .clear
 //        }
 
-         layer.masksToBounds = true
+//         layer.masksToBounds = false
         //corner radius
         
 //        print(bounds.height)
@@ -50,18 +50,19 @@ class CustomSegmentControl: UISegmentedControl {
         //background
         clipsToBounds = true
         layer.cornerRadius = bounds.height / 2
-        layer.maskedCorners = maskedCorners
+      // layer.maskedCorners = maskedCorners
 
         let foregroundIndex = numberOfSegments
         if subviews.indices.contains(foregroundIndex),
             let foregroundImageView = subviews[foregroundIndex] as? UIImageView {
             foregroundImageView.image = UIImage()
             foregroundImageView.clipsToBounds = true
-            foregroundImageView.layer.masksToBounds = true
+//            foregroundImageView.layer.masksToBounds = false
             foregroundImageView.backgroundColor = selectedSegmentTintColor
             
-            foregroundImageView.layer.cornerRadius = (bounds.height / 2) + 7
-            foregroundImageView.layer.maskedCorners = maskedCorners
+            print("\(bounds.height / 2) \(foregroundImageView.bounds.height / 2)")
+            foregroundImageView.layer.cornerRadius = bounds.height / 2
+            //foregroundImageView.layer.maskedCorners =  maskedCorners
         }
         
     }

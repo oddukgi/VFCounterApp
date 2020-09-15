@@ -13,9 +13,8 @@ import SnapKit
 extension UserItemVC {
     
 // MARK: create collectionView layout
-
-    // 384 X 104 , item : 74 X 73
     func configureHierarchy() {
+    
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind))
         collectionView.backgroundColor = ColorHex.iceBlue
         view.addSubview(collectionView)
@@ -39,7 +38,7 @@ extension UserItemVC {
     // MARK: create collectionView datasource
     
     func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<VFItemController.VFCollections, DataType>(collectionView: collectionView) {
+        dataSource = UICollectionViewDiffableDataSource<Section, DataType>(collectionView: collectionView) {
             (collectionView: UICollectionView,  indexPath: IndexPath,
             data: DataType) -> UICollectionViewCell? in
             
@@ -71,6 +70,7 @@ extension UserItemVC {
         
     }
   
+    
     func configureTitleDataSource() {
         dataSource.supplementaryViewProvider = { [weak self]
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -80,7 +80,7 @@ extension UserItemVC {
                 
                 let category = snapshot.sectionIdentifiers[indexPath.section]
                 titleSupplementary.delegate = self
-                titleSupplementary.updateTitles(title: category.title, subtitle: category.subtitle)
+                titleSupplementary.updateTitles(title: category.title)
                 return titleSupplementary
                 
             } else {
@@ -91,20 +91,17 @@ extension UserItemVC {
     
     func updateData(flag: Bool = true) {
         
-        currentSnapshot = NSDiffableDataSourceSnapshot <VFItemController.VFCollections, DataType>()
+        currentSnapshot = NSDiffableDataSourceSnapshot <Section, DataType>()
     
         for i in 0..<2 {
-            currentSnapshot.appendSections([vfitemController.collections[i]])
+            
+            let sectionTitle: Section = (i == 0 ? Section.vTitle : Section.fTitle)
+            currentSnapshot.appendSections([sectionTitle])
             let fetchedItem = fetchingItems[i](stringDate)
-
             currentSnapshot.appendItems(fetchedItem)
-
         }
         
-        OperationQueue.main.addOperation {
-            self.dataSource.apply(self.currentSnapshot, animatingDifferences: flag)
-        }
-
+        self.dataSource.apply(self.currentSnapshot, animatingDifferences: flag)
         reloadRing(date: stringDate)
     }
 
@@ -163,14 +160,20 @@ extension UserItemVC: PickItemVCProtocol {
     }
     
     func updateItems(item: VFItemController.Items, time: Date?) {
-        if tag == 0 {
-            dataManager.modfiyEntity(item: item,originTime: time!, tag: tag, Veggies.self)
-        } else {
-            dataManager.modfiyEntity(item: item,originTime: time!, tag: tag, Fruits.self)
+        var datatype: DataType.Type!
+        tag == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
+        
+        self.hideItemView()
+        OperationQueue.main.addOperation {
+            self.updateData(flag: false)
         }
         
-         self.hideItemView()
-        updateData(flag: false)
+        dataManager.modfiyEntity(item: item, originTime: time!, datatype)
+      
+        let date = item.entityDT?.changeDateTime(format: .selectedDT)
+        let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
+        
+        NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": newDate[0]])
     }
 
 }
@@ -178,33 +181,44 @@ extension UserItemVC: PickItemVCProtocol {
 extension UserItemVC: TitleSupplmentaryViewDelegate {
     
     func showPickUpViewController(tag: Int) {
-         OperationQueue.main.addOperation {
+        self.hideItemView()
+        self.tag = tag
         
-            self.hideItemView()
-            self.tag = tag
-            
-            let date = self.stringDate + Date().changeDateTime(format: .onlyTime)    
+        let date = self.stringDate + Date().changeDateTime(format: .onlyTime)
+        DispatchQueue.main.async {
             let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date)
             let navController = UINavigationController(rootViewController: itemPickVC)
             self.present(navController, animated: true)
-         
-         }
+        }
+    
     }
 }
 
 extension UserItemVC: VFItemCellDelegate {
-    
-    // receive data from VFItemCell
+
     func updateSelectedItem(item: VFItemController.Items, index: Int) {
         // display PickItemVC
         DispatchQueue.main.async {
             let itemPickVC = PickItemVC(delegate: self, tag: index)
-            
+            self.tag = index
             itemPickVC.items = item.copy() as? VFItemController.Items
             let navController = UINavigationController(rootViewController: itemPickVC)
             self.present(navController, animated: true)
         }
     }
     
+    
+    func deleteSelectedItem(item: Int, section: Int) {
+        let sectionTitle: Section = (section == 0 ? Section.vTitle : Section.fTitle)     
+        let sectionItem = currentSnapshot.itemIdentifiers(inSection: sectionTitle)[item]
+      
+        var datatype: DataType.Type!
+        section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
+        
+//        print(sectionItem.createdDate)
+        dataManager.deleteEntity(originTime: sectionItem.createdDate!, datatype)
+        self.currentSnapshot.deleteItems([sectionItem])
+        self.updateData(flag: false)
+    }
     
 }

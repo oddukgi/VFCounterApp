@@ -20,7 +20,7 @@ extension ChartVC {
         
         segmentControl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15)
-            make.centerX.equalTo(view.safeAreaLayoutGuide.snp.centerX)
+            make.centerX.equalTo(view.snp.centerX)
             make.width.equalTo(width)
             make.height.equalTo(30)
         }
@@ -35,16 +35,14 @@ extension ChartVC {
         segmentControl.selectedConfiguration(font: defaultFont, color: .white)
         segmentControl.addTarget(self, action: #selector(changedIndexSegment), for: .valueChanged)
         
-
+        let height = ScreenSize.height - 250
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
             $0.top.equalTo(segmentControl.snp.bottom).offset(10)
-            $0.leading.equalTo(view)
             $0.width.equalTo(view.bounds.width)
-            $0.bottom.equalTo(view)
+            $0.height.equalTo(height)
         }
-        
-//        contentView.layer.borderWidth = 1
+
     }
         
 }

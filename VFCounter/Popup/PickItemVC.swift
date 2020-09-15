@@ -93,8 +93,8 @@ class PickItemVC: UIViewController {
     }
 
     func configureMeasurementView() {
-        
-        measurementView = MeasurementView(delegate: self)
+    
+        measurementView = MeasurementView()
         view.addSubview(measurementView)
         measurementView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -122,7 +122,6 @@ class PickItemVC: UIViewController {
     }
      // close button, time button
      func configureSubview() {
-        
 
         if fetchedItem != nil {
             userdate = fetchedItem!.date
@@ -155,7 +154,6 @@ class PickItemVC: UIViewController {
     // MARK: Add Button
     @objc func pressedAdd() {
    
-       
         guard  !checkedIndexPath.isEmpty else { return }
             
         let indexPath = checkedIndexPath.first!
@@ -189,7 +187,7 @@ class PickItemVC: UIViewController {
 
         let totalCount = currentSnapshot.numberOfItems
         
-        for i in 0..<totalCount {
+        for i in 0 ..< totalCount {
             let item = currentSnapshot.itemIdentifiers[i]
             
             if item.name == fetchedItem.name {

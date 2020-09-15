@@ -15,11 +15,12 @@ class DateView: UIView {
     var btnLeftArrow: VFButton!
     var btnRightArrow: VFButton!
     let weatherIcon = WeatherIconView(frame: .zero)
-  
+    
     var horizontalView: [UIStackView] = []
     let dateLabel = VFTitleLabel(textAlignment: .center, fontSize: 16)
     let weatherLabel = VFSubTitleLabel(fontSize: 14)
     let commentLabel = VFBodyLabel(textAlignment: .left, fontSize: 13, fontColor: ColorHex.dullOrange)
+
     private var date = Date()
     private var startDate: Date?
     private var endDate: Date?
@@ -68,50 +69,29 @@ class DateView: UIView {
         
         startDate = date.getFirstMonthDate()
         endDate = date.addDaysToday(days: 0)
-
     }
     
+    fileprivate func changeDateToResource(to date: Date) {
+        let newDate = DateConverter(date: date).changeDate(format: "yyyy.MM.dd E", option: 1)
+        dateLabel.text = newDate
+        NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": newDate])
+    }
     
     @objc func changedDateTouched(_ sender: VFButton) {
-    
-    
+
         if sender.tag == 0 {
-
-            if date > startDate! {
-                date = date.dayBefore.endOfDay()
-                let beforeDate = DateConverter(date: date).changeDate(format: "yyyy.MM.dd E", option: 1)
-                dateLabel.text = beforeDate
-                NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": beforeDate])
-                
-            }
-            
-        } else {
-            
-            if date < endDate! {
-                date = date.dayAfter.endOfDay()
-                let afterDate = DateConverter(date: date).changeDate(format: "yyyy.MM.dd E", option: 1)
-                dateLabel.text = afterDate
-                NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": afterDate])
-               
-
-            }
-
+            guard date > startDate! else { return }
+            date = date.dayBefore.endOfDay()           
+        } else {            
+            guard date < endDate! else { return }
+            date = date.dayAfter.endOfDay()
         }
-//        print(date)
         
+        changeDateToResource(to: date)
     }
-
     
-    func updateDate(userdate: String) {
-        
+    func updateDate(userdate: String) {       
         date = userdate.changeDateTime(format: .date)
-        if date > startDate! {
-             changedDateTouched(btnLeftArrow)
-        }
-        
-        if date < endDate! {
-            changedDateTouched(btnRightArrow)
-        }
-        
+        changeDateToResource(to: date)
     }
 }

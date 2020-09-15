@@ -75,6 +75,13 @@ struct ChartColor {
     static let fruitYellow = UIColor(hexString: "F1C40F")  
 }
 
+
+struct SegmentColor {
+    static let primary = ColorHex.weirdGreen
+    static let secondary = ColorHex.weirdGreen.withAlphaComponent(0.9) // .74
+    static let tertiery =  ColorHex.weirdGreen.withAlphaComponent(0.7) // .42
+}
+
 extension UIColor {
     
    convenience init(hexString: String) {

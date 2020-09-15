@@ -11,14 +11,23 @@ import CoreStore
 import CoreData
 
 
+
 class UserItemVC: UIViewController {
 
-    let vfitemController = VFItemController()
+    enum Section: String {     
+        case vTitle = "야채"
+        case fTitle = "과일"
+            
+        var title: String {
+            return rawValue
+        }
+    }
+
     let circularView = VFCircularView()
     var collectionView: UICollectionView! = nil
  
-    var dataSource: UICollectionViewDiffableDataSource<VFItemController.VFCollections,DataType>! = nil
-    var currentSnapshot: NSDiffableDataSourceSnapshot<VFItemController.VFCollections,DataType>! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section,DataType>! = nil
+    var currentSnapshot: NSDiffableDataSourceSnapshot<Section,DataType>! = nil
     let titleElementKind = "titleElementKind"
     var tag: Int = 0
     var height: CGFloat = 0
@@ -59,13 +68,8 @@ class UserItemVC: UIViewController {
         configureTitleDataSource()
         updateData()
         prepareNotificationAddObserver()
-//        setCircularValue()
-//        
-//        DispatchQueue.main.async {
-//            self.dataManager.deleteAllEntity()
-//        }
+
     }
-    
 
     func setupLayout() {
         
@@ -115,7 +119,6 @@ class UserItemVC: UIViewController {
             circularView.insideSlider.maximumValue = CGFloat(fruitAmount)
         }
     }
-    
     
     // MARK: action
     //AlarSetting 화면에서 최대 복용량 받아서 링 의 최대값을 설정한다.

@@ -19,13 +19,9 @@ extension PickItemVC {
         
         return layout
     }
-    
-
 
    func configureDataSource() {
- 
-    // MARK: Section DataSource
-    
+
     dataSource = UICollectionViewDiffableDataSource<Section, PickItems.Element>(collectionView:collectionView,cellProvider: { (collectionView, indexPath, items) -> UICollectionViewCell? in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PickItemCell.reuseIdentifier, for: indexPath)as! PickItemCell
         // 선택한 아이템을 다른 곳에 담기
@@ -93,9 +89,4 @@ extension PickItemVC: UICollectionViewDelegate {
     }
 }
 
-extension PickItemVC: MeasurementViewDelegate {
-
-
-    
-}
 

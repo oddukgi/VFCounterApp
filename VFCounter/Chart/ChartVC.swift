@@ -18,9 +18,11 @@ class ChartVC: UIViewController {
     }
     
     var segmentControl: CustomSegmentControl!
+    var bottomSegmentControl: CustomSegmentControl!
     let contentView     = UIView()
     let weeklyChartView = UIView()
     var monthlyChartView: UIView!
+    var datafilterView: DataFilterView!
     
     var currentVC: UIViewController?
     
@@ -72,11 +74,26 @@ class ChartVC: UIViewController {
         
         if let vc = viewControllerForSelectedIndex(index) , index == 0{
             self.addChild(vc)
-            vc.didMove(toParent: self)
-            vc.view.frame = self.contentView.bounds
             self.contentView.addSubview(vc.view)
+            vc.view.frame = self.contentView.bounds
             self.currentVC = vc
+    
+            print(contentView.frame.width, contentView.frame.height)
+            contentView.layer.borderWidth = 1
+    
+ 
+            vc.didMove(toParent: self)
         }
+        
+        datafilterView = DataFilterView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+         view.addSubview(datafilterView)
+         datafilterView.snp.makeConstraints {
+             $0.top.equalTo(contentView.snp.bottom).offset(9)
+             $0.centerX.equalTo(view.snp.centerX)
+         }
+         
+        datafilterView.selectSection(section: .data)
+         datafilterView.layer.borderWidth = 1
     }
     
     
@@ -89,11 +106,10 @@ class ChartVC: UIViewController {
         default:
             configureCalendar()
             calendarConroller.present(above: self, contentView: contentView)
+        
         }
         
         return vc
     }
-
-
 }
 

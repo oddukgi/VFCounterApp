@@ -21,8 +21,6 @@ class DataManager {
           return entityItem
       }
 
-    
-
     func createEntity(item: VFItemController.Items, tag: Int) {
           
           var entityItem: DataType? 
@@ -44,8 +42,7 @@ class DataManager {
               entityItem?.createdDate = item.entityDT
               entityItem?.image = item.image?.pngData()
               entityItem?.amount = Int16(item.amount)
-            
-              
+           
           })
           
        
@@ -59,8 +56,7 @@ class DataManager {
           })
           
       }
-      
-
+    
       
     func getEntity<T: DataType>(_ objectType: T.Type, section: Int) -> T? {
           
@@ -80,34 +76,29 @@ class DataManager {
             
             let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
             let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
+            completion(veggieSum!, fruitSum!)
             
-            OperationQueue.main.addOperation {
-                completion(veggieSum!, fruitSum!)
-            }
         })
 
     }
     
-    func modfiyEntity<T: DataType>(item: VFItemController.Items, originTime: Date?,
-                                   tag: Int,_ objectType: T.Type) {
+    func modfiyEntity<T: DataType>(item: VFItemController.Items, originTime: Date,
+                                   _ objectType: T.Type) {
  
         var configuration = ""
         
         let date = item.entityDT?.changeDateTime(format: .selectedDT)
         let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
-        
-        print(item.entityDT!, newDate[0])
-        
-        
-        tag == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
+       
+        objectType == Veggies.self ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
         
         guard let existingEntity = try? UserDataManager.dataStack.fetchOne(From<T>(configuration)
-            .where(\.date == newDate[0] && \.createdDate == originTime!)) else { return  }
+            .where(\.createdDate == originTime)) else { return  }
 
         _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
-          
+            let updateEntity = transaction.edit(existingEntity)!
+       
               // create veggies entity
-             let updateEntity = transaction.edit(existingEntity)!
               updateEntity.name = item.name
               updateEntity.date = newDate[0]
               updateEntity.createdDate = item.entityDT!
@@ -117,11 +108,11 @@ class DataManager {
             print(">>\(updateEntity.createdDate!)")
           })
           
+       
     }
 
     func getData<T: DataType>(tag: Int, index: Int, _ objectType: T.Type, newDate: String,
                               completion: @escaping (Date) -> Void) {
-
         var configuration = ""
         tag == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
         let orderBy = OrderBy<T>(.descending(\.createdDate))
@@ -137,7 +128,24 @@ class DataManager {
             completion(date!)
 
          })
+    }
     
+    // @paramter: Int
+       
+    func deleteEntity<T: DataType>(originTime: Date,_ objectType: T.Type) {
+        
+        var configuration = ""
+        objectType == Veggies.self ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)    
+        
+        //"createdDate"), Where<T>("%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate),orderBy
+        guard let existingEntity = try? UserDataManager.dataStack.fetchOne(From<T>(configuration)
+            .where(\.createdDate == originTime)) else { return  }
+
+        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+            transaction.delete(existingEntity)
+            
+        })
+        
     }
     
     func sortByTime<T: DataType>(_ objectType: T.Type, section:Int) -> [T]? {

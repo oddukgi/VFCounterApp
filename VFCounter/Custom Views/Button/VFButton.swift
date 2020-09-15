@@ -30,27 +30,15 @@ class VFButton: UIButton {
     
     // MARK: Tap Area
     override func setImage(_ image: UIImage?, for state: UIControl.State) {
-        super.setImage(image, for: state)
         guard let image = image else { return }
-        let verticalMarginToAdd = max(0, (targetSize.height - image.size.height) / 2)
-        let horizontalMarginToAdd = max(0, (targetSize.width - image.size.width) / 2)
-        
-        let insets = UIEdgeInsets(top: verticalMarginToAdd,
-                                  left: horizontalMarginToAdd,
-                                  bottom: verticalMarginToAdd,
-                                  right: horizontalMarginToAdd)
-        
-        contentEdgeInsets = insets
+        super.setImage(image, for: state)
     }
     
     override var alignmentRectInsets: UIEdgeInsets {
         contentEdgeInsets
     }
 
-
-    
-    // MARK: - custom methods
-       
+    // MARK: - custom method    
     private func configure() {
     
         titleLabel!.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -59,7 +47,7 @@ class VFButton: UIButton {
     
     func set(backgroundColor: UIColor, title: String = "") {
         self.backgroundColor = backgroundColor
-        if title.count > 1 {
+        if !title.isEmpty {
             setTitle(title, for: .normal)
         }
     }

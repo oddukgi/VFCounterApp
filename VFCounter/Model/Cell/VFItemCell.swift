@@ -12,6 +12,7 @@ import SnapKit
 
 protocol VFItemCellDelegate: class {
     func updateSelectedItem(item: VFItemController.Items, index: Int)
+    func deleteSelectedItem(item: Int, section: Int)
 }
 
 class VFItemCell: UICollectionViewCell {
@@ -22,12 +23,13 @@ class VFItemCell: UICollectionViewCell {
     let lblName      =  VFSubTitleLabel()
     let lblAmount    =  VFSubTitleLabel()
     let itemEditView = ItemEditView()
+    
     private var date     = ""
     weak var delegate: VFItemCellDelegate?
     private let dataManager = DataManager()
     private var row = 0
     private var section = 0
-    // Bool property
+
     var selectedItem: Bool = false {
         didSet{
           if selectedItem == true {
@@ -146,37 +148,26 @@ class VFItemCell: UICollectionViewCell {
 
         row = indexPath.row
         section = indexPath.section
-         //Do your business here.
-     }
+    }
 
     @objc func modifyItem(_ sender: VFButton) {
         print("tapped modify item")
-   
-        var datetime: Date?
+
         var datatype: DataType.Type!
-    
-        
         section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
          dataManager.getData(tag: section, index: row, datatype, newDate: date) { (result) in
-             
-             
-             datetime = result
+
              let name     = self.lblName.text!
              let image    = self.imageView.image!
              let amount   = String(self.lblAmount.text!.dropLast())
 
-             let item = VFItemController.Items(name: name, date: "", image: image, amount: Int(amount) ?? 0, entityDT: datetime!)
+             let item = VFItemController.Items(name: name, date: "", image: image, amount: Int(amount) ?? 0, entityDT: result)
              self.delegate?.updateSelectedItem(item: item, index: self.section)
          }
-        
-        
-        
-
  
     }
     
     @objc func deleteItem(_ sender: VFButton) {
-        print("tapped delete item")
+        delegate?.deleteSelectedItem(item: row, section: section)
     }
 }
-

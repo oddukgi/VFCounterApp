@@ -32,12 +32,10 @@ extension UIView {
             bottomAnchor.constraint(equalTo: superview.bottomAnchor,constant: topPadding)
         ])
     }
-    //Variadic Param. 가변 파라미터
+    
     func addSubViews(_ views: UIView...) {
         for view in views { addSubview(view) }
-    }
-    
-    
+    } 
     
     // MARK: Shadow Effect
     func setRadiusWithShadow(_ radius: CGFloat? = nil, shadowColor: UIColor = UIColor.darkGray) { // this method adds shadow to right and bottom side of button
@@ -88,4 +86,11 @@ extension UIView {
                return UIImage(cgImage: image!.cgImage!)
            }
        }
+    
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return self.safeAreaLayoutGuide.topAnchor
+        }
+        return self.topAnchor
+    }
 }

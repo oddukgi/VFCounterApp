@@ -9,11 +9,6 @@
 import UIKit
 import SnapKit
 
-
-protocol MeasurementViewDelegate: class {
-
-}
-
 class MeasurementView: UIView {
 
     lazy var labelStackView: UIStackView = {
@@ -49,18 +44,12 @@ class MeasurementView: UIView {
 
     
     let slider = CustomSlider(step: 10)
-
-    
     private var sliderWidth: CGFloat = 0
     private var step: Float = 10
   
-    weak var delegate: MeasurementViewDelegate?
 
-    
-    init(delegate: MeasurementViewDelegate) {
-        super.init(frame: .zero)
-        self.delegate = delegate
-        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setSlider()
         setLayout()
         createDismissKeyboardTapGesture()
@@ -68,7 +57,7 @@ class MeasurementView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }  
+    }
     
     func createDismissKeyboardTapGesture() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))

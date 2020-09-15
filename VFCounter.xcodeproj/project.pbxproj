@@ -56,6 +56,9 @@
 		127ADC1B24E4F4BA00E8F3B7 /* ChartVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */; };
 		127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127BF74324E52FB90066AC7D /* BalloonMarker.swift */; };
 		127BF74624E530050066AC7D /* code garbage in Resources */ = {isa = PBXBuildFile; fileRef = 127BF74524E530050066AC7D /* code garbage */; };
+		1286EA87250F3C7600FDDBE6 /* DataFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286EA86250F3C7600FDDBE6 /* DataFilter.swift */; };
+		1286EA89250F455C00FDDBE6 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286EA88250F455C00FDDBE6 /* GradientView.swift */; };
+		1286EA8D250F72A300FDDBE6 /* DataFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */; };
 		12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B5D24E50607001586EA /* ChartBaseVC.swift */; };
 		12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */; };
 		12885B6324E50FBC001586EA /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 12885B6224E50FBC001586EA /* Localize_Swift */; };
@@ -204,6 +207,9 @@
 		127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartVC+Ext.swift"; sourceTree = "<group>"; };
 		127BF74324E52FB90066AC7D /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		127BF74524E530050066AC7D /* code garbage */ = {isa = PBXFileReference; lastKnownFileType = text; path = "code garbage"; sourceTree = "<group>"; };
+		1286EA86250F3C7600FDDBE6 /* DataFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataFilter.swift; path = UIView/DataFilter.swift; sourceTree = "<group>"; };
+		1286EA88250F455C00FDDBE6 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFilterView.swift; sourceTree = "<group>"; };
 		12885B5D24E50607001586EA /* ChartBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartBaseVC.swift; sourceTree = "<group>"; };
 		12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayAxisValueFormatter.swift; sourceTree = "<group>"; };
 		12885B6424E51044001586EA /* LocalizeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizeConstant.swift; sourceTree = "<group>"; };
@@ -486,6 +492,7 @@
 		12885B5C24E505E9001586EA /* Chart */ = {
 			isa = PBXGroup;
 			children = (
+				1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */,
 				127BF74324E52FB90066AC7D /* BalloonMarker.swift */,
 				12885B5D24E50607001586EA /* ChartBaseVC.swift */,
 				1290EE5D24C6EDE5008DB339 /* ChartVC.swift */,
@@ -507,6 +514,7 @@
 				12C64CFE24E0F88B00677D5A /* UIView */,
 				12C64CFB24E0F83600677D5A /* Slider */,
 				12C64CFD24E0F84500677D5A /* CircularView */,
+				1286EA86250F3C7600FDDBE6 /* DataFilter.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -628,6 +636,7 @@
 		12C64CFE24E0F88B00677D5A /* UIView */ = {
 			isa = PBXGroup;
 			children = (
+				1286EA88250F455C00FDDBE6 /* GradientView.swift */,
 				12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */,
 				12F81FED24F24B030047804A /* ItemEditView.swift */,
 				12C64CF824E0F7D400677D5A /* MeasurementView.swift */,
@@ -871,6 +880,7 @@
 				12AAC70D24E7DE60000B16E7 /* UserDataManager.swift in Sources */,
 				1217CE3D24DA792C00521D49 /* SettingController.swift in Sources */,
 				12FD255424CEF6BB00E3D5E0 /* I18N.swift in Sources */,
+				1286EA8D250F72A300FDDBE6 /* DataFilterView.swift in Sources */,
 				1291B19624C9851800625BE6 /* VFCircularView+Ext.swift in Sources */,
 				12283AFF24CFB73400AE93E6 /* UIHelper.swift in Sources */,
 				1290EE6424C6F91F008DB339 /* DateView.swift in Sources */,
@@ -893,6 +903,7 @@
 				12F2EE672509C8A400D0E5FB /* CalendarController.swift in Sources */,
 				12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */,
 				12B3457024E5182B00F2ABA2 /* MonthAxisValueFormatter.swift in Sources */,
+				1286EA87250F3C7600FDDBE6 /* DataFilter.swift in Sources */,
 				127BF74424E52FB90066AC7D /* BalloonMarker.swift in Sources */,
 				1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */,
 				12B50D0024C6EBB700C87956 /* UIColor+Ext.swift in Sources */,
@@ -900,6 +911,7 @@
 				126AE53A24C6C6B4000BCF7E /* AppDelegate.swift in Sources */,
 				124A446024D28DE4003FFF3A /* Notification+Ext.swift in Sources */,
 				12F2EE692509C8A400D0E5FB /* WeekdayView.swift in Sources */,
+				1286EA89250F455C00FDDBE6 /* GradientView.swift in Sources */,
 				12B3733E24DE498A00491FBB /* AlarmSettingVC+Ext.swift in Sources */,
 				1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */,
 				126AA42924F4AA4300FF4F87 /* Veggies+CoreDataClass.swift in Sources */,

@@ -76,10 +76,10 @@ class TitleSupplementaryView: UICollectionReusableView {
         
     }
     
-    func updateTitles(title: String, subtitle: String) {
+    func updateTitles(title: String) {
  
         lblTitle.text = title
-        lblSubtitle.text = subtitle
+        lblSubtitle.text = (title == "야채") ? "야채음식,생야채가 해당됩니다." : "과일음식,주스,생과일이 해당됩니다."        
         (title == "야채") ? (btnPlus.tag = 0) : (btnPlus.tag = 1)
         btnPlus.addTarget(self, action: #selector(self.displayItems(sender:)), for: .touchUpInside)
     }

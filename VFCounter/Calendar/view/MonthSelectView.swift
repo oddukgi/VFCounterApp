@@ -87,7 +87,6 @@ class MonthSelectView<Value: CalendarValue>: UIView {
     
     
     // MARK: - Configuration
-    
     private func configureUI() {
         self.backgroundColor = .clear
     }
@@ -95,7 +94,6 @@ class MonthSelectView<Value: CalendarValue>: UIView {
     private func configureSubviews() {
         self.addSubViews(stackView, lblMonth, lblAmount)
         
-
         arrowButtons.forEach {
             stackView.addArrangedSubview($0)
         }
@@ -144,9 +142,6 @@ class MonthSelectView<Value: CalendarValue>: UIView {
     @objc func next(_ sender: UIButton) {
         delegate?.pressedArrow(tag: 1)
     }
-    
-    
-
 }
 
 extension CalendarSettings {

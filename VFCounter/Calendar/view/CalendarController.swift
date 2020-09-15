@@ -155,13 +155,13 @@ JTACMonthViewDataSource {
     
     // MARK: - Configure
     private func configureUI() {
-        view.backgroundColor = self.appearance.backgroundColor
-         
+        view.backgroundColor = self.appearance.backgroundColor        
     }
+    
     private func configureSubviews() {
         calendarView.register(DayCell.self, forCellWithReuseIdentifier: self.dayCellReuseIdentifier)
         view.addSubViews(self.currentValueView, self.weekdayView, self.calendarView)
-        
+        view.layer.borderWidth = 1   
     }
     
     private func configureConstraints() {

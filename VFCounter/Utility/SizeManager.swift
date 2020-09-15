@@ -188,8 +188,12 @@ class SizeManager {
     var chartHeight: CGFloat {
       
         var height: CGFloat = 0.0
-        if DeviceTypes.isiPhone8Standard {
-            height = ScreenSize.height - 250
+        
+        if DeviceTypes.isiPhoneSE {
+            height = ScreenSize.height - 200
+        }
+        else if DeviceTypes.isiPhone8Standard {
+            height = ScreenSize.height - 350
         } else if DeviceTypes.isiPhone8PlusStandard {
             height = ScreenSize.height - 300
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
