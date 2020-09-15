@@ -282,9 +282,7 @@ JTACMonthViewDataSource {
         
     }
     
-    
-
-    
+    // MARK : JTAppleCalendarDelegate & JTAppleCalendarDataSource
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: self.dayCellReuseIdentifier, for: indexPath)
         configureCell(cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
