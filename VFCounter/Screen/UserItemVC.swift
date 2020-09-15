@@ -10,8 +10,6 @@ import UIKit
 import CoreStore
 import CoreData
 
-
-
 class UserItemVC: UIViewController {
 
     enum Section: String {     
@@ -35,18 +33,17 @@ class UserItemVC: UIViewController {
     let dataManager = DataManager()
     var stringDate: String = ""
     var checkedIndexPath = Set<IndexPath>()
-
-    
+        
      let fetchingItems =  [ { (newDate) -> [DataType] in
         
-                return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
-                .where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
-            },
-            { (newDate) -> [DataType] in
-                
-                return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
+            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
+            .where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
+        },
+        { (newDate) -> [DataType] in
+            
+            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
         
-            } ]
+        } ]
     
     
     init(date: String) {
@@ -80,11 +77,8 @@ class UserItemVC: UIViewController {
             make.width.equalTo(view)
             make.height.equalTo(height)
         }
-//        circularView.layer.borderWidth = 1
-
     }
-    
-    
+
     func setCircularValue() {
         if let rate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") {
             circularView.outerSlider.maximumValue = CGFloat(rate)
@@ -96,15 +90,13 @@ class UserItemVC: UIViewController {
         }
         
     }
-    //MARK: - notificationCenter
+
     fileprivate func prepareNotificationAddObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)), name: .updateTaskPercent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)), name: .updateFetchingData, object: nil)
         
     }
     
-    // MARK: action
-    //AlarSetting 화면에서 최대 복용량 받아서 링 의 최대값을 설정한다.
     @objc fileprivate func updateTaskRate(_ notification: Notification) {
      
         if let veggieAmount = notification.userInfo?["veggieAmount"] as? Int {
@@ -119,9 +111,7 @@ class UserItemVC: UIViewController {
             circularView.insideSlider.maximumValue = CGFloat(fruitAmount)
         }
     }
-    
-    // MARK: action
-    //AlarSetting 화면에서 최대 복용량 받아서 링 의 최대값을 설정한다.
+
     @objc fileprivate func updateFetchingData(_ notification: Notification) {
         
         if let createdDate = notification.userInfo?["createdDate"] as? String {
