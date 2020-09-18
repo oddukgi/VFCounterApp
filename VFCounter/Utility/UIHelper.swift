@@ -10,7 +10,7 @@ import UIKit
 
 
 enum UIHelper {
-    
+    static let sectionHeaderElement = "sectionHeaderKind"
     
    // MARK: CollectionLayout
     static func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
@@ -82,7 +82,41 @@ enum UIHelper {
             sectionProvider: sectionProvider, configuration: config)
         return layout          
     }
-    
+
+     static func createList() -> UICollectionViewLayout {
+           
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 0
+           let sectionProvider = UICollectionViewCompositionalLayout(sectionProvider: {
+                (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+
+            let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(65),
+                                                  heightDimension: .absolute(65))
+            let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(65))
+            let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
+            layoutGroup.interItemSpacing = .fixed(3)
+            layoutGroup.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .fixed(100), top: nil, trailing: nil, bottom: nil)
+            
+            let section = NSCollectionLayoutSection(group: layoutGroup)
+            section.orthogonalScrollingBehavior = .continuous
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(65),  heightDimension: .absolute(65)), elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .topLeading,absoluteOffset:.init(x: 0, y: 65))
+            sectionHeader.pinToVisibleBounds = true
+            section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+            section.boundarySupplementaryItems = [sectionHeader]
+            return section
+            
+            
+            },configuration: config)
+
+            return sectionProvider
+
+        }
+        
+
+  
     // MARK: UIViewController
     static func backToPreviousScreen(_ view: UIViewController){
         if view.navigationController != nil{

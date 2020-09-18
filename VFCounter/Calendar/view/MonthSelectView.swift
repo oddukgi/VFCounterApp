@@ -85,7 +85,6 @@ class MonthSelectView<Value: CalendarValue>: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Configuration
     private func configureUI() {
         self.backgroundColor = .clear
@@ -99,7 +98,7 @@ class MonthSelectView<Value: CalendarValue>: UIView {
         }
         
         stackView.snp.makeConstraints {
-            $0.top.equalTo(self).offset(5)
+            $0.top.equalTo(self).offset(7)
             $0.centerX.equalTo(self.snp.centerX)
             $0.height.equalTo(32)
         }

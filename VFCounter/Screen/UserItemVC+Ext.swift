@@ -108,10 +108,8 @@ extension UserItemVC {
     func reloadRing(date: String) {
     
         dataManager.getSumItems(date: date) { (veggieSum, fruitSum) in
-//            print("\(veggieSum) \(fruitSum)")
             self.circularView.updateValue(amount: Int(veggieSum), tag: 0)
             self.circularView.updateValue(amount: Int(fruitSum), tag: 1)
-            
         }
     }
     
@@ -152,9 +150,10 @@ extension UserItemVC: PickItemVCProtocol {
 
         if !item.name.isEmpty {
             stringDate = String(item.date.split(separator: " ").first!)
-            NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
+            
             dataManager.createEntity(item: item, tag: tag)            
-		    updateData() 
+		    updateData()
+            NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
         }
       
     }
@@ -194,7 +193,7 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
     }
 }
 
-extension UserItemVC: VFItemCellDelegate {
+extension UserItemVC: ItemCellDelegate {
 
     func updateSelectedItem(item: VFItemController.Items, index: Int) {
         // display PickItemVC

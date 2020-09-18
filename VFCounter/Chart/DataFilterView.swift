@@ -55,7 +55,6 @@ extension DataFilterView {
         axis = .vertical
         distribution = .equalSpacing
         spacing = 0
-
         setupSectionView()
 
     }

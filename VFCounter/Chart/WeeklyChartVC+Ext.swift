@@ -15,12 +15,15 @@ extension WeeklyChartVC {
         view.addSubview(chartView)
         
         let height = SizeManager().chartHeight
-//        print("Size: \(view.bounds.width) \(view.bounds.height)")
+
         chartView.snp.makeConstraints { make in
             make.top.equalTo(weekStackView.snp.bottom).offset(10)
             make.width.equalTo(view.bounds.width)
             make.height.equalTo(height)
         }
+        
+        chartView.layer.borderWidth = 1
+        chartView.layer.borderColor = UIColor.blue.cgColor
 
     }
     
@@ -58,7 +61,6 @@ extension WeeklyChartVC {
         leftAxis.spaceTop = 0.2
         leftAxis.axisMinimum = 0
         
-        
         let l = chartView.legend
         l.horizontalAlignment = .right
         l.verticalAlignment = .top
@@ -82,5 +84,12 @@ extension WeeklyChartVC {
         marker.chartView = chartView
         marker.minimumSize = CGSize(width: 70, height: 40)
         chartView.marker = marker
+    }
+}
+
+
+extension DateSettings {
+    struct WeeklyChartController {
+       var startDate: Date?
     }
 }

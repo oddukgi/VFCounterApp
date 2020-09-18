@@ -19,6 +19,4 @@ struct CalendarSettings {
     var weekView = CalendarSettings.WeekView()
     var monthSelectView = CalendarSettings.MonthSelectView()
     
-    
-    
 }

@@ -158,13 +158,9 @@ open class BalloonMarker: MarkerImage
         }
         
         rect.size.height -= self.insets.top + self.insets.bottom
-        
         UIGraphicsPushContext(context)
-        
         label.draw(in: rect, withAttributes: _drawAttributes)
-        
         UIGraphicsPopContext()
-        
         context.restoreGState()
     }
 

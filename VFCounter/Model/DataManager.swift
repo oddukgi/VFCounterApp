@@ -13,6 +13,22 @@ import CoreStore
 class DataManager {
     
     // MARK: create entity
+    
+    static let weekItems  =  [{ (date) -> [DataType] in
+            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
+            .where(format: "%K BEGINSWITH[c] %@",
+            #keyPath(DataType.date),date).orderBy(.descending(\.createdDate)))
+        },
+       { (date) -> [DataType] in
+            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration)
+            .where(format: "%K BEGINSWITH[c] %@",
+                   #keyPath(DataType.date),date).orderBy(.descending(\.createdDate)))
+        }
+    ]
+    
+    
+    
+    
 
     func configureEntity<T: DataType>(_ objectType: T.Type, transaction: SynchronousDataTransaction,
           configuration: String) -> T {
@@ -82,6 +98,8 @@ class DataManager {
 
     }
     
+
+    
     func modfiyEntity<T: DataType>(item: VFItemController.Items, originTime: Date,
                                    _ objectType: T.Type) {
  
@@ -110,6 +128,8 @@ class DataManager {
           
        
     }
+    
+    
 
     func getData<T: DataType>(tag: Int, index: Int, _ objectType: T.Type, newDate: String,
                               completion: @escaping (Date) -> Void) {
@@ -155,4 +175,23 @@ class DataManager {
         guard let mostRecentData = try? UserDataManager.dataStack.fetchAll(From<T>(configuration),orderBy) else { return nil }
         return mostRecentData
     }
+    
+    static func getVeggies(date: String) -> [SubItems] {
+        
+        var subitem = [SubItems]()
+        let data = weekItems[0](date)
+        
+        for i in 0 ..< data.count {
+            let item = SubItems(element: data[i])
+            subitem.append(item)
+        }
+        
+        
+        return subitem
+    }
+    
+//
+//    static func getFruits(date: String) -> SubItems {
+//        return SubItems(element: weekItems[1](date))
+//    }
 }

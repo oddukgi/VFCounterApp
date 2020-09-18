@@ -101,7 +101,6 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
         if entry.y == 0.0{
             chartView.highlightValue(nil, callDelegate: false)
         }
-
     }
     
     func chartValueNothingSelected(_ chartView: ChartViewBase) {

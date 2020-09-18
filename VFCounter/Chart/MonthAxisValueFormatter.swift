@@ -20,10 +20,8 @@ class MonthAxisValueFormatter: NSObject, IAxisValueFormatter {
     }
 
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        
         let days = Int(value)
         let endOfMonth = date.getLastDayMonth()
-        
         var arrayDay = Array<Int>()
         var count = 1
         

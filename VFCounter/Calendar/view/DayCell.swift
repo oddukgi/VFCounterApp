@@ -30,9 +30,9 @@ class DayCell: JTACDayCell {
     }()
     
     var ringButton: RingItemButton!
-    
-    
     var isFirstLoading = true
+    
+    
     // MARK: - Variables
     private var setting: CalendarSettings.DayCell = CalendarSettings.default.dayCell
     private let dataManager = DataManager()
@@ -43,7 +43,6 @@ class DayCell: JTACDayCell {
         super.init(frame: frame)
         setOnSubviews()
         applySettings(CalendarSettings.default.dayCell)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,11 +50,11 @@ class DayCell: JTACDayCell {
     }
     
     func applySettings(_ setting: CalendarSettings.DayCell) {
-        
         self.setting = setting
         self.dateLabel.font = setting.dateLabelFont
 //        self.dateLabel.textColor = setting.dateLabelColor
     }
+    
     func setOnSubviews() {
         self.contentView.addSubViews(self.selectionBackgroundView, self.dateLabel)
         ringButton = RingItemButton(frame: bounds)
@@ -63,7 +62,6 @@ class DayCell: JTACDayCell {
         self.dateLabel.snp.makeConstraints { maker in
             maker.edges.equalTo(contentView)
         }
-
         ringButton.ringProgressView.ringWidth = 3.5
         ringButton.ringProgressView.ringSpacing = 1
         ringButton.ringProgressView.ring1StartColor = RingColor.ringGreen
@@ -71,7 +69,6 @@ class DayCell: JTACDayCell {
         ringButton.ringProgressView.ring2StartColor = RingColor.ringYellow
         ringButton.ringProgressView.ring2EndColor = RingColor.trackBeige
     }
-
     
     static func makeViewSettings(for state: CellState, minimumDate: Date?, maximumDate: Date?,
                                  rangeValue: CalendarRange?, flag: Bool = false) -> ViewSettings {

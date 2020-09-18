@@ -13,11 +13,9 @@ import SnapKit
 extension HomeVC {
     
     // MARK: Constraint
-
         
     func setupConstraints() {
          
-
         headerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(topConstraintConstant)
             make.width.equalToSuperview()

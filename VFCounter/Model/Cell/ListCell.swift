@@ -1,35 +1,27 @@
 //
-//  VFItemCell.swift
+//  ListCell.swift
 //  VFCounter
 //
-//  Created by Sunmi on 2020/07/24.
+//  Created by Sunmi on 2020/09/18.
 //  Copyright © 2020 creativeSun. All rights reserved.
 //
 
 import UIKit
-import SnapKit
 
-
-protocol ItemCellDelegate: class {
-    func updateSelectedItem(item: VFItemController.Items, index: Int)
-    func deleteSelectedItem(item: Int, section: Int)
-}
-
-class VFItemCell: UICollectionViewCell {
- 
-    static let reuseIdentifier = "VFItemCell"
-    let imageView    = UIImageView()
-    let lblTime      =  VFSubTitleLabel()
-    let lblName      =  VFSubTitleLabel()
-    let lblAmount    =  VFSubTitleLabel()
-    let itemEditView = ItemEditView()
+class ListCell: UICollectionViewCell, SelfConfigCell {
+    static let reuseIdentifier: String = "ListCell"
     
-    private var date     = ""
+    let lblTime      = VFSubTitleLabel()
+    let imageView    = UIImageView()
+    let lblName      = VFSubTitleLabel()
+    let lblAmount    = VFSubTitleLabel()
+    let itemEditView = ItemEditView()
+    private var date = ""
     weak var delegate: ItemCellDelegate?
     private let dataManager = DataManager()
     private var row = 0
     private var section = 0
-
+    
     var selectedItem: Bool = false {
         didSet{
           if selectedItem == true {
@@ -50,32 +42,33 @@ class VFItemCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     func setLayout() {
-        contentView.addSubViews(imageView,lblTime,lblName,lblAmount)
+        contentView.addSubViews(imageView, lblTime, lblName, lblAmount)
         
         imageView.contentMode = .scaleAspectFit
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView).offset(3)
             make.centerX.equalTo(contentView.snp.centerX)
-            make.size.equalTo(CGSize(width: 39, height: 37))
+            make.size.equalTo(CGSize(width: 28, height: 29))
         }
-    
+        
         lblTime.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(3)
-            make.centerX.equalTo(contentView.snp.centerX)
-            make.height.equalTo(10.2)
+            make.leading.equalTo(contentView.snp.leading).offset(3)
+            make.size.equalTo(CGSize(width: 38, height: 27))
         }
         lblName.snp.makeConstraints { make in
             make.top.equalTo(lblTime.snp.bottom).offset(3)
             make.centerX.equalTo(contentView.snp.centerX)
-            make.height.equalTo(14.2)
+            make.height.equalTo(1)
         }
         
         lblAmount.snp.makeConstraints { make in
-           make.top.equalTo(lblName.snp.bottom).offset(1.2)
-           make.centerX.equalTo(contentView.snp.centerX)
-           make.width.equalTo(50)
-           make.height.equalTo(18)
+            make.top.equalTo(lblName.snp.bottom).offset(1.2)
+            make.centerX.equalTo(contentView.snp.centerX)
+            make.size.equalTo(CGSize(width: 50, height: 18))
         }
         
         lblTime.font = NanumSquareRound.regular.style(sizeOffset: 11)
@@ -93,7 +86,6 @@ class VFItemCell: UICollectionViewCell {
         lblTime.textAlignment = .center
         lblName.textAlignment = .center
         lblAmount.textAlignment = .center
-       
     }
     
     func showItemEditView() {
@@ -106,6 +98,11 @@ class VFItemCell: UICollectionViewCell {
      }
 
     
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+         super.apply(layoutAttributes)
+         self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
+    }
+    
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
         guard isUserInteractionEnabled else { return nil }
@@ -117,10 +114,10 @@ class VFItemCell: UICollectionViewCell {
 
         // add one of these blocks for each button in our collection view cell we want to actually work
         if  !self.itemEditView.isHidden && self.itemEditView.itemButton[0].point(inside: convert(point, to: itemEditView.itemButton[0]), with: event) {
-           return self.itemEditView.itemButton[0]
+            return self.itemEditView.itemButton[0]
         }
         if !self.itemEditView.isHidden && self.itemEditView.itemButton[1].point(inside: convert(point, to: itemEditView.itemButton[1]), with: event) {
-           	return self.itemEditView.itemButton[1]
+            return self.itemEditView.itemButton[1]
         }
 
         return super.hitTest(point, with: event)
@@ -129,7 +126,7 @@ class VFItemCell: UICollectionViewCell {
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
         imageView.image = image
-    
+        
         self.date = String(date.split(separator: " ").first!)
         let time = date.trimmingTime(start: 0, end: -11).trimmingTime(start: 5, end: -3)
         lblTime.text = time
@@ -137,12 +134,10 @@ class VFItemCell: UICollectionViewCell {
         lblAmount.text = "\(amount)g"
     }
     
-  
     func connectedTarget() {
         itemEditView.itemButton[0].addTarget(self, action: #selector(modifyItem(_:)), for: .touchUpInside)
         itemEditView.itemButton[1].addTarget(self, action: #selector(deleteItem(_:)), for: .touchUpInside)
     }
-    
     
     func selectedIndexPath(_ indexPath: IndexPath) {
 
@@ -155,19 +150,20 @@ class VFItemCell: UICollectionViewCell {
 
         var datatype: DataType.Type!
         section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
-         dataManager.getData(tag: section, index: row, datatype, newDate: date) { (result) in
+        dataManager.getData(tag: section, index: row, datatype, newDate: date) { (result) in
 
-             let name     = self.lblName.text!
-             let image    = self.imageView.image!
-             let amount   = String(self.lblAmount.text!.dropLast())
+            let name     = self.lblName.text!
+            let image    = self.imageView.image!
+            let amount   = String(self.lblAmount.text!.dropLast())
 
-             let item = VFItemController.Items(name: name, date: "", image: image, amount: Int(amount) ?? 0, entityDT: result)
-             self.delegate?.updateSelectedItem(item: item, index: self.section)
-         }
- 
+            let item = VFItemController.Items(name: name, date: "", image: image, amount: Int(amount) ?? 0, entityDT: result)
+            self.delegate?.updateSelectedItem(item: item, index: self.section)
+        }
+    
     }
     
     @objc func deleteItem(_ sender: VFButton) {
         delegate?.deleteSelectedItem(item: row, section: section)
     }
+    
 }

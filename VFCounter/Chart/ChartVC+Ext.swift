@@ -35,12 +35,12 @@ extension ChartVC {
         segmentControl.selectedConfiguration(font: defaultFont, color: .white)
         segmentControl.addTarget(self, action: #selector(changedIndexSegment), for: .valueChanged)
         
-        let height = ScreenSize.height - 250
+        let _ = ScreenSize.height - 250
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
-            $0.top.equalTo(segmentControl.snp.bottom).offset(10)
+            $0.top.equalTo(segmentControl.snp.bottom).offset(13)
             $0.width.equalTo(view.bounds.width)
-            $0.height.equalTo(height)
+            $0.bottom.equalTo(datafilterView.snp.top).offset(-10)
         }
 
     }

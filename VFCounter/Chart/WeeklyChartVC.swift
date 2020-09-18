@@ -12,23 +12,25 @@ import Charts
 
 
 class WeeklyChartVC: ChartBaseVC {
-
+  
     var date: String?
-    let lblweek = VFTitleLabel(textAlignment: .center, fontSize: 15)
+    let lblweek = VFTitleLabel(textAlignment: .center, fontSize: 14)
     let chartView = BarChartView()
  
     private var aDayWeek: Date?
+    private var setting: DateSettings.WeeklyChartController
     private var veggieBarChart = [BarChartDataEntry]()
     private var fruitBarChart = [BarChartDataEntry]()
 
     let dataManager = DataManager()
 
-    lazy var arrowButtons: [VFButton] = {
-        var buttons = [VFButton]()
+    lazy var arrowButtons: [UIButton] = {
+        var buttons = [UIButton]()
         var img = ["chartL", "chartR"]
-        for i in 0..<2 {
-            let button = VFButton()
-            button.addImage(imageName: img[i])
+        (0 ..< 2).forEach { index in
+            
+            let button = UIButton()
+            button.setImage(UIImage(named: img[index]), for: .normal)
             button.contentMode = .scaleAspectFit
             buttons.append(button)
         }
@@ -38,16 +40,16 @@ class WeeklyChartVC: ChartBaseVC {
     
     lazy var weekStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 150
+        stackView.spacing = 105
         stackView.axis = .horizontal
         stackView.distribution = .fill
         return stackView
     }()
     
  
-    init(date: String) {
+    init(setting: DateSettings.WeeklyChartController) {
+        self.setting = setting
         super.init(nibName: nil, bundle: nil)
-        self.date = date
     }
     
     required init?(coder: NSCoder) {
@@ -63,84 +65,71 @@ class WeeklyChartVC: ChartBaseVC {
         configureChart()
         applyChartOption()
         configureMarker()
-
     }
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getCurrentWeek()
     }
     
     func configure() {
-      
         view.addSubViews(weekStackView,lblweek)
-        arrowButtons[0].snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 32, height: 40))
+        arrowButtons.forEach {
+            weekStackView.addArrangedSubview($0)
         }
-       
-        arrowButtons[1].snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 32, height: 40))
-        }
- 
-        weekStackView.addArrangedSubview(arrowButtons[0])
-        weekStackView.addArrangedSubview(arrowButtons[1])
         
         weekStackView.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(5)
+            make.top.equalTo(view).offset(7)
             make.centerX.equalTo(view.snp.centerX)
-            make.height.equalTo(40)
+            make.height.equalTo(32)
         }
         
-        // 80 X 28
         lblweek.snp.makeConstraints { make in
             make.leading.equalTo(arrowButtons[0].snp.trailing)
             make.centerY.equalTo(weekStackView.snp.centerY)
-            make.width.equalTo(150)
+            make.width.equalTo(105)
         }
-//        arrowButtons[0].layer.borderWidth = 1
-//        arrowButtons[1].layer.borderWidth = 1
-//        lblweek.layer.borderWidth = 1
         
         lblweek.font = Seoulnamsan.medium.style(offset: 20)
     }
     
     func getCurrentWeek() {
-        let newDate = date?.changeDateTime(format: .date)
-        let startWeekDate = newDate?.getStartOfWeek()
-        aDayWeek = startWeekDate
-        changeDate()
         
+        if DateSettings.default.weekChartCtrl.startDate == nil {
+            aDayWeek = setting.startDate?.getStartOfWeek()
+        } else {
+            aDayWeek = DateSettings.default.weekChartCtrl.startDate
+        }
+        changeDate()
     }
     
     func connectAction() {
         arrowButtons[0].addTargetClosure { _ in
             self.aDayWeek = self.aDayWeek?.aDayInLastWeek.getStartOfWeek()
+            DateSettings.default.listCtrl.startDate = self.aDayWeek
             self.changeDate()
-           
         }
         arrowButtons[1].addTargetClosure { _ in
             self.aDayWeek = self.aDayWeek?.aDayInNextWeek.getStartOfWeek()
             self.changeDate()
-
         }
     }
 
     func changeDate() {
         
         if !veggieBarChart.isEmpty {
-             veggieBarChart.removeAll()
+            veggieBarChart.removeAll()
         }
+        
         if !fruitBarChart.isEmpty {
-             fruitBarChart.removeAll()
+            fruitBarChart.removeAll()
         }
         
         DateProvider.updateDateMap(date: self.aDayWeek!) {  [weak self] (datemap) in
-            
-//            print(datemap)
             self?.updateWeekLabel(startDate: datemap.first!, endDate: datemap.last!)
-    
             datemap.forEach { item in
                 self?.updateChartData(date: item)
             }
-            
         }
     }
     
@@ -154,22 +143,17 @@ class WeeklyChartVC: ChartBaseVC {
         if firstMonth == secondMonth {
             let value = "\(firstMonth).\(startDateArray[2]) ~ \(endDateArray[2])"
             lblweek.text = value
-            
         } else {
             let value = "\(firstMonth).\(startDateArray[2]) ~ \(secondMonth).\(endDateArray[2])"
             lblweek.text = value
-            
         }
-    
     }
     
     func updateChartData(date: String) {
 
         let dateArray = date.components(separatedBy: [" "])
         dataManager.getSumItems(date: dateArray.first!) { (veggieSum, fruitSum) in
-//            print("\(veggieSum) \(fruitSum)")
             self.setDataCount(sumVeggie : veggieSum, sumFruit: fruitSum, day: dateArray.last!)
-    
         }
     }
     
@@ -207,4 +191,8 @@ class WeeklyChartVC: ChartBaseVC {
 }
 
 
-
+extension WeeklyChartVC {
+    struct WeekChartController {
+        var startDate: Date?
+    }
+}

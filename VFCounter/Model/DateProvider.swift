@@ -17,3 +17,19 @@ class DateProvider {
     }
     
 }
+struct Weeks: Hashable {
+    var day: String
+    let identifiable = UUID()
+    
+    func hash(into hasher: inout Hasher){
+        hasher.combine(identifiable)
+    }
+}
+struct SubItems: Hashable {
+    var element: DataType
+    let identifiable = UUID()
+    
+    func hash(into hasher: inout Hasher){
+        hasher.combine(identifiable)
+    }
+}
