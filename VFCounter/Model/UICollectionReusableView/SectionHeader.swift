@@ -28,7 +28,7 @@ class SectionHeader: UICollectionReusableView, SelfConfigCell {
         
         lblTitle.snp.makeConstraints { make in
          //   make.top.equalTo(self).offset(25)
-            make.centerX.equalTo(self.snp.centerX)
+            make.leading.equalTo(8)
             make.height.equalTo(28)
         }
         lblTitle.textColor = ColorHex.MilkChocolate.origin

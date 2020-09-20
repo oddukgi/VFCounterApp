@@ -55,41 +55,39 @@ extension HistoryVC {
                   withReuseIdentifier: SectionHeader.reuseIdentifier,
                   for: indexPath) as? SectionHeader {
                   
+                
+                let weekday = snapshot.sectionIdentifiers[indexPath.section]
+                titleSupplementary.lblTitle.text = weekday.day
                 titleSupplementary.layer.borderWidth = 1
-                  let weekday = snapshot.sectionIdentifiers[indexPath.section]
-//                  titleSupplementary.delegate = self
-                  titleSupplementary.lblTitle.text = weekday.day
                   return titleSupplementary
             } else {
               fatalError("Cannot create new supplementary")
           }
         }
     }
+    
+    func updateCell(for indexPath: IndexPath, headerCell: UICollectionReusableView)  {
+        
+        headerCell.layer.borderColor = UIColor.clear.cgColor
+    }
+    
     func updateList(flag: Bool = true) {
           
         currentSnapshot = NSDiffableDataSourceSnapshot <Weeks, SubItems>()
         let count = (periodRange == .weekly) ? 14 : 30
-        
         var index = 0
-        
-        
         
         for i in 0 ..< count {
       
             currentSnapshot.appendSections([setting.weekDays()[i]])
-            
-
-            let sectionIdentifier = currentSnapshot.sectionIdentifiers[i]
+//            let sectionIdentifier = currentSnapshot.sectionIdentifiers[i]
             index = (i > 6) ? (i / 2) : i
             if i % 2 == 0 {
-                currentSnapshot.appendItems(DataManager.getVeggies(date: weekDate[index]))
+                currentSnapshot.appendItems(DataManager.getList(date: weekDate[index], index: 0))
             }
-            
-            
-//            else {
-//                currentSnapshot.appendItems(DataManager.weekItems[1](weekDate[index]))
-//            }
-           
+            else {
+                currentSnapshot.appendItems(DataManager.getList(date: weekDate[index], index: 1))
+            }
         }
         
         self.dataSource.apply(self.currentSnapshot, animatingDifferences: flag)
@@ -105,7 +103,7 @@ extension HistoryVC {
       }
       
       func hideItemView() {
-          checkedIndexPath.removeAll()
+//          checkedIndexPath.removeAll()
           updateData()
       }
 }
@@ -114,20 +112,20 @@ extension HistoryVC: UICollectionViewDelegate {
     // 아이템 값 수정 및 삭제
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 아이템을 선택하면, 홈화면으로 이동
-        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
+//        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
        
-        if checkedIndexPath.isEmpty {
-            cell.selectedItem = true
-            checkedIndexPath.insert(indexPath)
-            cell.selectedIndexPath(indexPath)
-            
-        } else {
-            checkedIndexPath.removeAll()
-             OperationQueue.main.addOperation {
-                self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
-            }
-        }
-        
+//        if checkedIndexPath.isEmpty {
+//            cell.selectedItem = true
+//            checkedIndexPath.insert(indexPath)
+//            cell.selectedIndexPath(indexPath)
+//
+//        } else {
+//            checkedIndexPath.removeAll()
+//             OperationQueue.main.addOperation {
+//                self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+//            }
+//        }
+//
     }
 }
 

@@ -15,28 +15,18 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
     let imageView    = UIImageView()
     let lblName      = VFSubTitleLabel()
     let lblAmount    = VFSubTitleLabel()
-    let itemEditView = ItemEditView()
+//    let itemEditView = ItemEditView()
     private var date = ""
     weak var delegate: ItemCellDelegate?
     private let dataManager = DataManager()
     private var row = 0
     private var section = 0
     
-    var selectedItem: Bool = false {
-        didSet{
-          if selectedItem == true {
-            itemEditView.isHidden = false
-          } else {
-            itemEditView.isHidden = true
-          }
-       }
-    }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
-        showItemEditView()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -88,41 +78,13 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
         lblAmount.textAlignment = .center
     }
     
-    func showItemEditView() {
-        contentView.addSubview(itemEditView)
-        itemEditView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(25)
-            make.centerX.equalTo(contentView.snp.centerX).offset(-40)
-        }
-        connectedTarget()
-     }
-
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
          super.apply(layoutAttributes)
          self.layer.zPosition = CGFloat(layoutAttributes.zIndex)
     }
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
-        guard isUserInteractionEnabled else { return nil }
-        guard !isHidden else { return nil }
-        guard alpha >= 0.01 else { return nil }
-
-        guard self.point(inside: point, with: event) else { return nil }
-
-
-        // add one of these blocks for each button in our collection view cell we want to actually work
-        if  !self.itemEditView.isHidden && self.itemEditView.itemButton[0].point(inside: convert(point, to: itemEditView.itemButton[0]), with: event) {
-            return self.itemEditView.itemButton[0]
-        }
-        if !self.itemEditView.isHidden && self.itemEditView.itemButton[1].point(inside: convert(point, to: itemEditView.itemButton[1]), with: event) {
-            return self.itemEditView.itemButton[1]
-        }
-
-        return super.hitTest(point, with: event)
-    }
-    
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
         imageView.image = image
@@ -134,10 +96,7 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
         lblAmount.text = "\(amount)g"
     }
     
-    func connectedTarget() {
-        itemEditView.itemButton[0].addTarget(self, action: #selector(modifyItem(_:)), for: .touchUpInside)
-        itemEditView.itemButton[1].addTarget(self, action: #selector(deleteItem(_:)), for: .touchUpInside)
-    }
+
     
     func selectedIndexPath(_ indexPath: IndexPath) {
 

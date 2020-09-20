@@ -81,6 +81,10 @@ extension String {
         let days = ["월", "화", "수", "목", "금", "토", "일"]
         return days.firstIndex(of: self)!
     }
+    
+    func containsWhitespaceAndNewlines() -> Bool {
+        return rangeOfCharacter(from: CharacterSet(charactersIn: "월화수목금토일")) != nil
+    }
 }
 
 

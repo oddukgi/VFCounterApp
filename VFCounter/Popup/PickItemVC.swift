@@ -36,6 +36,7 @@ class PickItemVC: UIViewController {
     
     let pickItems = PickItems()
     var vfItems: VFItemController.Items!
+    
     weak var delegate: PickItemVCProtocol?
     var tag: Int = 0
     var userdate: String = ""
@@ -133,11 +134,11 @@ class PickItemVC: UIViewController {
             make.top.equalTo(collectionView.snp.bottom).offset(15)
             make.leading.equalTo(view).offset(20)
             make.trailing.equalTo(view).offset(-20)
-            make.bottom.equalTo(view).offset(-180)
+            make.height.equalTo(80)
         }
         
         btnAdd.snp.makeConstraints { make in
-            make.top.equalTo(userDTView.snp.bottom).offset(14)
+            make.top.equalTo(userDTView.snp.bottom).offset(10)
             make.centerX.equalTo(view.snp.centerX)
             make.size.equalTo(CGSize(width: 58, height: 38))
         }

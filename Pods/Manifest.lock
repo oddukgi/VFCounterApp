@@ -1,0 +1,16 @@
+PODS:
+  - MKRingProgressView (2.2.3)
+
+DEPENDENCIES:
+  - MKRingProgressView
+
+SPEC REPOS:
+  trunk:
+    - MKRingProgressView
+
+SPEC CHECKSUMS:
+  MKRingProgressView: 404b3157e7a533ab8668d29ec20042c35d12ca1d
+
+PODFILE CHECKSUM: 38ad303cd8c98dee35a23a224f1ff4fe46d3081b
+
+COCOAPODS: 1.9.1

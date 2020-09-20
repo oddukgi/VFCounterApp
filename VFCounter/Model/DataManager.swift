@@ -176,10 +176,10 @@ class DataManager {
         return mostRecentData
     }
     
-    static func getVeggies(date: String) -> [SubItems] {
+    static func getList(date: String, index: Int) -> [SubItems] {
         
         var subitem = [SubItems]()
-        let data = weekItems[0](date)
+        let data = weekItems[index](date)
         
         for i in 0 ..< data.count {
             let item = SubItems(element: data[i])

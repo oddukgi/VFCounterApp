@@ -22,10 +22,9 @@ extension UserItemVC {
         let tabBarHeight = tabBarController?.tabBar.bounds.size.height ?? 0
         let padding = (view.bounds.height - height) - tabBarHeight
         collectionView.snp.makeConstraints { make in
-          //  make.top.equalTo(view).offset(height)
-            make.top.equalTo(circularView.snp.bottom).offset(8)
-            make.leading.trailing.equalTo(view)
-            make.height.equalTo(padding)
+            make.top.equalTo(circularView.snp.bottom)
+            make.width.equalTo(view.frame.width)
+            make.bottom.equalTo(view)
         }
         
         collectionView.delegate = self

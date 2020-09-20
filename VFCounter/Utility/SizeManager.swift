@@ -127,9 +127,17 @@ class SizeManager {
     var getUserItemHeight: CGFloat {
 
         if DeviceTypes.isiPhone8Standard {
-            userItemHeight = 98
+            userItemHeight = 80
+            
+        } else if DeviceTypes.isiPhone8PlusStandard {
+            return 85
+        } else if DeviceTypes.isiPhoneX {
+            return 90
+        }
+        else if DeviceTypes.isiPhoneXsMaxAndXr {
+            return 95
         } else {
-            userItemHeight = 108
+            userItemHeight = 99
         }
         return userItemHeight
     }

@@ -18,8 +18,8 @@ class HistoryVC: UIViewController {
     
     var weekDate = Array<String>()
     let sectionHeaderElementKind = "section-header-element-kind"
-    var checkedIndexPath = Set<IndexPath>()
     let dataManager = DataManager()
+    
     
     init(periodRange: PeriodRange, setting: DateSettings.HistoryList) {
         self.periodRange = periodRange
@@ -42,7 +42,6 @@ class HistoryVC: UIViewController {
         connectAction()
         configureDataSource()
         configureTitleDataSource()
-
         updateList()
     }
     
@@ -69,13 +68,13 @@ class HistoryVC: UIViewController {
         }
     }
 
-    
+     
     func configureHierarchy() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createList())
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createHorizontalLayout(titleElemendKind: sectionHeaderElementKind))
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         collectionView.register(ListCell.self, forCellWithReuseIdentifier: ListCell.reuseIdentifier)
-        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: sectionHeaderElementKind,
                                      withReuseIdentifier: SectionHeader.reuseIdentifier)
         
         view.addSubview(collectionView)
@@ -86,8 +85,8 @@ class HistoryVC: UIViewController {
             $0.leading.trailing.equalTo(view)
             $0.bottom.equalTo(view.snp.bottom).offset(-8)
         }
-
-
+        
+        
     }
     
     private func getCurrentWeek() {
@@ -177,7 +176,6 @@ extension DateSettings {
         
         mutating func weekDays() -> [Weeks] {
             
-            
             calendar.locale = Locale(identifier: "ko_KR")
             var weekDays = self.calendar.shortWeekdaySymbols
             weekDays.append(weekDays.remove(at: 0))
@@ -187,7 +185,6 @@ extension DateSettings {
             
             var arrays = [Weeks]()
             newArray.forEach {
-                
                 let weekitem = Weeks(day: $0)
                 arrays.append(weekitem)
             }

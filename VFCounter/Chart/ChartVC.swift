@@ -30,7 +30,7 @@ class ChartVC: UIViewController {
     private var settings: DateSettings = DateSettings.default
     
     lazy var weeklyChartVC: UIViewController? = {
-        settings.weekChartCtrl.startDate = now
+        settings.weekChartCtrl.startDate = now.dayBefore
         let weeklyChartVC = WeeklyChartVC(setting: settings.weekChartCtrl)
         return weeklyChartVC
     }()
@@ -127,7 +127,7 @@ class ChartVC: UIViewController {
             self.datafilterView.selectSection(section: .list)
             var periodRange: PeriodRange
             self.segmentControl.selectedSegmentIndex == 0 ? (periodRange = .weekly) : (periodRange = .monthly)
-            self.settings.listCtrl.startDate = self.now
+            self.settings.listCtrl.startDate = self.now.dayBefore
             self.showChildVC(HistoryVC(periodRange: periodRange, setting: self.settings.listCtrl))
         }
     }

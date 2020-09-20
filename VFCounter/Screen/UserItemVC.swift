@@ -40,7 +40,6 @@ class UserItemVC: UIViewController {
             .where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
         },
         { (newDate) -> [DataType] in
-            
             return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate).orderBy(.descending(\.createdDate)))
         
         } ]
@@ -58,7 +57,6 @@ class UserItemVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupLayout()
         configureHierarchy()
         configureDataSource()
@@ -70,11 +68,13 @@ class UserItemVC: UIViewController {
 
     func setupLayout() {
         
-        view.addSubview(circularView)        
+        view.addSubview(circularView)
+
         height = SizeManager().circularViewHeight(view: view)
+        let padding = height + 90
         circularView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(5)
-            make.width.equalTo(view)
+            make.bottom.equalTo(view.snp.bottom).offset(-padding)
+            make.leading.trailing.equalTo(view)
             make.height.equalTo(height)
         }
     }
