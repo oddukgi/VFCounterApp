@@ -27,14 +27,20 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
+        setStyle()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func setLayout() {
+    override func layoutSubviews() {
+        layer.cornerRadius = 10
+        layer.borderWidth = 1
+        layer.borderColor = ColorHex.lightlightGrey.cgColor
+    }
+
+    private func setLayout() {
         contentView.addSubViews(imageView, lblTime, lblName, lblAmount)
         
         imageView.contentMode = .scaleAspectFit
@@ -46,14 +52,15 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
         
         lblTime.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(3)
-            make.leading.equalTo(contentView.snp.leading).offset(3)
-            make.size.equalTo(CGSize(width: 38, height: 27))
+            make.centerX.equalTo(contentView.snp.centerX)
+            make.height.equalTo(10.2)
         }
         lblName.snp.makeConstraints { make in
             make.top.equalTo(lblTime.snp.bottom).offset(3)
             make.centerX.equalTo(contentView.snp.centerX)
-            make.height.equalTo(1)
+            make.height.equalTo(14.2)
         }
+        
         
         lblAmount.snp.makeConstraints { make in
             make.top.equalTo(lblName.snp.bottom).offset(1.2)
@@ -61,6 +68,9 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
             make.size.equalTo(CGSize(width: 50, height: 18))
         }
         
+    }
+    
+    private func setStyle() {
         lblTime.font = NanumSquareRound.regular.style(sizeOffset: 11)
         lblName.font = NanumSquareRound.bold.style(sizeOffset: 13)
         lblAmount.font = NanumSquareRound.regular.style(sizeOffset: 12)
@@ -87,6 +97,7 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
 
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
+        
         imageView.image = image
         
         self.date = String(date.split(separator: " ").first!)
@@ -96,14 +107,13 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
         lblAmount.text = "\(amount)g"
     }
     
-
-    
     func selectedIndexPath(_ indexPath: IndexPath) {
 
         row = indexPath.row
         section = indexPath.section
     }
 
+    // MARK: - Edit Item
     @objc func modifyItem(_ sender: VFButton) {
         print("tapped modify item")
 

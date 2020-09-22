@@ -14,7 +14,7 @@ class DataManager {
     
     // MARK: create entity
     
-    static let weekItems  =  [{ (date) -> [DataType] in
+    static let dateItems  =  [{ (date) -> [DataType] in
             return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
             .where(format: "%K BEGINSWITH[c] %@",
             #keyPath(DataType.date),date).orderBy(.descending(\.createdDate)))
@@ -25,9 +25,6 @@ class DataManager {
                    #keyPath(DataType.date),date).orderBy(.descending(\.createdDate)))
         }
     ]
-    
-    
-    
     
 
     func configureEntity<T: DataType>(_ objectType: T.Type, transaction: SynchronousDataTransaction,
@@ -98,8 +95,24 @@ class DataManager {
 
     }
     
-
     
+    func isDataEmpty(date: String, completion: @escaping (String?, String?) -> Void) {
+    
+        let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+            
+            let veggieName = try transaction.queryValue(From<Veggies>()
+                    .select(String.self, .attribute(\.name))
+                    .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
+            
+            let fruitName = try transaction.queryValue(From<Veggies>()
+                    .select(String.self, .attribute(\.name))
+                    .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
+            
+             completion(veggieName, fruitName)
+        })
+
+    }
+        
     func modfiyEntity<T: DataType>(item: VFItemController.Items, originTime: Date,
                                    _ objectType: T.Type) {
  
@@ -179,7 +192,7 @@ class DataManager {
     static func getList(date: String, index: Int) -> [SubItems] {
         
         var subitem = [SubItems]()
-        let data = weekItems[index](date)
+        let data = dateItems[index](date)
         
         for i in 0 ..< data.count {
             let item = SubItems(element: data[i])
@@ -189,9 +202,4 @@ class DataManager {
         
         return subitem
     }
-    
-//
-//    static func getFruits(date: String) -> SubItems {
-//        return SubItems(element: weekItems[1](date))
-//    }
 }

@@ -128,7 +128,6 @@ class SizeManager {
 
         if DeviceTypes.isiPhone8Standard {
             userItemHeight = 80
-            
         } else if DeviceTypes.isiPhone8PlusStandard {
             return 85
         } else if DeviceTypes.isiPhoneX {

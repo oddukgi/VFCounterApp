@@ -48,7 +48,7 @@ enum UIHelper {
        return section
     }
     
-    static func createHorizontalLayout(titleElemendKind: String) -> UICollectionViewCompositionalLayout {
+    static func createHorizontalLayout(titleElemendKind: String, isHeader: Bool = true) -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(SizeManager().getUserItemHeight))
 
@@ -69,16 +69,21 @@ enum UIHelper {
              section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
       
 
-            let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .estimated(28))
-            let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: titleSize,
-                elementKind: titleElemendKind,
-                alignment: .top)
             
 //        titleSupplementary.contentInsets =  NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0)
 //            section.interGroupSpacing = 8
-            section.boundarySupplementaryItems = [titleSupplementary]
+            
+            
+            if isHeader {
+                let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                       heightDimension: .estimated(28))
+                let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: titleSize,
+                    elementKind: titleElemendKind,
+                    alignment: .top)
+                
+                section.boundarySupplementaryItems = [titleSupplementary]
+            }
             return section
         }
         

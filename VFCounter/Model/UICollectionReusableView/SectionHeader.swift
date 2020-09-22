@@ -33,6 +33,4 @@ class SectionHeader: UICollectionReusableView, SelfConfigCell {
         }
         lblTitle.textColor = ColorHex.MilkChocolate.origin
     }
-    
-
 }

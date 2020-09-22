@@ -18,7 +18,8 @@ class VFItemController {
         var entityDT: Date?
 
         func copy(with zone: NSZone? = nil) -> Any {
-            let copy = Items(name: name, date: date, image: image, amount: amount, entityDT: entityDT)
+            let copy = Items(name: name, date: date, image: image,
+                             amount: amount, entityDT: entityDT)
             return copy
         }
     }

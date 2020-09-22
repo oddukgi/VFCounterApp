@@ -14,6 +14,7 @@ struct DateSettings {
     private init() {}
     
     var listCtrl      = DateSettings.HistoryList()
+    var monthlyListCtrl = DateSettings.MonthlyList()
     var weekChartCtrl = DateSettings.WeeklyChartController()
     
 }

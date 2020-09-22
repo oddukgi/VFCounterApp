@@ -19,9 +19,9 @@ class HistoryVC: UIViewController {
     var weekDate = Array<String>()
     let sectionHeaderElementKind = "section-header-element-kind"
     let dataManager = DataManager()
+
     
-    
-    init(periodRange: PeriodRange, setting: DateSettings.HistoryList) {
+   init(periodRange: PeriodRange, setting: DateSettings.HistoryList) {
         self.periodRange = periodRange
         self.setting = setting
         super.init(nibName: nil, bundle: nil)
@@ -112,12 +112,9 @@ class HistoryVC: UIViewController {
     }
     
     func updateData() {
-        DateProvider.updateDateMap(date: self.aDayWeek!) {  [weak self] (datemap) in
+        DateProvider.updateDateMap(date: aDayWeek!, period: .weekly) {  [weak self] (datemap) in
             self?.updateWeekLabel(startDate: datemap.first!, endDate: datemap.last!)
-  
-            weekDate = datemap.map {
-                String($0.split(separator: " ").first!)
-            }
+            weekDate = datemap
             
         }
     }
@@ -173,25 +170,5 @@ extension DateSettings {
     struct HistoryList {
         var calendar: Calendar = .current
         var startDate: Date?
-        
-        mutating func weekDays() -> [Weeks] {
-            
-            calendar.locale = Locale(identifier: "ko_KR")
-            var weekDays = self.calendar.shortWeekdaySymbols
-            weekDays.append(weekDays.remove(at: 0))
-            
-            var newArray = weekDays.joined(separator: "  ").components(separatedBy: " ")
-            newArray.append(" ")
-            
-            var arrays = [Weeks]()
-            newArray.forEach {
-                let weekitem = Weeks(day: $0)
-                arrays.append(weekitem)
-            }
-            
-            return arrays
-            
-        }
     }
-
 }

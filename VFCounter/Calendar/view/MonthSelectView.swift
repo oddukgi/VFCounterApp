@@ -56,7 +56,7 @@ class MonthSelectView<Value: CalendarValue>: UIView {
       
     // MARK: - Variable
     
-    private let setting: CalendarSettings.MonthSelectView
+    private var setting: CalendarSettings.MonthSelectView
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -124,9 +124,11 @@ class MonthSelectView<Value: CalendarValue>: UIView {
     
     func updateMonth() {
         if let value = self.currentValue as? Date {
+            setting.currentDate = value
             lblMonth.text = dateFormatter.string(from: value)
             lblMonth.textColor = setting.textColor
-
+            NotificationCenter.default.post(name: .updateMonth, object: nil, userInfo: ["usermonth": value])
+     
         }
     }
     
@@ -149,6 +151,7 @@ extension CalendarSettings {
         var textColor: UIColor = .black
         var format: String = "YYYY MM"
         var locale = Locale(identifier: "ko_KR")
+        var currentDate = Date()
         var monthFont: UIFont = .systemFont(ofSize: 14, weight: .bold)
         var amountFont: UIFont = .systemFont(ofSize: 13, weight: .medium)
     }

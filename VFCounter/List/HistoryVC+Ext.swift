@@ -14,7 +14,7 @@ extension HistoryVC {
       func configureDataSource() {
           dataSource = UICollectionViewDiffableDataSource<Weeks, SubItems>(collectionView: collectionView) {
               (collectionView: UICollectionView,  indexPath: IndexPath,
-              data: SubItems) -> UICollectionViewCell? in
+              items: SubItems) -> UICollectionViewCell? in
               
               // Get a cell of the desired kind.
               guard let cell = collectionView.dequeueReusableCell(
@@ -24,21 +24,14 @@ extension HistoryVC {
                       fatalError("Cannot create new cell")
                   }
               
+            
+            let image = UIImage(data: items.element.image!)
+            let amount = Int(items.element.amount)
+            let name = items.element.name
+            let date = items.element.createdDate?.changeDateTime(format: .dateTime)
 
-              cell.layer.cornerRadius = 10
-              cell.layer.borderWidth = 1
-              cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
-              
-//              let image = UIImage(data: data.image!)
-//              let amount = Int(data.amount)
-//
-//              print("\(data.name!) \(data.createdDate!)")
-//              let dateTime = data.createdDate?.changeDateTime(format: .dateTime)
-
-//              cell.updateContents(image: image,name: data.name!, amount: amount, date: dateTime!)
-//              cell.selectedItem = self.checkedIndexPath.contains(indexPath)
-
-              return cell
+            cell.updateContents(image: image, name: name!, amount: amount, date: date!)
+            return cell
 
           }
           
@@ -54,12 +47,23 @@ extension HistoryVC {
                   ofKind: kind,
                   withReuseIdentifier: SectionHeader.reuseIdentifier,
                   for: indexPath) as? SectionHeader {
-                  
                 
+           
                 let weekday = snapshot.sectionIdentifiers[indexPath.section]
-                titleSupplementary.lblTitle.text = weekday.day
-                titleSupplementary.layer.borderWidth = 1
-                  return titleSupplementary
+                
+                if !weekday.day.containsWhitespaceAndNewlines() {
+                    titleSupplementary.frame = .zero
+
+                }
+                else {
+                
+                    titleSupplementary.lblTitle.text = weekday.day
+                    titleSupplementary.layer.borderWidth = 1
+                }
+                
+                return titleSupplementary
+                    
+                    
             } else {
               fatalError("Cannot create new supplementary")
           }
@@ -71,22 +75,43 @@ extension HistoryVC {
         headerCell.layer.borderColor = UIColor.clear.cgColor
     }
     
-    func updateList(flag: Bool = true) {
+    func updateList(flag: Bool = false) {
           
         currentSnapshot = NSDiffableDataSourceSnapshot <Weeks, SubItems>()
-        let count = (periodRange == .weekly) ? 14 : 30
+        let count = (periodRange == .weekly) ? 7 : 30
         var index = 0
         
-        for i in 0 ..< count {
-      
-            currentSnapshot.appendSections([setting.weekDays()[i]])
-//            let sectionIdentifier = currentSnapshot.sectionIdentifiers[i]
+
+        var flag = false
+        for var i in 0 ..< count {
+  
             index = (i > 6) ? (i / 2) : i
-            if i % 2 == 0 {
-                currentSnapshot.appendItems(DataManager.getList(date: weekDate[index], index: 0))
+
+            let weekdayArray = weekDate[index].components(separatedBy: " ")
+            let veggieData = DataManager.getList(date: weekdayArray[0], index: 0)
+            if veggieData.count > 0 {
+               
+                flag = true
+                let weekday = Weeks(day: weekdayArray[1])
+                currentSnapshot.appendSections([weekday])
+                currentSnapshot.appendItems(veggieData)
+            } else {
+                flag = false
             }
-            else {
-                currentSnapshot.appendItems(DataManager.getList(date: weekDate[index], index: 1))
+            
+
+            let fruitData = DataManager.getList(date: weekdayArray[0], index: 1)
+            var weekday = Weeks(day: weekdayArray[1])
+            if fruitData.count > 0 {
+  
+                if flag == true {
+                   i += 1
+                    weekday = Weeks(day: "")
+                }
+                
+                currentSnapshot.appendSections([weekday])
+                currentSnapshot.appendItems(fruitData)
+
             }
         }
         
@@ -108,6 +133,7 @@ extension HistoryVC {
       }
 }
 extension HistoryVC: UICollectionViewDelegate {
+
     
     // 아이템 값 수정 및 삭제
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

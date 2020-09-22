@@ -28,6 +28,7 @@ class ChartVC: UIViewController {
     let now = Date()
 
     private var settings: DateSettings = DateSettings.default
+    private var calendarMonth: CalendarSettings.MonthSelectView = CalendarSettings.default.monthSelectView
     
     lazy var weeklyChartVC: UIViewController? = {
         settings.weekChartCtrl.startDate = now.dayBefore
@@ -53,13 +54,15 @@ class ChartVC: UIViewController {
         super.viewDidLoad()
         self.title = "Chart"
         view.backgroundColor = .systemBackground
-        
+        prepareNotificationAddObserver()
         configureDataFilterView()
         configure()
         displayCurrentTab(TabIndex.firstChildTab.rawValue)
         connectAction()
     }
-  
+
+    
+    
     @objc func changedIndexSegment(sender: UISegmentedControl) {
         self.currentVC?.view.removeFromSuperview()
         self.currentVC?.removeFromParent()
@@ -114,6 +117,22 @@ class ChartVC: UIViewController {
         }
     }
  
+    fileprivate func prepareNotificationAddObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)),
+                                               name: .updateMonth, object: nil)
+    }
+    
+    
+    // MARK: action
+    @objc fileprivate func updateDateTime(_ notification: Notification) {
+        
+        if let userDate = notification.userInfo?["usermonth"] as? Date {
+          
+            self.settings.monthlyListCtrl.startDate = userDate
+        }
+    }
+    
+    
     func connectAction() {
       
         datafilterView.dataBtn.addTargetClosure { _ in
@@ -125,10 +144,18 @@ class ChartVC: UIViewController {
         datafilterView.listBtn.addTargetClosure { _ in
             print("tapped list button")
             self.datafilterView.selectSection(section: .list)
-            var periodRange: PeriodRange
-            self.segmentControl.selectedSegmentIndex == 0 ? (periodRange = .weekly) : (periodRange = .monthly)
-            self.settings.listCtrl.startDate = self.now.dayBefore
-            self.showChildVC(HistoryVC(periodRange: periodRange, setting: self.settings.listCtrl))
+ 
+            if self.segmentControl.selectedSegmentIndex == 0 {
+                self.settings.listCtrl.startDate = self.now.dayBefore
+                self.showChildVC(HistoryVC(periodRange: .weekly, setting: self.settings.listCtrl))
+                
+            } else {
+                
+                print(self.calendarMonth.currentDate)
+                
+//                self.settings.listCtrl.startDate = self.calendarMonth.currentDate
+                self.showChildVC(MonthlyListVC(setting: self.settings.monthlyListCtrl))
+            }
         }
     }
 }

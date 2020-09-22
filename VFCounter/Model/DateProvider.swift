@@ -10,9 +10,12 @@ import Foundation
 
 class DateProvider {
     
-    class func updateDateMap(date: Date, _ completion: DateMaps) {
-        let mDate = date.getWeekDates()
-        let arrDates = mDate.map { $0.changeDateTime(format: .longDate)}
+    class func updateDateMap(date: Date, period: PeriodRange, _ completion: DateMaps) {
+        
+        var dates = [Date]()
+        
+        (period == .weekly) ? (dates = date.getWeekDates()) : (dates = date.getMonthlyDates())
+        let arrDates = dates.map { $0.changeDateTime(format: .longDate)}
         completion(arrDates)        
     }
     

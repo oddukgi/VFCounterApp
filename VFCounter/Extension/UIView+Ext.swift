@@ -74,6 +74,7 @@ extension UIView {
     }
 }
 
+
 /// convert uiview to uiimage
 extension UIView {
     
@@ -100,4 +101,60 @@ extension UIView {
         }
         return self.topAnchor
     }
+    
+    // MARK: - UIView with Dashed line
+    // https://stackoverflow.com/a/42051342/13275605
+    
+    func addDashedLine(color: UIColor = .lightGray) {
+        layer.sublayers?.filter({ $0.name == "DashedTopLine" }).forEach { $0.removeFromSuperlayer() }
+        self.backgroundColor = .clear
+        
+        let cgColor = color.cgColor
+        let shapeLayer: CAShapeLayer = CAShapeLayer()
+        let frameSize = self.frame.size
+        let shapeRect = CGRect(x: 0, y: -20, width: frameSize.width - 20, height: frameSize.height)
+        shapeLayer.name = "DashedTopLine"
+        shapeLayer.bounds = shapeRect
+        shapeLayer.position = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = cgColor
+        shapeLayer.lineWidth = 0.8
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
+        
+        //   // passing an array with the values [2,3] sets a dash pattern that alternates between a 2-user-space-unit-long painted segment and a 3-user-space-unit-long unpainted segment
+//        shapeLayer.lineDashPattern = [2,3]
+        shapeLayer.lineDashPattern = [2,3]
+        
+        let path = CGMutablePath()
+        path.addLines(between: [CGPoint(x: 0, y: 0),
+                                CGPoint(x: self.frame.width, y: 0)])
+        shapeLayer.path = path
+        layer.addSublayer(shapeLayer)
+        
+    }
+    
+    
+    // Example use: myView.addBorder(toSide: .Left, withColor: UIColor.redColor().CGColor, andThickness: 1.0)
+    // https://gist.github.com/MrJackdaw/6ffbc33fc274838412bfe3ad48592b9b
+
+    enum ViewSide {
+        case left, right, top, bottom
+    }
+    
+    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+        
+        let border = CALayer()
+        border.backgroundColor = color
+        
+        switch side {
+        case .left: border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
+        case .right: border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
+        case .top: border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
+        case .bottom: border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
+        }
+        
+        layer.addSublayer(border)
+    }
 }
+
+

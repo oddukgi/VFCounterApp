@@ -18,5 +18,4 @@ struct CalendarSettings {
     var dayCell = CalendarSettings.DayCell()
     var weekView = CalendarSettings.WeekView()
     var monthSelectView = CalendarSettings.MonthSelectView()
-    
 }

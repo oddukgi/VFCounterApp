@@ -35,7 +35,6 @@ struct UserDataManager {
         )
         
         return userStack
-        
     }()
 }
 

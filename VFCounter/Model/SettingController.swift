@@ -35,7 +35,6 @@ class SettingController {
                          Settings(name: "앱버전", image: nil),
                          Settings(name: "문의하기", image: nil),
                         ]
-
 }
 
 

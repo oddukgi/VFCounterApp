@@ -142,17 +142,24 @@ extension Date {
     func getWeekDates() -> [Date] {
         
         var arrThisWeek: [Date] = []
-        for i in 0..<7 {
+        for i in 0 ..< 7 {
             arrThisWeek.append(Calendar.current.date(byAdding: .day, value: i, to: self)!)
         }
         
         return arrThisWeek
     }
 
+    func getMonthlyDates() -> [Date] {
+        var arrThisMonth: [Date] = []
+        let lastDayOfMonth = self.getLastDayMonth()
+        for i in 0 ..< lastDayOfMonth {
+            arrThisMonth.append(Calendar.current.date(byAdding: .day, value: i, to: self)!)
+        }
+        
+        return arrThisMonth
+    }
     
 }
-    
-
 
 extension Date {
         

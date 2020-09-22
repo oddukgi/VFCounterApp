@@ -125,7 +125,7 @@ class WeeklyChartVC: ChartBaseVC {
             fruitBarChart.removeAll()
         }
         
-        DateProvider.updateDateMap(date: self.aDayWeek!) {  [weak self] (datemap) in
+        DateProvider.updateDateMap(date: self.aDayWeek!, period: .weekly) {  [weak self] (datemap) in
             self?.updateWeekLabel(startDate: datemap.first!, endDate: datemap.last!)
             datemap.forEach { item in
                 self?.updateChartData(date: item)

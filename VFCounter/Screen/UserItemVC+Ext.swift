@@ -20,7 +20,7 @@ extension UserItemVC {
         view.addSubview(collectionView)
 
         let tabBarHeight = tabBarController?.tabBar.bounds.size.height ?? 0
-        let padding = (view.bounds.height - height) - tabBarHeight
+//        let padding = (view.bounds.height - height) - tabBarHeight
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(circularView.snp.bottom)
             make.width.equalTo(view.frame.width)

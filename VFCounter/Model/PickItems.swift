@@ -24,8 +24,6 @@ class PickItems {
         func hash(into hasher: inout Hasher){
             hasher.combine(identifiable)
         }
-        
-        
     }
     
     struct SinglePick: Hashable {
