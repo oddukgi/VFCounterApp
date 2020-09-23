@@ -20,6 +20,7 @@ class ElementCell: UITableViewCell, SelfConfigCell {
     
     private var date: String = "" {
         didSet {
+            
             updateList()
         }   
     }
@@ -56,6 +57,7 @@ class ElementCell: UITableViewCell, SelfConfigCell {
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         // `collectionView.contentSize` has a wrong width because in this nested example, the sizing pass occurs before te layout pass,
         // so we need to force a force a  layout pass with the corredt width.
+        
         self.contentView.frame = self.bounds
         self.contentView.layoutIfNeeded()
         // Returns `collectionView.contentSize` in order to set the UITableVieweCell height a value greater than 0.
@@ -73,14 +75,15 @@ class ElementCell: UITableViewCell, SelfConfigCell {
 }
 
 extension ElementCell {
-
+    
     func updateList(flag: Bool = false) {
           
         var flag = false
+        let datamanager = DataManager()
         currentSnapshot = NSDiffableDataSourceSnapshot<Int, SubItems>()
 
-        let veggieData = DataManager.getList(date: date, index: 0)
-        let fruitData = DataManager.getList(date: date, index: 1)
+        let veggieData = datamanager.getList(date: date, index: 0)
+        let fruitData = datamanager.getList(date: date, index: 1)
         if !veggieData.isEmpty {
             
             flag = true
@@ -95,8 +98,10 @@ extension ElementCell {
             
         }
         
-        self.dataSource.apply(self.currentSnapshot, animatingDifferences: flag)
-//          reloadRing(date: stringDate)
+        
+//        DispatchQueue.main.async {
+            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+//        }
       }
 
     
@@ -114,6 +119,10 @@ extension ElementCell {
                 }
             
           
+            cell.layer.cornerRadius = 10
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
+            
             let image = UIImage(data: items.element.image!)
             let amount = Int(items.element.amount)
             let name = items.element.name

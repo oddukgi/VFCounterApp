@@ -9,4 +9,4 @@
 import Foundation
 
 
-typealias DateMaps = (_ arrDate: [String]) -> Void
+typealias DateDictionary = ([[String : Any]], [[String : Any]]) -> Void

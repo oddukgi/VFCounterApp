@@ -186,7 +186,7 @@ JTACMonthViewDataSource {
             maker.width.equalTo(screenWidth)
         }
         
-        let height = ScreenSize.height - 350
+        let height = SizeManager().chartHeight
         calendarView.snp.makeConstraints { (maker) in
             maker.top.equalTo(weekdayView.snp.bottom).offset(9)
             maker.centerX.equalTo(view.snp.centerX)

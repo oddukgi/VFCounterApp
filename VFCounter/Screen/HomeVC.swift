@@ -30,6 +30,8 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+       // 초기 실행시, 날짜 저장
+        saveInitialDate()
         setupConstraints()
         setContentView()
         settings()
@@ -50,10 +52,14 @@ class HomeVC: UIViewController {
     //MARK: - notificationCenter
     fileprivate func prepareNotificationAddObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)), name: .updateDateTime, object: nil)
-
         
     }
     
+    func saveInitialDate() {
+        if SettingManager.getInitialDate(keyName: "InitialDate") == nil {
+            SettingManager.setInitialDate(date: Date())
+        }
+    }
     
     @objc func retrieveLocation() {
         

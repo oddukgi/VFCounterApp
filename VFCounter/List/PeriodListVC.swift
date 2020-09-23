@@ -8,29 +8,21 @@
 
 import UIKit
 
-class MonthlyListVC: UIViewController {
+class PeriodListVC: UIViewController {
 
-
-    var tableView: UITableView!
-    private let reuseIdentifer = "MonthlyList"
-    var setting: DateSettings.MonthlyList
     let elementDataSource = ElementDataSource()
-  
+    var periodRange: PeriodRange
+    var tableView: UITableView!
+    
+    private let reuseIdentifer = "MonthlyList"
+    private var dateStrategy: DateStrategy!
 
-    private var aDay: Date?
-    
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = self.setting.locale
-        formatter.dateFormat = self.setting.format
-        return formatter
-    }()
-    
 
-   init(setting: DateSettings.MonthlyList) {
-       self.setting = setting
-       super.init(nibName: nil, bundle: nil)
+    init(periodRange: PeriodRange,dateStrategy: DateStrategy) {
+      
+        self.periodRange = periodRange
+        self.dateStrategy = dateStrategy
+        super.init(nibName: nil, bundle: nil)
     
    }
      
@@ -41,18 +33,18 @@ class MonthlyListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchTimeRange()
         configureView()
-        updateMonth()
+     
         connectAction()
         configureTableView()
+        updatePeriod()
     }
     
     // MARK: create collectionView layout
     
     private func configureView() {
         view.backgroundColor = .white
-        view.addSubViews(stackView, lblMonth)
+        view.addSubViews(stackView, lblPeriod)
         
         arrowButtons.forEach {
             stackView.addArrangedSubview($0)
@@ -64,15 +56,14 @@ class MonthlyListVC: UIViewController {
             $0.height.equalTo(32)
         }
         
-        lblMonth.snp.makeConstraints {
+        lblPeriod.snp.makeConstraints {
             $0.leading.equalTo(arrowButtons[0].snp.trailing)
             $0.centerY.equalTo(stackView.snp.centerY)
             $0.width.equalTo(105)
         }
+        lblPeriod.textColor = .black
     }
 
-    
-    
 
     func configureTableView() {
         tableView = UITableView(frame: view.bounds, style: .grouped)
@@ -84,41 +75,46 @@ class MonthlyListVC: UIViewController {
         }
         tableView.delegate = self
         tableView.dataSource = elementDataSource
+        
+        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.estimatedRowHeight = SizeManager().getUserItemHeight * 2
+        tableView.contentInsetAdjustmentBehavior = .automatic
         tableView.register(ElementCell.self, forCellReuseIdentifier: ElementCell.reuseIdentifier)
     }
 
-    private func fetchTimeRange() {
-        if DateSettings.default.monthlyListCtrl.startDate == nil {
-            aDay = setting.startDate
-        } else {
-            aDay = DateSettings.default.monthlyListCtrl.startDate
-        }
-    }
     
-    func updateMonth() {
-        guard let date = aDay else { return }
-        lblMonth.text = dateFormatter.string(from: date)
-        lblMonth.textColor = setting.textColor
-
-        DateProvider.updateDateMap(date: aDay!, period: .monthly) { (datemap) in
-            elementDataSource.dates = datemap
-        }
-        elementDataSource.checkDate()
+    func updatePeriod(_ reloadData: Bool = false) {
         
-    }
-    
-    
+        dateStrategy.setDateRange()
+        let dateMap = dateStrategy.updateLabel()
+        lblPeriod.text = dateMap.0
+        
+        let dateSet = dateMap.1!
+        elementDataSource.weekday = dateSet
+        
+        tableView.isUserInteractionEnabled = true
+      
+        if reloadData == true {
+
+            self.tableView.reloadData()
+        }
+         
+     }
+       
     
     func connectAction() {
         
         arrowButtons[0].addTargetClosure { _ in
-            
-            self.updateMonth()
+            self.dateStrategy.previous()
+            self.updatePeriod(true)
+
         }
         arrowButtons[1].addTargetClosure { _ in
-//            self.aDayWeek = self.aDayWeek?.aDayInNextWeek.getStartOfWeek()
-            self.updateMonth()
+            self.dateStrategy.next()
+            self.updatePeriod(true)
         }
+        
+     
     }
     
     lazy var stackView: UIStackView = {
@@ -143,21 +139,10 @@ class MonthlyListVC: UIViewController {
         return buttons
     }()
     
-    let lblMonth = VFTitleLabel(textAlignment: .center, fontSize: 14)
+    let lblPeriod = VFTitleLabel(textAlignment: .center, fontSize: 14)
 }
 
-extension MonthlyListVC: UITableViewDelegate {
+extension PeriodListVC: UITableViewDelegate {
     
 }
 
-extension DateSettings {
-    
-    struct MonthlyList {
-        var calendar: Calendar = .current
-        var startDate: Date?
-        var format: String = "YYYY MM"
-        var locale = Locale(identifier: "ko_KR")
-        var textColor: UIColor = .black
-        
-    }
-}

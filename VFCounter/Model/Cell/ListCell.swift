@@ -33,12 +33,7 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        layer.cornerRadius = 10
-        layer.borderWidth = 1
-        layer.borderColor = ColorHex.lightlightGrey.cgColor
-    }
+
 
     private func setLayout() {
         contentView.addSubViews(imageView, lblTime, lblName, lblAmount)
@@ -47,7 +42,7 @@ class ListCell: UICollectionViewCell, SelfConfigCell {
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView).offset(3)
             make.centerX.equalTo(contentView.snp.centerX)
-            make.size.equalTo(CGSize(width: 28, height: 29))
+            make.size.equalTo(CGSize(width: 35, height: 36))
         }
         
         lblTime.snp.makeConstraints { make in

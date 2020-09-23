@@ -25,14 +25,18 @@ class ChartVC: UIViewController {
     var datafilterView: DataFilterView!
 
     var currentVC: UIViewController?
+    private var dateStrategy: DateStrategy!
+    private var periodRange: PeriodRange = .weekly
+    
+    
     let now = Date()
 
     private var settings: DateSettings = DateSettings.default
     private var calendarMonth: CalendarSettings.MonthSelectView = CalendarSettings.default.monthSelectView
     
     lazy var weeklyChartVC: UIViewController? = {
-        settings.weekChartCtrl.startDate = now.dayBefore
-        let weeklyChartVC = WeeklyChartVC(setting: settings.weekChartCtrl)
+        settings.periodController.weekDate = now.dayBefore
+        let weeklyChartVC = WeeklyChartVC(setting: settings.periodController)
         return weeklyChartVC
     }()
     
@@ -128,7 +132,7 @@ class ChartVC: UIViewController {
         
         if let userDate = notification.userInfo?["usermonth"] as? Date {
           
-            self.settings.monthlyListCtrl.startDate = userDate
+            self.settings.periodController.monthDate = userDate
         }
     }
     
@@ -144,19 +148,25 @@ class ChartVC: UIViewController {
         datafilterView.listBtn.addTargetClosure { _ in
             print("tapped list button")
             self.datafilterView.selectSection(section: .list)
- 
+            
             if self.segmentControl.selectedSegmentIndex == 0 {
-                self.settings.listCtrl.startDate = self.now.dayBefore
-                self.showChildVC(HistoryVC(periodRange: .weekly, setting: self.settings.listCtrl))
+                self.dateStrategy = WeeklyDateStrategy(date: self.now)
+                self.periodRange = .weekly
                 
             } else {
                 
-                print(self.calendarMonth.currentDate)
                 
-//                self.settings.listCtrl.startDate = self.calendarMonth.currentDate
-                self.showChildVC(MonthlyListVC(setting: self.settings.monthlyListCtrl))
+                let newDate = self.settings.periodController.monthDate!
+                print(newDate)
+                self.dateStrategy = MonthlyDateStrategy(date: newDate)
+                self.periodRange = .monthly
+
             }
+            self.showChildVC(PeriodListVC(periodRange: self.periodRange,
+                                           dateStrategy: self.dateStrategy))
         }
     }
+    
+
 }
 

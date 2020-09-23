@@ -11,16 +11,8 @@ import UIKit
 protocol DateProtocol {
 
     var newDate: String { get set }
-
 }
 
-struct DateUpdater: DateProtocol, Hashable {
-    var newDate: String
-    init(from fromDate: String) {
-        self.newDate = fromDate
-
-    }
-}
 enum DataFilter {
     
     case data, list
@@ -38,3 +30,4 @@ enum DataFilter {
 enum PeriodRange: Int {
     case weekly = 0, monthly
 }
+

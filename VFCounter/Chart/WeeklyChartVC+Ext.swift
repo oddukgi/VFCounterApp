@@ -89,7 +89,9 @@ extension WeeklyChartVC {
 
 
 extension DateSettings {
-    struct WeeklyChartController {
-       var startDate: Date?
+    struct PeriodController {
+       var weekDate: Date?
+       var monthDate: Date?
+        
     }
 }

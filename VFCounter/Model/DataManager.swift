@@ -14,7 +14,7 @@ class DataManager {
     
     // MARK: create entity
     
-    static let dateItems  =  [{ (date) -> [DataType] in
+    private let dateItems  =  [{ (date) -> [DataType] in
             return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
             .where(format: "%K BEGINSWITH[c] %@",
             #keyPath(DataType.date),date).orderBy(.descending(\.createdDate)))
@@ -189,7 +189,7 @@ class DataManager {
         return mostRecentData
     }
     
-    static func getList(date: String, index: Int) -> [SubItems] {
+    func getList(date: String, index: Int) -> [SubItems] {
         
         var subitem = [SubItems]()
         let data = dateItems[index](date)
@@ -202,4 +202,29 @@ class DataManager {
         
         return subitem
     }
+
+    /// 날짜 가져오기
+    
+    func getDateDictionary(completion: DateDictionary) {
+        let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+            
+            let veggieData = try transaction.queryAttributes(From<Veggies>()
+                                                                .select(NSDictionary.self,
+                                                              .attribute(\.name),
+                                                              .attribute(\.date))
+                                                              .orderBy(.descending(\.date)))
+            
+            let fruitData = try transaction.queryAttributes(From<Fruits>()
+                                                                .select(NSDictionary.self,
+                                                              .attribute(\.name),
+                                                              .attribute(\.date))
+                                                              .orderBy(.descending(\.date)))
+            completion(veggieData, fruitData)
+            
+        })
+    }
+    
+    
+        
+
 }

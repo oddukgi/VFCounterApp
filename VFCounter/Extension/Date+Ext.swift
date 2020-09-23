@@ -138,7 +138,15 @@ extension Date {
     var aDayInNextWeek: Date {
         return Calendar.current.date(byAdding: .weekOfYear, value: +1, to: self)!
     }
+    
+    var lastMonth: Date {
+        return Calendar.current.date(byAdding: .month, value: -1, to: self)!
+    }
 
+    var nextMonth: Date {
+        return Calendar.current.date(byAdding: .month, value: +1, to: self)!
+    }
+    
     func getWeekDates() -> [Date] {
         
         var arrThisWeek: [Date] = []
@@ -189,6 +197,8 @@ extension Date {
     func getLast12Month() -> Date? {
         return Calendar.current.date(byAdding: .month, value: -12, to: self)
     }
-
+    func getLast3Month() -> Date? {
+        return Calendar.current.date(byAdding: .month, value: -3, to: self)
+    }
 }
 

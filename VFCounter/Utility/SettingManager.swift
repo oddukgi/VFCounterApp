@@ -35,5 +35,15 @@ class SettingManager {
     class func getTaskValue(keyName: String) -> Float? {
         return userDefaults?.float(forKey: keyName)
     }
+    
+    class func setInitialDate(date: Date) {
+        userDefaults?.set(date, forKey: "InitialDate")
+    }
+    
+    class func getInitialDate(keyName: String) -> Date? {
+        return userDefaults?.object(forKey: keyName) as? Date
+    }
+    
+
 }
 

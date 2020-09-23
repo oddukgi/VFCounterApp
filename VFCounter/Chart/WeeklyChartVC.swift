@@ -18,7 +18,7 @@ class WeeklyChartVC: ChartBaseVC {
     let chartView = BarChartView()
  
     private var aDayWeek: Date?
-    private var setting: DateSettings.WeeklyChartController
+    private var setting: DateSettings.PeriodController
     private var veggieBarChart = [BarChartDataEntry]()
     private var fruitBarChart = [BarChartDataEntry]()
 
@@ -47,7 +47,7 @@ class WeeklyChartVC: ChartBaseVC {
     }()
     
  
-    init(setting: DateSettings.WeeklyChartController) {
+    init(setting: DateSettings.PeriodController) {
         self.setting = setting
         super.init(nibName: nil, bundle: nil)
     }
@@ -95,10 +95,10 @@ class WeeklyChartVC: ChartBaseVC {
     
     func getCurrentWeek() {
         
-        if DateSettings.default.weekChartCtrl.startDate == nil {
-            aDayWeek = setting.startDate?.getStartOfWeek()
+        if DateSettings.default.periodController.weekDate == nil {
+            aDayWeek = setting.weekDate?.getStartOfWeek()
         } else {
-            aDayWeek = DateSettings.default.weekChartCtrl.startDate
+            aDayWeek = DateSettings.default.periodController.weekDate
         }
         changeDate()
     }
@@ -106,7 +106,7 @@ class WeeklyChartVC: ChartBaseVC {
     func connectAction() {
         arrowButtons[0].addTargetClosure { _ in
             self.aDayWeek = self.aDayWeek?.aDayInLastWeek.getStartOfWeek()
-            DateSettings.default.listCtrl.startDate = self.aDayWeek
+            DateSettings.default.periodController.weekDate = self.aDayWeek
             self.changeDate()
         }
         arrowButtons[1].addTargetClosure { _ in
@@ -125,12 +125,12 @@ class WeeklyChartVC: ChartBaseVC {
             fruitBarChart.removeAll()
         }
         
-        DateProvider.updateDateMap(date: self.aDayWeek!, period: .weekly) {  [weak self] (datemap) in
-            self?.updateWeekLabel(startDate: datemap.first!, endDate: datemap.last!)
-            datemap.forEach { item in
-                self?.updateChartData(date: item)
-            }
+       let datemap = DateProvider.updateDateMap(date: self.aDayWeek!, period: .weekly)
+        updateWeekLabel(startDate: datemap.first!, endDate: datemap.last!)
+        datemap.forEach { item in
+            updateChartData(date: item)
         }
+        
     }
     
     func updateWeekLabel(startDate: String, endDate: String) {
