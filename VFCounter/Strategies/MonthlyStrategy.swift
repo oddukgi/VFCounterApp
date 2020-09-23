@@ -160,16 +160,3 @@ public class MonthlyDateStrategy: DateStrategy {
         }
     }
 }
-
-/*
- if let minimumDate = minimumDate, state.date < minimumDate.startOfDay() {
-     
-     config.isDateEnabled = false
-     return config
- } else if let maximumDate = maximumDate, state.date > maximumDate.endOfDay() {
-     
-     config.isDateEnabled = false
-     return config
- }
- 
- */
