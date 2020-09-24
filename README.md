@@ -17,7 +17,7 @@ Calcurate how much take some vegie or fruits in a day
 **Swift Package**\
 [SnapKit](http://snapkit.io/)\
 [Charts](https://github.com/danielgindi/Charts)\
-[CoreStore](https://github.com/JohnEstropia/CoreStore)\
+[CoreStore](https://github.com/JohnEstropia/CoreStore)
 
 **Modify Opensource**\
 [Calendar by Fastis](https://github.com/retailcrm/Fastis)
