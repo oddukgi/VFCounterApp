@@ -473,7 +473,6 @@
 			isa = PBXGroup;
 			children = (
 				12E5DE3E251AF7D300D4CCC5 /* Strategies */,
-				122E073924EE664A00BC8066 /* VFCounter.entitlements */,
 				1240D3D624E642C100A7EAD4 /* Core Data */,
 				123E00FC24ED40B5000457B9 /* Network */,
 				12699FDF2509C7DA008872FB /* Calendar */,
@@ -483,13 +482,11 @@
 				1290EE5A24C6ED37008DB339 /* View */,
 				12B50CFA24C6EBA800C87956 /* Extension */,
 				12B50CF924C6EB2200C87956 /* Screen */,
+				121A909524D18C9300AE0780 /* Assets */,
+				127BF74524E530050066AC7D /* code garbage */,
 				12FD254524CEF6BB00E3D5E0 /* Support Files */,
 				126AE53924C6C6B4000BCF7E /* AppDelegate.swift */,
 				126AE53B24C6C6B4000BCF7E /* SceneDelegate.swift */,
-				121A909524D18C9300AE0780 /* Assets */,
-				126AE54424C6C6B6000BCF7E /* LaunchScreen.storyboard */,
-				126AE54724C6C6B6000BCF7E /* Info.plist */,
-				127BF74524E530050066AC7D /* code garbage */,
 			);
 			path = VFCounter;
 			sourceTree = "<group>";
@@ -713,9 +710,12 @@
 		12FD254524CEF6BB00E3D5E0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				126AE54724C6C6B6000BCF7E /* Info.plist */,
+				122E073924EE664A00BC8066 /* VFCounter.entitlements */,
 				129116D024F615E600BEF3B2 /* Seoulnamsan */,
 				12FD254624CEF6BB00E3D5E0 /* NanumSquareRound */,
 				12FD254B24CEF6BB00E3D5E0 /* I18N.swift */,
+				126AE54424C6C6B6000BCF7E /* LaunchScreen.storyboard */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";
