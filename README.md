@@ -12,14 +12,12 @@ Calcurate how much take some vegie or fruits in a day
 - 야채는 권장양까지 먹을 수 있도록, 알려준다. (미정)
 - 야채와 과일을 먹은양은 링을 채우며, 달성하도록 한다.
 - 주간 데이터는 차트로, 월간 데이터는 달력으로 보여준다.
----
+
 ## Library Usage
 **Swift Package**\
-[HGCircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider)\
 [SnapKit](http://snapkit.io/)\
 [Charts](https://github.com/danielgindi/Charts)\
 [CoreStore](https://github.com/JohnEstropia/CoreStore)\
-[Localize-Swift](https://github.com/marmelroy/Localize-Swift)
 
 **Modify Opensource**\
 [Calendar by Fastis](https://github.com/retailcrm/Fastis)
