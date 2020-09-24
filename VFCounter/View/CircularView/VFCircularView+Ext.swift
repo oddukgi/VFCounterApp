@@ -7,27 +7,23 @@
 //
 
 import UIKit
-import HGCircularSlider
+
 
 extension VFCircularView {
     
     func setCircularView() {
     
-        addSubview(outerSlider)
-        addSubview(insideSlider)
-
+        ringView = MainRingView()
+        addSubview(ringView)
         let sliderSize = SizeManager().sliderSize()
-        outerSlider.snp.makeConstraints { make in
-
+      
+        ringView.snp.makeConstraints { make in
             make.centerY.equalTo(self.snp.centerY)
             make.trailing.equalTo(self.snp.trailing).offset(-20)
-            make.size.equalTo(sliderSize.0)
+            make.size.equalTo(sliderSize)
         }
 
-        insideSlider.snp.makeConstraints { make in
-            make.center.equalTo(outerSlider)
-            make.size.equalTo(sliderSize.1)
-        }
+
         for _ in 0 ..< 2 {
 
             let stackview          = UIStackView()
@@ -38,16 +34,12 @@ extension VFCircularView {
             
         }
         
+        
     // refer to : https://stackoverflow.com/questions/51100121/how-to-generate-an-uiimage-from-custom-text-in-swift
 //        let image = "야".image(withAttributes: [ .foregroundColor: UIColor.black,
 //                                                  .font: UIFont.systemFont(ofSize: 6),
 //                            ], size: CGSize(width: 10.0, height: 10.0))
         
-        let veggieTextImg = "야".imageWith(fontSize: 15, width: 18, height: 18, textColor:.black)
-        outerSlider.endThumbImage = veggieTextImg
-        
-        let fruitsTextImg = "과".imageWith(fontSize: 15, width: 18, height: 18, textColor:.black)
-        insideSlider.endThumbImage = fruitsTextImg
 
         
     }

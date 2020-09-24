@@ -62,12 +62,7 @@ class DayCell: JTACDayCell {
         self.dateLabel.snp.makeConstraints { maker in
             maker.edges.equalTo(contentView)
         }
-        ringButton.ringProgressView.ringWidth = 3.5
-        ringButton.ringProgressView.ringSpacing = 1
-        ringButton.ringProgressView.ring1StartColor = RingColor.ringGreen
-        ringButton.ringProgressView.ring1EndColor = RingColor.trackGreen
-        ringButton.ringProgressView.ring2StartColor = RingColor.ringYellow
-        ringButton.ringProgressView.ring2EndColor = RingColor.trackBeige
+
     }
     
     static func makeViewSettings(for state: CellState, minimumDate: Date?, maximumDate: Date?,

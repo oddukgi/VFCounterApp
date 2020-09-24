@@ -60,7 +60,7 @@ class CustomSegmentControl: UISegmentedControl {
 //            foregroundImageView.layer.masksToBounds = false
             foregroundImageView.backgroundColor = selectedSegmentTintColor
             
-            print("\(bounds.height / 2) \(foregroundImageView.bounds.height / 2)")
+//            print("\(bounds.height / 2) \(foregroundImageView.bounds.height / 2)")
             foregroundImageView.layer.cornerRadius = bounds.height / 2
             //foregroundImageView.layer.maskedCorners =  maskedCorners
         }

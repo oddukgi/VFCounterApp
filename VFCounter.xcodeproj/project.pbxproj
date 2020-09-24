@@ -22,7 +22,6 @@
 		122420A424EE504300729898 /* WeatherIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122420A324EE504300729898 /* WeatherIconView.swift */; };
 		122625E224DA549900AC2962 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122625E124DA549900AC2962 /* SettingVC.swift */; };
 		1226FEC924E790270092BDAF /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 1226FEC824E790270092BDAF /* CoreStore */; };
-		1228222D24E51340002A3F5A /* ChartLabel.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1228222F24E51340002A3F5A /* ChartLabel.strings */; };
 		12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */; };
 		12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0424CFBDA900AE93E6 /* PickItems.swift */; };
 		1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236800424D02DB6004F4AE8 /* SectionHeader.swift */; };
@@ -38,6 +37,7 @@
 		124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B918124CACD85009616A7 /* TitleSupplementaryView.swift */; };
 		124F561724DED284006CE413 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F561624DED284006CE413 /* CustomSlider.swift */; };
 		1251729024F4DB91002B9927 /* WeeklyChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */; };
+		1252A684251CD22500906E9B /* MainRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1252A683251CD22500906E9B /* MainRingView.swift */; };
 		125918BB2519CFD80031790D /* ElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125918BA2519CFD80031790D /* ElementCell.swift */; };
 		125918C92519DD550031790D /* ElementDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125918C82519DD550031790D /* ElementDataSource.swift */; };
 		126AA42724F4AA4300FF4F87 /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */; };
@@ -62,7 +62,6 @@
 		1286EA8D250F72A300FDDBE6 /* DataFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */; };
 		12885B5E24E50607001586EA /* ChartBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B5D24E50607001586EA /* ChartBaseVC.swift */; };
 		12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */; };
-		12885B6324E50FBC001586EA /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 12885B6224E50FBC001586EA /* Localize_Swift */; };
 		12885B6524E51044001586EA /* LocalizeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12885B6424E51044001586EA /* LocalizeConstant.swift */; };
 		1290EE5C24C6ED45008DB339 /* VFTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5B24C6ED45008DB339 /* VFTabBarController.swift */; };
 		1290EE5E24C6EDE5008DB339 /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5D24C6EDE5008DB339 /* ChartVC.swift */; };
@@ -79,7 +78,6 @@
 		129116DA24F616F700BEF3B2 /* SeoulnamsanM.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D424F6160C00BEF3B2 /* SeoulnamsanM.otf */; };
 		1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B18D24C9834600625BE6 /* VFCircularView.swift */; };
 		1291B19124C983F400625BE6 /* Ring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B19024C983F400625BE6 /* Ring.swift */; };
-		1291B19424C9842900625BE6 /* HGCircularSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 1291B19324C9842900625BE6 /* HGCircularSlider */; };
 		1291B19624C9851800625BE6 /* VFCircularView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B19524C9851800625BE6 /* VFCircularView+Ext.swift */; };
 		129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129C7FB924D54C4C00E5A719 /* SizeManager.swift */; };
 		12A0DCDD24EFC4400002F15F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A0DCDC24EFC4400002F15F /* DataManager.swift */; };
@@ -120,7 +118,7 @@
 		12F2EE632509C8A400D0E5FB /* MonthSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */; };
 		12F2EE642509C8A400D0E5FB /* RingItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5D2509C8A300D0E5FB /* RingItemButton.swift */; };
 		12F2EE652509C8A400D0E5FB /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5E2509C8A300D0E5FB /* DayCell.swift */; };
-		12F2EE662509C8A400D0E5FB /* RingItemGrouopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5F2509C8A400D0E5FB /* RingItemGrouopView.swift */; };
+		12F2EE662509C8A400D0E5FB /* RingItemGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE5F2509C8A400D0E5FB /* RingItemGroupView.swift */; };
 		12F2EE672509C8A400D0E5FB /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE602509C8A400D0E5FB /* CalendarController.swift */; };
 		12F2EE682509C8A400D0E5FB /* CalendarSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE612509C8A400D0E5FB /* CalendarSettings.swift */; };
 		12F2EE692509C8A400D0E5FB /* WeekdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F2EE622509C8A400D0E5FB /* WeekdayView.swift */; };
@@ -178,8 +176,6 @@
 		121B197324CC198500CC6EEF /* PickItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItemVC.swift; sourceTree = "<group>"; };
 		122420A324EE504300729898 /* WeatherIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconView.swift; sourceTree = "<group>"; };
 		122625E124DA549900AC2962 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
-		1228222E24E51340002A3F5A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ChartLabel.strings; sourceTree = "<group>"; };
-		1228223524E5142B002A3F5A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ChartLabel.strings; sourceTree = "<group>"; };
 		12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickItemVC+CV.swift"; sourceTree = "<group>"; };
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
 		122E073924EE664A00BC8066 /* VFCounter.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
@@ -196,6 +192,7 @@
 		124B918124CACD85009616A7 /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
 		124F561624DED284006CE413 /* CustomSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChartVC.swift; sourceTree = "<group>"; };
+		1252A683251CD22500906E9B /* MainRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRingView.swift; sourceTree = "<group>"; };
 		125918BA2519CFD80031790D /* ElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCell.swift; sourceTree = "<group>"; };
 		125918C82519DD550031790D /* ElementDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementDataSource.swift; sourceTree = "<group>"; };
 		126AA42124F4AA4300FF4F87 /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -280,7 +277,7 @@
 		12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthSelectView.swift; sourceTree = "<group>"; };
 		12F2EE5D2509C8A300D0E5FB /* RingItemButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RingItemButton.swift; sourceTree = "<group>"; };
 		12F2EE5E2509C8A300D0E5FB /* DayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
-		12F2EE5F2509C8A400D0E5FB /* RingItemGrouopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RingItemGrouopView.swift; sourceTree = "<group>"; };
+		12F2EE5F2509C8A400D0E5FB /* RingItemGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RingItemGroupView.swift; sourceTree = "<group>"; };
 		12F2EE602509C8A400D0E5FB /* CalendarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarController.swift; sourceTree = "<group>"; };
 		12F2EE612509C8A400D0E5FB /* CalendarSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSettings.swift; sourceTree = "<group>"; };
 		12F2EE622509C8A400D0E5FB /* WeekdayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekdayView.swift; sourceTree = "<group>"; };
@@ -315,10 +312,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				126AE56B24C6C78C000BCF7E /* SnapKit in Frameworks */,
-				12885B6324E50FBC001586EA /* Localize_Swift in Frameworks */,
 				1226FEC924E790270092BDAF /* CoreStore in Frameworks */,
 				12ACE9BD24E4D179007EBC2F /* Charts in Frameworks */,
-				1291B19424C9842900625BE6 /* HGCircularSlider in Frameworks */,
 				12F2EE6F2509C9F000D0E5FB /* JTAppleCalendar in Frameworks */,
 				12F2EE6B2509C96E00D0E5FB /* MKRingProgressView.framework in Frameworks */,
 				4F740B54353E3E0D6E311261 /* Pods_VFCounter.framework in Frameworks */,
@@ -389,14 +384,6 @@
 				6AD2E94A27F5694DE52175AC /* Pods_VFCounterTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		1228222A24E512D9002A3F5A /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				1228222F24E51340002A3F5A /* ChartLabel.strings */,
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		123E00FC24ED40B5000457B9 /* Network */ = {
@@ -488,15 +475,12 @@
 				12E5DE3E251AF7D300D4CCC5 /* Strategies */,
 				122E073924EE664A00BC8066 /* VFCounter.entitlements */,
 				1240D3D624E642C100A7EAD4 /* Core Data */,
-				1228222A24E512D9002A3F5A /* Localization */,
 				123E00FC24ED40B5000457B9 /* Network */,
-				125918C72519DCCD0031790D /* List */,
 				12699FDF2509C7DA008872FB /* Calendar */,
-				12885B5C24E505E9001586EA /* Chart */,
 				127A497B24CC152D0032194E /* Popup */,
 				12BBF92724CABE4700C11ECD /* Model */,
 				12143CD424CA93F00080ADFE /* Utility */,
-				1290EE5A24C6ED37008DB339 /* Custom Views */,
+				1290EE5A24C6ED37008DB339 /* View */,
 				12B50CFA24C6EBA800C87956 /* Extension */,
 				12B50CF924C6EB2200C87956 /* Screen */,
 				12FD254524CEF6BB00E3D5E0 /* Support Files */,
@@ -553,9 +537,11 @@
 			path = Chart;
 			sourceTree = "<group>";
 		};
-		1290EE5A24C6ED37008DB339 /* Custom Views */ = {
+		1290EE5A24C6ED37008DB339 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				125918C72519DCCD0031790D /* List */,
+				12885B5C24E505E9001586EA /* Chart */,
 				12C64CFC24E0F83D00677D5A /* Button */,
 				1290EE6B24C6FA55008DB339 /* Label */,
 				12C64CFA24E0F82300677D5A /* TabBar */,
@@ -563,7 +549,7 @@
 				12C64CFB24E0F83600677D5A /* Slider */,
 				12C64CFD24E0F84500677D5A /* CircularView */,
 			);
-			path = "Custom Views";
+			path = View;
 			sourceTree = "<group>";
 		};
 		1290EE6B24C6FA55008DB339 /* Label */ = {
@@ -694,6 +680,7 @@
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
 				127ADC1824E4E4CF00E8F3B7 /* CustomSegmentControl.swift */,
 				122420A324EE504300729898 /* WeatherIconView.swift */,
+				1252A683251CD22500906E9B /* MainRingView.swift */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -716,7 +703,7 @@
 				12F2EE5E2509C8A300D0E5FB /* DayCell.swift */,
 				12F2EE5C2509C8A300D0E5FB /* MonthSelectView.swift */,
 				12F2EE5D2509C8A300D0E5FB /* RingItemButton.swift */,
-				12F2EE5F2509C8A400D0E5FB /* RingItemGrouopView.swift */,
+				12F2EE5F2509C8A400D0E5FB /* RingItemGroupView.swift */,
 				12F2EE622509C8A400D0E5FB /* WeekdayView.swift */,
 				12D4067E2513777F00DFE7FC /* DateController.swift */,
 			);
@@ -777,9 +764,7 @@
 			name = VFCounter;
 			packageProductDependencies = (
 				126AE56A24C6C78C000BCF7E /* SnapKit */,
-				1291B19324C9842900625BE6 /* HGCircularSlider */,
 				12ACE9BC24E4D179007EBC2F /* Charts */,
-				12885B6224E50FBC001586EA /* Localize_Swift */,
 				1226FEC824E790270092BDAF /* CoreStore */,
 				12F2EE6E2509C9F000D0E5FB /* JTAppleCalendar */,
 			);
@@ -861,9 +846,7 @@
 			mainGroup = 126AE52D24C6C6B4000BCF7E;
 			packageReferences = (
 				126AE56924C6C78C000BCF7E /* XCRemoteSwiftPackageReference "SnapKit" */,
-				1291B19224C9842900625BE6 /* XCRemoteSwiftPackageReference "HGCircularSlider" */,
 				12ACE9BB24E4D179007EBC2F /* XCRemoteSwiftPackageReference "Charts" */,
-				12885B6124E50FBC001586EA /* XCRemoteSwiftPackageReference "Localize-Swift" */,
 				1226FEC724E790270092BDAF /* XCRemoteSwiftPackageReference "CoreStore" */,
 				12F2EE6D2509C9F000D0E5FB /* XCRemoteSwiftPackageReference "JTAppleCalendar" */,
 			);
@@ -896,7 +879,6 @@
 				12FD255024CEF6BB00E3D5E0 /* NanumSquareRoundB.ttf in Resources */,
 				12FD255124CEF6BB00E3D5E0 /* NanumSquareRoundR.ttf in Resources */,
 				12FD255224CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf in Resources */,
-				1228222D24E51340002A3F5A /* ChartLabel.strings in Resources */,
 				121A909224D18BF500AE0780 /* Vegies.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1030,6 +1012,7 @@
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
 				12E5DE71251B19CA00D4CCC5 /* MonthlyStrategy.swift in Sources */,
 				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
+				1252A684251CD22500906E9B /* MainRingView.swift in Sources */,
 				12B7B98D250A4F020089BA56 /* UICollectionViewCell+Ext.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
 				126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */,
@@ -1046,7 +1029,7 @@
 				123E010124ED4215000457B9 /* WeatherData.swift in Sources */,
 				12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */,
 				12C2FA4024F65A74001CEC30 /* UIButton+Ext.swift in Sources */,
-				12F2EE662509C8A400D0E5FB /* RingItemGrouopView.swift in Sources */,
+				12F2EE662509C8A400D0E5FB /* RingItemGroupView.swift in Sources */,
 				123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */,
 				129C7FBA24D54C4C00E5A719 /* SizeManager.swift in Sources */,
 				12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */,
@@ -1169,15 +1152,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1228222F24E51340002A3F5A /* ChartLabel.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1228222E24E51340002A3F5A /* en */,
-				1228223524E5142B002A3F5A /* ko */,
-			);
-			name = ChartLabel.strings;
-			sourceTree = "<group>";
-		};
 		126AE54424C6C6B6000BCF7E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1317,10 +1291,7 @@
 				CODE_SIGN_ENTITLEMENTS = VFCounter/VFCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VFCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1342,10 +1313,7 @@
 				CODE_SIGN_ENTITLEMENTS = VFCounter/VFCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VFCounter/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1505,22 +1473,6 @@
 				minimumVersion = 5.0.1;
 			};
 		};
-		12885B6124E50FBC001586EA /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.0;
-			};
-		};
-		1291B19224C9842900625BE6 /* XCRemoteSwiftPackageReference "HGCircularSlider" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/HamzaGhazouani/HGCircularSlider.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.1;
-			};
-		};
 		12ACE9BB24E4D179007EBC2F /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts.git";
@@ -1549,16 +1501,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 126AE56924C6C78C000BCF7E /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		12885B6224E50FBC001586EA /* Localize_Swift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 12885B6124E50FBC001586EA /* XCRemoteSwiftPackageReference "Localize-Swift" */;
-			productName = Localize_Swift;
-		};
-		1291B19324C9842900625BE6 /* HGCircularSlider */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1291B19224C9842900625BE6 /* XCRemoteSwiftPackageReference "HGCircularSlider" */;
-			productName = HGCircularSlider;
 		};
 		12ACE9BC24E4D179007EBC2F /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;

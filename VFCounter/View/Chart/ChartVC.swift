@@ -48,9 +48,9 @@ class ChartVC: UIViewController {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy.MM.dd"
             formatter.locale = Locale(identifier: "ko_KR")
-            if let date = self.currentValue as? Date {
-                print(formatter.string(from: date))
-            }
+//            if let date = self.currentValue as? Date {
+//                print(formatter.string(from: date))
+//            }
         }
     }
     
@@ -95,8 +95,8 @@ class ChartVC: UIViewController {
         self.contentView.addSubview(vc.view)
         vc.view.frame = self.contentView.bounds
         self.currentVC = vc
-        print(contentView.frame.width, contentView.frame.height)
-        contentView.layer.borderWidth = 1
+//        print(contentView.frame.width, contentView.frame.height)
+//        contentView.layer.borderWidth = 1
         vc.didMove(toParent: self)
     }
     
@@ -140,13 +140,12 @@ class ChartVC: UIViewController {
     func connectAction() {
       
         datafilterView.dataBtn.addTargetClosure { _ in
-            print("tapped data button")
             self.datafilterView.selectSection(section: .data)
             self.displayCurrentTab(self.segmentControl.selectedSegmentIndex)
         }
         
         datafilterView.listBtn.addTargetClosure { _ in
-            print("tapped list button")
+
             self.datafilterView.selectSection(section: .list)
             
             if self.segmentControl.selectedSegmentIndex == 0 {
@@ -154,14 +153,13 @@ class ChartVC: UIViewController {
                 self.periodRange = .weekly
                 
             } else {
-                
-                
                 let newDate = self.settings.periodController.monthDate!
-                print(newDate)
+//                print(newDate)
                 self.dateStrategy = MonthlyDateStrategy(date: newDate)
                 self.periodRange = .monthly
 
             }
+            
             self.showChildVC(PeriodListVC(periodRange: self.periodRange,
                                            dateStrategy: self.dateStrategy))
         }

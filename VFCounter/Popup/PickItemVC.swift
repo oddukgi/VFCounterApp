@@ -164,7 +164,7 @@ class PickItemVC: UIViewController {
          pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
          userdate = userDTView.dateTime
         
-         print(userDTView.dtPickerView.date)
+//         print(userDTView.dtPickerView.date)
    
         let selectedItem = VFItemController.Items(name: item.name, date: userdate, image: item.image, amount: pickItems.item.amount, entityDT: userDTView.dtPickerView.date)
         

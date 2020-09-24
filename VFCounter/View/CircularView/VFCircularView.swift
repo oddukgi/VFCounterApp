@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import HGCircularSlider
 
 class VFCircularView: UIView {
     
@@ -71,76 +70,25 @@ class VFCircularView: UIView {
     
     
     var horizontalStackView = Array<UIStackView>()
-    
-    lazy var outerSlider: CircularSlider = {
-        let slider = CircularSlider()
-        slider.lineWidth = SizeManager().sliderWidth
-        slider.backtrackLineWidth = SizeManager().sliderWidth
-        slider.diskFillColor = UIColor.clear
-        slider.diskColor = UIColor.clear
-        slider.trackFillColor = RingColor.ringGreen
-        slider.trackColor = RingColor.trackGreen
-        slider.backgroundColor = .clear
-        slider.thumbRadius = 8
-        slider.endThumbStrokeHighlightedColor = UIColor.orange
-        slider.endThumbTintColor              = .clear
-        slider.endThumbStrokeColor            = .clear
-        slider.endThumbStrokeHighlightedColor = .white
-        slider.maximumValue   = 500.0
-        slider.minimumValue   = 0.0
-        
-//        slider.layer.borderWidth = 1
-        return slider
-    }()
-        
-    lazy var insideSlider: CircularSlider = {
-        let slider = CircularSlider()
-        slider.lineWidth = SizeManager().sliderWidth
-        slider.backtrackLineWidth = SizeManager().sliderWidth
-        slider.diskFillColor = UIColor.clear
-        slider.diskColor = UIColor.clear
-        slider.trackFillColor = RingColor.ringYellow
-        slider.trackColor = RingColor.trackBeige
-        slider.backgroundColor = .clear
-        slider.thumbRadius = 8
-        slider.endThumbStrokeHighlightedColor = UIColor.black
-        slider.endThumbTintColor              = .clear
-        slider.endThumbStrokeColor            = .clear
-        
-        //        slider.endThumbStrokeHighlightedColor = .white
-        slider.maximumValue   = 500.0
-        slider.minimumValue   = 0.0
-//        slider.layer.borderWidth = 1
-        return slider
-    }()
+    var ringView: MainRingView!
             
     override init(frame: CGRect) {
         super.init(frame: frame)
         setCircularView()
         setsubviewLayout()      
-        outerSlider.isUserInteractionEnabled = false
-        insideSlider.isUserInteractionEnabled = false
-        
+      
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func updateValue(amount: Int, tag: Int) {
+    func updateValue(veggieSum: Int, fruitSum: Int) {
         
-        switch tag {
-        case 0:          
-            outerSlider.endPointValue = CGFloat(amount)
-            totVeggieLabel.text = "\(amount)g"
-//          print("\(totalVeggies)g")
-            
-        default:         
-            insideSlider.endPointValue = CGFloat(amount)
-            totFruitLabel.text = "\(amount)g"
-//          print("\(totalFruits)g")
-       }
-
+        ringView.ringProgressView.ring1.progress = Double(veggieSum) / 500.0
+        ringView.ringProgressView.ring2.progress = Double(fruitSum) / 500.0
+        totVeggieLabel.text = "\(veggieSum)g"
+        totFruitLabel.text = "\(fruitSum)g"
     }
 
 }

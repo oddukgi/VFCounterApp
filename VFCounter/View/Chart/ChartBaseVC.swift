@@ -11,12 +11,11 @@
 #endif
 
 import Charts
-import Localize_Swift
+
 
 class ChartBaseVC: UIViewController, ChartViewDelegate {
 
     var shouldHideData: Bool = false
-    let availableLaunage = Localize.availableLanguages()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -30,7 +29,7 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
     
     private func initialize() {
         self.edgesForExtendedLayout = []
-        Localize.setCurrentLanguage("en")       
+      
     }
     
     func updateChartData() {

@@ -138,8 +138,7 @@ public class MonthlyDateStrategy: DateStrategy {
     public func previous() {
         if let minDate = privateMinimumDate,  date >= minDate.startOfDay()  {
             date = date.lastMonth
-            
-            print(date)
+
             DateSettings.default.periodController.monthDate = date
         }
     }

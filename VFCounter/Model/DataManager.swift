@@ -136,7 +136,7 @@ class DataManager {
               updateEntity.image = item.image?.pngData()
               updateEntity.amount = Int16(item.amount)
             
-            print(">>\(updateEntity.createdDate!)")
+//            print(">>\(updateEntity.createdDate!)")
           })
           
        
@@ -194,12 +194,11 @@ class DataManager {
         var subitem = [SubItems]()
         let data = dateItems[index](date)
         
-        for i in 0 ..< data.count {
-            let item = SubItems(element: data[i])
+        for value in data {
+            let item = SubItems(element: value)
             subitem.append(item)
         }
-        
-        
+    
         return subitem
     }
 

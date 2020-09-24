@@ -71,7 +71,7 @@ class UserItemVC: UIViewController {
         view.addSubview(circularView)
 
         height = SizeManager().circularViewHeight(view: view)
-        let padding = height + 90
+        let padding = height + 80
         circularView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom).offset(-padding)
             make.leading.trailing.equalTo(view)
@@ -81,12 +81,12 @@ class UserItemVC: UIViewController {
 
     func setCircularValue() {
         if let rate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") {
-            circularView.outerSlider.maximumValue = CGFloat(rate)
+            circularView.ringView.maxVeggies = Double(rate)
             
         }
             
         if let rate = SettingManager.getTaskValue(keyName: "FruitsTaskRate") {
-            circularView.insideSlider.maximumValue = CGFloat(rate)
+            circularView.ringView.maxFruits = Double(rate)
         }
         
     }
@@ -102,13 +102,13 @@ class UserItemVC: UIViewController {
         if let veggieAmount = notification.userInfo?["veggieAmount"] as? Int {
         
            print(veggieAmount)
-           circularView.outerSlider.maximumValue = CGFloat(veggieAmount)
+            circularView.ringView.maxVeggies = Double(veggieAmount)
         }
         
         if let fruitAmount = notification.userInfo?["fruitAmount"] as? Int {
             
             print(fruitAmount)
-            circularView.insideSlider.maximumValue = CGFloat(fruitAmount)
+            circularView.ringView.maxFruits = Double(fruitAmount)
         }
     }
 

@@ -29,9 +29,6 @@ extension Date {
         return calendar.component(component, from: self)
     }
 
-    var localizedDescription: String {
-        return description(with: .current)
-    }
     
     var getYear: Int {
         let component = self.get(.year,.month,.day)

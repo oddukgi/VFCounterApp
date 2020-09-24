@@ -12,7 +12,7 @@ import UIKit
 class RingItemButton: UIButton {
 
 
-    let ringProgressView = RingItemGrouopView()
+    let ringProgressView = RingItemGroupView()
     let selectionIndicatorView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
     var contentMargin: CGFloat = 2 {
@@ -30,11 +30,11 @@ class RingItemButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
+        configureRing()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-  
     }
 
     func configure() {
@@ -48,7 +48,18 @@ class RingItemButton: UIButton {
         selectionIndicatorView.layer.shadowOffset = CGSize(width: 0, height: 0)
         selectionIndicatorView.isHidden = true
         ringProgressView.isUserInteractionEnabled = false
+    }
+    
+    func configureRing() {
+        ringProgressView.ringWidth = 3.5
+        ringProgressView.ringSpacing = 1
+        ringProgressView.ring1StartColor = RingColor.ringGreen
+        ringProgressView.ring1EndColor = RingColor.trackGreen
+        ringProgressView.ring2StartColor = RingColor.ringYellow
+        ringProgressView.ring2EndColor = RingColor.trackBeige
         
+        ringProgressView.ring1.hidesRingForZeroProgress = true
+        ringProgressView.ring2.hidesRingForZeroProgress = true
     }
     
     override func layoutSubviews() {

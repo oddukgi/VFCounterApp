@@ -9,10 +9,14 @@
 import UIKit
 import MKRingProgressView
 
-class RingItemGrouopView: UIView {
+class RingItemGroupView: UIView {
 
     let ring1 = RingProgressView()
     let ring2 = RingProgressView()
+    
+    let iconRing = UIView()
+
+    var addThumbImage: Bool = false
     
     @IBInspectable var ring1StartColor: UIColor = .green {
         didSet {
@@ -53,7 +57,7 @@ class RingItemGrouopView: UIView {
             setNeedsLayout()
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -74,3 +78,5 @@ class RingItemGrouopView: UIView {
 
     }
 }
+
+

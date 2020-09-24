@@ -98,3 +98,55 @@ open override func draw(context: CGContext, point: CGPoint)
     
     context.restoreGState()
 }
+
+
+// Make font image
+
+/*
+ lazy var veggieItemView: UIImageView = {
+     let img = "야".imageWith(fontSize: 14, width: 18, height: 18, textColor: .lightGray)
+     let imageView = UIImageView(image: img)
+     imageView.contentMode = .scaleAspectFit
+     return imageView
+     
+ }()
+
+ lazy var fruitItemView: UIImageView = {
+     let img =  "과".imageWith(fontSize: 14, width: 18, height: 18, textColor: .lightGray)
+     let imageView = UIImageView(image: img)
+     imageView.contentMode = .scaleAspectFit
+     return imageView
+ }()
+
+ func addIconView() {
+     
+     addSubViews(iconRing, ring1, ring2)
+     bringSubviewToFront(iconRing)
+    
+     iconRing.snp.makeConstraints { (maker) in
+         maker.top.equalTo(self)
+         maker.centerX.equalTo(self.snp.centerX)
+         maker.height.equalTo(43)
+     }
+     
+     iconRing.addSubViews(veggieItemView, fruitItemView)
+     
+     veggieItemView.snp.makeConstraints {
+         $0.top.equalTo(iconRing).offset(2)
+         $0.leading.trailing.equalTo(iconRing)
+         $0.height.equalTo(18)
+    }
+     
+     fruitItemView.snp.makeConstraints {
+         $0.top.equalTo(veggieItemView.snp.bottom).offset(5)
+         $0.leading.trailing.equalTo(iconRing)
+         $0.height.equalTo(18)
+    }
+     
+//        iconRing.layer.borderWidth = 1
+//        veggieItemView.layer.borderWidth = 1
+//        fruitItemView.layer.borderWidth = 1
+
+ }
+ */
+

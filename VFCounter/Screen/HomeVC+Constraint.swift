@@ -57,7 +57,7 @@ extension HomeVC {
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
        }
         self.add(childVC: UserItemVC(date: newDate!), to: self.userItemView)
-        userItemView.layer.borderWidth = 1
+//        userItemView.layer.borderWidth = 1
 
     }
    

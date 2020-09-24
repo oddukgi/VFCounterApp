@@ -22,8 +22,8 @@ extension WeeklyChartVC {
             make.height.equalTo(height)
         }
         
-        chartView.layer.borderWidth = 1
-        chartView.layer.borderColor = UIColor.blue.cgColor
+//        chartView.layer.borderWidth = 1
+//        chartView.layer.borderColor = UIColor.blue.cgColor
 
     }
     

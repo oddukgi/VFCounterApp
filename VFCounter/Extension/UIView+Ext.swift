@@ -7,16 +7,9 @@
 //
 
 import UIKit
-import SnapKit
 
 
 extension UIView {
-    
-
-    var safeArea : ConstraintLayoutGuideDSL {
-        return safeAreaLayoutGuide.snp
-    }
-    
     
     func pinToEdges(of superview: UIView) {
         translatesAutoresizingMaskIntoConstraints = false

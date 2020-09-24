@@ -161,7 +161,7 @@ JTACMonthViewDataSource {
     private func configureSubviews() {
         calendarView.register(DayCell.self, forCellWithReuseIdentifier: self.dayCellReuseIdentifier)
         view.addSubViews(self.currentValueView, self.weekdayView, self.calendarView)
-        view.layer.borderWidth = 1   
+//        view.layer.borderWidth = 1   
     }
     
     private func configureConstraints() {

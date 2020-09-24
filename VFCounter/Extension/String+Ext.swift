@@ -48,7 +48,7 @@ extension String {
          nameLabel.textAlignment = .center
          nameLabel.backgroundColor = .clear
          nameLabel.textColor = textColor
-         nameLabel.font = UIFont.systemFont(ofSize: fontSize)
+         nameLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
          nameLabel.text = self
          UIGraphicsBeginImageContext(frame.size)
           if let currentContext = UIGraphicsGetCurrentContext() {

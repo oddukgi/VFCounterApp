@@ -19,7 +19,7 @@ extension UserItemVC {
         collectionView.backgroundColor = ColorHex.iceBlue
         view.addSubview(collectionView)
 
-        let tabBarHeight = tabBarController?.tabBar.bounds.size.height ?? 0
+//        let tabBarHeight = tabBarController?.tabBar.bounds.size.height ?? 0
 //        let padding = (view.bounds.height - height) - tabBarHeight
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(circularView.snp.bottom)
@@ -56,8 +56,7 @@ extension UserItemVC {
             
             let image = UIImage(data: data.image!)
             let amount = Int(data.amount)
-            
-            print("\(data.name!) \(data.createdDate!)")
+
             let dateTime = data.createdDate?.changeDateTime(format: .dateTime)
 
             cell.updateContents(image: image,name: data.name!, amount: amount, date: dateTime!)
@@ -65,10 +64,10 @@ extension UserItemVC {
 
             return cell
 
-        }
-        
+        }        
     }
-  
+    
+//            print("\(data.name!) \(data.createdDate!)")
     
     func configureTitleDataSource() {
         dataSource.supplementaryViewProvider = { [weak self]
@@ -107,8 +106,7 @@ extension UserItemVC {
     func reloadRing(date: String) {
     
         dataManager.getSumItems(date: date) { (veggieSum, fruitSum) in
-            self.circularView.updateValue(amount: Int(veggieSum), tag: 0)
-            self.circularView.updateValue(amount: Int(fruitSum), tag: 1)
+            self.circularView.updateValue(veggieSum: Int(veggieSum), fruitSum: Int(fruitSum))
         }
     }
     
