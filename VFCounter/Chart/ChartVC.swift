@@ -26,17 +26,16 @@ class ChartVC: UIViewController {
 
     var currentVC: UIViewController?
     private var dateStrategy: DateStrategy!
-    private var periodRange: PeriodRange = .weekly
     
     
     let now = Date()
 
     private var settings: DateSettings = DateSettings.default
-    private var calendarMonth: CalendarSettings.MonthSelectView = CalendarSettings.default.monthSelectView
+    private var calendarDate = Date()
     
     lazy var weeklyChartVC: UIViewController? = {
-        settings.periodController.weekDate = now.dayBefore
-        let weeklyChartVC = WeeklyChartVC(setting: settings.periodController)
+        dateStrategy =  WeeklyDateStrategy(date: self.now)
+        let weeklyChartVC = WeeklyChartVC(dateStrategy: dateStrategy)
         return weeklyChartVC
     }()
     
@@ -48,9 +47,6 @@ class ChartVC: UIViewController {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy.MM.dd"
             formatter.locale = Locale(identifier: "ko_KR")
-//            if let date = self.currentValue as? Date {
-//                print(formatter.string(from: date))
-//            }
         }
     }
     
@@ -65,11 +61,13 @@ class ChartVC: UIViewController {
         connectAction()
     }
 
-    
-    
-    @objc func changedIndexSegment(sender: UISegmentedControl) {
+    func removeCurrentVC() {
         self.currentVC?.view.removeFromSuperview()
         self.currentVC?.removeFromParent()
+    }
+
+    @objc func changedIndexSegment(sender: UISegmentedControl) {
+        removeCurrentVC()
         displayCurrentTab(sender.selectedSegmentIndex)
     }
     
@@ -91,12 +89,11 @@ class ChartVC: UIViewController {
     }
     
     fileprivate func showChildVC(_ vc: UIViewController) {
+        
         self.addChild(vc)
         self.contentView.addSubview(vc.view)
         vc.view.frame = self.contentView.bounds
         self.currentVC = vc
-//        print(contentView.frame.width, contentView.frame.height)
-//        contentView.layer.borderWidth = 1
         vc.didMove(toParent: self)
     }
     
@@ -126,42 +123,34 @@ class ChartVC: UIViewController {
                                                name: .updateMonth, object: nil)
     }
     
-    
     // MARK: action
     @objc fileprivate func updateDateTime(_ notification: Notification) {
         
         if let userDate = notification.userInfo?["usermonth"] as? Date {
-          
-            self.settings.periodController.monthDate = userDate
+            calendarDate = userDate
         }
     }
-    
     
     func connectAction() {
       
         datafilterView.dataBtn.addTargetClosure { _ in
+
             self.datafilterView.selectSection(section: .data)
             self.displayCurrentTab(self.segmentControl.selectedSegmentIndex)
         }
         
         datafilterView.listBtn.addTargetClosure { _ in
 
+            
             self.datafilterView.selectSection(section: .list)
             
             if self.segmentControl.selectedSegmentIndex == 0 {
                 self.dateStrategy = WeeklyDateStrategy(date: self.now)
-                self.periodRange = .weekly
-                
             } else {
-                let newDate = self.settings.periodController.monthDate!
-//                print(newDate)
-                self.dateStrategy = MonthlyDateStrategy(date: newDate)
-                self.periodRange = .monthly
-
+                self.dateStrategy = MonthlyDateStrategy(date: self.calendarDate)
             }
             
-            self.showChildVC(PeriodListVC(periodRange: self.periodRange,
-                                           dateStrategy: self.dateStrategy))
+            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy))
         }
     }
     

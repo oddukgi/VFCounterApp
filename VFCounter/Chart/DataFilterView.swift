@@ -63,8 +63,6 @@ extension DataFilterView {
 
         let background = UIView(frame: .zero)
         background.translatesAutoresizingMaskIntoConstraints = false
-//        background.layer.borderColor = UIColor.lightGray.cgColor
-//        background.layer.borderWidth = 1
         background.layer.cornerRadius = 19
         addArrangedSubview(background)
 

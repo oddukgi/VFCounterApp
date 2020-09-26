@@ -21,10 +21,6 @@ extension WeeklyChartVC {
             make.width.equalTo(view.bounds.width)
             make.height.equalTo(height)
         }
-        
-//        chartView.layer.borderWidth = 1
-//        chartView.layer.borderColor = UIColor.blue.cgColor
-
     }
     
     func applyChartOption() {
@@ -33,8 +29,7 @@ extension WeeklyChartVC {
         chartView.delegate = self
         chartView.drawBarShadowEnabled = false
         chartView.drawValueAboveBarEnabled = false
-        chartView.maxVisibleCount = 7
-      
+    
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .bottom
         xAxis.centerAxisLabelsEnabled = true
@@ -87,11 +82,3 @@ extension WeeklyChartVC {
     }
 }
 
-
-extension DateSettings {
-    struct PeriodController {
-       var weekDate: Date?
-       var monthDate: Date?
-        
-    }
-}

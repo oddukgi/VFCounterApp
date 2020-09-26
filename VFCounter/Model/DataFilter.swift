@@ -26,8 +26,3 @@ enum DataFilter {
         }
     }
 }
-
-enum PeriodRange: Int {
-    case weekly = 0, monthly
-}
-

@@ -106,7 +106,6 @@ class PickItemVC: UIViewController {
 
     func configureHierarchy() {
         
-   
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.register(PickItemCell.self, forCellWithReuseIdentifier: PickItemCell.reuseIdentifier)
@@ -155,14 +154,14 @@ class PickItemVC: UIViewController {
     // MARK: Add Button
     @objc func pressedAdd() {
    
-        guard  !checkedIndexPath.isEmpty else { return }
+        guard !checkedIndexPath.isEmpty else { return }
             
         let indexPath = checkedIndexPath.first!
         let row = indexPath.row
         let item = currentSnapshot.itemIdentifiers[row]
         
-         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
-         userdate = userDTView.dateTime
+        pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
+        userdate = userDTView.dateTime
         
 //         print(userDTView.dtPickerView.date)
    

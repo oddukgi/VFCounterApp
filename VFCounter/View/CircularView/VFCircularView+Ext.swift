@@ -23,9 +23,7 @@ extension VFCircularView {
             make.size.equalTo(sliderSize)
         }
 
-
         for _ in 0 ..< 2 {
-
             let stackview          = UIStackView()
             stackview.axis         = .horizontal
             stackview.distribution = .fill
@@ -33,14 +31,6 @@ extension VFCircularView {
             horizontalStackView.append(stackview)
             
         }
-        
-        
-    // refer to : https://stackoverflow.com/questions/51100121/how-to-generate-an-uiimage-from-custom-text-in-swift
-//        let image = "야".image(withAttributes: [ .foregroundColor: UIColor.black,
-//                                                  .font: UIFont.systemFont(ofSize: 6),
-//                            ], size: CGSize(width: 10.0, height: 10.0))
-        
-
         
     }
            
@@ -53,7 +43,7 @@ extension VFCircularView {
         addSubview(totFruitLabel)
         
         horizontalStackView[1].snp.makeConstraints { make in
-            make.top.equalTo(self.snp.bottom).offset(-38)
+            make.centerY.equalTo(self.snp.centerY).offset(20)
             make.leading.equalTo(self).offset(20)
             make.height.equalTo(20)
             
@@ -71,7 +61,7 @@ extension VFCircularView {
         addSubview(totVeggieLabel)
         
         horizontalStackView[0].snp.makeConstraints { make in
-            make.top.equalTo(horizontalStackView[1].snp.top).offset(-33)
+            make.top.equalTo(horizontalStackView[1].snp.top).offset(-30)
             make.leading.equalTo(self).offset(20)
             make.height.equalTo(20)
         }

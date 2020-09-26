@@ -474,14 +474,15 @@
 			children = (
 				12E5DE3E251AF7D300D4CCC5 /* Strategies */,
 				1240D3D624E642C100A7EAD4 /* Core Data */,
+				12885B5C24E505E9001586EA /* Chart */,
 				123E00FC24ED40B5000457B9 /* Network */,
 				12699FDF2509C7DA008872FB /* Calendar */,
 				127A497B24CC152D0032194E /* Popup */,
+				12B50CF924C6EB2200C87956 /* Screen */,
 				12BBF92724CABE4700C11ECD /* Model */,
 				12143CD424CA93F00080ADFE /* Utility */,
 				1290EE5A24C6ED37008DB339 /* View */,
 				12B50CFA24C6EBA800C87956 /* Extension */,
-				12B50CF924C6EB2200C87956 /* Screen */,
 				121A909524D18C9300AE0780 /* Assets */,
 				127BF74524E530050066AC7D /* code garbage */,
 				12FD254524CEF6BB00E3D5E0 /* Support Files */,
@@ -537,8 +538,6 @@
 		1290EE5A24C6ED37008DB339 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				125918C72519DCCD0031790D /* List */,
-				12885B5C24E505E9001586EA /* Chart */,
 				12C64CFC24E0F83D00677D5A /* Button */,
 				1290EE6B24C6FA55008DB339 /* Label */,
 				12C64CFA24E0F82300677D5A /* TabBar */,
@@ -574,6 +573,7 @@
 		12B50CF924C6EB2200C87956 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				125918C72519DCCD0031790D /* List */,
 				12143CD224CA8F800080ADFE /* DateView+Constraint.swift */,
 				12BBF92524CAB08200C11ECD /* UserItemVC.swift */,
 				124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */,
@@ -1288,11 +1288,11 @@
 			baseConfigurationReference = 7B0E5D45D1B3A52D8119A439 /* Pods-VFCounter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = VFCounter/VFCounter.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "VFCounter/Support Files/VFCounter.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = VFCounter/Info.plist;
+				INFOPLIST_FILE = "VFCounter/Support Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1310,11 +1310,11 @@
 			baseConfigurationReference = 8AE9EBD0888E37777A44FAB3 /* Pods-VFCounter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = VFCounter/VFCounter.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "VFCounter/Support Files/VFCounter.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = VFCounter/Info.plist;
+				INFOPLIST_FILE = "VFCounter/Support Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

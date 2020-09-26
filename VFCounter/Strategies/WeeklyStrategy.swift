@@ -9,20 +9,21 @@
 import Foundation
 
 
-
 public class WeeklyDateStrategy: DateStrategy {
+
 
     // MARK: - Properties
     
     public var date: Date = Date()
-
+ 
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
     private var oldVDates: Date?
     private var oldFDates: Date?
     private var vDates: [String] = []
     private var fDates: [String] = []
-    
+ 
+
     // MARK: - Date Setting
 
     public var mininumDate: Date? {
@@ -44,14 +45,13 @@ public class WeeklyDateStrategy: DateStrategy {
         }
     }
     
-
     // MARK: - Object Lifecycle
     public init(date: Date) {
         self.date = date
     }
     
     // MARK: - Setting Date
-    public func updateLabel() -> (String?, [String]?) {
+    public func updateLabel() -> (String?, [String]?, [String]?) {
     
         if DateSettings.default.periodController.weekDate == nil {
              date = date.getStartOfWeek()
@@ -59,12 +59,11 @@ public class WeeklyDateStrategy: DateStrategy {
              date = DateSettings.default.periodController.weekDate!
          }
         
-        let datemap = DateProvider.updateDateMap(date: date, period: .weekly)
+        let datemap = DateProvider.updateDateMap(date: date)
         let weeklyDate = setWeeklyDate(startDate: datemap.first!, endDate: datemap.last!)
-        let dataMap = checkDate(datemap: datemap)
-        
-        
-        return (weeklyDate, dataMap)
+        let commonDate = checkDate(datemap: datemap)
+
+        return (weeklyDate, commonDate, datemap)
     }
     
     private func checkDate(datemap: [String]) -> [String] {
@@ -143,8 +142,6 @@ public class WeeklyDateStrategy: DateStrategy {
     }
     
     public func previous() {
-        
-        
         guard let minDate = privateMinimumDate else { return }
         date = self.date.aDayInLastWeek.getStartOfWeek()
 
@@ -164,4 +161,3 @@ public class WeeklyDateStrategy: DateStrategy {
     }
     
 }
-

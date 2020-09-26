@@ -19,8 +19,6 @@ extension UserItemVC {
         collectionView.backgroundColor = ColorHex.iceBlue
         view.addSubview(collectionView)
 
-//        let tabBarHeight = tabBarController?.tabBar.bounds.size.height ?? 0
-//        let padding = (view.bounds.height - height) - tabBarHeight
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(circularView.snp.bottom)
             make.width.equalTo(view.frame.width)
@@ -35,7 +33,6 @@ extension UserItemVC {
 
     
     // MARK: create collectionView datasource
-    
     func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, DataType>(collectionView: collectionView) {
             (collectionView: UICollectionView,  indexPath: IndexPath,
@@ -181,12 +178,33 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
         self.tag = tag
         
         let date = self.stringDate + Date().changeDateTime(format: .onlyTime)
+        displayAlarmVC(tag: tag)
+
         DispatchQueue.main.async {
             let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date)
             let navController = UINavigationController(rootViewController: itemPickVC)
             self.present(navController, animated: true)
+                
         }
     
+    }
+    
+    func displayAlarmVC(tag: Int) {
+        var sumV = circularView.totVeggieLabel.text!
+        var sumF = circularView.totFruitLabel.text!
+        
+        sumV.removeLast()
+        sumF.removeLast()
+
+        if Int(sumV) == 500 && tag == 0 {
+            self.presentAlertVC(title: "경고!", message: "500g을 넘을 수 없습니다.", buttonTitle: "OK")
+            return
+        }
+        
+        if Int(sumF) == 500 && tag == 1{
+            self.presentAlertVC(title: "경고!", message: "500g을 넘을 수 없습니다.", buttonTitle: "OK")
+            return
+        }   
     }
 }
 

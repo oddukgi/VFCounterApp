@@ -10,15 +10,16 @@ import Foundation
 
 class DateProvider {
     
-    class func updateDateMap(date: Date, period: PeriodRange) -> [String]{
+    class func updateDateMap(date: Date, isWeekly: Bool = true) -> [String]{
         
         var dates = [Date]()
-        (period == .weekly) ? (dates = date.getWeekDates()) : (dates = date.getMonthlyDates())
+        isWeekly ? (dates = date.getWeekDates()) : (dates = date.getMonthlyDates())
         let arrDates = dates.map { $0.changeDateTime(format: .longDate)}
         return arrDates 
     }
     
 }
+
 struct Weeks: Hashable {
     var day: String
     let identifiable = UUID()
@@ -27,6 +28,7 @@ struct Weeks: Hashable {
         hasher.combine(identifiable)
     }
 }
+
 struct SubItems: Hashable {
     var element: DataType
     let identifiable = UUID()

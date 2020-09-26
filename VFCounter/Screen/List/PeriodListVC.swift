@@ -11,19 +11,16 @@ import UIKit
 class PeriodListVC: UIViewController {
 
     let elementDataSource = ElementDataSource()
-    var periodRange: PeriodRange
     var tableView: UITableView!
     
     private let reuseIdentifer = "MonthlyList"
     private var dateStrategy: DateStrategy!
 
 
-    init(periodRange: PeriodRange,dateStrategy: DateStrategy) {
+    init(dateStrategy: DateStrategy) {
       
-        self.periodRange = periodRange
         self.dateStrategy = dateStrategy
         super.init(nibName: nil, bundle: nil)
-    
    }
      
    required init?(coder: NSCoder) {
@@ -34,7 +31,6 @@ class PeriodListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-     
         connectAction()
         configureTableView()
         updatePeriod()
@@ -86,16 +82,13 @@ class PeriodListVC: UIViewController {
     func updatePeriod(_ reloadData: Bool = false) {
         
         dateStrategy.setDateRange()
-        let dateMap = dateStrategy.updateLabel()
-        lblPeriod.text = dateMap.0
-        
-        let dateSet = dateMap.1!
-        elementDataSource.weekday = dateSet
+        let datemap = dateStrategy.updateLabel()
+        lblPeriod.text = datemap.0
+        elementDataSource.weekday = datemap.1!
         
         tableView.isUserInteractionEnabled = true
       
         if reloadData == true {
-
             self.tableView.reloadData()
         }
          
@@ -113,8 +106,6 @@ class PeriodListVC: UIViewController {
             self.dateStrategy.next()
             self.updatePeriod(true)
         }
-        
-     
     }
     
     lazy var stackView: UIStackView = {

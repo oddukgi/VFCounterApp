@@ -16,3 +16,11 @@ struct DateSettings {
     var periodController = DateSettings.PeriodController()
     
 }
+
+extension DateSettings {
+    struct PeriodController {
+       var weekDate: Date?
+       var monthDate: Date?
+        
+    }
+}

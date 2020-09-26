@@ -21,6 +21,7 @@ public class MonthlyDateStrategy: DateStrategy {
     
     public var date: Date = Date()
     
+    
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
     private var oldVDates: Date?
@@ -29,6 +30,8 @@ public class MonthlyDateStrategy: DateStrategy {
     // MARK: - Date Setting    
     private var vDates: [String] = []
     private var fDates: [String] = []
+    
+
     
     public var mininumDate: Date? {
 
@@ -66,13 +69,13 @@ public class MonthlyDateStrategy: DateStrategy {
     }
     
     // MARK: - Setting Date
-    public func updateLabel() -> (String?, [String]?) {
+    public func updateLabel() -> (String?, [String]?, [String]?) {
   
         let strDate = dateFormatter.string(from: date)
-        let datemap = DateProvider.updateDateMap(date: date, period: .monthly)
+        let datemap = DateProvider.updateDateMap(date: date, isWeekly: false)
         let monthlyDate = checkDate(datemap: datemap)
        
-        return (strDate, monthlyDate)
+        return (strDate, monthlyDate, nil)
     }
     
     

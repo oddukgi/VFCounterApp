@@ -92,8 +92,9 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
         
         chartView.rightAxis.enabled = false
     }
+
+    
     // TODO: Cannot override from extensions
-    //extension DemoBaseViewController: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         NSLog("chartValueSelected");
         

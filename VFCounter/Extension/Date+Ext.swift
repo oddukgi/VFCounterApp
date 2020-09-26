@@ -18,6 +18,7 @@ extension Date {
         case onlyTime = " h:mm:ss a"
         case pickerTime = " HH:mm:ss"
         case selectedDT = "yyyy-MM-dd HH:mm:ss"
+        case day       = "EEE"
     }
     
     /// get month, year, day
