@@ -155,11 +155,10 @@ extension UserItemVC {
         let maxVeggies = valueConfig.maxVeggies
         let maxFruits = valueConfig.maxFruits
        
-        dataManager.getSumItems(date: date) { (veggieSum, fruitSum) in
-            self.circularView.updateValue(veggieSum: Int(veggieSum), fruitSum: Int(fruitSum))
-            self.valueConfig.sumVeggies = Int(veggieSum)
-            self.valueConfig.sumFruits = Int(fruitSum)
-        }
+        let values = dataManager.getSumItems(date: date)
+        self.circularView.updateValue(veggieSum: values.0, fruitSum: values.1)
+        self.valueConfig.sumVeggies = values.0
+        self.valueConfig.sumFruits = values.1     
     }
     
     func hideItemView() {

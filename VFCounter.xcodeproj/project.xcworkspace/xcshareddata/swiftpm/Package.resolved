@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Charts",
-        "repositoryURL": "https://github.com/danielgindi/Charts.git",
-        "state": {
-          "branch": null,
-          "revision": "7ac4a05e83d279bac305a472af9128c2a0eca3d7",
-          "version": "3.5.0"
-        }
-      },
-      {
         "package": "CoreStore",
         "repositoryURL": "https://github.com/JohnEstropia/CoreStore.git",
         "state": {
@@ -20,30 +11,12 @@
         }
       },
       {
-        "package": "HGCircularSlider",
-        "repositoryURL": "https://github.com/HamzaGhazouani/HGCircularSlider.git",
-        "state": {
-          "branch": null,
-          "revision": "2b98462d32bf7211851aa73537dbaba5dd80229e",
-          "version": "2.2.1"
-        }
-      },
-      {
         "package": "JTAppleCalendar",
         "repositoryURL": "https://github.com/patchthecode/JTAppleCalendar.git",
         "state": {
           "branch": null,
           "revision": "2812ae8a58c4b8132cd3d0e761b984e344d841a4",
           "version": "8.0.3"
-        }
-      },
-      {
-        "package": "Localize_Swift",
-        "repositoryURL": "https://github.com/marmelroy/Localize-Swift.git",
-        "state": {
-          "branch": null,
-          "revision": "f2d0c6d790b8af64ae54377ad93494e8d3e46b17",
-          "version": "3.1.0"
         }
       },
       {

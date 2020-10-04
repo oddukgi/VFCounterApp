@@ -201,6 +201,8 @@ class SizeManager {
             height = ScreenSize.height - 300
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
             height = ScreenSize.height - 400
+        } else {
+            height = ScreenSize.height - 380
         }
         
         return height

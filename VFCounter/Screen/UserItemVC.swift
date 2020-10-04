@@ -83,7 +83,7 @@ class UserItemVC: UIViewController {
             make.height.equalTo(newHeight)
         }
         
-        circularView.layer.borderWidth = 1
+//        circularView.layer.borderWidth = 1
     }
 
    

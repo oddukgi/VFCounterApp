@@ -144,7 +144,6 @@ class DayCell: JTACDayCell {
             return config
         } else if let maximumDate = maximumDate, state.date > maximumDate.endOfDay() {
             
-            print(">> \(state.date), \(maximumDate)")
             config.isDateEnabled = false
 
             return config
@@ -258,11 +257,11 @@ class DayCell: JTACDayCell {
                 
         let maxVeggie = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
         let maxFruit = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
-        dataManager.getSumItems(date: dateArray.first!) { (veggieSum, fruitSum) in
+        let values = dataManager.getSumItems(date: dateArray.first!)
             
-            self.ringButton.ringProgressView.ring1.progress = Double(veggieSum) / Double(maxVeggie)
-            self.ringButton.ringProgressView.ring2.progress = Double(fruitSum) / Double(maxFruit)
-        }
+        self.ringButton.ringProgressView.ring1.progress = Double(values.0) / Double(maxVeggie)
+        self.ringButton.ringProgressView.ring2.progress = Double(values.1) / Double(maxFruit)
+        
     }
 
     

@@ -126,14 +126,13 @@ class WeeklyChartVC: ChartBaseVC {
         for (index, item) in datemap.enumerated() {
             
             let customDate = item.components(separatedBy: " ").first!
-             dataManager.getSumItems(date: customDate) { (veggieSum, fruitSum) in
-                let item1 = BarChartDataEntry(x: Double(index), y: Double(veggieSum))
-                let item2 = BarChartDataEntry(x: Double(index), y: Double(fruitSum))
+            let values = dataManager.getSumItems(date: customDate)
+            
+            let item1 = BarChartDataEntry(x: Double(index), y: Double(values.0))
+            let item2 = BarChartDataEntry(x: Double(index), y: Double(values.1))
 
-                veggieChartEntry.append(item1)
-                fruitChartEntry.append(item2)
-                
-             }
+            veggieChartEntry.append(item1)
+            fruitChartEntry.append(item2)    
         }
         
         var veggieChartDataSet: BarChartDataSet! = nil

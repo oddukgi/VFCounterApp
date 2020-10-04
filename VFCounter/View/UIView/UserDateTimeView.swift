@@ -56,8 +56,7 @@ class UserDateTimeView: UIView {
         dtPickerView.snp.makeConstraints { make in
             make.edges.size.equalTo(containerView)
         }
-        
-        dtPickerView.layer.borderWidth = 1
+
         dtPickerView.timeZone = TimeZone.current
         dtPickerView.locale =  Locale(identifier: "ko_KR")
         dtPickerView.backgroundColor = .systemBackground

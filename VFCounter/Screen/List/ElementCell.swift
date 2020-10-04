@@ -185,13 +185,9 @@ extension ElementCell: ItemCellDelegate {
         
         print(item.date)
         
-        dataManager.getSumItems(date: item.date) { (veggieSum, fruitSum) in
+        let values = dataManager.getSumItems(date: item.date)    
+        datemodel = DateModel(tag: index, sumV: values.0,sumF: values.1, maxV: 500, maxF: 500)
             
-            datemodel = DateModel(tag: index, sumV: veggieSum,
-                                      sumF: fruitSum, maxV: 500, maxF: 500)
-            
-        }
-
         let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
         itemPickVC.items = item.copy() as? VFItemController.Items
         delegate?.displayPickItemVC(pickItemVC: itemPickVC)

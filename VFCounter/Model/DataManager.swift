@@ -44,7 +44,7 @@ class DataManager {
            
         _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
           
-              // create veggies entity
+                         // create veggies entity
               if tag == 0 {
                 entityItem = configureEntity(Veggies.self, transaction: transaction, configuration: UserDataManager.veggieConfiguration)
               } else {
@@ -83,29 +83,28 @@ class DataManager {
       }
 
     
-    func getSumItems(date: String, completion: @escaping (Int, Int) -> Void) {
+    func getSumItems(date: String) -> (Int,Int) {
+        var veggieFilter = Where<Veggies>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date),date)
+        var fruitFilter = Where<Fruits>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date),date)
     
-        let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
-            
-            let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
-            let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
-            completion(Int(veggieSum!), Int(fruitSum!))
-            
-        })
+        let totalVeggies = try? UserDataManager.dataStack.queryValue(From<Veggies>(),
+            Select<Veggies,Int16>(.sum("amount")), veggieFilter) ?? 0
+        
+        let totalFruits = try? UserDataManager.dataStack.queryValue(From<Fruits>(),
+            Select<Fruits,Int16>(.sum("amount")), fruitFilter) ?? 0
 
+        return (Int(totalVeggies ?? 0),Int(totalFruits ?? 0))
     }
     
     
     /*
-     return try! Modern.TimeZonesDemo.dataStack.queryAttributes(
-         From<Modern.TimeZonesDemo.TimeZone>()
-             .select(
-                 NSDictionary.self,
-                 .attribute(\.$name),
-                 .attribute(\.$abbreviation)
-             )
-             .orderBy(.ascending(\.$name))
-     )
+     let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+         
+         let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
+         let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
+         completion(Int(veggieSum!), Int(fruitSum!))
+         
+     })
      */
     
     func checkVeggieData(date: String, completion: @escaping ([[String : Any]]) -> Void) {

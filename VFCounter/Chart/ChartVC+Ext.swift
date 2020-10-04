@@ -29,15 +29,15 @@ extension ChartVC {
             make.centerX.equalTo(view.snp.centerX)
             make.size.equalTo(CGSize(width: width, height: 38))
         }
-        segmentControl.layer.borderWidth = 1
+//        segmentControl.layer.borderWidth = 1
     
         btnAdd.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
-            $0.leading.equalTo(segmentControl.snp.trailing).offset(10)
+            $0.leading.equalTo(segmentControl.snp.trailing).offset(20)
             $0.size.equalTo(CGSize(width: 30, height: 30))
         }
         
-        btnAdd.layer.borderWidth = 1
+//        btnAdd.layer.borderWidth = 1
   
         btnAdd.addTarget(self, action: #selector(tappedAdd), for: .touchUpInside)
         

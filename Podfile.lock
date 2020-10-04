@@ -1,0 +1,22 @@
+PODS:
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
+  - MKRingProgressView (2.2.3)
+
+DEPENDENCIES:
+  - Charts
+  - MKRingProgressView
+
+SPEC REPOS:
+  trunk:
+    - Charts
+    - MKRingProgressView
+
+SPEC CHECKSUMS:
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
+  MKRingProgressView: 404b3157e7a533ab8668d29ec20042c35d12ca1d
+
+PODFILE CHECKSUM: 61001c8363fea2e5f1ef7a45f2d1954b96955b26
+
+COCOAPODS: 1.9.1

@@ -15,7 +15,7 @@ extension WeeklyChartVC {
         view.addSubview(chartView)
         
         let height = SizeManager().chartHeight
-
+        
         chartView.snp.makeConstraints { make in
             make.top.equalTo(weekStackView.snp.bottom).offset(10)
             make.width.equalTo(view.bounds.width)
@@ -50,12 +50,12 @@ extension WeeklyChartVC {
         
         leftAxis.drawAxisLineEnabled = true
         leftAxis.drawGridLinesEnabled = true
-        leftAxis.labelFont = Seoulnamsan.medium.style(offset: 13)
+        leftAxis.labelFont = Seoulnamsan.medium.style(offset: 14)
         leftAxis.labelCount = 10
         leftAxis.labelPosition = .outsideChart
         leftAxis.spaceTop = 0.2
         leftAxis.axisMinimum = 0
-        
+       
         let l = chartView.legend
         l.horizontalAlignment = .right
         l.verticalAlignment = .top

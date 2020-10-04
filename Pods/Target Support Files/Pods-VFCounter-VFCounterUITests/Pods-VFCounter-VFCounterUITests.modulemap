@@ -1,0 +1,6 @@
+framework module Pods_VFCounter_VFCounterUITests {
+  umbrella header "Pods-VFCounter-VFCounterUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
