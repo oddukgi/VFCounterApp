@@ -21,7 +21,6 @@ class MonthSelectView<Value: CalendarValue>: UIView {
           stackView.axis = .horizontal
           stackView.distribution = .fill
           return stackView
-          
     }()
       
 
@@ -130,6 +129,10 @@ class MonthSelectView<Value: CalendarValue>: UIView {
             NotificationCenter.default.post(name: .updateMonth, object: nil, userInfo: ["usermonth": value])
      
         }
+    }
+    
+    func updateDate(date: Date) {
+        lblAmount.text = date.changeDateTime(format: .longDate)
     }
     
     func updateAmount(veggieSum: Int, fruitSum: Int) {

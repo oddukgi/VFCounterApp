@@ -34,6 +34,7 @@ extension String {
     ///     - size: of the image to return.
     /// - Returns: a `UIImage` instance from this string using a specified
     /// attributes and size, or `nil` if the operation fails.
+    
     func image(withAttributes attributes: [NSAttributedString.Key: Any]? = nil, size: CGSize? = nil) -> UIImage? {
         let size = size ?? (self as NSString).size(withAttributes: attributes)
         return UIGraphicsImageRenderer(size: size).image { _ in
@@ -85,6 +86,11 @@ extension String {
     func containsWhitespaceAndNewlines() -> Bool {
         return rangeOfCharacter(from: CharacterSet(charactersIn: "월화수목금토일")) != nil
     }
+    
+    
+    func doesStringContains(input: String) -> Bool {
+        return self.range(of: input, options: .caseInsensitive) != nil
+    }
 }
 
 
@@ -94,8 +100,6 @@ extension Double {
     func roundValue() -> String {
         return String(format: "%.5f", self)
     }
-    
-    
 }
 
 

@@ -22,7 +22,7 @@ public class WeeklyDateStrategy: DateStrategy {
     private var oldFDates: Date?
     private var vDates: [String] = []
     private var fDates: [String] = []
- 
+    private var configs = ValueConfig()
 
     // MARK: - Date Setting
 
@@ -44,6 +44,10 @@ public class WeeklyDateStrategy: DateStrategy {
             return self.privateMaximumDate
         }
     }
+
+
+
+    
     
     // MARK: - Object Lifecycle
     public init(date: Date) {
@@ -73,14 +77,13 @@ public class WeeklyDateStrategy: DateStrategy {
             
             let item = element.components(separatedBy: " ").first
             
-            dataManager.isDataEmpty(date: item!) { (veggieName, fruitName) in
-            
-              if veggieName != nil {
-                    items.insert(element)
-                }
-                
-              if fruitName != nil {
-                  items.insert(element)
+            dataManager.reorderData(date: item!) { (veggies, fruits) in            
+             if veggies.count > 0 {
+                 items.insert(element)
+             }
+             
+             if fruits.count > 0 {
+               items.insert(element)
               }
             }
         }
@@ -158,6 +161,17 @@ public class WeeklyDateStrategy: DateStrategy {
             date = self.date.aDayInNextWeek.getStartOfWeek()
             DateSettings.default.periodController.weekDate = date
         }
+    }
+    
+    func getLimitAmount(date: String) {
+     
+        let dataManager = DataManager()
+        configs.maxVeggies = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
+        configs.maxFruits = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
+        
+    
+        
+        
     }
     
 }

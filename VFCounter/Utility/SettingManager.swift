@@ -25,7 +25,7 @@ class SettingManager {
     }
     
     class func setFruitsTaskRate(percent: Float) {
-        userDefaults?.set(percent, forKey: "FruitsTaskRate")
+        userDefaults?.set(percent, forKey: "FruitTaskRate")
     }
 
     class func getAlarmValue(keyName: String) -> Bool? {
@@ -36,12 +36,12 @@ class SettingManager {
         return userDefaults?.float(forKey: keyName)
     }
     
-    class func setInitialDate(date: Date) {
-        userDefaults?.set(date, forKey: "InitialDate")
+    class func setInitialLaunching(flag: Bool) {
+        userDefaults?.set(flag, forKey: "InitialLaunching")
     }
     
-    class func getInitialDate(keyName: String) -> Date? {
-        return userDefaults?.object(forKey: keyName) as? Date
+    class func getInitialLaunching(keyName: String) -> Bool?  {
+        return userDefaults?.bool(forKey: keyName)
     }
     
 

@@ -15,11 +15,16 @@ public protocol DateStrategy: class {
     var mininumDate: Date? { get set }
     var maximumDate: Date? { get set }
 
-    
+
     func updateLabel() -> (String?, [String]?, [String]?)
     func fetchedData() 
     func setDateRange()
     func previous()
     func next()
     
+}
+
+protocol ItemCellDelegate: class {
+    func updateSelectedItem(item: VFItemController.Items, index: Int)
+    func deleteSelectedItem(item: Int, section: Int)
 }

@@ -48,9 +48,10 @@ enum UIHelper {
        return section
     }
     
-    static func createHorizontalLayout(titleElemendKind: String, isHeader: Bool = true) -> UICollectionViewCompositionalLayout {
+    static func createHorizontalLayout(titleElemendKind: String, isHeader: Bool = true, isPaddingForSection: Bool = false) -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(SizeManager().getUserItemHeight))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .absolute(SizeManager().getUserItemHeight))
 
             let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
             layoutItem.contentInsets = NSDirectionalEdgeInsets(
@@ -66,7 +67,12 @@ enum UIHelper {
      //        group.interItemSpacing = .fixed(3.5)
              let section = NSCollectionLayoutSection(group: group)
              section.orthogonalScrollingBehavior = .continuous
-             section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
+            
+            if isPaddingForSection {
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
+            } else {
+                section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
+            }
       
 
             

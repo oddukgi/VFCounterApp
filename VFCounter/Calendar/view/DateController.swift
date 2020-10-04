@@ -9,18 +9,14 @@
 import Foundation
 
 struct DateSettings {
-    
     static var `default` = DateSettings()
     private init() {}
-
     var periodController = DateSettings.PeriodController()
-    
 }
 
 extension DateSettings {
     struct PeriodController {
        var weekDate: Date?
        var monthDate: Date?
-        
     }
 }

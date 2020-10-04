@@ -14,7 +14,6 @@ extension AlarmSettingVC {
     func calcurateSlider(slider: CustomSlider, amount: Float, step: Float, cell: UITableViewCell) {
     
         if slider.minimumValue <= amount && slider.maximumValue >= amount {
-
             let roundedValue = round(amount / step) * step
             slider.value = roundedValue
             cell.textLabel?.text = String(Int(roundedValue)) + " g"
@@ -23,11 +22,9 @@ extension AlarmSettingVC {
             cell.textLabel?.text = "0"
             slider.value = 0
         }
-        
-       
-            
     }
 }
+
 extension AlarmSettingVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -53,7 +50,6 @@ extension AlarmSettingVC: UITableViewDataSource {
 
 extension AlarmSettingVC: SliderUpdateDelegate {
     
-    
     func sliderTouch(value: Float, tag: Int) {
         
     }
@@ -63,14 +59,13 @@ extension AlarmSettingVC: SliderUpdateDelegate {
         switch tag {
         case 1:
             veggieSettings.taskPercent = value
-            
             let cell = tableView.cellForRow(at: IndexPath(row: tag, section: 0))
             print(veggieSettings.taskPercent)
             calcurateSlider(slider: veggieSlider, amount: value, step: 10.0, cell: cell!)
             SettingManager.setVeggieTaskRate(percent: value)
             NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["veggieAmount": Int(veggieSlider.value)])
-        default:
-            
+
+        default:        
             fruitsSettings.taskPercent = value
             let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 1))
             print(fruitsSettings.taskPercent)

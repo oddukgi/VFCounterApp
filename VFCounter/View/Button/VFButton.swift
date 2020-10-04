@@ -31,6 +31,7 @@ class VFButton: UIButton {
     // MARK: Tap Area
     override func setImage(_ image: UIImage?, for state: UIControl.State) {
         guard let image = image else { return }
+        self.contentMode = .scaleAspectFit
         super.setImage(image, for: state)
     }
     

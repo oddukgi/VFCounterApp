@@ -79,17 +79,13 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
     }
     
     func setup(barLineChartView chartView: BarLineChartViewBase) {
-        chartView.chartDescription?.enabled = false
-                
+        chartView.chartDescription?.enabled = false                
         chartView.dragEnabled = false
         chartView.setScaleEnabled(false)
         chartView.pinchZoomEnabled = false
         
-        // ChartYAxis *leftAxis = chartView.leftAxis;
-        
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .bottom
-        
         chartView.rightAxis.enabled = false
     }
 

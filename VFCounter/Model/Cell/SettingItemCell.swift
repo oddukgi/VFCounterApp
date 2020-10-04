@@ -17,8 +17,7 @@ class SettingItemCell: UITableViewCell {
         let image = UIImage(named: "alarm")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
-        return imageView
-        
+        return imageView        
     }()
     
     override func awakeFromNib() {
@@ -29,7 +28,6 @@ class SettingItemCell: UITableViewCell {
     func setLayout() {
         
         contentView.addSubview(itemImgView)
-        
         itemImgView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView.snp.centerY)
             make.leading.equalTo(contentView).offset(25)

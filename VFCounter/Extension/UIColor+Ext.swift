@@ -23,6 +23,7 @@ struct ColorHex {
     static let dullOrange     = UIColor(hexString: "D68432")
     static let lightGreen     = UIColor(hexString: "1F6151").withAlphaComponent(0.3)
     static let darkGreen      = UIColor(hexString: "1F6151")
+    static let middleGreen    = UIColor(hexString: "37937C")
     static let greyBlue       = UIColor(hexString: "78ACA3")
     static let iceBlue        = UIColor(hexString: "EFF8F8")
     static let dimmedGrey     = UIColor(hexString: "D0D3D9")
@@ -48,6 +49,7 @@ struct ColorHex {
     
     static let switchWhite = UIColor(hexString: "E9E9EB")
     static let separator   = UIColor(white: 0.0, alpha: 0.22)
+    static let lightBlue  = UIColor(hexString: "00BCD4")
 }
 
 struct SliderColor {

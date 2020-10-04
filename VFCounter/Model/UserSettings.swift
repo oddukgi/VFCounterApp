@@ -9,11 +9,12 @@
 import Foundation
 
 struct UserSettings: Codable, Hashable {
+    
     var title      : String
     var alarmOn    : Bool
     var taskPercent: Float
     
     func hasNilField() -> Bool {
-          return ([title, alarmOn, taskPercent] as [Any?]).contains(where: { $0 == nil})
-      }
+        return ([title, alarmOn, taskPercent] as [Any?]).contains(where: { $0 == nil})
+    }
 }

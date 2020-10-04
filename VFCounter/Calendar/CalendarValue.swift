@@ -13,6 +13,7 @@ enum CalendarMode {
 }
 
 protocol CalendarValue {
+    
     static var mode: CalendarMode { get set }
     func outOfRange(minDate: Date?, maxDate: Date?) -> Bool
 }
@@ -40,7 +41,6 @@ struct CalendarRange: CalendarValue, Hashable {
     func outOfRange(minDate: Date?, maxDate: Date?) -> Bool {
         return self.fromDate < minDate ?? self.fromDate || self.toDate > maxDate ?? self.toDate
     }
-    
 }
 
 enum CalendarModeSingle {
@@ -55,7 +55,6 @@ enum CalendarModeRange {
 extension Date: CalendarValue {
     
     static var mode: CalendarMode = .single
-    
     func outOfRange(minDate: Date?, maxDate: Date?) -> Bool {
         return self < minDate ?? self || self > maxDate ?? self
     }

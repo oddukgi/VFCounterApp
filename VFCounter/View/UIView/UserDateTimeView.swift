@@ -10,13 +10,14 @@ import UIKit
 
 class UserDateTimeView: UIView {
 
-    private var now = Date()
-    private var userDateTime: String = ""
-    
     let containerView = UIView()
     let dtPickerView = UIDatePicker()
     var entityDT: Date?
+    
+    private var now = Date()
+    private var userDateTime: String = ""
     private var flag: Bool = false
+    
     var dateTime: String {
         
         get {
@@ -56,9 +57,11 @@ class UserDateTimeView: UIView {
             make.edges.size.equalTo(containerView)
         }
         
-//        dtPickerView.layer.borderWidth = 1    
+        dtPickerView.layer.borderWidth = 1
         dtPickerView.timeZone = TimeZone.current
         dtPickerView.locale =  Locale(identifier: "ko_KR")
+        dtPickerView.backgroundColor = .systemBackground
+        dtPickerView.preferredDatePickerStyle = .wheels
         dtPickerView.maximumDate = now.addDaysToday(days: 0)
         dtPickerView.addTarget(self, action: #selector(changedDateTime), for: .valueChanged)
     }
@@ -78,7 +81,7 @@ class UserDateTimeView: UIView {
             dtPickerView.date = entityDT!
             
         } else {
-           dtPickerView.date = now
+            dtPickerView.date = userDateTime.changeDateTime(format: .dateTime)
         }
       
     }

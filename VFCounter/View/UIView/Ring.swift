@@ -19,13 +19,11 @@ import UIKit
 
     @IBInspectable var ringColor: UIColor = UIColor.black {
          didSet {
-             //print("bColor was set here")
         }
     }
 
     @IBInspectable var ringThickness: CGFloat = 4 {
         didSet {
-           // print("ringThickness was set here")
         }
     }
     

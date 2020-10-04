@@ -11,6 +11,7 @@ import SnapKit
 
 class MeasurementView: UIView {
 
+    var tags = 0
     lazy var labelStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -32,7 +33,6 @@ class MeasurementView: UIView {
         textField.textAlignment = NSTextAlignment.center
         textField.returnKeyType = UIReturnKeyType.done
         textField.layer.cornerRadius = 8
-        textField.delegate = self
         return textField
     }()
     
@@ -46,17 +46,22 @@ class MeasurementView: UIView {
     let slider = CustomSlider(step: 10)
     private var sliderWidth: CGFloat = 0
     private var step: Float = 10
-  
+
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setSlider()
-        setLayout()
-        createDismissKeyboardTapGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    convenience init(tag: Int) {
+        self.init(frame: .zero)
+        self.tags = tag
+        setSlider()
+        setLayout()
+        createDismissKeyboardTapGesture()
     }
     
     func createDismissKeyboardTapGesture() {
@@ -69,14 +74,28 @@ class MeasurementView: UIView {
         let width = ScreenSize.width
         let btnWidt: CGFloat = 25
         let padding: CGFloat = (btnWidt * 2.0) + CGFloat(25)
-        
+    
         sliderWidth = width - padding
-        slider.values(min: 0, max: 500, current: 10)
+        
+        let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
+        let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
+        
+        if tags == 0 {
+            slider.values(min: 1, max: veggieRate, current: 10)
+        } else {
+            slider.values(min: 1, max: fruitRate, current: 10)
+
+        }
+
         slider.delegate = self
         slider.thumbTintColor(.white)
         slider.minimumTrackTintColor(ColorHex.MilkChocolate.origin)
         slider.maximumTrackTintColor(SliderColor.maximumTrackTint)
         slider.isContinuous = true
+    }
+    
+    func changeMaximumRange() {
+        
     }
 
     func setLayout() {
@@ -103,15 +122,11 @@ class MeasurementView: UIView {
             make.height.equalTo(30)
             
         }
-
         gramTF.text = "\(Int(slider.value))"
 
     }
     
-    func updateTextField() {
-        let amount = Int(slider.value)
-        gramTF.text = String(amount)
-    }
+
     
     
     func judgetTextHasNumber(texts:String) -> Bool{
@@ -156,9 +171,11 @@ extension MeasurementView: SliderUpdateDelegate {
     func sliderTouch(value: Float, tag: Int) {
         print("Slider Touched: \(value)")
     }
-    
-    func sliderValueChanged(value: Float, tag: Int) {
-        updateTextField()
+
+    func sliderValueChanged(value: Float,tag: Int)  {
+        
+        let amount = Int(slider.value)
+        gramTF.text = String(amount)
     }
 
 }

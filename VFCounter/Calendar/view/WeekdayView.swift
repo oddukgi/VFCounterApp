@@ -13,8 +13,7 @@ import SnapKit
 
 class WeekdayView: UIView {
 
-    // MARK: - Outlets
-    
+    // MARK: - Outlets    
     lazy var stackView: UIStackView = {
        let stackView = UIStackView()
         stackView.backgroundColor = .clear

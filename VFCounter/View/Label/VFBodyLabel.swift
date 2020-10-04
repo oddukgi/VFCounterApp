@@ -10,7 +10,7 @@ import UIKit
 
 class VFBodyLabel: UILabel {
     
-   override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
@@ -27,7 +27,6 @@ class VFBodyLabel: UILabel {
           
     }
     
-
     // MARK: - Accessibility : change font size when device's content size change
     private func configure() {
         textColor                                 = .secondaryLabel
@@ -38,7 +37,6 @@ class VFBodyLabel: UILabel {
         lineBreakMode                             = .byWordWrapping
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
 }
 
 

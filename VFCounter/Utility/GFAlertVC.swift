@@ -12,15 +12,14 @@ class GFAlertVC: UIViewController {
 
     let containerView    = VFContainerView()
     let titleLabel       = VFTitleLabel(textAlignment: .center, fontSize: 20)
-    let messageLabel     = VFBodyLabel(textAlignment: .center, fontSize: 11, fontColor: .white)
+    let messageLabel     = VFBodyLabel(textAlignment: .center, fontSize: 11,
+                                       fontColor: .white)
     let actionButton     = VFButton(backgroundColor: .systemPink, title: "Ok")
     
     var alertTitle: String?
     var message: String?
     var buttonTitle: String?
-  
     let padding: CGFloat = 20
-    
     
     init(title: String, message: String, buttonTitle: String) {
         super.init(nibName: nil, bundle: nil)
@@ -32,10 +31,8 @@ class GFAlertVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
- 
+
     override func viewDidLoad() {
-    
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubViews(containerView, titleLabel, actionButton, messageLabel)
@@ -89,8 +86,8 @@ class GFAlertVC: UIViewController {
             messageLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             messageLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -12)
         ])
-        
     }
+    
     @objc func dismissVC() {
         dismiss(animated: true)
     }

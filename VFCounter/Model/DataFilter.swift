@@ -9,14 +9,12 @@
 import UIKit
 
 protocol DateProtocol {
-
     var newDate: String { get set }
 }
 
 enum DataFilter {
     
     case data, list
-
     var filterName: String {
         switch self {
         case .data:
@@ -26,3 +24,17 @@ enum DataFilter {
         }
     }
 }
+
+enum SectionFilter {
+    
+    case main, chart
+    var kind: String {
+        switch self {
+        case .main:
+            return "main"
+        default:
+            return "chart"
+        }
+    }
+}
+

@@ -10,13 +10,14 @@ import UIKit
 import CoreLocation
 
 
+
 class HomeVC: UIViewController {
 
    let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 0
            
    lazy var headerView: UIView = {
       let subview = UIView()
-      subview.backgroundColor = ColorHex.pale
+      subview.backgroundColor = UIColor.white
       view.addSubview(subview)
       return subview
     }()
@@ -26,15 +27,17 @@ class HomeVC: UIViewController {
     let locationManager = CLLocationManager()
     let contentView = UIView()
     let userItemView = UIView()
+    var coordinator = Coordinator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
        // 초기 실행시, 날짜 저장
-        saveInitialDate()
         setupConstraints()
         setContentView()
-        settings()
+        retrieveLocation()
+        connectTapGesture()
+        self.setupToHideKeyboardOnTapOnView()
         prepareNotificationAddObserver()
     }
 
@@ -42,26 +45,35 @@ class HomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        requestWeathData(from: coordinator.latitude, to: coordinator.longitude)
     }
     
-    func settings() {
-        dateView.btnLocation.addTarget(self, action: #selector(retrieveLocation), for: .touchUpInside)
-  
-    }
+//    func settings() {
+//        dateView.btnLocation.addTarget(self, action: #selector(retrieveLocation), for: .touchUpInside)
+//
+//    }
     
     //MARK: - notificationCenter
     fileprivate func prepareNotificationAddObserver(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)), name: .updateDateTime, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)),
+                                               name: .updateDateTime, object: nil)
         
     }
     
-    func saveInitialDate() {
-        if SettingManager.getInitialDate(keyName: "InitialDate") == nil {
-            SettingManager.setInitialDate(date: Date())
-        }
-    }
     
-    @objc func retrieveLocation() {
+    func establishUserDefaultsHaveBeenVerifed()->Bool{
+         let defaults = UserDefaults.standard
+         if let _ = defaults.string(forKey: "userDefaultsHaveBeenVerified"){
+             print("user defaults were already verified")
+             return true
+          }else{
+             defaults.set(true, forKey: "userDefaultsHaveBeenVerified")
+             print("verified user defaults for first time since app was installed")
+             return false
+          }
+     }
+    
+    func retrieveLocation() {
         
          locationManager.delegate = self
          print("Retrieve Button: start tracking Location")
@@ -107,8 +119,7 @@ class HomeVC: UIViewController {
                 self.updateUI(weatherData)
                 
             case .failure(let error):
-//                self.presentAlertVC(title: "데이터 요청에 실패하였습니다.", message: "Wifi나 데이터를 연결해주세요.",buttonTitle: "OK")
-                
+                //      self.presentAlertVC(title: "데이터 요청에 실패하였습니다.", message: "Wifi나 데이터를 연결해주세요.",buttonTitle: "OK")
                 print(error.rawValue)
                 
             }
@@ -134,11 +145,25 @@ class HomeVC: UIViewController {
         if let userDate = notification.userInfo?["userdate"] as? String {
             print(userDate)
             dateView.updateDate(userdate: userDate)
-            
         }
     }
-     
     
+    @objc func dateLabelTapped(_ sender: UITapGestureRecognizer) {
+        DispatchQueue.main.async {
+            let datePickerVC = DatePickerVC()
+            datePickerVC.modalPresentationStyle  = .overFullScreen
+            datePickerVC.modalTransitionStyle    = .crossDissolve
+            datePickerVC.view.layoutIfNeeded() //avoid Snapshotting error
+            datePickerVC.delegate = self
+            self.present(datePickerVC, animated: true)
+        }
+    }
+    
+    func connectTapGesture() {
+        let labelTap = UITapGestureRecognizer(target: self, action: #selector(self.dateLabelTapped(_:)))
+        dateView.dateLabel.isUserInteractionEnabled = true
+        dateView.dateLabel.addGestureRecognizer(labelTap)
+    }
 }
 
 extension HomeVC: CLLocationManagerDelegate {
@@ -174,6 +199,8 @@ extension HomeVC: CLLocationManagerDelegate {
             
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
+            coordinator.latitude = latitude
+            coordinator.longitude = longitude
             requestWeathData(from: latitude, to: longitude)
    
         }
@@ -184,7 +211,21 @@ extension HomeVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
        // might be that user didn't enable location service on the device
        // or there might be no GPS signal inside a building
-        
         print(error.localizedDescription)
+    }
+}
+
+
+extension HomeVC: DatePickerProtocol {
+    func updateDate(date: Date) {
+        let date = date.changeDateTime(format: .date)
+        dateView.updateDate(userdate: date)
+    }
+}
+
+extension HomeVC {
+    struct Coordinator {
+        var latitude: Double = 0.0
+        var longitude: Double = 0.0
     }
 }

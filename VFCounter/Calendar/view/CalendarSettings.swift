@@ -10,8 +10,7 @@
 import Foundation
 
 struct CalendarSettings {
-    static var `default` = CalendarSettings()
-    
+    static var `default` = CalendarSettings()   
     private init() {}
     
     var controller = CalendarSettings.Controller()

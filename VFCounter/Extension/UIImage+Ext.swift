@@ -29,6 +29,7 @@ extension UIImage {
          return result
 
      }
+    
     func transparentImageBackgroundToWhite(color: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         let imageRect: CGRect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)

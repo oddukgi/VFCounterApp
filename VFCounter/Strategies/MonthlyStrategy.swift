@@ -75,7 +75,7 @@ public class MonthlyDateStrategy: DateStrategy {
         let datemap = DateProvider.updateDateMap(date: date, isWeekly: false)
         let monthlyDate = checkDate(datemap: datemap)
        
-        return (strDate, monthlyDate, nil)
+        return (strDate, monthlyDate, datemap)
     }
     
     
@@ -86,20 +86,20 @@ public class MonthlyDateStrategy: DateStrategy {
             
             let item = element.components(separatedBy: " ").first
             
-            dataManager.isDataEmpty(date: item!) { (veggieName, fruitName) in
-            
-              if veggieName != nil {
-                    items.insert(element)
-                }
-                
-              if fruitName != nil {
-                  items.insert(element)
+            dataManager.reorderData(date: item!) { (veggies, fruits) in
+             if veggies.count > 0 {
+                 items.insert(element)
+             }
+             
+             if fruits.count > 0 {
+               items.insert(element)
               }
             }
         }
         
         return Array(items).sorted()
     }
+    
     
     
     public func fetchedData() {
@@ -160,5 +160,9 @@ public class MonthlyDateStrategy: DateStrategy {
             date = date.nextMonth
             DateSettings.default.periodController.monthDate = date
         }
+    }
+    
+    public func calcurateItems() {
+        
     }
 }

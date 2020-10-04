@@ -13,9 +13,59 @@ import SnapKit
 extension UserItemVC {
     
 // MARK: create collectionView layout
+    
+    fileprivate func updateCircularView(veggieValue : Int, fruitValue: Int) {
+        circularView.ringView.maxVeggies = Double(veggieValue)
+        circularView.ringView.maxFruits = Double(fruitValue)
+    }
+    
+    func alreadyLoadingApp() {
+       
+        let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
+        SettingManager.setVeggieTaskRate(percent: veggieRate)
+        valueConfig.maxVeggies = Int(veggieRate)
+
+        let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
+        SettingManager.setFruitsTaskRate(percent: fruitRate)
+        valueConfig.maxFruits = Int(fruitRate)
+        
+        updateCircularView(veggieValue : Int(veggieRate), fruitValue: Int(fruitRate))
+   
+    }
+
+    func firstLoadingApp() {
+
+        SettingManager.setVeggieTaskRate(percent: Float(defaultRate))
+        SettingManager.setFruitsTaskRate(percent: Float(defaultRate))
+        valueConfig.maxVeggies = defaultRate
+        valueConfig.maxFruits = defaultRate
+        updateCircularView(veggieValue : defaultRate, fruitValue: defaultRate)
+        
+        SettingManager.setVeggieAlarm(veggieFlag: true)
+        SettingManager.setFruitsAlarm(fruitsFlag: true)
+        
+    }
+    
+    func getAppLoadingStatus() -> Bool {
+
+         let flag = SettingManager.getInitialLaunching(keyName: "InitialLaunching")
+         
+         if flag == true {
+            print("App already launched")
+            return true
+        } else {
+            
+            print("App launched first time")
+            SettingManager.setInitialLaunching(flag: true)
+            return false
+        }
+        
+    }
+
+    
     func configureHierarchy() {
     
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind))
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind, isPaddingForSection: true))
         collectionView.backgroundColor = ColorHex.iceBlue
         view.addSubview(collectionView)
 
@@ -29,6 +79,7 @@ extension UserItemVC {
         collectionView.register(VFItemCell.self, forCellWithReuseIdentifier: VFItemCell.reuseIdentifier)
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: titleElementKind,
                                      withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
+        collectionView.isScrollEnabled = false
     }
 
     
@@ -60,12 +111,10 @@ extension UserItemVC {
             cell.selectedItem = self.checkedIndexPath.contains(indexPath)
 
             return cell
-
         }        
     }
     
-//            print("\(data.name!) \(data.createdDate!)")
-    
+
     func configureTitleDataSource() {
         dataSource.supplementaryViewProvider = { [weak self]
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
@@ -76,6 +125,7 @@ extension UserItemVC {
                 let category = snapshot.sectionIdentifiers[indexPath.section]
                 titleSupplementary.delegate = self
                 titleSupplementary.updateTitles(title: category.title)
+                
                 return titleSupplementary
                 
             } else {
@@ -102,8 +152,13 @@ extension UserItemVC {
 
     func reloadRing(date: String) {
     
+        let maxVeggies = valueConfig.maxVeggies
+        let maxFruits = valueConfig.maxFruits
+       
         dataManager.getSumItems(date: date) { (veggieSum, fruitSum) in
             self.circularView.updateValue(veggieSum: Int(veggieSum), fruitSum: Int(fruitSum))
+            self.valueConfig.sumVeggies = Int(veggieSum)
+            self.valueConfig.sumFruits = Int(fruitSum)
         }
     }
     
@@ -113,14 +168,13 @@ extension UserItemVC {
     }
 }
 
-
 extension UserItemVC: UICollectionViewDelegate {
     
     // 아이템 값 수정 및 삭제
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 아이템을 선택하면, 홈화면으로 이동
         let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
-       
+        var snap = self.dataSource.snapshot()
         if checkedIndexPath.isEmpty {
             cell.selectedItem = true
             checkedIndexPath.insert(indexPath)
@@ -129,7 +183,7 @@ extension UserItemVC: UICollectionViewDelegate {
         } else {
             checkedIndexPath.removeAll()
              OperationQueue.main.addOperation {
-                self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+                self.dataSource.apply(snap, animatingDifferences: false)
             }
         }
         
@@ -140,11 +194,11 @@ extension UserItemVC: UICollectionViewDelegate {
 
 extension UserItemVC: PickItemVCProtocol {
     
-    func addItems(item: VFItemController.Items) {
+
+    func addItems(item: VFItemController.Items, tag: Int) {
 
         if !item.name.isEmpty {
             stringDate = String(item.date.split(separator: " ").first!)
-            
             dataManager.createEntity(item: item, tag: tag)            
 		    updateData()
             NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
@@ -152,7 +206,7 @@ extension UserItemVC: PickItemVCProtocol {
       
     }
     
-    func updateItems(item: VFItemController.Items, time: Date?) {
+    func updateItems(item: VFItemController.Items, time: Date?, tag: Int) {
         var datatype: DataType.Type!
         tag == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
         
@@ -160,12 +214,10 @@ extension UserItemVC: PickItemVCProtocol {
         OperationQueue.main.addOperation {
             self.updateData(flag: false)
         }
-        
+
         dataManager.modfiyEntity(item: item, originTime: time!, datatype)
-      
         let date = item.entityDT?.changeDateTime(format: .selectedDT)
         let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
-        
         NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": newDate[0]])
     }
 
@@ -175,13 +227,25 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
     
     func showPickUpViewController(tag: Int) {
         self.hideItemView()
-        self.tag = tag
-        
-        let date = self.stringDate + Date().changeDateTime(format: .onlyTime)
-        displayAlarmVC(tag: tag)
 
+        if tag == 0 {
+            if valueConfig.sumVeggies == valueConfig.maxVeggies ,  valueConfig.sumVeggies > 0{
+                self.presentAlertVC(title: "알림", message: "최대치를 넘었습니다. 아이템을 삭제하세요!", buttonTitle: "OK")
+                return
+            }
+            
+        } else {
+            if valueConfig.sumFruits == valueConfig.maxFruits, valueConfig.sumFruits > 0 {
+                self.presentAlertVC(title: "알림", message: "최대치를 넘었습니다. 아이템을 삭제하세요!", buttonTitle: "OK")
+                return
+            }
+        }
+        
+        
+        let datemodel = DateModel(date: self.stringDate, tag: tag, sumV: valueConfig.sumVeggies,
+                                  sumF: valueConfig.sumFruits, maxV: valueConfig.maxVeggies , maxF: valueConfig.maxFruits)
         DispatchQueue.main.async {
-            let itemPickVC = PickItemVC(delegate: self, tag: tag, date: date)
+            let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
             let navController = UINavigationController(rootViewController: itemPickVC)
             self.present(navController, animated: true)
                 
@@ -189,32 +253,19 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
     
     }
     
-    func displayAlarmVC(tag: Int) {
-        var sumV = circularView.totVeggieLabel.text!
-        var sumF = circularView.totFruitLabel.text!
-        
-        sumV.removeLast()
-        sumF.removeLast()
-
-        if Int(sumV) == 500 && tag == 0 {
-            self.presentAlertVC(title: "경고!", message: "500g을 넘을 수 없습니다.", buttonTitle: "OK")
-            return
-        }
-        
-        if Int(sumF) == 500 && tag == 1{
-            self.presentAlertVC(title: "경고!", message: "500g을 넘을 수 없습니다.", buttonTitle: "OK")
-            return
-        }   
-    }
+  
 }
 
 extension UserItemVC: ItemCellDelegate {
 
     func updateSelectedItem(item: VFItemController.Items, index: Int) {
-        // display PickItemVC
+
+        let datemodel = DateModel(tag: index, sumV: self.valueConfig.sumVeggies,
+                                  sumF: self.valueConfig.sumFruits, maxV: self.valueConfig.maxVeggies,
+                                  maxF: self.valueConfig.maxFruits)
         DispatchQueue.main.async {
-            let itemPickVC = PickItemVC(delegate: self, tag: index)
-            self.tag = index
+
+            let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
             itemPickVC.items = item.copy() as? VFItemController.Items
             let navController = UINavigationController(rootViewController: itemPickVC)
             self.present(navController, animated: true)
@@ -224,15 +275,21 @@ extension UserItemVC: ItemCellDelegate {
     
     func deleteSelectedItem(item: Int, section: Int) {
         let sectionTitle: Section = (section == 0 ? Section.vTitle : Section.fTitle)     
-        let sectionItem = currentSnapshot.itemIdentifiers(inSection: sectionTitle)[item]
-      
+       
         var datatype: DataType.Type!
         section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
+        var snapshot = self.dataSource.snapshot()
         
-//        print(sectionItem.createdDate)
-        dataManager.deleteEntity(originTime: sectionItem.createdDate!, datatype)
-        self.currentSnapshot.deleteItems([sectionItem])
-        self.updateData(flag: false)
+        if let listData = self.dataSource.itemIdentifier(for: IndexPath(item: item, section: section)) {
+            dataManager.deleteEntity(originTime:listData.createdDate!,datatype)
+            snapshot.deleteItems([listData])
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+        
+        reloadRing(date: stringDate)
     }
     
 }
+
+
+

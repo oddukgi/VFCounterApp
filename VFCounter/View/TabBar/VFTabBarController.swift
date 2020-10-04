@@ -16,8 +16,7 @@ class VFTabBarController: UITabBarController {
         tabBar.isTranslucent = false
         UITabBar.appearance().tintColor = ColorHex.darkGreen
         UITabBar.appearance().clipsToBounds = true
-        viewControllers = [createHomeVC(), createChartVC(),createSettings()]
-     
+        viewControllers = [ createHomeVC(), createChartVC(), createSettings()]
     }
     
     // MARK: - Child View Controller

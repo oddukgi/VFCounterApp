@@ -14,7 +14,6 @@ import JTAppleCalendar
 class DayCell: JTACDayCell {
 
     // MARK: - Outlets
-    
     lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
@@ -30,8 +29,7 @@ class DayCell: JTACDayCell {
     }()
     
     var ringButton: RingItemButton!
-    var isFirstLoading = true
-    
+    var isFirstLoaded = true
     
     // MARK: - Variables
     private var setting: CalendarSettings.DayCell = CalendarSettings.default.dayCell
@@ -41,7 +39,12 @@ class DayCell: JTACDayCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setOnSubviews()
+        
+        if setting.isRingVisible {
+            setOnSubviews()
+        } else {
+            setSelectBgView()
+        }
         applySettings(CalendarSettings.default.dayCell)
     }
     
@@ -52,19 +55,39 @@ class DayCell: JTACDayCell {
     func applySettings(_ setting: CalendarSettings.DayCell) {
         self.setting = setting
         self.dateLabel.font = setting.dateLabelFont
+        self.selectionBackgroundView.backgroundColor = setting.selectedBackgroundColor
 //        self.dateLabel.textColor = setting.dateLabelColor
     }
     
     func setOnSubviews() {
-        self.contentView.addSubViews(self.selectionBackgroundView, self.dateLabel)
+      
         ringButton = RingItemButton(frame: bounds)
+        self.contentView.addSubViews(ringButton,self.dateLabel)
         self.backgroundView = ringButton
         self.dateLabel.snp.makeConstraints { maker in
-            maker.edges.equalTo(contentView)
+            maker.edges.equalToSuperview()
         }
 
     }
     
+    func setSelectBgView() {
+        self.contentView.addSubViews(selectionBackgroundView, self.dateLabel)
+        self.dateLabel.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+        
+        self.selectionBackgroundView.snp.makeConstraints { (maker) in
+            maker.height.equalTo(100).priority(.low)
+            maker.top.left.greaterThanOrEqualToSuperview()
+            maker.right.bottom.lessThanOrEqualToSuperview()
+            maker.center.equalToSuperview()
+            maker.width.equalTo(self.selectionBackgroundView.snp.height)
+        }
+        
+        self.selectionBackgroundView.layer.cornerRadius = .minimum(self.frame.width, self.frame.height) / 2
+    }
+    
+
     static func makeViewSettings(for state: CellState, minimumDate: Date?, maximumDate: Date?,
                                  rangeValue: CalendarRange?, flag: Bool = false) -> ViewSettings {
         
@@ -116,12 +139,14 @@ class DayCell: JTACDayCell {
         
     
         if let minimumDate = minimumDate, state.date < minimumDate.startOfDay() {
-            
             config.isDateEnabled = false
+
             return config
         } else if let maximumDate = maximumDate, state.date > maximumDate.endOfDay() {
             
+            print(">> \(state.date), \(maximumDate)")
             config.isDateEnabled = false
+
             return config
         }
         
@@ -132,7 +157,7 @@ class DayCell: JTACDayCell {
             switch position {
                 
             case .full:
-                config.isSelectedItem = true
+                config.isSelectedItem = false
                 
             case .left, .right, .middle:
                 config.isSelectedItem = position == .middle
@@ -164,7 +189,7 @@ class DayCell: JTACDayCell {
                     
                 default:
                     break
-                }                
+                }
             }
             
             return config
@@ -197,62 +222,82 @@ class DayCell: JTACDayCell {
         var dateLabelText: String?
         var date: Date?
         var state: CellState?
-        var isSelectedItem: Bool = false
+        var isSelectedItem: Bool = true
         var isDateEnabled: Bool = true
+        var isRingVisible: Bool = true
         var rangeView: RangeViewConfig = RangeViewConfig()
     }
     
 
-    func configure(for config: ViewSettings) {
-        
-        func updateRing(date: Date) {
-            let strDate = date.changeDateTime(format: .longDate)
-            let dateArray = strDate.components(separatedBy: [" "])
-            dataManager.getSumItems(date: dateArray.first!) { (veggieSum, fruitSum) in
+    fileprivate func selectedDate(_ config: DayCell.ViewSettings) {
+    
+        if !config.isSelectedItem {
+            
+            var selectedClr: UIColor
+            config.isRingVisible ? (selectedClr = self.setting.selectedLabelColor)
+                : (selectedClr = .white)
+            self.dateLabel.textColor = selectedClr
+            
+        } else {
+            
+            self.dateLabel.textColor = self.setting.dateLabelColor
+            if !config.isRingVisible {
                 
-                self.ringButton.ringProgressView.ring1.progress = Double(veggieSum) / 500.0
-                self.ringButton.ringProgressView.ring2.progress = Double(fruitSum) / 500.0
-
+                let from = Date().startOfDay()
+                if config.state!.date == from {
+                    self.dateLabel.textColor = self.setting.todayLabelColor
+                }
             }
         }
+    }
+    
+    func updateRing(date: Date) {
         
-        //config.isSelectedItem
-        self.ringButton.isSelected = config.isSelectedItem
+        let strDate = date.changeDateTime(format: .longDate)
+        let dateArray = strDate.components(separatedBy: [" "])
+                
+        let maxVeggie = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
+        let maxFruit = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
+        dataManager.getSumItems(date: dateArray.first!) { (veggieSum, fruitSum) in
+            
+            self.ringButton.ringProgressView.ring1.progress = Double(veggieSum) / Double(maxVeggie)
+            self.ringButton.ringProgressView.ring2.progress = Double(fruitSum) / Double(maxFruit)
+        }
+    }
+
+    
+    func configure(for config: ViewSettings) {
+        
+
         self.isUserInteractionEnabled = config.dateLabelText != nil && config.isDateEnabled
         
         if let dateLabelText = config.dateLabelText {
             self.dateLabel.isHidden = false
         
-  
-            if config.state!.dateBelongsTo == .thisMonth  && config.state!.date > Date() {
-                self.ringButton.isHidden = true
+            self.dateLabel.text = dateLabelText
+            
+            if config.isRingVisible {
+       
+                if config.state!.dateBelongsTo == .thisMonth && config.state!.date > Date() {
+                    self.ringButton.isHidden = true
+                } else {
+                    self.ringButton.isHidden = false
+                }
+                self.ringButton.isSelected = !config.isSelectedItem
+                updateRing(date: config.date!)
                 
             } else {
-                self.ringButton.isHidden = false
-            }
-     
-            self.dateLabel.text = dateLabelText
-             updateRing(date: config.date!)
-            if !config.isDateEnabled {
-                self.dateLabel.textColor = self.setting.dateLabelUnavailableColor
-            } else if !config.isSelectedItem {
                 
-                if config.state!.date == Date() {
-                    self.dateLabel.textColor = self.setting.todayLabelColor
-                  
-                } else {
+                self.selectionBackgroundView.isHidden = config.isSelectedItem
 
-                    self.dateLabel.textColor = self.setting.selectedLabelColor
-                }
-            }
-//            } else {
-//
-//                self.dateLabel.textColor = self.setting.dateLabelColor
-//            }
+            }  
+            selectedDate(config)
             
         } else {
             self.dateLabel.isHidden = true
-            self.ringButton.isHidden = true
+            if config.isRingVisible {
+                self.ringButton.isHidden = true
+            }
         }
 
     }
@@ -263,19 +308,21 @@ extension CalendarSettings {
     
     struct DayCell {
         
-        var dateLabelFont: UIFont = .systemFont(ofSize: 13)
+        var dateLabelFont: UIFont = .systemFont(ofSize: 17)
         var dateLabelColor: UIColor = .black
-        var todayLabelColor: UIColor = ColorHex.orangeyRed
+        var todayLabelColor: UIColor = .red
         var dateLabelUnavailableColor: UIColor = .lightGray
         
+        var plainselectedLabelColor: UIColor = .white
         var selectedBackgroundColor: UIColor = .systemBlue
-        var selectedLabelColor: UIColor = .black
+        var selectedLabelColor: UIColor = ColorHex.orangeyRed
         
         var rangeViewCornerRadius: CGFloat = 6
         var onRangeBackgroundColor: UIColor = UIColor.systemBlue.withAlphaComponent(0.2)
         var onRangeLabelColor: UIColor = .black
         var insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-
+        var isRingVisible = false
 
     }
 }
+

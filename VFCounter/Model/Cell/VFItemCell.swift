@@ -10,11 +10,6 @@ import UIKit
 import SnapKit
 
 
-protocol ItemCellDelegate: class {
-    func updateSelectedItem(item: VFItemController.Items, index: Int)
-    func deleteSelectedItem(item: Int, section: Int)
-}
-
 class VFItemCell: UICollectionViewCell {
  
     static let reuseIdentifier = "VFItemCell"
@@ -29,7 +24,7 @@ class VFItemCell: UICollectionViewCell {
     private let dataManager = DataManager()
     private var row = 0
     private var section = 0
-
+    
     var selectedItem: Bool = false {
         didSet{
           if selectedItem == true {
@@ -61,7 +56,7 @@ class VFItemCell: UICollectionViewCell {
         }
     
         lblTime.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(3)
+            make.top.equalTo(imageView.snp.bottom).offset(5)
             make.centerX.equalTo(contentView.snp.centerX)
             make.height.equalTo(10.2)
         }
@@ -80,7 +75,7 @@ class VFItemCell: UICollectionViewCell {
         
         lblTime.font = NanumSquareRound.regular.style(sizeOffset: 11)
         lblName.font = NanumSquareRound.bold.style(sizeOffset: 13)
-        lblAmount.font = NanumSquareRound.regular.style(sizeOffset: 12)
+        lblAmount.font = NanumSquareRound.regular.style(sizeOffset: 11)
         
         lblTime.textColor = .black
         lblName.textColor = ColorHex.MilkChocolate.origin
@@ -149,22 +144,47 @@ class VFItemCell: UICollectionViewCell {
         row = indexPath.row
         section = indexPath.section
     }
+    
+    func retrieveKind(name: String) {
+        
+        let fruit = [
+                        "사과","살구","아보카도","바나나","블루베리","체리",
+                        "코코넛","용과","포도","자몽","아오리(초록사과)","샤인머스캣",
+                        "천도복숭아","키위","레몬","망고","망고스틴","멜론",
+                        "오렌지","복숭아","배","감","파인애플","자두",
+                        "석류","라즈베리","딸기","귤","수박"
+                    ]
+
+        for item in fruit {
+            if item.doesStringContains(input: name) {
+                section = 1
+                break
+            } else {
+                section = 0
+            }
+        }
+        
+    }
 
     @objc func modifyItem(_ sender: VFButton) {
         print("tapped modify item")
 
         var datatype: DataType.Type!
+        var item: VFItemController.Items?
+        let name     = self.lblName.text!
+        let image    = self.imageView.image!
+        let amount   = String(self.lblAmount.text!.dropLast())
+        
+        retrieveKind(name: name)
         section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
          dataManager.getData(tag: section, index: row, datatype, newDate: date) { (result) in
-
-             let name     = self.lblName.text!
-             let image    = self.imageView.image!
-             let amount   = String(self.lblAmount.text!.dropLast())
-
-             let item = VFItemController.Items(name: name, date: "", image: image, amount: Int(amount) ?? 0, entityDT: result)
-             self.delegate?.updateSelectedItem(item: item, index: self.section)
+            item = VFItemController.Items(name: name, date: self.date, image: image, amount: Int(amount) ?? 0, entityDT: result)
+             
          }
- 
+        
+        if let unwrappedItem = item {
+            self.delegate?.updateSelectedItem(item: unwrappedItem, index: self.section)
+        }
     }
     
     @objc func deleteItem(_ sender: VFButton) {

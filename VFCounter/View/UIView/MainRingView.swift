@@ -87,7 +87,7 @@ class MainRingView: UIView {
     }
     
     func updateRingValue(veggieSum: Int, fruitSum: Int) {
-        ringProgressView.ring1.progress = Double(veggieSum) / 500.0
-        ringProgressView.ring2.progress = Double(fruitSum) / 500.0
+        ringProgressView.ring1.progress = Double(veggieSum) / maxVeggies
+        ringProgressView.ring2.progress = Double(fruitSum) / maxFruits
     }
 }

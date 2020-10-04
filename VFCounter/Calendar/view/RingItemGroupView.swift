@@ -22,7 +22,6 @@ class RingItemGroupView: UIView {
         didSet {
             ring1.startColor = ring1StartColor
         }
-        
     }
     
     @IBInspectable var ring1EndColor: UIColor = .green {

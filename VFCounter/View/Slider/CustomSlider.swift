@@ -9,7 +9,8 @@
 import UIKit
 
 protocol SliderUpdateDelegate: AnyObject {
-    func sliderTouch(value: Float, tag: Int)
+    
+    func sliderTouch(value: Float, tag: Int) 
     func sliderValueChanged(value: Float, tag: Int)
 }
 

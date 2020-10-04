@@ -40,26 +40,25 @@ class AlarmSettingVC: UIViewController {
     var fruitsSwitch = UISwitch()
     var fruitsSlider = CustomSlider()
     
-    var veggieSettings = UserSettings(title: "야채", alarmOn: false, taskPercent: 0)
-    var fruitsSettings = UserSettings(title: "과일", alarmOn: false, taskPercent: 0)
-    
-
-
+    var veggieSettings = UserSettings(title: "야채",
+                                      alarmOn: false, taskPercent: 0)
+    var fruitsSettings = UserSettings(title: "과일",
+                                      alarmOn: false, taskPercent: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
         initialize()
         loadDataFromUserDefaults()
- 
     }
 
     func loadDataFromUserDefaults() {
         
+        // check initial launching
+        
         if let alarm = SettingManager.getAlarmValue(keyName: "VeggieAlarm") {
             veggieSettings.alarmOn = alarm
             veggieSwitch.isOn = alarm
-            
             veggieSwitch.isOn ? (veggieSlider.isEnabled = true) : (veggieSlider.isEnabled = false)
         }
         
@@ -67,20 +66,24 @@ class AlarmSettingVC: UIViewController {
             fruitsSettings.alarmOn = alarm
             fruitsSwitch.isOn = alarm
             fruitsSwitch.isOn ? (fruitsSlider.isEnabled = true) : (fruitsSlider.isEnabled = false)
-            
         }
         
+        if let flag = SettingManager.getInitialLaunching(keyName: "InitialLaunching"),
+           flag == false {
+                SettingManager.setInitialLaunching(flag: true)
+            }
+        
+    
         if let rate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") {
             veggieSettings.taskPercent = rate
             veggieSlider.value = rate
-            
         }
-        
-        if let rate = SettingManager.getTaskValue(keyName: "FruitsTaskRate") {
+    
+        if let rate = SettingManager.getTaskValue(keyName: "FruitTaskRate") {
             fruitsSettings.taskPercent = rate
             fruitsSlider.value = rate
         }
-    
+
     }
     
     @objc func changedSwitch(_ sender: UISwitch) {
@@ -104,7 +107,6 @@ class AlarmSettingVC: UIViewController {
     
     func changedColorOfSwitch(_ flag: Bool) {
         if flag == true {
-//            fruitsSwitch.backgroundColor = ColorHex.orangeyRed
             fruitsSwitch.onTintColor = ColorHex.orangeyRed
             fruitsSwitch.subviews[0].subviews[0].backgroundColor = ColorHex.orangeyRed
       
@@ -115,7 +117,17 @@ class AlarmSettingVC: UIViewController {
   
     }
 
-    
+    @objc fileprivate func initializeRate(_ notification: Notification) {
+     
+        if let maxValue = notification.userInfo?["VeggieTaskRate"] as? Int {
+            veggieSlider.maximumValue = Float(maxValue)
+            veggieSlider.value = Float(maxValue)
+            
+            fruitsSlider.maximumValue = Float(maxValue)
+            fruitsSlider.value = Float(maxValue)
+
+        }
+    }
     
 }
 

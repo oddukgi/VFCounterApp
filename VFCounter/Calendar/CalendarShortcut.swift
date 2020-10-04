@@ -10,6 +10,7 @@
 import Foundation
 
 struct CalendarShortcut<Value: CalendarValue>: Hashable {
+    
     private var id: UUID = UUID()
     public var name: String
     public var action: () -> Value

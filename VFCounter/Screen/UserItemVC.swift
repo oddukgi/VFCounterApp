@@ -27,13 +27,14 @@ class UserItemVC: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<Section,DataType>! = nil
     var currentSnapshot: NSDiffableDataSourceSnapshot<Section,DataType>! = nil
     let titleElementKind = "titleElementKind"
-    var tag: Int = 0
     var height: CGFloat = 0
     var userSettings = [UserSettings]()
     let dataManager = DataManager()
     var stringDate: String = ""
     var checkedIndexPath = Set<IndexPath>()
+    var valueConfig = ValueConfig()
         
+    let defaultRate = 500
      let fetchingItems =  [ { (newDate) -> [DataType] in
         
             return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
@@ -57,13 +58,16 @@ class UserItemVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        prepareNotificationAddObserver()
         setupLayout()
         configureHierarchy()
         configureDataSource()
         configureTitleDataSource()
+        checkLoadingStatus()
         updateData()
-        prepareNotificationAddObserver()
-
+       
+    
     }
 
     func setupLayout() {
@@ -71,45 +75,52 @@ class UserItemVC: UIViewController {
         view.addSubview(circularView)
 
         height = SizeManager().circularViewHeight(view: view)
-        let padding = height + 80
+        let padding = height + 150
+        let newHeight = height - 20
         circularView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom).offset(-padding)
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(height)
-        }
-    }
-
-    func setCircularValue() {
-        if let rate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") {
-            circularView.ringView.maxVeggies = Double(rate)
-            
-        }
-            
-        if let rate = SettingManager.getTaskValue(keyName: "FruitsTaskRate") {
-            circularView.ringView.maxFruits = Double(rate)
+            make.height.equalTo(newHeight)
         }
         
+        circularView.layer.borderWidth = 1
     }
 
+   
     fileprivate func prepareNotificationAddObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)), name: .updateTaskPercent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)), name: .updateFetchingData, object: nil)
-        
+    }
+    
+    
+    func checkLoadingStatus() {
+        if getAppLoadingStatus() {
+            alreadyLoadingApp()
+        } else {
+            firstLoadingApp()
+        }
     }
     
     @objc fileprivate func updateTaskRate(_ notification: Notification) {
      
         if let veggieAmount = notification.userInfo?["veggieAmount"] as? Int {
         
-           print(veggieAmount)
+            print(veggieAmount)
+            valueConfig.maxVeggies = veggieAmount
             circularView.ringView.maxVeggies = Double(veggieAmount)
+            circularView.updateMaxValue(tag: 0)
         }
         
         if let fruitAmount = notification.userInfo?["fruitAmount"] as? Int {
-            
             print(fruitAmount)
+            
+            valueConfig.maxFruits = fruitAmount
             circularView.ringView.maxFruits = Double(fruitAmount)
+            circularView.updateMaxValue(tag: 1)
         }
+        
+        reloadDataByRange(date: stringDate)
+    
     }
 
     @objc fileprivate func updateFetchingData(_ notification: Notification) {
@@ -133,3 +144,49 @@ class UserItemVC: UIViewController {
      self.updateData()
  }
 */
+extension UserItemVC {
+
+    func reloadDataByRange(date: String) {
+        
+        currentSnapshot = NSDiffableDataSourceSnapshot <Section, DataType>()
+    
+        var sumA = 0, sumB = 0
+        let veggieFetchedItem = fetchingItems[0](date)
+        let fruitFetchedItem = fetchingItems[1](date)
+   
+        for (index, item) in veggieFetchedItem.enumerated() {
+            
+            sumA += Int(item.amount)
+            if sumA > valueConfig.maxVeggies {
+                dataManager.deleteEntity(originTime:item.createdDate!, Veggies.self)
+                
+                if let veggieData = self.dataSource.itemIdentifier(for: IndexPath(item: index, section: 0)) {
+                     var snap = self.dataSource.snapshot()
+                     snap.deleteItems([veggieData])
+                     self.dataSource.apply(snap, animatingDifferences: true)
+                     
+                 }
+            }
+        }
+        
+ 
+        for (index, item) in fruitFetchedItem.enumerated() {
+            
+            sumB += Int(item.amount)
+            if sumB > valueConfig.maxFruits {
+                dataManager.deleteEntity(originTime:item.createdDate!, Fruits.self)
+
+                if let fruitData = self.dataSource.itemIdentifier(for: IndexPath(item: index, section: 1)) {
+                    var snap = self.dataSource.snapshot()
+                    snap.deleteItems([fruitData])
+                    self.dataSource.apply(snap, animatingDifferences: true)
+                   
+                }
+
+            }
+        }
+        
+        reloadRing(date: date)
+
+    }
+}

@@ -12,30 +12,35 @@ extension ChartVC {
 
     func configure() {
         
-        segmentControl = CustomSegmentControl(items: ["주", "월"])
-        segmentControl.selectedSegmentIndex = 0
-        
+        let defaultFont = NanumSquareRound.bold.style(sizeOffset: 13)
+        segmentControl = CustomSegmentedControl()
+        segmentControl.setButtonTitles(buttonTitles: [ "주","월"])
+        segmentControl.selectorViewColor = ColorHex.jadeGreen
+        segmentControl.selectorTextColor = ColorHex.jadeGreen
+        segmentControl.titleFont = defaultFont
+        segmentControl.resourceType = .timeSection
+        segmentControl.delegate = self
+      
         let width = 200
-        view.addSubview(segmentControl)
-        
+        view.addSubViews(segmentControl, btnAdd)
+
         segmentControl.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.centerX.equalTo(view.snp.centerX)
-            make.width.equalTo(width)
-            make.height.equalTo(30)
+            make.size.equalTo(CGSize(width: width, height: 38))
+        }
+        segmentControl.layer.borderWidth = 1
+    
+        btnAdd.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
+            $0.leading.equalTo(segmentControl.snp.trailing).offset(10)
+            $0.size.equalTo(CGSize(width: 30, height: 30))
         }
         
-        // segmentstyle : rounded
-        segmentControl.backgroudClr = .white
-        segmentControl.tintClr = UIColor(white: 0, alpha: 0)
-        segmentControl.selectedSegmentTintClr = ColorHex.weirdGreen
-
-        let defaultFont = NanumSquareRound.bold.style(sizeOffset: 12)
-        segmentControl.initConfiguration(font: defaultFont, color: ColorHex.lightGreyBlue)
-        segmentControl.selectedConfiguration(font: defaultFont, color: .white)
-        segmentControl.addTarget(self, action: #selector(changedIndexSegment), for: .valueChanged)
+        btnAdd.layer.borderWidth = 1
+  
+        btnAdd.addTarget(self, action: #selector(tappedAdd), for: .touchUpInside)
         
-        let _ = ScreenSize.height - 250
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
             $0.top.equalTo(segmentControl.snp.bottom).offset(13)

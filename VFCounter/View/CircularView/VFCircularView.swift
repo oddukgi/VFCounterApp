@@ -14,14 +14,14 @@ class VFCircularView: UIView {
       
     // circle
     lazy var veggieCircle: Ring = {
-        let view = Ring(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let view = Ring(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
         view.mainColor = RingColor.ringGreen
         view.ringColor = RingColor.ringGreen
         return view
     }()
     
     lazy var fruitsCircle: Ring = {
-        let view = Ring(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let view = Ring(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
         view.mainColor = RingColor.ringYellow
         view.ringColor = RingColor.ringYellow
         return view
@@ -69,8 +69,11 @@ class VFCircularView: UIView {
     }()
     
     
+    
     var horizontalStackView = Array<UIStackView>()
     var ringView: MainRingView!
+    private var privateMaxVeggie = 0
+    private var privateMaxFruit = 0
             
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -85,10 +88,35 @@ class VFCircularView: UIView {
 
     func updateValue(veggieSum: Int, fruitSum: Int) {
         
-        ringView.ringProgressView.ring1.progress = Double(veggieSum) / 500.0
-        ringView.ringProgressView.ring2.progress = Double(fruitSum) / 500.0
-        totVeggieLabel.text = "\(veggieSum)g"
-        totFruitLabel.text = "\(fruitSum)g"
+        let maxVeggie = Int(ringView.maxVeggies)
+        let maxFruit = Int(ringView.maxFruits)
+        ringView.ringProgressView.ring1.progress = Double(veggieSum) / Double(maxVeggie)
+        ringView.ringProgressView.ring2.progress = Double(fruitSum) / Double(maxFruit)
+        
+        totVeggieLabel.text = "\(veggieSum)g / \(maxVeggie)g"
+        totFruitLabel.text =  "\(fruitSum)g / \(maxFruit)g"
+    }
+    
+    
+    func updateMaxValue(tag: Int) {
+        let maxVeggie = Int(ringView.maxVeggies)
+        let maxFruit = Int(ringView.maxFruits)
+        
+        var totVeggie = totVeggieLabel.text ?? ""
+        var totFruits = totFruitLabel.text ?? ""
+        
+        if tag == 0 {
+            var arrayV = totVeggie.components(separatedBy: "/")
+            arrayV[1] = " \(maxVeggie)g"
+            totVeggieLabel.text = arrayV.joined(separator: "/")
+        } else {
+            
+            var arrayF = totFruits.components(separatedBy: "/")
+            arrayF[1] = " \(maxFruit)g"
+            totFruitLabel.text = arrayF.joined(separator: "/")
+        }
+        
+      
     }
 
 }

@@ -28,6 +28,9 @@ extension HomeVC {
             make.leading.trailing.equalTo(view)
             make.height.equalTo(headerView.snp.height)
         }
+        
+//        headerView.layer.borderWidth = 1
+//        dateView.layer.borderWidth = 1
     }
     
     func add(childVC: UIViewController, to containerView: UIView) {
@@ -52,12 +55,10 @@ extension HomeVC {
         var newDate = dateView.dateLabel.text
         newDate?.removeLast(2)
 
-        
         userItemView.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
        }
         self.add(childVC: UserItemVC(date: newDate!), to: self.userItemView)
-//        userItemView.layer.borderWidth = 1
 
     }
    

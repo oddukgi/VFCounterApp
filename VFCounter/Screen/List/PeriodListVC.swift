@@ -10,15 +10,16 @@ import UIKit
 
 class PeriodListVC: UIViewController {
 
-    let elementDataSource = ElementDataSource()
     var tableView: UITableView!
-    
+    var weekday = Array<String>()
+    var datemaps = Array<String>()
     private let reuseIdentifer = "MonthlyList"
     private var dateStrategy: DateStrategy!
+    var sectionControl: CustomSegmentedControl!
+    var selectedIndex: Int = 0
 
-
+    
     init(dateStrategy: DateStrategy) {
-      
         self.dateStrategy = dateStrategy
         super.init(nibName: nil, bundle: nil)
    }
@@ -27,13 +28,16 @@ class PeriodListVC: UIViewController {
        fatalError("init(coder:) has not been implemented")
    }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
         connectAction()
         configureTableView()
         updatePeriod()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updatePeriod(true)
     }
     
     // MARK: create collectionView layout
@@ -57,9 +61,9 @@ class PeriodListVC: UIViewController {
             $0.centerY.equalTo(stackView.snp.centerY)
             $0.width.equalTo(105)
         }
+ 
         lblPeriod.textColor = .black
     }
-
 
     func configureTableView() {
         tableView = UITableView(frame: view.bounds, style: .grouped)
@@ -70,11 +74,9 @@ class PeriodListVC: UIViewController {
             make.bottom.equalTo(view.snp.bottom).offset(-8)
         }
         tableView.delegate = self
-        tableView.dataSource = elementDataSource
+        tableView.dataSource = self
         
         tableView.rowHeight = UITableView.automaticDimension
-//        tableView.estimatedRowHeight = SizeManager().getUserItemHeight * 2
-        tableView.contentInsetAdjustmentBehavior = .automatic
         tableView.register(ElementCell.self, forCellReuseIdentifier: ElementCell.reuseIdentifier)
     }
 
@@ -84,29 +86,30 @@ class PeriodListVC: UIViewController {
         dateStrategy.setDateRange()
         let datemap = dateStrategy.updateLabel()
         lblPeriod.text = datemap.0
-        elementDataSource.weekday = datemap.1!
-        
-        tableView.isUserInteractionEnabled = true
-      
+        weekday = datemap.1!
+        datemaps = datemap.2!
+
         if reloadData == true {
             self.tableView.reloadData()
         }
-         
      }
-       
     
+    
+       
     func connectAction() {
         
         arrowButtons[0].addTargetClosure { _ in
             self.dateStrategy.previous()
             self.updatePeriod(true)
-
         }
+        
         arrowButtons[1].addTargetClosure { _ in
             self.dateStrategy.next()
             self.updatePeriod(true)
         }
+        
     }
+    
     
     lazy var stackView: UIStackView = {
           let stackView = UIStackView()
@@ -134,6 +137,29 @@ class PeriodListVC: UIViewController {
 }
 
 extension PeriodListVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40.0
+    }
 }
 
+/*
+ public override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+     return 61.0
+ }
+ */
+
+// MARK: - Protocol Extension
+extension PeriodListVC: ElementCellProtocol {
+    
+    func displayPickItemVC(pickItemVC: PickItemVC) {
+        DispatchQueue.main.async {
+            let navController = UINavigationController(rootViewController: pickItemVC)
+            self.present(navController, animated: true)
+        }
+    }
+    
+    func updateTableView() {
+        updatePeriod(true)
+    }
+
+}

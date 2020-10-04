@@ -8,22 +8,32 @@
 
 import UIKit
 
+
+protocol ElementCellProtocol: class {
+    func displayPickItemVC(pickItemVC: PickItemVC)
+    func updateTableView()
+    
+}
 class ElementCell: UITableViewCell, SelfConfigCell {
     
     static let reuseIdentifier = "ElementCell"
 
     let sectionHeaderElementKind = "ElementSectionHeaderCell"
+    let datamanager = DataManager()
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Int, SubItems>! = nil
     var currentSnapshot: NSDiffableDataSourceSnapshot<Int, SubItems>! = nil
+    var checkedIndexPath = Set<IndexPath>()
+    weak var delegate: ElementCellProtocol?
     
     private var date: String = "" {
         didSet {
-            
             updateList()
         }   
     }
+    
+    var kindIndex: Int = 0
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
@@ -36,12 +46,11 @@ class ElementCell: UITableViewCell, SelfConfigCell {
     }
     
     func configure() {
-        
-       
+    
         collectionView = UICollectionView(frame: contentView.bounds, collectionViewLayout:
                                         UIHelper.createHorizontalLayout(titleElemendKind: sectionHeaderElementKind, isHeader: false))
         contentView.addSubview(collectionView)
-        collectionView.register(ListCell.self, forCellWithReuseIdentifier: ListCell.reuseIdentifier)
+        collectionView.register(VFItemCell.self, forCellWithReuseIdentifier: VFItemCell.reuseIdentifier)
       
         collectionView.snp.makeConstraints { (maker) in
             maker.top.equalTo(contentView)
@@ -49,6 +58,7 @@ class ElementCell: UITableViewCell, SelfConfigCell {
             maker.bottom.equalTo(contentView)
         }
         collectionView.backgroundColor = .white
+        collectionView.delegate = self
     }
 
     // MARK: - SizeFitting
@@ -97,11 +107,9 @@ extension ElementCell {
             currentSnapshot.appendItems(fruitData)
             
         }
-        
-        
-//        DispatchQueue.main.async {
-            self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
-//        }
+    
+        self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+
       }
 
     
@@ -112,15 +120,15 @@ extension ElementCell {
             
             // Get a cell of the desired kind.
             guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: ListCell.reuseIdentifier,
-                for: indexPath) as? ListCell
+                withReuseIdentifier: VFItemCell.reuseIdentifier,
+                for: indexPath) as? VFItemCell
                 else {
                     fatalError("Cannot create new cell")
-                }
-            
+                }            
           
             cell.layer.cornerRadius = 10
             cell.layer.borderWidth = 1
+            cell.delegate = self
             cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
             
             let image = UIImage(data: items.element.image!)
@@ -129,10 +137,113 @@ extension ElementCell {
             let date = items.element.createdDate?.changeDateTime(format: .dateTime)
             
             cell.updateContents(image: image, name: name!, amount: amount, date: date!)
+            cell.selectedItem = self.checkedIndexPath.contains(indexPath)
             return cell
 
         }
         
     }
-  
+    
+    func hideItemView() {
+        checkedIndexPath.removeAll()
+//        updateData()
+    }
+    
+}
+
+
+extension ElementCell: UICollectionViewDelegate {
+    
+    // 아이템 값 수정 및 삭제
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 아이템을 선택하면, 홈화면으로 이동
+        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
+        var snap = self.dataSource.snapshot()
+        if checkedIndexPath.isEmpty {
+            cell.selectedItem = true
+            checkedIndexPath.insert(indexPath)
+            cell.selectedIndexPath(indexPath)
+            
+        } else {
+            checkedIndexPath.removeAll()
+             OperationQueue.main.addOperation {
+                self.dataSource.apply(snap, animatingDifferences: false)
+            }
+        }
+        
+    }
+}
+
+
+extension ElementCell: ItemCellDelegate {
+
+    func updateSelectedItem(item: VFItemController.Items, index: Int) {
+        
+        let dataManager = DataManager()
+        
+        var datemodel: DateModel!
+        
+        print(item.date)
+        
+        dataManager.getSumItems(date: item.date) { (veggieSum, fruitSum) in
+            
+            datemodel = DateModel(tag: index, sumV: veggieSum,
+                                      sumF: fruitSum, maxV: 500, maxF: 500)
+            
+        }
+
+        let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
+        itemPickVC.items = item.copy() as? VFItemController.Items
+        delegate?.displayPickItemVC(pickItemVC: itemPickVC)
+    }
+    
+    
+    func deleteSelectedItem(item: Int, section: Int) {
+
+        var datatype: DataType.Type!
+        section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
+        var snapshot = self.dataSource.snapshot()
+        
+        if let listData = self.dataSource.itemIdentifier(for: IndexPath(item: item, section: section)) {
+            datamanager.deleteEntity(originTime:listData.element.createdDate!,datatype)
+            snapshot.deleteItems([listData])
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+        
+        OperationQueue.main.addOperation {
+            self.delegate?.updateTableView()
+        }
+        
+    }
+    
+}
+
+// MARK: - Protocol Extension
+
+extension ElementCell: PickItemVCProtocol {
+    
+    func addItems(item: VFItemController.Items, tag: Int) {
+
+        let datemodel = DateModel(tag: tag, sumV: 0,sumF: 0, maxV: 500, maxF: 500)
+        let pickItemVC = PickItemVC(delegate: self, datemodel: datemodel)
+        pickItemVC.items = item.copy() as? VFItemController.Items
+        delegate?.displayPickItemVC(pickItemVC: pickItemVC)
+    }
+    
+    func updateItems(item: VFItemController.Items, time: Date?, tag: Int) {
+        var datatype: DataType.Type!
+        tag == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
+        
+
+        datamanager.modfiyEntity(item: item, originTime: time!, datatype)
+        OperationQueue.main.addOperation {
+            self.updateList(flag: true)
+            self.delegate?.updateTableView()
+        }
+
+        let date = item.entityDT?.changeDateTime(format: .selectedDT)
+        let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
+      
+        NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": newDate[0]])
+    }
 }

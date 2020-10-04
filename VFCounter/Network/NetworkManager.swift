@@ -11,7 +11,7 @@ import UIKit
 struct URLManager {
    
     private static let baseURL = "https://api.openweathermap.org/data/2.5/weather?"
-    private static let apiKey = "YOUR_API_KEY"
+    private static let apiKey = "f60d2251a5624e7173372b69aee6d865"
     
     static func openWeatherURL(from lat: String, to lon: String) -> URL {
         var components = URLComponents(string: baseURL)!

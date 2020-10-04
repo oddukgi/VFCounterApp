@@ -18,8 +18,7 @@ class WeeklyChartVC: ChartBaseVC {
     let chartView = BarChartView()
  
     private var dateStrategy: DateStrategy!
-    private var veggieChartDataSet: BarChartDataSet!
-    private var fruitChartDataSet: BarChartDataSet!
+
     private let dataManager = DataManager()
     private var weekday = Array<String>()
 
@@ -30,7 +29,6 @@ class WeeklyChartVC: ChartBaseVC {
             
             let button = UIButton()
             button.setImage(UIImage(named: img[index]), for: .normal)
-            button.contentMode = .scaleAspectFit
             buttons.append(button)
         }
         return buttons
@@ -99,23 +97,9 @@ class WeeklyChartVC: ChartBaseVC {
         dateStrategy.setDateRange()
         let data = dateStrategy.updateLabel()
         lblweek.text = data.0
-  
         let datamap = data.2!
-        
-        
-        if veggieChartDataSet != nil {
-            veggieChartDataSet.removeAll()
-        }
-        
-        if fruitChartDataSet != nil {
-            fruitChartDataSet.removeAll()
-        }
+        setDataCount(datemap: datamap)
 
-   	    updateChartData(count: 1, date: datamap[0])
-
-        for i in 1...6 {
-             self.updateChartData(date: datamap[i])
-         }      
     }
     
     func connectAction() {
@@ -130,64 +114,50 @@ class WeeklyChartVC: ChartBaseVC {
             self.updatePeriod()
         }
     }
-
-    func updateChartData(count: Int = 7, date: String) {
-        let customDate = date.components(separatedBy: " ")
-        dataManager.getSumItems(date: customDate[0]) { (veggieSum, fruitSum) in
-            self.setDataCount(count: count, sumVeggie : veggieSum, sumFruit: fruitSum, day: customDate[1])
-        }
-    }
     
-    func singleData(sumVeggie: Int16, sumFruit: Int16, day: String) -> [BarChartDataSet] {
-        
-        let index = day.getWeekdayIndex()
-        veggieChartDataSet = BarChartDataSet(entries: [BarChartDataEntry(x: Double(index),
-                                                                         y: Double(sumVeggie))], label: "야채")
-        
-        fruitChartDataSet = BarChartDataSet(entries: [BarChartDataEntry(x: Double(index),
-                                                                        y: Double(sumFruit))], label: "과일")
-        return [veggieChartDataSet, fruitChartDataSet]
-        
-    }
-    
-    func multipleData(sumVeggie : Int16, sumFruit: Int16, day: String) -> [BarChartDataSet] {
-        
-        let index = day.getWeekdayIndex()
-
-        veggieChartDataSet.append(BarChartDataEntry(x: Double(index), y: Double(sumVeggie)))
-        fruitChartDataSet.append(BarChartDataEntry(x: Double(index), y: Double(sumFruit)))
-
-        return  [veggieChartDataSet, fruitChartDataSet]
-    }
-
-    // update value
-    func setDataCount(count: Int = 7, sumVeggie : Int16, sumFruit: Int16, day: String) {
-              
+    func setDataCount(datemap: [String]) {
         let groupSpace = 0.3
         let barSpace = 0.05
         let barWidth = 0.3
-        var chartDataArray = [BarChartDataSet]()
-      
-        if count == 1 {
-            chartDataArray = singleData(sumVeggie: sumVeggie, sumFruit: sumFruit, day: day)
-        } else {
-            chartDataArray = multipleData(sumVeggie: sumVeggie, sumFruit: sumFruit, day: day)
+
+        var veggieChartEntry: [BarChartDataEntry] = []
+        var fruitChartEntry: [BarChartDataEntry] = []
+        
+        for (index, item) in datemap.enumerated() {
+            
+            let customDate = item.components(separatedBy: " ").first!
+             dataManager.getSumItems(date: customDate) { (veggieSum, fruitSum) in
+                let item1 = BarChartDataEntry(x: Double(index), y: Double(veggieSum))
+                let item2 = BarChartDataEntry(x: Double(index), y: Double(fruitSum))
+
+                veggieChartEntry.append(item1)
+                fruitChartEntry.append(item2)
+                
+             }
         }
- 
-        chartDataArray[0].setColor(ChartColor.veggieGreen)
-        chartDataArray[0].drawValuesEnabled = false
+        
+        var veggieChartDataSet: BarChartDataSet! = nil
+        var fruitChartDataSet: BarChartDataSet! = nil
 
-        chartDataArray[1].setColor(ChartColor.fruitYellow)
-        chartDataArray[1].drawValuesEnabled = false
+
+        let set1 = BarChartDataSet(entries: veggieChartEntry, label: "야채")
+        set1.setColor(ChartColor.veggieGreen)
+        set1.drawValuesEnabled = false
         
-        let chartData = BarChartData(dataSets: [chartDataArray[0], chartDataArray[1]])
+        let set2 = BarChartDataSet(entries: fruitChartEntry, label: "과일")
+        set2.setColor(ChartColor.fruitYellow)
+        set2.drawValuesEnabled = false
         
-        chartData.setValueFont(.systemFont(ofSize: 10, weight: .light))
-        chartData.barWidth = barWidth
-        chartData.groupBars(fromX: 0, groupSpace: groupSpace, barSpace: barSpace)
-   
-        chartView.data = chartData
+        let data = BarChartData(dataSets: [set1, set2])
+        data.setValueFont(.systemFont(ofSize: 10, weight: .light))
+        data.setValueFormatter(ValueFormatter())
+        
+        // specify the width each bar should have
+        data.barWidth = barWidth
+        data.groupBars(fromX: Double(0), groupSpace: groupSpace, barSpace: barSpace)
+        
+        chartView.data = data
+
     }
-
 }
 

@@ -28,9 +28,9 @@ class SizeManager {
     var getHeaderviewHeight: CGFloat {
         
         if DeviceTypes.isiPhone8Standard {
-            headerViewHeight = 145
+            headerViewHeight = 110
         } else {
-            headerViewHeight = 150
+            headerViewHeight = 110
         }
         return headerViewHeight
     }
@@ -55,18 +55,18 @@ class SizeManager {
     func sliderSize() -> (CGSize) {
 
         if DeviceTypes.isiPhone8Standard {
-            outerSliderSize = CGSize(width: 160, height: 160)
+            outerSliderSize = CGSize(width: 150, height: 150)
      
         } else if DeviceTypes.isiPhone8PlusStandard {
             
-            outerSliderSize = CGSize(width: 190, height: 190)
+            outerSliderSize = CGSize(width: 180, height: 180)
             
         } else if DeviceTypes.isiPhoneX {
            
-            outerSliderSize = CGSize(width: 210, height: 210)
+            outerSliderSize = CGSize(width: 190, height: 190)
         
         } else {
-            outerSliderSize = CGSize(width: 230, height: 230)
+            outerSliderSize = CGSize(width: 210, height: 210)
          }
 
         return (outerSliderSize)
@@ -75,9 +75,9 @@ class SizeManager {
     var sliderWidth: CGFloat {
         var width: CGFloat = 0
         if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhone8PlusStandard {
-            width = 18
+            width = 15
         } else {
-            width = 22
+            width = 18
         }
         
         return width
@@ -123,16 +123,16 @@ class SizeManager {
     var getUserItemHeight: CGFloat {
 
         if DeviceTypes.isiPhone8Standard {
-            userItemHeight = 80
+            userItemHeight = 98
         } else if DeviceTypes.isiPhone8PlusStandard {
-            return 85
+            return 90   
         } else if DeviceTypes.isiPhoneX {
             return 90
         }
         else if DeviceTypes.isiPhoneXsMaxAndXr {
-            return 95
+            return 120
         } else {
-            userItemHeight = 99
+            userItemHeight = 140
         }
         return userItemHeight
     }
@@ -213,7 +213,6 @@ class SizeManager {
     fileprivate var insideSliderSize: CGSize
     fileprivate var userItemSection: CGFloat 
     fileprivate var userItemHeight: CGFloat
-    
     fileprivate var itemTopPadding: CGFloat
     fileprivate var groupTopPadding: CGFloat
 }

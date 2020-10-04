@@ -10,8 +10,7 @@ import UIKit
 
 
 class RingItemButton: UIButton {
-
-
+    
     let ringProgressView = RingItemGroupView()
     let selectionIndicatorView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     
@@ -27,6 +26,7 @@ class RingItemButton: UIButton {
             ringProgressView.ring2.isHidden = self.isRingHidden
         }
      }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -84,7 +84,4 @@ class RingItemButton: UIButton {
             selectionIndicatorView.isHidden = !isSelected
         }
     }
-
-    
-
 }

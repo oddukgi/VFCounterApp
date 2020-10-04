@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import CoreStore
 
+
 class ChartVC: UIViewController {
 
     enum TabIndex: Int {
@@ -17,19 +18,24 @@ class ChartVC: UIViewController {
         case secondChildTab = 1
     }
     
-    var segmentControl: CustomSegmentControl!
-    var bottomSegmentControl: CustomSegmentControl!
+    var segmentControl: CustomSegmentedControl!
+    var datafilterView: DataFilterView!
+   
     let contentView     = UIView()
     let weeklyChartView = UIView()
     var monthlyChartView: UIView!
-    var datafilterView: DataFilterView!
+
+    lazy var btnAdd: VFButton = {
+        let button = VFButton()
+        button.addImage(imageName: "add")
+        return button
+    }()
 
     var currentVC: UIViewController?
     private var dateStrategy: DateStrategy!
     
     
     let now = Date()
-
     private var settings: DateSettings = DateSettings.default
     private var calendarDate = Date()
     
@@ -40,7 +46,7 @@ class ChartVC: UIViewController {
     }()
     
 
-    let calendarConroller = CalendarController(mode: .single)
+    let calendarController = CalendarController(mode: .single)
     
     var currentValue: CalendarValue? {
         didSet {
@@ -51,41 +57,40 @@ class ChartVC: UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         self.title = "Chart"
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
         view.backgroundColor = .systemBackground
         prepareNotificationAddObserver()
         configureDataFilterView()
         configure()
         displayCurrentTab(TabIndex.firstChildTab.rawValue)
-        connectAction()
     }
 
     func removeCurrentVC() {
         self.currentVC?.view.removeFromSuperview()
         self.currentVC?.removeFromParent()
     }
-
-    @objc func changedIndexSegment(sender: UISegmentedControl) {
-        removeCurrentVC()
-        displayCurrentTab(sender.selectedSegmentIndex)
-    }
     
-    func configureCalendar() {
-        calendarConroller.initialValue = self.currentValue as? Date
-        calendarConroller.minimumDate = now.getLast12Month()
-        calendarConroller.maximumDate = now
+    private func configureCalendar() {
+        calendarController.initialValue = self.currentValue as? Date
+        calendarController.minimumDate = now.getFirstMonthDate()
+        calendarController.maximumDate = now
+        calendarController.isRingVisible = true
     }
     
     fileprivate func configureDataFilterView() {
-        datafilterView = DataFilterView(frame: CGRect(x: 0, y: 0,
-                                                      width: view.frame.width, height: view.frame.height))
-        view.addSubview(datafilterView)
+        datafilterView = DataFilterView()
+        view.addSubViews(datafilterView)
         datafilterView.snp.makeConstraints {
             $0.bottom.equalTo(view.snp.bottom).offset(-8)
             $0.centerX.equalTo(view.snp.centerX)
+            $0.size.equalTo(CGSize(width: 200, height: 38))
         }
-        datafilterView.selectSection(section: .data)
+        datafilterView.dataSegmentControl.delegate = self
+ 
     }
     
     fileprivate func showChildVC(_ vc: UIViewController) {
@@ -99,14 +104,16 @@ class ChartVC: UIViewController {
     
     
     func viewControllerForSelectedIndex(_ index: Int) -> UIViewController? {
+        
         var vc: UIViewController?
         
         switch index {
         case TabIndex.firstChildTab.rawValue:
             vc = weeklyChartVC
+       
         default:
             configureCalendar()
-            calendarConroller.present(above: self, contentView: contentView)
+            calendarController.present(above: self, contentView: contentView)
         }
         
         return vc
@@ -125,35 +132,47 @@ class ChartVC: UIViewController {
     
     // MARK: action
     @objc fileprivate func updateDateTime(_ notification: Notification) {
-        
         if let userDate = notification.userInfo?["usermonth"] as? Date {
             calendarDate = userDate
         }
     }
     
-    func connectAction() {
-      
-        datafilterView.dataBtn.addTargetClosure { _ in
+    @objc func tappedAdd(_ sender: VFButton) {
+        print("tapped add")
+    }
 
-            self.datafilterView.selectSection(section: .data)
-            self.displayCurrentTab(self.segmentControl.selectedSegmentIndex)
-        }
+}
+
+
+
+extension ChartVC: CustomSegmentedControlDelegate {
+    func change(to index: Int) {
         
-        datafilterView.listBtn.addTargetClosure { _ in
-
+        if datafilterView.dataSegmentControl.selectedIndex == 0 {
+            removeCurrentVC()
+            displayCurrentTab(index)
+        } else {
+            removeCurrentVC()
+            valueChangedIndex(to: datafilterView.dataSegmentControl.selectedIndex)
+        }
+    }
+    
+    func valueChangedIndex(to index: Int) {
+        
+        switch index {
+        case 0 :
+            removeCurrentVC()
+            self.displayCurrentTab(self.segmentControl.selectedIndex)
             
-            self.datafilterView.selectSection(section: .list)
-            
-            if self.segmentControl.selectedSegmentIndex == 0 {
+        default:
+            removeCurrentVC()
+            if self.segmentControl.selectedIndex == 0 {
                 self.dateStrategy = WeeklyDateStrategy(date: self.now)
             } else {
                 self.dateStrategy = MonthlyDateStrategy(date: self.calendarDate)
             }
             
-            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy))
+            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy))            
         }
     }
-    
-
 }
-

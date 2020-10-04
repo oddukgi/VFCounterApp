@@ -14,7 +14,6 @@ class PickItems {
         var name: String
         var image: UIImage?
         var amount: Int
-
     }
     
     struct Collections: Hashable {
@@ -75,6 +74,7 @@ extension PickItems {
     func generateveggies() {
     
         var elements: [Element] = []
+        
         let images = [
                         UIImage(named: "asparagus"),UIImage(named:"beet"),
                         UIImage(named: "broccoli"),UIImage(named: "paprika"),
@@ -128,24 +128,20 @@ extension PickItems {
                           UIImage(named: "pomegranate"), UIImage(named: "rasberry"), UIImage(named: "strawberry"),
                           UIImage(named: "tangerine"), UIImage(named:    "watermelon")
                       ]
+        
           let koName = [
-                          "사과","살구","아보카도",
-                          "바나나","블루베리","체리",
-                          "코코넛","용과","포도",
-                          "자몽","아오리(초록사과)","샤인머스캣",
-                          "천도복숭아","키위","레몬",
-                          "망고","망고스틴","멜론",
-                          "오렌지","복숭아","배",
-                          "감","파인애플","자두",
-                          "석류","라즈베리","딸기",
-                          "귤","수박"
+                          "사과","살구","아보카도","바나나","블루베리","체리",
+                          "코코넛","용과","포도","자몽","아오리(초록사과)","샤인머스캣",
+                          "천도복숭아","키위","레몬","망고","망고스틴","멜론",
+                          "오렌지","복숭아","배","감","파인애플","자두",
+                          "석류","라즈베리","딸기","귤","수박"
                       ]
           
         var i = 0
+        
          for name in koName {
            
             let element = Element(name: name, image: images[i], amount: 0)
-            
             elements.append(element)
             i += 1
         }

@@ -69,4 +69,5 @@ class VFTextField: UITextField {
         minimumFontSize    = 12
         clearButtonMode    = .whileEditing        
     }
+    
 }

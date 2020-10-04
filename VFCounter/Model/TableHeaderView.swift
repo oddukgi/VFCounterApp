@@ -32,14 +32,13 @@ class TableHeaderView: UITableViewHeaderFooterView {
     //MARK: - Configure
     
     func configure() {
-        
         contentView.addSubview(lbTitle)
         lbTitle.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
             make.height.equalTo(40)
         }
-        
     }
+    
     func setTitle(with section: SettingVC.Section) {
         lbTitle.text = section.title
     }

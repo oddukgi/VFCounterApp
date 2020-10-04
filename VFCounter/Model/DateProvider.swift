@@ -17,7 +17,6 @@ class DateProvider {
         let arrDates = dates.map { $0.changeDateTime(format: .longDate)}
         return arrDates 
     }
-    
 }
 
 struct Weeks: Hashable {
@@ -36,4 +35,15 @@ struct SubItems: Hashable {
     func hash(into hasher: inout Hasher){
         hasher.combine(identifiable)
     }
+}
+
+
+struct ValueConfig {
+    var maxVeggies: Int = 0
+    var maxFruits: Int  = 0
+    var sumVeggies: Int  = 0
+    var sumFruits: Int  = 0
+    
+    init() {}
+
 }

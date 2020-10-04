@@ -11,8 +11,6 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
       
@@ -23,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // SQL File Directory
         let applicationSupportDirectories = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         let _ = applicationSupportDirectories.first!
-         
-//        print("SQL file: \(sqliteDirectory.absoluteString)")
-//        printFonts()
+
+        
+
         return true
     }
 

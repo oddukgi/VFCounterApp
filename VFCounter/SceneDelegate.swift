@@ -22,11 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = VFTabBarController()
         window?.makeKeyAndVisible()
-        
-//        UINavigationBar.appearance().barTintColor = .white
-//        UINavigationBar.appearance().tintColor = .white
-//        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-
 
     }
 

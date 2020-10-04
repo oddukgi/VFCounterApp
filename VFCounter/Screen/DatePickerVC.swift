@@ -2,110 +2,128 @@
 //  DatePickerVC.swift
 //  VFCounter
 //
-//  Created by Sunmi on 2020/08/10.
+//  Created by Sunmi on 2020/09/26.
 //  Copyright © 2020 creativeSun. All rights reserved.
 //
 
 import UIKit
 
-
-protocol DatePickerVCDelegate: class {
-   func selectDate(date: String)
+protocol DatePickerProtocol: class {
+    func updateDate(date: Date)
 }
-
 class DatePickerVC: UIViewController {
 
     let containerView = VFContainerView()
+    let calendarView = UIView()
+    let calendarController = CalendarController(mode: .single)
     let now = Date()
+    let controller = Controller()
+    weak var delegate: DatePickerProtocol?
+
     
-    lazy var lblDateTime: VFTitleLabel = {
-        let label = VFTitleLabel()
-        label.textAlignment = .center
-        label.font = NanumSquareRound.bold.style(sizeOffset: 15)
-        return label
-        
+    var currentValue: CalendarValue? {
+        didSet {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy.MM.dd"
+            formatter.locale = Locale(identifier: "ko_KR")
+
+        }
+    }
+    // MARK: - Resource
+    private lazy var closeBtn: VFButton = {
+        let button = VFButton()
+        button.setImage(UIImage(named: "delete"), for: .normal)
+        button.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    private lazy var applyBtn:  VFButton = {
+        let button = VFButton()
+        button.setTitle("Apply", for: .normal)
+        button.backgroundColor    = ColorHex.middleGreen
+        button.setFont(clr: .white, font: NanumSquareRound.extrabold.style(sizeOffset: 15))
+        button.layer.cornerRadius = 20
+//        button.setRadiusWithShadow(18)
+        button.addTarget(self, action: #selector(applyDate), for: .touchUpInside)
+        return button
     }()
     
 
-    let pickerView = UIDatePicker()
-    weak var delegate: DatePickerVCDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
-        createDismissGesture()
-    }
- 
-    init(delegate: DatePickerVCDelegate?) {
-        super.init(nibName: nil, bundle: nil)
-        self.delegate = delegate
+        configureCalendar()
+        configureUI()
+        connectDateAction()      
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func configureUI() {
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.75)  
+        view.addSubViews(containerView, calendarView, closeBtn, applyBtn)
+        
+        containerView.snp.makeConstraints { (maker) in
+            maker.center.equalTo(view.snp.center)
+            maker.size.equalTo(CGSize(width: 345, height: 440))
+        }
+        
+        calendarView.snp.makeConstraints { (maker) in
+            maker.top.equalTo(containerView).offset(38)
+            maker.leading.equalTo(containerView).offset(5)
+            maker.trailing.equalTo(containerView).offset(-5)
+            maker.bottom.equalTo(containerView).offset(-68)
+        }
+        
+        closeBtn.snp.makeConstraints { (maker) in
+            maker.top.equalTo(containerView).offset(10)
+            maker.trailing.equalTo(containerView).offset(-10)
+            maker.size.equalTo(CGSize(width: 24, height: 24))
+        }
+        
+        applyBtn.snp.makeConstraints { (maker) in
+            maker.centerX.equalTo(containerView)
+            maker.bottom.equalTo(containerView).offset(-15)
+            maker.size.equalTo(CGSize(width: 70, height: 40))
+        }
+        
+        calendarController.present(above: self, contentView: calendarView)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //Animate blackView opacity to 1 to give some depth
-        UIView.animate(withDuration: 0.4, delay: 0.2, options: .curveEaseInOut, animations: {
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-
-        })
+    
+    private func configureCalendar() {
+        calendarController.initialValue = self.currentValue as? Date
+        calendarController.minimumDate = now.getFirstMonthDate()
+        calendarController.maximumDate = now
+        calendarController.isRingVisible = false
     }
     
-    private func configure() {
+    @objc private func cancel() {
         
-        view.addSubViews(containerView, lblDateTime, pickerView)
-        containerView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(view)
-            make.width.equalTo(view.bounds.width)
-            make.height.equalTo(270)
+        if let date = currentValue as? Date {
+            delegate?.updateDate(date: date)
         }
-
-        pickerView.timeZone = TimeZone.current
-        pickerView.locale =  Locale(identifier: "ko_KR")
-        pickerView.addTarget(self, action: #selector(changedDateTime), for: .valueChanged)
-        
-        lblDateTime.snp.makeConstraints { (make) in
-            make.top.equalTo(containerView)
-            make.width.equalTo(view.bounds.width)
-            make.height.equalTo(40)
-        }
-        
-        pickerView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(containerView)
-            make.width.equalTo(containerView)
-            make.height.equalTo(240)
-        }
-        
-        if lblDateTime.text == nil {
-            let dateConverter = DateConverter(date: now)
-            lblDateTime.text =  dateConverter.stringDT
-            
-        }
-
-        pickerView.layer.borderWidth = 1
-    }
-
-    func createDismissGesture() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.closeVC(_:)))
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func closeVC(_ sender: UITapGestureRecognizer) {
-        pickerView.resignFirstResponder()
-        delegate?.selectDate(date:  lblDateTime.text!)
         dismiss(animated: true)
     }
-
-    @objc func changedDateTime(sender: UIDatePicker) {
-        
-        let dateConverter = DateConverter(date: sender.date)
-        pickerView.date = dateConverter.dateTime
-        lblDateTime.text = dateConverter.stringDT
+    
+    @objc private func applyDate() {
+        self.cancel()
+    }
+   
+    func connectDateAction() {
+        calendarController.doneHandler = { newDate in
+            self.currentValue = newDate
+        }
     }
 
 }
 
-
+extension DatePickerVC {
+    public struct Controller {
+        public var cancelButtonTitle: String = "Cancel"
+        public var doneButtonTitle: String = "Done"
+        public var titleTextAttributes: [NSAttributedString.Key: Any] = [:]
+        public var backgroundColor: UIColor = .white
+        public var barButtonItemsColor: UIColor = .systemBlue
+        public var customCancelButton: UIBarButtonItem?
+        public var customDoneButton: UIBarButtonItem?
+    }
+}

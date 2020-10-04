@@ -38,6 +38,11 @@ JTACMonthViewDataSource {
     private lazy var currentValueView: MonthSelectView<Value> = {
         let view = MonthSelectView<Value>(settings: self.setting.monthSelectView)
         view.delegate = self
+        self.calendarView.visibleDates { (segment) in
+            UIView.performWithoutAnimation {
+                self.calendarView.reloadItems(at: (segment.outdates + segment.indates).map({ $0.indexPath }))
+            }
+        }
         return view
         
     }()
@@ -110,6 +115,18 @@ JTACMonthViewDataSource {
         }
     }
     
+    var isRingVisible: Bool {
+        
+        set {
+            CalendarSettings.default.dayCell.isRingVisible = newValue
+            self.privateisRingVisible = newValue
+        }
+        
+        get {
+            return self.privateisRingVisible
+        }
+    }
+    
     init(setting: CalendarSettings = .default) {
         self.setting = setting
         self.appearance = setting.controller
@@ -127,12 +144,10 @@ JTACMonthViewDataSource {
         configureInitialState()
         
         calendarView.visibleDates() { visibleDates in
-            
             if Value.mode == .single {
                 self.value = visibleDates.monthDates.first!.date as? Value
             }
         }
-        
     }
     
     /**
@@ -152,6 +167,10 @@ JTACMonthViewDataSource {
         contentView.addSubview(self.view)
     }
     
+    func didShowArrowButton() {
+        
+        
+    }
     
     // MARK: - Configure
     private func configureUI() {
@@ -167,6 +186,8 @@ JTACMonthViewDataSource {
     private func configureConstraints() {
 
         var screenWidth: CGFloat = 0.0
+        var height: CGFloat = 0.0
+        
         currentValueView.snp.makeConstraints { (maker) in
             maker.top.equalTo(view).offset(6)
             maker.centerX.equalTo(view.snp.centerX)
@@ -186,7 +207,12 @@ JTACMonthViewDataSource {
             maker.width.equalTo(screenWidth)
         }
         
-        let height = SizeManager().chartHeight
+        if isRingVisible {
+            height = SizeManager().chartHeight
+        } else {
+            height = 200
+        }
+        
         calendarView.snp.makeConstraints { (maker) in
             maker.top.equalTo(weekdayView.snp.bottom).offset(9)
             maker.centerX.equalTo(view.snp.centerX)
@@ -194,7 +220,7 @@ JTACMonthViewDataSource {
             maker.height.equalTo(height)
 
         }
-        
+
     }
     
     private func configureInitialState() {
@@ -219,12 +245,14 @@ JTACMonthViewDataSource {
     private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath, flag: Bool = false) {
     
         guard let cell = cell as? DayCell else { return }
-        if let cachedSettings = self.viewSettings[indexPath] {
+        if var cachedSettings = self.viewSettings[indexPath] {
+            cachedSettings.isRingVisible = isRingVisible
             cell.configure(for: cachedSettings)
         } else {
-            let newSettings = DayCell.makeViewSettings(for: cellState, minimumDate: self.privateMinimumDate, maximumDate: self.privateMaximumDate, rangeValue: self.value as? CalendarRange, flag: flag)
+            var newSettings = DayCell.makeViewSettings(for: cellState, minimumDate: self.privateMinimumDate, maximumDate: self.privateMaximumDate, rangeValue: self.value as? CalendarRange, flag: flag)
             self.viewSettings[indexPath] = newSettings
             cell.applySettings(self.setting.dayCell)
+            newSettings.isRingVisible = isRingVisible
             cell.configure(for: newSettings)
   
         }
@@ -239,20 +267,31 @@ JTACMonthViewDataSource {
     private func handleDateTap(in calendar: JTACMonthView, date: Date) {
         if Value.mode == .single {
             value = date as? Value
-            selectValue(date as? Value, in: calendar)
-            
-            
+            selectValue(date as? Value, in: calendar) 
         }
     }
     
     private func updateAmount(_ cell: JTACDayCell) {
     
         guard let cell = cell as? DayCell else { return }
-        let veggieSum = Int(cell.ringButton.ringProgressView.ring1.progress  * 500)
-        let fruitSum = Int(cell.ringButton.ringProgressView.ring2.progress * 500)
-        currentValueView.updateAmount(veggieSum: veggieSum, fruitSum: fruitSum)
+
+        let veggieMaxRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
+        let fruitMaxRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
+        
+        let veggie = cell.ringButton.ringProgressView.ring1.progress.clean
+        let fruit = cell.ringButton.ringProgressView.ring2.progress.clean
+
+        
+        let veggieSum = Float(veggie)! * veggieMaxRate
+        let fruitSum = Float(fruit)! * fruitMaxRate
+        currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.up)), fruitSum: Int(fruitSum.rounded(.up)))
     }
     
+    
+    
+    private func updateDate(date: Date) {
+        currentValueView.updateDate(date: date)
+    }
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy MM dd"
@@ -305,7 +344,13 @@ JTACMonthViewDataSource {
            self.handleDateTap(in: calendar, date: date)
        } else if let cell = cell {
            self.configureCell(cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
-           self.updateAmount(cell)
+       
+        if isRingVisible == true {
+            self.updateAmount(cell)
+        } else {
+            self.updateDate(date: date)
+            self.doneHandler?(self.value)
+        }
         
        }
     }
@@ -331,16 +376,20 @@ JTACMonthViewDataSource {
      // MARK: - Variables
      private let setting: CalendarSettings
      private var appearance: CalendarSettings.Controller = CalendarSettings.default.controller
+    
      private let dayCellReuseIdentifier = "DayCellReuseIdentifier"
      private var viewSettings: [IndexPath: DayCell.ViewSettings] = [:]
      private var currentCalendar: Calendar = .autoupdatingCurrent
      private var privateMinimumDate: Date?
      private var privateMaximumDate: Date?
+    
      private var value: Value? {
          didSet {
              self.currentValueView.currentValue = self.value
          }
      }
+    
+    private var privateisRingVisible: Bool = true
     
 }
 
@@ -363,6 +412,7 @@ extension CalendarController where Value == Date {
     ///   - config: Custom configuration parameters. Default value is equal to `CalendarSettings.default`
     convenience init(mode: CalendarModeSingle, setting: CalendarSettings = .default) {
         self.init(setting: setting)
+        calendarView.reloadData()
     }
     
 }
@@ -375,6 +425,7 @@ extension CalendarSettings {
 }
 
 extension CalendarController: MonthSelectViewProtocol {
+    
     func pressedArrow(tag: Int) {
         
         switch tag {
@@ -384,4 +435,5 @@ extension CalendarController: MonthSelectViewProtocol {
             calendarView.scrollToSegment(.next)
         }
     }
+
 }

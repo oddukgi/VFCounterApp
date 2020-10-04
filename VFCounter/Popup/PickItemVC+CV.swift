@@ -22,7 +22,7 @@ extension PickItemVC {
 
    func configureDataSource() {
 
-    dataSource = UICollectionViewDiffableDataSource<Section, PickItems.Element>(collectionView:collectionView,cellProvider: { (collectionView, indexPath, items) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, PickItems.Element>(collectionView:collectionView,cellProvider: { (collectionView, indexPath, items) -> UICollectionViewCell? in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PickItemCell.reuseIdentifier, for: indexPath)as! PickItemCell
         // 선택한 아이템을 다른 곳에 담기
         cell.contentView.backgroundColor = ColorHex.iceBlue
@@ -43,7 +43,7 @@ extension PickItemVC {
         currentSnapshot = NSDiffableDataSourceSnapshot<Section, PickItems.Element>()
        
         currentSnapshot.appendSections([.main])
-        if tag == 0 {
+        if datemodel.tag == 0 {
             currentSnapshot.appendItems(pickItems.collections.first!.elements)
       
         } else {
@@ -85,7 +85,7 @@ extension PickItemVC: UICollectionViewDelegate {
         let name = cell.lblName.text!      
         let image = cell.veggieImage.image
         
-        storeItems(name: name, dateTime: userdate, image: image)
+        storeItems(name: name, dateTime: datemodel.date, image: image)
     }
 }
 
