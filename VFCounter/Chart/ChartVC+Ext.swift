@@ -41,11 +41,13 @@ extension ChartVC {
   
         btnAdd.addTarget(self, action: #selector(tappedAdd), for: .touchUpInside)
         
+        let height = SizeManager().chartHeight
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
             $0.top.equalTo(segmentControl.snp.bottom).offset(13)
             $0.width.equalTo(view.bounds.width)
-            $0.bottom.equalTo(datafilterView.snp.top).offset(-10)
+            $0.bottom.equalTo(datafilterView.snp.top).offset(-30)
+   
         }
 
     }

@@ -74,7 +74,7 @@ public class MonthlyDateStrategy: DateStrategy {
         let strDate = dateFormatter.string(from: date)
         let datemap = DateProvider.updateDateMap(date: date, isWeekly: false)
         let monthlyDate = checkDate(datemap: datemap)
-       
+
         return (strDate, monthlyDate, datemap)
     }
     
@@ -107,12 +107,12 @@ public class MonthlyDateStrategy: DateStrategy {
         dataManager.getDateDictionary { (veggieDates, fruitDates) in
          
             veggieDates.forEach { (item) in
-                _ = item.compactMap ({ vDates.append($1 as! String) })
+                _ = item.compactMap ({ if $0 == "date" {  vDates.append($1 as! String) } })
             }
             
             
             fruitDates.forEach { (item) in
-                _ = item.compactMap ({ fDates.append($1 as! String) })
+                _ = item.compactMap ({ if $0 == "date" {  fDates.append($1 as! String) } })
             }
         }
         
@@ -120,22 +120,26 @@ public class MonthlyDateStrategy: DateStrategy {
         oldFDates = fDates.last?.changeDateTime(format: .date)
     }
     
-   public func setDateRange() {
-        if oldVDates == nil && oldFDates == nil {
+    public func setDateRange() {
+    
+        guard let oldVDates = oldVDates,let oldFDates = oldFDates else { return }
+        
+        let customDateCondition: Bool = (oldVDates < date || oldFDates < date)
+        if customDateCondition {
+            let newDate: Date = (oldVDates < oldFDates) || (oldVDates > oldFDates) ? oldVDates : oldFDates
+            privateMinimumDate = newDate
+        } else {
             privateMinimumDate = date
         }
-    
+       
         privateMaximumDate = Date()
         
-        if let dateA = oldVDates, let dateB = oldFDates {
-            
-            if dateA < dateB {
-                privateMinimumDate = dateA
-            } else {
-                privateMinimumDate = dateB
-            }
-            
+        if oldVDates < oldFDates {
+            privateMinimumDate = oldVDates
+        } else {
+            privateMinimumDate = oldFDates
         }
+      
     }
     
     public func previous() {

@@ -33,6 +33,8 @@ class UserItemVC: UIViewController {
     var stringDate: String = ""
     var checkedIndexPath = Set<IndexPath>()
     var valueConfig = ValueConfig()
+    private var dateView: DateView!
+
         
     let defaultRate = 500
      let fetchingItems =  [ { (newDate) -> [DataType] in
@@ -58,16 +60,14 @@ class UserItemVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         prepareNotificationAddObserver()
         setupLayout()
         configureHierarchy()
         configureDataSource()
         configureTitleDataSource()
         checkLoadingStatus()
+        connectCV()
         updateData()
-       
-    
     }
 
     func setupLayout() {
@@ -82,16 +82,15 @@ class UserItemVC: UIViewController {
             make.leading.trailing.equalTo(view)
             make.height.equalTo(newHeight)
         }
-        
-//        circularView.layer.borderWidth = 1
     }
 
    
     fileprivate func prepareNotificationAddObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)), name: .updateTaskPercent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)), name: .updateFetchingData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTouchDateView(_:)),
+                                               name: .touchDateView, object: nil)
     }
-    
     
     func checkLoadingStatus() {
         if getAppLoadingStatus() {
@@ -101,26 +100,28 @@ class UserItemVC: UIViewController {
         }
     }
     
+    func connectCV() {
+        // tap the blank place, then save the icons arrangetment changes
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapEmptySpaceGesture))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        self.collectionView?.backgroundView = UIView(frame:(self.collectionView?.bounds)!)
+        self.collectionView?.backgroundView!.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
     @objc fileprivate func updateTaskRate(_ notification: Notification) {
      
         if let veggieAmount = notification.userInfo?["veggieAmount"] as? Int {
-        
-            print(veggieAmount)
             valueConfig.maxVeggies = veggieAmount
             circularView.ringView.maxVeggies = Double(veggieAmount)
             circularView.updateMaxValue(tag: 0)
         }
         
         if let fruitAmount = notification.userInfo?["fruitAmount"] as? Int {
-            print(fruitAmount)
-            
             valueConfig.maxFruits = fruitAmount
             circularView.ringView.maxFruits = Double(fruitAmount)
             circularView.updateMaxValue(tag: 1)
-        }
-        
+        }        
         reloadDataByRange(date: stringDate)
-    
     }
 
     @objc fileprivate func updateFetchingData(_ notification: Notification) {
@@ -131,8 +132,47 @@ class UserItemVC: UIViewController {
             stringDate = newDate
             updateData()
         }
-    }  
+    }
     
+    
+    @objc fileprivate func updateTouchDateView(_ notification: Notification) {
+        if let touchView = notification.userInfo?["dateViewTouch"] as? Set<UITouch>,
+           let dateView = notification.userInfo?["dateView"] as? DateView {
+            
+            self.dateView = dateView
+            self.touchesBegan(touchView, with: nil)
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         let touch = touches.first
+         if touch?.view == self.circularView ||  touch?.view == self.dateView {
+
+            guard let indexPath = checkedIndexPath.first else { return }
+            if let cell = collectionView.cellForItem(at: indexPath) as? VFItemCell {
+                if cell.itemEditView.isHidden == false {
+                    cell.itemEditView.isHidden = true
+                }
+            }
+         }
+    }
+    
+    @objc func handleTapEmptySpaceGesture(recognizer: UITapGestureRecognizer){
+        let tapLocation = recognizer.location(in: self.view)
+        
+        if collectionView.indexPathForItem(at: tapLocation) == nil ||
+            collectionView.backgroundView != nil {
+        
+            //The point is outside of collection cell
+            guard let indexPath = checkedIndexPath.first else { return }
+            if let cell = collectionView.cellForItem(at: indexPath) as? VFItemCell {
+                if cell.itemEditView.isHidden == false {
+                    cell.itemEditView.isHidden = true
+                }
+            }
+         
+        }
+    }
 }
 
 
@@ -164,7 +204,6 @@ extension UserItemVC {
                      var snap = self.dataSource.snapshot()
                      snap.deleteItems([veggieData])
                      self.dataSource.apply(snap, animatingDifferences: true)
-                     
                  }
             }
         }
@@ -190,3 +229,12 @@ extension UserItemVC {
 
     }
 }
+//
+//extension UserItemVC: UIGestureRecognizerDelegate {
+//    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        // only handle tapping empty space (i.e. not a cell)
+//        let point = gestureRecognizer.location(in: collectionView)
+//        let indexPath = collectionView.indexPathForItem(at: point)
+//        return indexPath == nil
+//    }
+//}

@@ -35,9 +35,9 @@ class HomeVC: UIViewController {
        // 초기 실행시, 날짜 저장
         setupConstraints()
         setContentView()
-        retrieveLocation()
+//        retrieveLocation()
         connectTapGesture()
-        self.setupToHideKeyboardOnTapOnView()
+        setupToHideKeyboardOnTapOnView()
         prepareNotificationAddObserver()
     }
 
@@ -45,7 +45,7 @@ class HomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
-        requestWeathData(from: coordinator.latitude, to: coordinator.longitude)
+//        requestWeathData(from: coordinator.latitude, to: coordinator.longitude)
     }
     
 //    func settings() {
@@ -57,7 +57,7 @@ class HomeVC: UIViewController {
     fileprivate func prepareNotificationAddObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)),
                                                name: .updateDateTime, object: nil)
-        
+
     }
     
     
@@ -149,8 +149,12 @@ class HomeVC: UIViewController {
     }
     
     @objc func dateLabelTapped(_ sender: UITapGestureRecognizer) {
+        var dateTxt = dateView.dateLabel.text!
+        var shortDate = String(dateTxt.split(separator: " ").first!)
+        var date = shortDate.changeDateTime(format: .date)
+    
         DispatchQueue.main.async {
-            let datePickerVC = DatePickerVC()
+            let datePickerVC = DatePickerVC(date: date)
             datePickerVC.modalPresentationStyle  = .overFullScreen
             datePickerVC.modalTransitionStyle    = .crossDissolve
             datePickerVC.view.layoutIfNeeded() //avoid Snapshotting error
@@ -164,6 +168,17 @@ class HomeVC: UIViewController {
         dateView.dateLabel.isUserInteractionEnabled = true
         dateView.dateLabel.addGestureRecognizer(labelTap)
     }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         let touch = touches.first
+         if touch?.view == self.dateView {
+            NotificationCenter.default.post(name: .touchDateView, object: nil,
+                                            userInfo: ["dateViewTouch": touches,
+                                                       "dateView": self.dateView ])
+        }
+    }
+
 }
 
 extension HomeVC: CLLocationManagerDelegate {

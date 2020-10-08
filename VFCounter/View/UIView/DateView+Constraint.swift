@@ -33,7 +33,7 @@ extension DateView {
         self.addSubViews(horizontalView[0], dateLabel, weatherLabel, weatherIcon)
         horizontalView[0].addArrangedSubview(btnLeftArrow)
         horizontalView[0].addArrangedSubview(btnRightArrow)
-        horizontalView[0].spacing = 128
+        horizontalView[0].spacing = 130
 
         let padding = (150 / 3) - 11
         horizontalView[0].snp.makeConstraints { make in
@@ -45,7 +45,7 @@ extension DateView {
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(horizontalView[0])
             make.leading.equalTo(btnLeftArrow.snp.trailing)
-            make.width.equalTo(128)
+            make.width.equalTo(130)
         }
     
         // MARK: - Icon & Label

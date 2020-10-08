@@ -23,8 +23,9 @@ struct DateModel {
         self.sumF = sumF
         self.maxV = maxV
         self.maxF = maxF
-       
+      
         changeDateFormat()
+        
     }
     
     mutating func changeDateFormat() {

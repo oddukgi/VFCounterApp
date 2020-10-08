@@ -16,7 +16,7 @@ class DatePickerVC: UIViewController {
     let containerView = VFContainerView()
     let calendarView = UIView()
     let calendarController = CalendarController(mode: .single)
-    let now = Date()
+    var date: Date?
     let controller = Controller()
     weak var delegate: DatePickerProtocol?
 
@@ -54,7 +54,13 @@ class DatePickerVC: UIViewController {
         super.viewDidLoad()
         configureCalendar()
         configureUI()
-        connectDateAction()      
+        connectDateAction()
+        moveCalendar()
+    }
+    
+    convenience init(date: Date) {
+        self.init()
+        self.date = date
     }
     
     private func configureUI() {
@@ -63,16 +69,19 @@ class DatePickerVC: UIViewController {
         
         containerView.snp.makeConstraints { (maker) in
             maker.center.equalTo(view.snp.center)
-            maker.size.equalTo(CGSize(width: 345, height: 440))
+            maker.size.equalTo(CGSize(width: 350, height: 490))
         }
         
         calendarView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(containerView).offset(38)
+            maker.top.equalTo(containerView).offset(30)
             maker.leading.equalTo(containerView).offset(5)
             maker.trailing.equalTo(containerView).offset(-5)
-            maker.bottom.equalTo(containerView).offset(-68)
+            maker.bottom.equalTo(containerView).offset(-30)
+            
         }
         
+//        calendarView.layer.borderWidth = 1
+//        calendarView.layer.borderColor = UIColor.red.cgColor
         closeBtn.snp.makeConstraints { (maker) in
             maker.top.equalTo(containerView).offset(10)
             maker.trailing.equalTo(containerView).offset(-10)
@@ -81,7 +90,7 @@ class DatePickerVC: UIViewController {
         
         applyBtn.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(containerView)
-            maker.bottom.equalTo(containerView).offset(-15)
+            maker.bottom.equalTo(containerView).offset(-10)
             maker.size.equalTo(CGSize(width: 70, height: 40))
         }
         
@@ -91,8 +100,8 @@ class DatePickerVC: UIViewController {
     
     private func configureCalendar() {
         calendarController.initialValue = self.currentValue as? Date
-        calendarController.minimumDate = now.getFirstMonthDate()
-        calendarController.maximumDate = now
+        calendarController.minimumDate = date?.getFirstMonthDate()
+        calendarController.maximumDate = Date()
         calendarController.isRingVisible = false
     }
     
@@ -113,6 +122,16 @@ class DatePickerVC: UIViewController {
             self.currentValue = newDate
         }
     }
+    
+    func moveCalendar() {
+        calendarController.moveToSpecificDate(date: date!)
+    }
+        
+        
+//        calendarController.scrollToDate(searchedDate, triggerScrollToDateDelegate: true, animateScroll: true, preferredScrollPosition: nil, extraAddedOffset: 0.0) {
+//           self.calendarView.selectDates([searchedDate], triggerSelectionDelegate: true)
+//        }
+
 
 }
 

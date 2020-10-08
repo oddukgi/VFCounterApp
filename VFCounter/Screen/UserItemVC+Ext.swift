@@ -30,7 +30,6 @@ extension UserItemVC {
         valueConfig.maxFruits = Int(fruitRate)
         
         updateCircularView(veggieValue : Int(veggieRate), fruitValue: Int(fruitRate))
-   
     }
 
     func firstLoadingApp() {
@@ -43,7 +42,6 @@ extension UserItemVC {
         
         SettingManager.setVeggieAlarm(veggieFlag: true)
         SettingManager.setFruitsAlarm(fruitsFlag: true)
-        
     }
     
     func getAppLoadingStatus() -> Bool {
@@ -54,14 +52,11 @@ extension UserItemVC {
             print("App already launched")
             return true
         } else {
-            
             print("App launched first time")
             SettingManager.setInitialLaunching(flag: true)
             return false
         }
-        
     }
-
     
     func configureHierarchy() {
     
@@ -81,7 +76,6 @@ extension UserItemVC {
                                      withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
         collectionView.isScrollEnabled = false
     }
-
     
     // MARK: create collectionView datasource
     func configureDataSource() {
@@ -163,7 +157,7 @@ extension UserItemVC {
     
     func hideItemView() {
         checkedIndexPath.removeAll()
-        updateData()
+        collectionView.reloadData()
     }
 }
 
@@ -196,6 +190,7 @@ extension UserItemVC: PickItemVCProtocol {
 
     func addItems(item: VFItemController.Items, tag: Int) {
 
+        self.hideItemView()
         if !item.name.isEmpty {
             stringDate = String(item.date.split(separator: " ").first!)
             dataManager.createEntity(item: item, tag: tag)            
@@ -251,6 +246,25 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
         }
     
     }
+
+    func deleteSelectedItem(item: Int, section: Int) {
+  
+        let sectionTitle: Section = (section == 0 ? Section.vTitle : Section.fTitle)
+       
+        var datatype: DataType.Type!
+        section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
+        var snapshot = self.dataSource.snapshot()
+        
+        if let listData = self.dataSource.itemIdentifier(for: IndexPath(item: item, section: section)) {
+            dataManager.deleteEntity(originTime:listData.createdDate!,datatype)
+            snapshot.deleteItems([listData])
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+        
+        reloadRing(date: stringDate)
+    }
+    
+
     
   
 }
@@ -272,22 +286,19 @@ extension UserItemVC: ItemCellDelegate {
     }
     
     
-    func deleteSelectedItem(item: Int, section: Int) {
-        let sectionTitle: Section = (section == 0 ? Section.vTitle : Section.fTitle)     
-       
-        var datatype: DataType.Type!
-        section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
-        var snapshot = self.dataSource.snapshot()
+  
+    func presentSelectedAlertVC(item: Int, section: Int) {
         
-        if let listData = self.dataSource.itemIdentifier(for: IndexPath(item: item, section: section)) {
-            dataManager.deleteEntity(originTime:listData.createdDate!,datatype)
-            snapshot.deleteItems([listData])
-            self.dataSource.apply(snapshot, animatingDifferences: true)
-        }
-        
-        reloadRing(date: stringDate)
+        self.hideItemView()
+        let alert = UIAlertController(title: "", message: "선택한 아이템을 삭제할까요?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { _ in
+            self.deleteSelectedItem(item: item, section: section)
+        }))
+
+        self.present(alert, animated: true, completion: nil)
     }
-    
+
 }
 
 

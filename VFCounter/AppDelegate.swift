@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //           NSLog("Your NSUserDefaults are stored in this folder: %@/Preferences", folder)
 
         // SQL File Directory
-        let applicationSupportDirectories = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let _ = applicationSupportDirectories.first!
+//        let applicationSupportDirectories = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+//        let _ = applicationSupportDirectories.first!
 
         
 

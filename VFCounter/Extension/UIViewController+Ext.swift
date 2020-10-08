@@ -12,6 +12,13 @@ import UIKit
 
 extension UIViewController {
   
+    func presentOnRoot(with viewController : UIViewController){
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        navigationController.isNavigationBarHidden = true
+        self.present(navigationController, animated: false, completion: nil)
+    }
+
     func presentAlertOnMainThread(title: String, message: String, buttonTitle: String) {
         
         DispatchQueue.main.async {
@@ -33,6 +40,7 @@ extension UIViewController {
         }
     }
     
+
     
 
     func setupToHideKeyboardOnTapOnView() {

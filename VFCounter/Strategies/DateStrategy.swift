@@ -26,5 +26,5 @@ public protocol DateStrategy: class {
 
 protocol ItemCellDelegate: class {
     func updateSelectedItem(item: VFItemController.Items, index: Int)
-    func deleteSelectedItem(item: Int, section: Int)
+    func presentSelectedAlertVC(item: Int, section: Int) 
 }

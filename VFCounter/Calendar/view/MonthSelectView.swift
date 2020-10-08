@@ -120,7 +120,6 @@ class MonthSelectView<Value: CalendarValue>: UIView {
 
     }
     
-    
     func updateMonth() {
         if let value = self.currentValue as? Date {
             setting.currentDate = value

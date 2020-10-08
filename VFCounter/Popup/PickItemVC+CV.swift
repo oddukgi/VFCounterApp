@@ -66,6 +66,44 @@ extension PickItemVC {
         }
     
     }
+    
+    func configureSegmentControl() {
+        
+        kindSegmentControl = UISegmentedControl(items: ["야채", "과일"])
+        kindSegmentControl.selectedSegmentIndex = 0
+        
+        let width = 100
+        view.addSubview(kindSegmentControl)
+        
+        kindSegmentControl.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
+            make.trailing.equalTo(view).offset(-20)
+            make.width.equalTo(width)
+            make.height.equalTo(30)
+        }
+    
+        // Style the Segmented Control
+        kindSegmentControl.layer.cornerRadius = 5.0  // Don't let background bleed
+        kindSegmentControl.backgroundColor = ColorHex.iceBlue
+        kindSegmentControl.tintColor = ColorHex.lightBlue
+
+            // Add target action method
+        kindSegmentControl.addTarget(self, action: #selector(changedIndexSegment), for: .valueChanged)
+    }
+    
+    @objc func changedIndexSegment(sender: UISegmentedControl) {
+
+        switch sender.selectedSegmentIndex {
+        case 0:
+            datemodel.tag = 0
+            
+        default:
+            datemodel.tag = 1
+
+        }
+        updateNaviTitle(to: datemodel.tag)
+        updateData()
+      }
 }
 
 extension PickItemVC: UICollectionViewDelegate {

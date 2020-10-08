@@ -10,7 +10,7 @@ import UIKit
 
 class PeriodListVC: UIViewController {
 
-    var tableView: UITableView!
+    var tableView: CustomTableView!
     var weekday = Array<String>()
     var datemaps = Array<String>()
     private let reuseIdentifer = "MonthlyList"
@@ -33,7 +33,8 @@ class PeriodListVC: UIViewController {
         configureView()
         connectAction()
         configureTableView()
-        updatePeriod()
+        dateStrategy.fetchedData()
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,8 +66,9 @@ class PeriodListVC: UIViewController {
         lblPeriod.textColor = .black
     }
 
+
     func configureTableView() {
-        tableView = UITableView(frame: view.bounds, style: .grouped)
+        tableView = CustomTableView(frame: view.bounds, style: .grouped)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(8)
@@ -82,7 +84,7 @@ class PeriodListVC: UIViewController {
 
     
     func updatePeriod(_ reloadData: Bool = false) {
-        
+    
         dateStrategy.setDateRange()
         let datemap = dateStrategy.updateLabel()
         lblPeriod.text = datemap.0
@@ -93,9 +95,7 @@ class PeriodListVC: UIViewController {
             self.tableView.reloadData()
         }
      }
-    
-    
-       
+
     func connectAction() {
         
         arrowButtons[0].addTargetClosure { _ in
@@ -107,9 +107,11 @@ class PeriodListVC: UIViewController {
             self.dateStrategy.next()
             self.updatePeriod(true)
         }
-        
     }
-    
+
+    @objc func tappedOutsideOfTableView() {
+        print("user tapped outside table view")
+    }
     
     lazy var stackView: UIStackView = {
           let stackView = UIStackView()
@@ -137,6 +139,7 @@ class PeriodListVC: UIViewController {
 }
 
 extension PeriodListVC: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40.0
     }
@@ -162,4 +165,19 @@ extension PeriodListVC: ElementCellProtocol {
         updatePeriod(true)
     }
 
+    func presentSelectedAlertVC(item: Int, section: Int) {
+
+        let alert = UIAlertController(title: "", message: "선택한 아이템을 삭제할까요?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { _ in
+            
+            let indexPath = IndexPath(item: item, section: section)
+            NotificationCenter.default.post(name: .deleteTableViewItem, object: nil,
+                                             userInfo: [  "indexPath": indexPath ])
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
 }
+

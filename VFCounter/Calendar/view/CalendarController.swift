@@ -167,8 +167,11 @@ JTACMonthViewDataSource {
         contentView.addSubview(self.view)
     }
     
-    func didShowArrowButton() {
-        
+    func moveToSpecificDate(date: Date) {
+        //default set to todays date
+        calendarView.deselectAllDates()
+        calendarView.scrollToDate(date, animateScroll: false)
+        calendarView.selectDates([date])
         
     }
     
@@ -187,6 +190,16 @@ JTACMonthViewDataSource {
 
         var screenWidth: CGFloat = 0.0
         var height: CGFloat = 0.0
+        var width: CGFloat = 0.0
+        
+        
+        if isRingVisible {
+            height = SizeManager().calendarHeight
+            width = SizeManager().calendarWidth
+        } else {
+            height = 280
+            width = SizeManager().miniCalendarWidth
+        }
         
         currentValueView.snp.makeConstraints { (maker) in
             maker.top.equalTo(view).offset(6)
@@ -194,33 +207,23 @@ JTACMonthViewDataSource {
             maker.width.equalTo(180)
             maker.height.equalTo(40)
         }
-        
-        if DeviceTypes.isiPhone8Standard {
-            screenWidth = ScreenSize.width - 39
-        } else {
-            screenWidth = ScreenSize.width - 78
-        }
+
     
         weekdayView.snp.makeConstraints { (maker) in
             maker.top.equalTo(currentValueView.snp.bottom).offset(35)
             maker.centerX.equalTo(view.snp.centerX)
-            maker.width.equalTo(screenWidth)
+            maker.width.equalTo(width)
         }
-        
-        if isRingVisible {
-            height = SizeManager().chartHeight
-        } else {
-            height = 200
-        }
+    
         
         calendarView.snp.makeConstraints { (maker) in
             maker.top.equalTo(weekdayView.snp.bottom).offset(9)
             maker.centerX.equalTo(view.snp.centerX)
-            maker.width.equalTo(screenWidth)
+            maker.width.equalTo(width)
             maker.height.equalTo(height)
 
         }
-
+        
     }
     
     private func configureInitialState() {
@@ -239,7 +242,7 @@ JTACMonthViewDataSource {
             }
         }
         
-        calendarView.scrollingMode = .stopAtEachSection
+        calendarView.scrollingMode = .stopAtEachCalendarFrame
     }
     
     private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath, flag: Bool = false) {
@@ -281,12 +284,10 @@ JTACMonthViewDataSource {
         let veggie = cell.ringButton.ringProgressView.ring1.progress.clean
         let fruit = cell.ringButton.ringProgressView.ring2.progress.clean
 
-        
         let veggieSum = Float(veggie)! * veggieMaxRate
         let fruitSum = Float(fruit)! * fruitMaxRate
         currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.up)), fruitSum: Int(fruitSum.rounded(.up)))
     }
-    
     
     
     private func updateDate(date: Date) {
@@ -314,7 +315,7 @@ JTACMonthViewDataSource {
                                                  numberOfRows: 6,
                                                  calendar: self.currentCalendar,
                                                  generateInDates: .forAllMonths,
-                                                 generateOutDates: .tillEndOfGrid,
+                                                 generateOutDates: .off,
                                                  firstDayOfWeek: .monday,
                                                  hasStrictBoundaries: true)
         return parameters
@@ -349,7 +350,10 @@ JTACMonthViewDataSource {
             self.updateAmount(cell)
         } else {
             self.updateDate(date: date)
-            self.doneHandler?(self.value)
+            
+            if date <= Date() {
+                self.doneHandler?(self.value)
+            }
         }
         
        }
@@ -427,7 +431,6 @@ extension CalendarSettings {
 extension CalendarController: MonthSelectViewProtocol {
     
     func pressedArrow(tag: Int) {
-        
         switch tag {
         case 0:
             calendarView.scrollToSegment(.previous)

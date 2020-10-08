@@ -77,7 +77,7 @@ class DayCell: JTACDayCell {
         }
         
         self.selectionBackgroundView.snp.makeConstraints { (maker) in
-            maker.height.equalTo(100).priority(.low)
+            maker.height.equalTo(90).priority(.low)
             maker.top.left.greaterThanOrEqualToSuperview()
             maker.right.bottom.lessThanOrEqualToSuperview()
             maker.center.equalToSuperview()
@@ -230,11 +230,18 @@ class DayCell: JTACDayCell {
 
     fileprivate func selectedDate(_ config: DayCell.ViewSettings) {
     
-        if !config.isSelectedItem {
+        if !config.isDateEnabled {
+            self.dateLabel.textColor = self.setting.dateLabelUnavailableColor
+        } else if !config.isSelectedItem {
             
-            var selectedClr: UIColor
-            config.isRingVisible ? (selectedClr = self.setting.selectedLabelColor)
-                : (selectedClr = .white)
+            var selectedClr: UIColor!
+            if config.isRingVisible { selectedClr = self.setting.selectedLabelColor }
+            if selectionBackgroundView != nil {
+                selectedClr = self.setting.plainselectedLabelColor
+            }
+            if selectionBackgroundView.isHidden == true {
+                selectedClr = self.setting.selectedLabelColor
+            }
             self.dateLabel.textColor = selectedClr
             
         } else {
@@ -287,13 +294,18 @@ class DayCell: JTACDayCell {
                 
             } else {
                 
-                self.selectionBackgroundView.isHidden = config.isSelectedItem
-
+                let theFuture = Date().addingTimeInterval(100)
+                if config.state!.dateBelongsTo == .thisMonth && config.state!.date > theFuture {
+                    self.selectionBackgroundView.isHidden = true
+                } else {
+                    self.selectionBackgroundView.isHidden = config.isSelectedItem
+                }
             }  
             selectedDate(config)
             
         } else {
             self.dateLabel.isHidden = true
+            self.selectionBackgroundView.isHidden = true
             if config.isRingVisible {
                 self.ringButton.isHidden = true
             }
@@ -307,14 +319,14 @@ extension CalendarSettings {
     
     struct DayCell {
         
-        var dateLabelFont: UIFont = .systemFont(ofSize: 17)
+        var dateLabelFont: UIFont = .systemFont(ofSize: 16.5)
         var dateLabelColor: UIColor = .black
         var todayLabelColor: UIColor = .red
         var dateLabelUnavailableColor: UIColor = .lightGray
         
         var plainselectedLabelColor: UIColor = .white
         var selectedBackgroundColor: UIColor = .systemBlue
-        var selectedLabelColor: UIColor = ColorHex.orangeyRed
+        var selectedLabelColor: UIColor = .systemBlue
         
         var rangeViewCornerRadius: CGFloat = 6
         var onRangeBackgroundColor: UIColor = UIColor.systemBlue.withAlphaComponent(0.2)

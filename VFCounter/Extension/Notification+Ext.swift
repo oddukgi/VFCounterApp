@@ -15,5 +15,9 @@ extension Notification.Name {
     static let updateDateTime = Notification.Name("updateDateTime")
     static let updateMonth    = Notification.Name("updateMonth")
     static let initialMaxValue = Notification.Name("InitailMax")
+    static let closeItemEditView = Notification.Name("CloseItemEditView")
+    static let touchDateView = Notification.Name("TouchDateView")
+    static let touchOutsideTableView = Notification.Name("TouchTableView")
+    static let deleteTableViewItem = Notification.Name("DeleteItemTableView")
 
 }

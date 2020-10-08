@@ -10,9 +10,10 @@ import UIKit
 
 
 protocol ElementCellProtocol: class {
+    
     func displayPickItemVC(pickItemVC: PickItemVC)
     func updateTableView()
-    
+    func presentSelectedAlertVC(item: Int, section: Int)
 }
 class ElementCell: UITableViewCell, SelfConfigCell {
     
@@ -25,6 +26,7 @@ class ElementCell: UITableViewCell, SelfConfigCell {
     var dataSource: UICollectionViewDiffableDataSource<Int, SubItems>! = nil
     var currentSnapshot: NSDiffableDataSourceSnapshot<Int, SubItems>! = nil
     var checkedIndexPath = Set<IndexPath>()
+    var tableSection: Int = 0
     weak var delegate: ElementCellProtocol?
     
     private var date: String = "" {
@@ -38,11 +40,49 @@ class ElementCell: UITableViewCell, SelfConfigCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
         configureDataSource()
+        prepareNotificationAddObserver()
        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - notificationCenter
+    fileprivate func prepareNotificationAddObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.touchOutsideTableView(_:)),
+                                               name: .touchOutsideTableView, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.deleteTableViewItem(_:)),
+                                               name: .deleteTableViewItem, object: nil)
+    }
+    
+    // MARK: action
+    @objc fileprivate func touchOutsideTableView(_ notification: Notification) {
+        
+        let flag = notification.userInfo?["hideEditView"] as? Bool
+        
+        if flag == true {
+            self.hideItemView()
+        } else {
+            
+//            guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
+//            for indexPath in selectedItems {
+//                if checkedIndexPath.first == indexPath {
+//                    self.hideItemView()
+//                    break
+//                }
+//            }
+        }
+    }
+    
+    @objc fileprivate func deleteTableViewItem(_ notification: Notification) {
+        guard let indexPath = notification.userInfo?["indexPath"] as? IndexPath else { return }
+        let item = indexPath.item
+        let section = indexPath.section
+        deleteSelectedItem(item: item, section: section)
+        OperationQueue.main.addOperation {
+            self.delegate?.updateTableView()
+        }
     }
     
     func configure() {
@@ -75,44 +115,39 @@ class ElementCell: UITableViewCell, SelfConfigCell {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
+        super.setSelected(selected, animated: animated)        
     }
-    
+  
     func updateDate(_ date: String) {
         self.date = date
     }
+
 }
 
 extension ElementCell {
     
     func updateList(flag: Bool = false) {
-          
-        var flag = false
-        let datamanager = DataManager()
-        currentSnapshot = NSDiffableDataSourceSnapshot<Int, SubItems>()
+         
+       var flag = false
+       let datamanager = DataManager()
+       currentSnapshot = NSDiffableDataSourceSnapshot<Int, SubItems>()
 
-        let veggieData = datamanager.getList(date: date, index: 0)
-        let fruitData = datamanager.getList(date: date, index: 1)
-        if !veggieData.isEmpty {
-            
-            flag = true
-            currentSnapshot.appendSections([0])
-            currentSnapshot.appendItems(veggieData)
-        }
-        
-        if !fruitData.isEmpty {
-            
-            (flag == true) ? currentSnapshot.appendSections([1]) : currentSnapshot.appendSections([0])
-            currentSnapshot.appendItems(fruitData)
-            
-        }
+       let veggieData = datamanager.getList(date: date, index: 0)
+       let fruitData = datamanager.getList(date: date, index: 1)
+       if !veggieData.isEmpty {
+           flag = true
+           currentSnapshot.appendSections([0])
+           currentSnapshot.appendItems(veggieData)
+       }
+       
+       if !fruitData.isEmpty {
+           (flag == true) ? currentSnapshot.appendSections([1]) : currentSnapshot.appendSections([0])
+           currentSnapshot.appendItems(fruitData)
+       }
     
-        self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+       self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
+     }
 
-      }
-
-    
     func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Int, SubItems>(collectionView: collectionView) {
             (collectionView: UICollectionView,  indexPath: IndexPath,
@@ -145,54 +180,12 @@ extension ElementCell {
     }
     
     func hideItemView() {
+        
         checkedIndexPath.removeAll()
-//        updateData()
-    }
-    
-}
-
-
-extension ElementCell: UICollectionViewDelegate {
-    
-    // 아이템 값 수정 및 삭제
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 아이템을 선택하면, 홈화면으로 이동
-        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
-        var snap = self.dataSource.snapshot()
-        if checkedIndexPath.isEmpty {
-            cell.selectedItem = true
-            checkedIndexPath.insert(indexPath)
-            cell.selectedIndexPath(indexPath)
-            
-        } else {
-            checkedIndexPath.removeAll()
-             OperationQueue.main.addOperation {
-                self.dataSource.apply(snap, animatingDifferences: false)
-            }
+        OperationQueue.main.addOperation {
+            self.dataSource.apply(self.dataSource.snapshot(), animatingDifferences: false)
         }
-        
     }
-}
-
-
-extension ElementCell: ItemCellDelegate {
-
-    func updateSelectedItem(item: VFItemController.Items, index: Int) {
-        
-        let dataManager = DataManager()
-        
-        var datemodel: DateModel!
-        
-        print(item.date)
-        
-        let values = dataManager.getSumItems(date: item.date)    
-        datemodel = DateModel(tag: index, sumV: values.0,sumF: values.1, maxV: 500, maxF: 500)
-            
-        let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
-        itemPickVC.items = item.copy() as? VFItemController.Items
-        delegate?.displayPickItemVC(pickItemVC: itemPickVC)
-    }
-    
     
     func deleteSelectedItem(item: Int, section: Int) {
 
@@ -203,15 +196,52 @@ extension ElementCell: ItemCellDelegate {
         if let listData = self.dataSource.itemIdentifier(for: IndexPath(item: item, section: section)) {
             datamanager.deleteEntity(originTime:listData.element.createdDate!,datatype)
             snapshot.deleteItems([listData])
-            self.dataSource.apply(snapshot, animatingDifferences: true)
+            self.dataSource.apply(snapshot, animatingDifferences: false)
         }
-        
-        OperationQueue.main.addOperation {
-            self.delegate?.updateTableView()
+
+    }
+}
+
+
+extension ElementCell: UICollectionViewDelegate {
+    
+    // 아이템 값 수정 및 삭제
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 아이템을 선택하면, 홈화면으로 이동
+        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
+        var snap = self.dataSource.snapshot()
+        if  checkedIndexPath.count == 0  {
+            cell.selectedItem = true
+            checkedIndexPath.insert(indexPath)
+            cell.selectedIndexPath(indexPath)
+            
         }
+    }
+}
+
+
+extension ElementCell: ItemCellDelegate {
+
+
+    func updateSelectedItem(item: VFItemController.Items, index: Int) {
         
+        let dataManager = DataManager()
+        var datemodel: DateModel!
+
+        let values = dataManager.getSumItems(date: item.date)    
+        datemodel = DateModel(tag: index, sumV: values.0,sumF: values.1, maxV: 500, maxF: 500)
+            
+        let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
+        itemPickVC.items = item.copy() as? VFItemController.Items
+        delegate?.displayPickItemVC(pickItemVC: itemPickVC)
+    }
+    func presentSelectedAlertVC(item: Int, section: Int) {
+        self.hideItemView()
+        delegate?.presentSelectedAlertVC(item: item, section: section)
     }
     
+  
+
 }
 
 // MARK: - Protocol Extension

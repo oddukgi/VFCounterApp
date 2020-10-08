@@ -14,7 +14,7 @@ typealias Item = UIImage?
 
 class ItemEditView: UIView {
 
-    let containerView = VFContainerView(frame: CGRect(x: 0, y: 0, width: 80, height: 23))
+    let containerView = VFContainerView(frame: CGRect(x: 0, y: 0, width: 80, height: 28))
     
     lazy var horizontalStackView: UIStackView = {
        let stackView = UIStackView()
@@ -30,6 +30,8 @@ class ItemEditView: UIView {
     ]
     
     var itemButton = [VFButton]()
+    // Create a property to store the hit insets:
+    var addedTouchArea = CGFloat(0)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,6 +47,9 @@ class ItemEditView: UIView {
         addSubview(containerView)
         containerView.backgroundColor = .white
         containerView.addSubview(horizontalStackView)
+
+        containerView.layer.borderColor = ColorHex.darkGreen.cgColor
+        containerView.layer.borderWidth = 0.5
         
         items.forEach { item in
             if horizontalStackView.arrangedSubviews.count > 0 {
@@ -65,6 +70,20 @@ class ItemEditView: UIView {
                 button.widthAnchor.constraint(equalTo: firstButton.widthAnchor).isActive = true
             }
         }
+
+    }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+
+        // Generate the new hit area by adding the hitInsets:
+        let newBound = CGRect(
+            x: self.bounds.origin.x - addedTouchArea,
+            y: self.bounds.origin.y - addedTouchArea,
+            width: self.bounds.width + 2 * addedTouchArea,
+            height: self.bounds.width + 2 * addedTouchArea
+        )
+        // Check if the point is within the new hit area:
+        return newBound.contains(point)
 
     }
 

@@ -28,8 +28,7 @@ class AlarmSettingVC: UIViewController {
                 return "과일"
             }
         }
-        
-        
+ 
     }
 
     let reuseIdentifer = "AlarmSettings"
@@ -52,10 +51,8 @@ class AlarmSettingVC: UIViewController {
         loadDataFromUserDefaults()
     }
 
-    func loadDataFromUserDefaults() {
-        
+    func loadDataFromUserDefaults() {        
         // check initial launching
-        
         if let alarm = SettingManager.getAlarmValue(keyName: "VeggieAlarm") {
             veggieSettings.alarmOn = alarm
             veggieSwitch.isOn = alarm

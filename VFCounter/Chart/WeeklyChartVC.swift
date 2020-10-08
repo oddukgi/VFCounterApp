@@ -12,12 +12,11 @@ import Charts
 
 
 class WeeklyChartVC: ChartBaseVC {
-  
-    var date: String?
+
     let lblweek = VFTitleLabel(textAlignment: .center, fontSize: 14)
     let chartView = BarChartView()
  
-    private var dateStrategy: DateStrategy!
+    var dateStrategy: DateStrategy!
 
     private let dataManager = DataManager()
     private var weekday = Array<String>()
@@ -94,6 +93,8 @@ class WeeklyChartVC: ChartBaseVC {
     
     
     func updatePeriod() {
+        
+        dateStrategy.fetchedData()
         dateStrategy.setDateRange()
         let data = dateStrategy.updateLabel()
         lblweek.text = data.0

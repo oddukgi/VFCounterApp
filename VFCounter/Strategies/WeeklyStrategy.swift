@@ -115,12 +115,12 @@ public class WeeklyDateStrategy: DateStrategy {
         dataManager.getDateDictionary { (veggieDates, fruitDates) in
          
             veggieDates.forEach { (item) in
-                _ = item.compactMap ({ vDates.append($1 as! String) })
+                _ = item.compactMap ({ if $0 == "date" {  vDates.append($1 as! String) } })
             }
             
             
             fruitDates.forEach { (item) in
-                _ = item.compactMap ({ fDates.append($1 as! String) })
+                _ = item.compactMap ({ if $0 == "date" {  fDates.append($1 as! String) } })
             }
         }
         

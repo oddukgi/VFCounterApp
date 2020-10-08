@@ -24,8 +24,6 @@ class DateView: UIView {
     private var startDate: Date?
     private var endDate: Date?
 
-
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureStackView()
@@ -50,7 +48,7 @@ class DateView: UIView {
         btnRightArrow.addTarget(self, action: #selector(changedDateTouched), for: .touchUpInside)
         btnRightArrow.tag = 1
         startDate = date.getFirstMonthDate()
-        endDate = date.addDaysToday(days: 0)
+        endDate = date.endOfDay()
 
     }
 
@@ -70,8 +68,10 @@ class DateView: UIView {
         if sender.tag == 0 {
             guard date > startDate! else { return }
             date = date.dayBefore.endOfDay()           
-        } else {            
-            guard date < endDate! else { return }
+        } else {
+            
+            let theFuture = date.addingTimeInterval(100)
+            if theFuture > endDate! { return }
             date = date.dayAfter.endOfDay()
         }
         

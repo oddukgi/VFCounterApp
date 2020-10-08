@@ -122,7 +122,7 @@ class CustomSlider: UISlider {
         let roundedValue = round(sender.value / step) * step
         sender.value = roundedValue
         
-        print("Slider Value: \(roundedValue)")      
+//        print("Slider Value: \(roundedValue)")      
         delegate?.sliderValueChanged(value: sender.value, tag: sender.tag)
     }
     

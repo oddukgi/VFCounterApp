@@ -201,6 +201,58 @@ class SizeManager {
             height = ScreenSize.height - 300
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
             height = ScreenSize.height - 400
+            
+        } else if DeviceTypes.isiPhoneX {
+            height = ScreenSize.height - 380
+        } else {
+            height = ScreenSize.height - 380
+        }
+        
+        return height
+    }
+    
+    
+    var calendarWidth: CGFloat {
+        
+        var screenWidth: CGFloat = 0.0
+        if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
+            screenWidth = ScreenSize.width - 39
+        } else {
+            screenWidth = ScreenSize.width - 78
+        }
+    
+        return screenWidth
+    }
+    
+    
+    var miniCalendarWidth: CGFloat {
+        
+        var screenWidth: CGFloat = 0.0
+        if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
+            screenWidth = ScreenSize.width - 39
+        } else {
+            screenWidth = ScreenSize.width - 78
+        }
+    
+        return screenWidth
+    }
+    
+    var calendarHeight: CGFloat {
+      
+        var height: CGFloat = 0.0
+        
+        if DeviceTypes.isiPhoneSE {
+            height = ScreenSize.height - 200
+        }
+        else if DeviceTypes.isiPhone8Standard {
+            height = ScreenSize.height - 350
+        } else if DeviceTypes.isiPhone8PlusStandard {
+            height = ScreenSize.height - 300
+        } else if DeviceTypes.isiPhoneXsMaxAndXr {
+            height = ScreenSize.height - 500
+            
+        } else if DeviceTypes.isiPhoneX {
+            height = ScreenSize.height - 450
         } else {
             height = ScreenSize.height - 380
         }

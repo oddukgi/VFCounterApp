@@ -172,16 +172,15 @@ class DataManager {
     
         let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
                 
-            let entity = try transaction.queryAttributes(
-                From<T>(configuration),Select("createdDate"), Where<T>("%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate),orderBy
-               
-            )
+            let entity = try? transaction.queryAttributes(
+                From<T>(configuration),Select("createdDate"), Where<T>("%K BEGINSWITH[c] %@",#keyPath(DataType.date),newDate),orderBy)
             
-            if let date = entity[index]["createdDate"] as? Date {
-                completion(date)
+            
+            if let entity = entity {
+                if let date = entity[index]["createdDate"] as? Date {
+                    completion(date)
+                }
             }
-           
-
          })
     }
     

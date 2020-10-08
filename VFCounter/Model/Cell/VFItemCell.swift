@@ -38,8 +38,7 @@ class VFItemCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
-        showItemEditView()
-        
+        showItemEditView()       
     }
     
     required init?(coder: NSCoder) {
@@ -92,11 +91,13 @@ class VFItemCell: UICollectionViewCell {
     }
     
     func showItemEditView() {
+        itemEditView.addedTouchArea = 50
         contentView.addSubview(itemEditView)
         itemEditView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(25)
+            make.top.equalTo(contentView.snp.top).offset(30)
             make.centerX.equalTo(contentView.snp.centerX).offset(-40)
         }
+        
         connectedTarget()
      }
 
@@ -104,23 +105,21 @@ class VFItemCell: UICollectionViewCell {
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 
         guard isUserInteractionEnabled else { return nil }
+
         guard !isHidden else { return nil }
+
         guard alpha >= 0.01 else { return nil }
 
         guard self.point(inside: point, with: event) else { return nil }
 
 
         // add one of these blocks for each button in our collection view cell we want to actually work
-        if  !self.itemEditView.isHidden && self.itemEditView.itemButton[0].point(inside: convert(point, to: itemEditView.itemButton[0]), with: event) {
-           return self.itemEditView.itemButton[0]
-        }
-        if !self.itemEditView.isHidden && self.itemEditView.itemButton[1].point(inside: convert(point, to: itemEditView.itemButton[1]), with: event) {
-           	return self.itemEditView.itemButton[1]
+        if self.itemEditView.point(inside: convert(point, to: itemEditView), with: event) {
+            return self.itemEditView
         }
 
         return super.hitTest(point, with: event)
     }
-    
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
         imageView.image = image
@@ -143,6 +142,7 @@ class VFItemCell: UICollectionViewCell {
 
         row = indexPath.row
         section = indexPath.section
+        
     }
     
     func retrieveKind(name: String) {
@@ -188,6 +188,10 @@ class VFItemCell: UICollectionViewCell {
     }
     
     @objc func deleteItem(_ sender: VFButton) {
-        delegate?.deleteSelectedItem(item: row, section: section)
+        print("tapped delete item")
+        delegate?.presentSelectedAlertVC(item: row, section: section)
     }
+    
+
 }
+

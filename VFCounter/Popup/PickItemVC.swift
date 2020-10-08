@@ -48,7 +48,7 @@ class PickItemVC: UIViewController {
     private var measurementView: MeasurementView!
     private var userDTView: UserDateTimeView!
     private var fetchedItem: VFItemController.Items?
-    private var kindSegmentControl: UISegmentedControl!
+    var kindSegmentControl: UISegmentedControl!
     private var sectionFilter: SectionFilter?
 
 
@@ -71,7 +71,13 @@ class PickItemVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if sectionFilter == .chart {
+            configureSegmentControl()
+        } else {
+            if kindSegmentControl != nil {
+                kindSegmentControl.isHidden = true
+            }
+        }
         configureBarItem()
         configureMeasurementView()
         configureHierarchy()
@@ -81,13 +87,18 @@ class PickItemVC: UIViewController {
         applyFetchedItem()        
     }
     
+    func updateNaviTitle(to tag: Int) {
+        tag == 0 ? (navigationItem.title = NavTitle.veggie.text)
+            : (navigationItem.title = NavTitle.fruit.text)
+    }
+    
     func configureBarItem() {
         
         view.backgroundColor = ColorHex.lightKhaki
         let doneButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self,
                                          action: #selector(dismissVC))
     
-        datemodel.tag == 0 ? (navigationItem.title = NavTitle.veggie.text) : (navigationItem.title = NavTitle.fruit.text)
+        updateNaviTitle(to: datemodel.tag)
         navigationItem.rightBarButtonItem = doneButton
         self.setupToHideKeyboardOnTapOnView()
     }
@@ -101,7 +112,7 @@ class PickItemVC: UIViewController {
         measurementView = MeasurementView(tag: datemodel.tag)
         view.addSubview(measurementView)
         measurementView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
             make.leading.trailing.equalTo(view)
             make.height.equalTo(70)
         }
@@ -195,18 +206,17 @@ class PickItemVC: UIViewController {
             
             if (simulatedVeggie > datemodel.maxV) && amount > 0 {
                 self.presentAlertVC(title: "알림", message: "\(remain)g 추가할 수 있습니다.", buttonTitle: "OK")
-                 return true
+                return true
             }
             
         } else {
-            
             
             let simulatedFruit = sumF + amount
             let remain = datemodel.maxF - sumF
             
             if (simulatedFruit > datemodel.maxF) && amount > 0 {
                 self.presentAlertVC(title: "알림", message: "\(remain)g 추가할 수 있습니다.", buttonTitle: "OK")
-                 return true
+                return true
             }
         }
         
