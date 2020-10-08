@@ -36,7 +36,7 @@ class DataFilterView: UIView {
   
         let defaultFont = NanumSquareRound.bold.style(sizeOffset: 13)
         dataSegmentControl = CustomSegmentedControl()
-        dataSegmentControl.setButtonTitles(buttonTitles: ["데이터","내역"])
+        dataSegmentControl.setButtonTitles(buttonTitles: ["Data","List"])
         dataSegmentControl.selectorViewColor = ColorHex.orangeyRed
         dataSegmentControl.selectorTextColor = ColorHex.orangeyRed
         dataSegmentControl.titleFont = defaultFont

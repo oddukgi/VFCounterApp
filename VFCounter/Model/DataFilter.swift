@@ -12,19 +12,6 @@ protocol DateProtocol {
     var newDate: String { get set }
 }
 
-enum DataFilter {
-    
-    case data, list
-    var filterName: String {
-        switch self {
-        case .data:
-            return "데이터"
-        default:
-            return "내역"
-        }
-    }
-}
-
 enum SectionFilter {
     
     case main, chart
