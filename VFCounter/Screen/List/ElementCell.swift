@@ -64,7 +64,7 @@ class ElementCell: UITableViewCell, SelfConfigCell {
         if flag == true {
             self.hideItemView()
         } else {
-            
+            // inside of tableview
 //            guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
 //            for indexPath in selectedItems {
 //                if checkedIndexPath.first == indexPath {
@@ -239,8 +239,6 @@ extension ElementCell: ItemCellDelegate {
         self.hideItemView()
         delegate?.presentSelectedAlertVC(item: item, section: section)
     }
-    
-  
 
 }
 

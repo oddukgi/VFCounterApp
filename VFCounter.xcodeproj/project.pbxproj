@@ -609,6 +609,7 @@
 		12B50CF924C6EB2200C87956 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				123E00FF24ED41E8000457B9 /* Weather */,
 				12A0D6FD252EC46100A16877 /* Launch Screen.storyboard */,
 				12339B70252C6053004228DB /* SplashVC */,
 				125918C72519DCCD0031790D /* List */,
@@ -654,9 +655,8 @@
 		12BBF92724CABE4700C11ECD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				124B918024CACD5D009616A7 /* Cell */,
-				123E00FF24ED41E8000457B9 /* Weather */,
 				121A909824D18E3900AE0780 /* UICollectionReusableView */,
+				124B918024CACD5D009616A7 /* Cell */,
 				12AD3BA624EB7B7800443803 /* TableHeaderView.swift */,
 				12BBF92824CABE7B00C11ECD /* VFItemController.swift */,
 				1286EA86250F3C7600FDDBE6 /* DataFilter.swift */,
