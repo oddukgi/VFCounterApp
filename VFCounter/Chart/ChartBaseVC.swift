@@ -16,6 +16,12 @@ import Charts
 class ChartBaseVC: UIViewController, ChartViewDelegate {
 
     var shouldHideData: Bool = false
+    var dateStrategy: DateStrategy!
+    
+    init(dateStrategy: DateStrategy) {
+        self.dateStrategy = dateStrategy
+        super.init(nibName: nil, bundle: nil)
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -110,5 +116,11 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
     func chartTranslated(_ chartView: ChartViewBase, dX: CGFloat, dY: CGFloat) {
         
     }
+
+    func updatePeriod(_ reloadData: Bool = false) {
+        dateStrategy.fetchedData()
+        dateStrategy.setDateRange()
+    }
+    
 }
 

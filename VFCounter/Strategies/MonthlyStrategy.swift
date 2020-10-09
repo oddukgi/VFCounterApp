@@ -31,8 +31,6 @@ public class MonthlyDateStrategy: DateStrategy {
     private var vDates: [String] = []
     private var fDates: [String] = []
     
-
-    
     public var mininumDate: Date? {
 
         set {
@@ -52,7 +50,6 @@ public class MonthlyDateStrategy: DateStrategy {
         }
     }
     
-    
     let monthList = MonthlyList()
 
     private lazy var dateFormatter: DateFormatter = {
@@ -66,6 +63,7 @@ public class MonthlyDateStrategy: DateStrategy {
     // MARK: - Object Lifecycle
     public init(date: Date) {
         self.date = date
+        privateMaximumDate = self.date
     }
     
     // MARK: - Setting Date
@@ -100,8 +98,6 @@ public class MonthlyDateStrategy: DateStrategy {
         return Array(items).sorted()
     }
     
-    
-    
     public func fetchedData() {
         let dataManager = DataManager()
         dataManager.getDateDictionary { (veggieDates, fruitDates) in
@@ -110,7 +106,6 @@ public class MonthlyDateStrategy: DateStrategy {
                 _ = item.compactMap ({ if $0 == "date" {  vDates.append($1 as! String) } })
             }
             
-            
             fruitDates.forEach { (item) in
                 _ = item.compactMap ({ if $0 == "date" {  fDates.append($1 as! String) } })
             }
@@ -118,55 +113,49 @@ public class MonthlyDateStrategy: DateStrategy {
         
         oldVDates = vDates.last?.changeDateTime(format: .date)
         oldFDates = fDates.last?.changeDateTime(format: .date)
+        
+        print("Old Dates : \(oldVDates), \(oldFDates), \(date)")
     }
-    
+
     public func setDateRange() {
-    
-        guard let oldVDates = oldVDates,let oldFDates = oldFDates else { return }
-        
-        let customDateCondition: Bool = (oldVDates < date || oldFDates < date)
-        if customDateCondition {
-            let newDate: Date = (oldVDates < oldFDates) || (oldVDates > oldFDates) ? oldVDates : oldFDates
-            privateMinimumDate = newDate
-        } else {
-            privateMinimumDate = date
-        }
-       
-        privateMaximumDate = Date()
-        
-        if oldVDates < oldFDates {
+        // compare date
+        switch (oldVDates, oldFDates) {
+        case let (oldVDates?, .none):
             privateMinimumDate = oldVDates
-        } else {
+        case let (.none, oldFDates?):
             privateMinimumDate = oldFDates
-        }
-      
+        case let (.none, .none):
+            privateMinimumDate = date
+        default:
+            guard let oldVDates = oldVDates, let oldFDates = oldFDates else { return }
+            (oldVDates < oldFDates) ? (privateMinimumDate = oldVDates) : (privateMinimumDate = oldFDates)
+      }
+
     }
     
     public func previous() {
+        
+        print("Previous: \(privateMinimumDate)")
         if let minDate = privateMinimumDate,  date >= minDate.startOfDay()  {
             date = date.lastMonth
-
             DateSettings.default.periodController.monthDate = date
         }
     }
  
     public func next() {
         
+        guard let maxDate = privateMaximumDate else { return }
+        let maxYear = maxDate.getYear
+        let maxMonth = maxDate.getMonth
         let year = date.getYear
         let month = date.getMonth
-        let maxYear = privateMaximumDate!.getYear
-        let maxMonth = privateMaximumDate!.getMonth
         
+        print("MAX Date: \(maxDate)")
         
-        if ((year == maxYear) && (month < maxMonth)) ||
-                (year != maxYear)  {
-        
+        if ((year == maxYear) && (month < maxMonth)) || (year != maxYear)  {
             date = date.nextMonth
             DateSettings.default.periodController.monthDate = date
         }
     }
-    
-    public func calcurateItems() {
-        
-    }
+
 }

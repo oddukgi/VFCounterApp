@@ -12,8 +12,9 @@ class DateProvider {
     
     class func updateDateMap(date: Date, isWeekly: Bool = true) -> [String]{
         
-        var dates = [Date]()
-        isWeekly ? (dates = date.getWeekDates()) : (dates = date.getMonthlyDates())
+        var dates = [Date]()        
+        let startOfMonth = date.startOfMonth(in: Calendar.current)
+        isWeekly ? (dates = date.getWeekDates()) : (dates = startOfMonth.getMonthlyDates())
         let arrDates = dates.map { $0.changeDateTime(format: .longDate)}
         return arrDates 
     }
@@ -45,5 +46,4 @@ struct ValueConfig {
     var sumFruits: Int  = 0
     
     init() {}
-
 }

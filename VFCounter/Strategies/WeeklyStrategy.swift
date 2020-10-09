@@ -45,13 +45,9 @@ public class WeeklyDateStrategy: DateStrategy {
         }
     }
 
-
-
-    
-    
-    // MARK: - Object Lifecycle
     public init(date: Date) {
         self.date = date
+        self.privateMaximumDate = self.date
     }
     
     // MARK: - Setting Date
@@ -126,29 +122,34 @@ public class WeeklyDateStrategy: DateStrategy {
         
         oldVDates = vDates.last?.changeDateTime(format: .date)
         oldFDates = fDates.last?.changeDateTime(format: .date)
-    }
-    
-   public func setDateRange() {
-        if oldVDates == nil && oldFDates == nil {
-            privateMinimumDate = date.lastMonth
-        }
         
-        if let dateA = oldVDates, let dateB = oldFDates {
-            
-            if dateA < dateB {
-                privateMinimumDate = dateA
-            } else {
-                privateMinimumDate = dateB
-            }
-            
-        }
+    }
+
+    public func setDateRange() {
+        // compare date
+        switch (oldVDates, oldFDates) {
+        case let (oldVDates?, .none):
+            privateMinimumDate = oldVDates
+        case let (.none, oldFDates?):
+            privateMinimumDate = oldFDates
+        case let (.none, .none):
+            privateMinimumDate = date
+        default:
+            guard let oldVDates = oldVDates, let oldFDates = oldFDates else { return }
+            (oldVDates < oldFDates) ? (privateMinimumDate = oldVDates) : (privateMinimumDate = oldFDates)
+      }
+
     }
     
     public func previous() {
+        
         guard let minDate = privateMinimumDate else { return }
         date = self.date.aDayInLastWeek.getStartOfWeek()
 
-        if date >= minDate {
+        let dateMap = date.getWeekDates()
+        if dateMap.contains(minDate) {
+            DateSettings.default.periodController.weekDate = date
+        } else {
             DateSettings.default.periodController.weekDate = date
         }
     }
@@ -157,7 +158,6 @@ public class WeeklyDateStrategy: DateStrategy {
         
         let now = Date()
         if date <= now {
-            
             date = self.date.aDayInNextWeek.getStartOfWeek()
             DateSettings.default.periodController.weekDate = date
         }
@@ -168,10 +168,6 @@ public class WeeklyDateStrategy: DateStrategy {
         let dataManager = DataManager()
         configs.maxVeggies = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
         configs.maxFruits = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
-        
-    
-        
-        
-    }
-    
+
+    }  
 }

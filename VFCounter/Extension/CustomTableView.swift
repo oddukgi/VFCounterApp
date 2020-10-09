@@ -20,10 +20,10 @@ class CustomTableView: UITableView {
             return nil
         }
         
-//
-//        NotificationCenter.default.post(name: .touchOutsideTableView, object: nil,
-//                                        userInfo: [  "hideEditView": false,
-//                                                     "indexPath": path ])
+
+        NotificationCenter.default.post(name: .touchOutsideTableView, object: nil,
+                                        userInfo: [  "hideEditView": false,
+                                                     "indexPath": path ])
 
         return super.hitTest(point, with: event)
     }

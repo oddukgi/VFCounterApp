@@ -34,6 +34,7 @@
 		1239011724FF8B4A001865DD /* UIDatePicker+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */; };
 		123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E00FD24ED40CE000457B9 /* NetworkManager.swift */; };
 		123E010124ED4215000457B9 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123E010024ED4215000457B9 /* WeatherData.swift */; };
+		123F83332530288200F751D9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F83322530288200F751D9 /* BaseViewController.swift */; };
 		12445D3B251F630B00330FFE /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12445D3A251F630B00330FFE /* DatePickerVC.swift */; };
 		1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247F5A224CECB5E00AD34F5 /* PickItemCell.swift */; };
 		1249159D25281C2400FDFFCF /* MonthlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249159C25281C2400FDFFCF /* MonthlyModel.swift */; };
@@ -197,6 +198,7 @@
 		1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+Ext.swift"; sourceTree = "<group>"; };
 		123E00FD24ED40CE000457B9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		123E010024ED4215000457B9 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		123F83322530288200F751D9 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		12445D3A251F630B00330FFE /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DatePickerVC.swift; path = VFCounter/Screen/DatePickerVC.swift; sourceTree = SOURCE_ROOT; };
 		1247F5A224CECB5E00AD34F5 /* PickItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItemCell.swift; sourceTree = "<group>"; };
 		1249159C25281C2400FDFFCF /* MonthlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyModel.swift; sourceTree = "<group>"; };
@@ -620,6 +622,7 @@
 				126AE53D24C6C6B4000BCF7E /* HomeVC.swift */,
 				1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */,
 				122625E124DA549900AC2962 /* SettingVC.swift */,
+				123F83322530288200F751D9 /* BaseViewController.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -1149,6 +1152,7 @@
 				12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */,
 				12AD3BA724EB7B7800443803 /* TableHeaderView.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
+				123F83332530288200F751D9 /* BaseViewController.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,
 				12445D3B251F630B00330FFE /* DatePickerVC.swift in Sources */,
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,

@@ -15,8 +15,6 @@ class WeeklyChartVC: ChartBaseVC {
 
     let lblweek = VFTitleLabel(textAlignment: .center, fontSize: 14)
     let chartView = BarChartView()
- 
-    var dateStrategy: DateStrategy!
 
     private let dataManager = DataManager()
     private var weekday = Array<String>()
@@ -41,18 +39,7 @@ class WeeklyChartVC: ChartBaseVC {
         stackView.distribution = .fill
         return stackView
     }()
-    
-    
- 
-    init(dateStrategy: DateStrategy) {
-        self.dateStrategy = dateStrategy
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
    
@@ -67,10 +54,11 @@ class WeeklyChartVC: ChartBaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updatePeriod()
+        self.updatePeriod()
+        self.changeLabelText()
     }
     
-    func configure() {
+    private func configure() {
         view.addSubViews(weekStackView,lblweek)
         arrowButtons.forEach {
             weekStackView.addArrangedSubview($0)
@@ -91,28 +79,24 @@ class WeeklyChartVC: ChartBaseVC {
         lblweek.font = Seoulnamsan.medium.style(offset: 20)
     }
     
-    
-    func updatePeriod() {
-        
-        dateStrategy.fetchedData()
-        dateStrategy.setDateRange()
+    private func changeLabelText() {
         let data = dateStrategy.updateLabel()
         lblweek.text = data.0
         let datamap = data.2!
         setDataCount(datemap: datamap)
-
     }
     
     func connectAction() {
-        
-        arrowButtons[0].addTargetClosure { _ in
-            self.dateStrategy.previous()
-            self.updatePeriod()
 
+        arrowButtons[0].addTargetClosure { _ in
+            self.updatePeriod()
+            self.dateStrategy.previous()
+            self.changeLabelText()
         }
         arrowButtons[1].addTargetClosure { _ in
-            self.dateStrategy.next()
             self.updatePeriod()
+            self.dateStrategy.next()
+            self.changeLabelText()
         }
     }
     

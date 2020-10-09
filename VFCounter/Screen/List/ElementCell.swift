@@ -65,13 +65,13 @@ class ElementCell: UITableViewCell, SelfConfigCell {
             self.hideItemView()
         } else {
             // inside of tableview
-//            guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
-//            for indexPath in selectedItems {
-//                if checkedIndexPath.first == indexPath {
-//                    self.hideItemView()
-//                    break
-//                }
-//            }
+            guard let selectedItems = collectionView.indexPathsForSelectedItems else { return }
+            for indexPath in selectedItems {
+                if checkedIndexPath.first == indexPath {
+                    hideItemView()
+                    break
+                }
+            }
         }
     }
     

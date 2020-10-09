@@ -91,10 +91,10 @@ class VFItemCell: UICollectionViewCell {
     }
     
     func showItemEditView() {
-        itemEditView.addedTouchArea = 50
+        itemEditView.addedTouchArea = 60
         contentView.addSubview(itemEditView)
         itemEditView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(30)
+            make.top.equalTo(contentView.snp.top).offset(20)
             make.centerX.equalTo(contentView.snp.centerX).offset(-40)
         }
         
@@ -111,7 +111,6 @@ class VFItemCell: UICollectionViewCell {
         guard alpha >= 0.01 else { return nil }
 
         guard self.point(inside: point, with: event) else { return nil }
-
 
         // add one of these blocks for each button in our collection view cell we want to actually work
         if self.itemEditView.point(inside: convert(point, to: itemEditView), with: event) {
@@ -130,8 +129,7 @@ class VFItemCell: UICollectionViewCell {
         lblName.text = name
         lblAmount.text = "\(amount)g"
     }
-    
-  
+
     func connectedTarget() {
         itemEditView.itemButton[0].addTarget(self, action: #selector(modifyItem(_:)), for: .touchUpInside)
         itemEditView.itemButton[1].addTarget(self, action: #selector(deleteItem(_:)), for: .touchUpInside)
@@ -191,7 +189,5 @@ class VFItemCell: UICollectionViewCell {
         print("tapped delete item")
         delegate?.presentSelectedAlertVC(item: row, section: section)
     }
-    
-
 }
 

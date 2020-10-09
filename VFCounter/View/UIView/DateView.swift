@@ -68,10 +68,11 @@ class DateView: UIView {
         if sender.tag == 0 {
             guard date > startDate! else { return }
             date = date.dayBefore.endOfDay()           
+  
         } else {
             
-            let theFuture = date.addingTimeInterval(100)
-            if theFuture > endDate! { return }
+            let theFuture = date.endOfDay()
+            if theFuture >= endDate! { return }
             date = date.dayAfter.endOfDay()
         }
         
@@ -82,6 +83,4 @@ class DateView: UIView {
         date = userdate.changeDateTime(format: .date)
         changeDateToResource(to: date)
     }
-    
-
 }

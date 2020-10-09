@@ -66,7 +66,7 @@ class UserItemVC: UIViewController {
         configureDataSource()
         configureTitleDataSource()
         checkLoadingStatus()
-        connectCV()
+        addTapGestureInCollectionView()
         updateData()
     }
 
@@ -100,7 +100,7 @@ class UserItemVC: UIViewController {
         }
     }
     
-    func connectCV() {
+    func addTapGestureInCollectionView() {
         // tap the blank place, then save the icons arrangetment changes
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapEmptySpaceGesture))
         tapGestureRecognizer.numberOfTapsRequired = 1
@@ -166,8 +166,8 @@ class UserItemVC: UIViewController {
             //The point is outside of collection cell
             guard let indexPath = checkedIndexPath.first else { return }
             if let cell = collectionView.cellForItem(at: indexPath) as? VFItemCell {
-                if cell.itemEditView.isHidden == false {
-                    cell.itemEditView.isHidden = true
+                if cell.selectedItem == true {
+                    cell.selectedItem = false
                 }
             }
          
