@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NanumSquareRoundB.ttf">
+            <string>NanumSquareRoundB</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Rd7-Sf-DeE" customClass="MaxAmountVeggieCell" customModule="VFCounter" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="57"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rd7-Sf-DeE" id="Upc-Zs-xdW">
+                <rect key="frame" x="0.0" y="0.0" width="348" height="57"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mZ5-28-Ekn">
+                        <rect key="frame" x="8" y="8" width="80" height="41"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="10" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="907-qi-Tgh" userLabel="maxAmountTF">
+                                <rect key="frame" x="0.0" y="0.0" width="60" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="fqI-Fd-Iw0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="NanumSquareRoundB" family="NanumSquareRound" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="editingDidBegin:" destination="Rd7-Sf-DeE" eventType="editingDidBegin" id="xDE-Eh-PTt"/>
+                                    <outlet property="delegate" destination="Rd7-Sf-DeE" id="3Qf-If-N3a"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="g" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FI2-yh-Utl" userLabel="unitLabel">
+                                <rect key="frame" x="70" y="0.0" width="10" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="YVL-IU-SJL"/>
+                    </stackView>
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="DFP-jW-qg9" userLabel="amountSlider">
+                        <rect key="frame" x="109" y="8" width="232" height="42"/>
+                        <color key="minimumTrackTintColor" systemColor="systemGreenColor"/>
+                        <color key="maximumTrackTintColor" red="0.70196078431372544" green="0.72156862745098038" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <action selector="valueChangedSlider:" destination="Rd7-Sf-DeE" eventType="valueChanged" id="bjg-Dv-kxd"/>
+                        </connections>
+                    </slider>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="DFP-jW-qg9" secondAttribute="bottom" constant="8" id="NbB-c6-vsu"/>
+                    <constraint firstAttribute="bottom" secondItem="mZ5-28-Ekn" secondAttribute="bottom" constant="8" id="Pww-mP-SU4"/>
+                    <constraint firstItem="DFP-jW-qg9" firstAttribute="top" secondItem="Upc-Zs-xdW" secondAttribute="top" constant="8" id="X80-sr-bbs"/>
+                    <constraint firstItem="mZ5-28-Ekn" firstAttribute="top" secondItem="Upc-Zs-xdW" secondAttribute="top" constant="8" id="pNM-NY-IyI"/>
+                    <constraint firstItem="mZ5-28-Ekn" firstAttribute="leading" secondItem="Upc-Zs-xdW" secondAttribute="leading" constant="8" id="qb4-TN-XNW"/>
+                    <constraint firstAttribute="trailing" secondItem="DFP-jW-qg9" secondAttribute="trailing" constant="9" id="tpo-NU-smD"/>
+                    <constraint firstItem="DFP-jW-qg9" firstAttribute="leading" secondItem="mZ5-28-Ekn" secondAttribute="trailing" constant="23" id="ulu-9K-DpL"/>
+                </constraints>
+            </tableViewCellContentView>
+            <gestureRecognizers/>
+            <connections>
+                <outlet property="maxAmountTF" destination="907-qi-Tgh" id="Mwa-Wb-xIc"/>
+                <outlet property="veggieSlider" destination="DFP-jW-qg9" id="aET-YV-Vtz"/>
+            </connections>
+            <point key="canvasLocation" x="272" y="-91.304347826086968"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

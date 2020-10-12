@@ -60,11 +60,9 @@ extension PickItemVC {
     }
     
     func updateCollectionView() {
-    
          OperationQueue.main.addOperation {
             self.dataSource.apply(self.currentSnapshot, animatingDifferences: false)
         }
-    
     }
     
     func configureSegmentControl() {

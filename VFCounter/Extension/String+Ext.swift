@@ -87,6 +87,12 @@ extension String {
         return rangeOfCharacter(from: CharacterSet(charactersIn: "월화수목금토일")) != nil
     }
     
+    func containsNumber() -> String {
+        let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
+        let compSepByCharInSet = self.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        return numberFiltered
+    }
     
     func doesStringContains(input: String) -> Bool {
         return self.range(of: input, options: .caseInsensitive) != nil

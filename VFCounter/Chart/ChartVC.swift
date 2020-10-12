@@ -37,6 +37,7 @@ class ChartVC: UIViewController {
     private var dateStrategy: DateStrategy!
     var valueConfig = ValueConfig()
 
+    let datamanager = DataManager()
     var weeklyChartVC:  WeeklyChartVC?
     let calendarController = CalendarController(mode: .single)
     
@@ -140,14 +141,27 @@ class ChartVC: UIViewController {
     @objc func tappedAdd(_ sender: VFButton) {
         showPickUpViewController(tag: 0)
     }
+
+    func checkMaxValueFromDate(date: String) {
+        let dataManager = DataManager()
+        let defaultV = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
+        let defaultF = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
+        
+        let maxValues = datamanager.getMaxData(date: date)
+        let maxVeggie = (maxValues.0 == 0) ? defaultV : maxValues.0
+        let maxFruit = (maxValues.1 == 0) ? defaultF : maxValues.1
+        
+        print("Max Value: \(maxVeggie),\(maxFruit)")
+  
+        valueConfig.maxVeggies = maxVeggie
+        valueConfig.maxFruits = maxFruit
+    }
     
-
     func showPickUpViewController(tag: Int) {
-        let datamanager = DataManager()
-        valueConfig.maxVeggies = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
-        valueConfig.maxFruits = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
-
+     
         let datetime = dateConfigure.date.changeDateTime(format: .date)
+        
+        checkMaxValueFromDate(date: datetime)
         let datemodel = DateModel(date: datetime, tag: tag, sumV: valueConfig.sumVeggies,
                                   sumF: valueConfig.sumFruits, maxV: valueConfig.maxVeggies,
                                   maxF: valueConfig.maxFruits)
@@ -182,11 +196,8 @@ class ChartVC: UIViewController {
         }
 
     }
-    
-    
+
 }
-
-
 
 extension ChartVC: CustomSegmentedControlDelegate {
     func change(to index: Int) {
@@ -227,9 +238,10 @@ extension ChartVC: PickItemVCProtocol {
     func addItems(item: VFItemController.Items, tag: Int) {
     
         if !item.name.isEmpty {
-            let dataManager = DataManager()
+            
             let stringDate = String(item.date.split(separator: " ").first!)
-            dataManager.createEntity(item: item, tag: tag)
+            checkMaxValueFromDate(date: stringDate)
+            datamanager.createEntity(item: item, tag: tag, valueConfig: valueConfig)
             
             NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
             updateView(dateTime: stringDate)

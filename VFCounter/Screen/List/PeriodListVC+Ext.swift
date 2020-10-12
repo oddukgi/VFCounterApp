@@ -32,17 +32,21 @@ extension PeriodListVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return weekday[section]
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel.init(frame: CGRect.init(x: 20, y: 0, width: tableView.frame.size.width, height: 44))
+        label.textColor = UIColor.black
+        label.text = self.weekday[section]
+        label.font = NanumSquareRound.bold.style(sizeOffset: 15)
+        return label
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: ElementCell.reuseIdentifier, for: indexPath) as! ElementCell
         let newDate = weekday[indexPath.section].components(separatedBy: " ")[0]
         cell.updateDate(newDate)
         cell.delegate = self
-        cell.kindIndex = selectedIndex
         cell.layoutIfNeeded()
 
         return cell

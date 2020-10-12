@@ -14,7 +14,7 @@ class SettingItemCell: UITableViewCell {
     static let reuseIdentifier = "SettingItemCell"
     
     lazy var itemImgView: UIImageView = {
-        let image = UIImage(named: "alarm")
+        let image = UIImage(named: "scale")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         return imageView        
@@ -31,15 +31,13 @@ class SettingItemCell: UITableViewCell {
         itemImgView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView.snp.centerY)
             make.leading.equalTo(contentView).offset(25)
-            make.size.equalTo(CGSize(width: 25, height: 25))
+            make.size.equalTo(CGSize(width: 32, height: 32))
         }
 
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-    
-
     }
 
 }

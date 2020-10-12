@@ -35,7 +35,7 @@ class DataManager {
           return entityItem
       }
 
-    func createEntity(item: VFItemController.Items, tag: Int) {
+    func createEntity(item: VFItemController.Items, tag: Int, valueConfig: ValueConfig) {
           
           var entityItem: DataType? 
           
@@ -51,11 +51,13 @@ class DataManager {
                 entityItem = configureEntity(Fruits.self, transaction: transaction, configuration: UserDataManager.fruitsConfiguration)
               }
               
-              entityItem?.name = item.name
-              entityItem?.date = newDate[0]
-              entityItem?.createdDate = item.entityDT
-              entityItem?.image = item.image?.pngData()
-              entityItem?.amount = Int16(item.amount)
+            entityItem?.name = item.name
+            entityItem?.date = newDate[0]
+            entityItem?.createdDate = item.entityDT
+            entityItem?.image = item.image?.pngData()
+            entityItem?.amount = Int16(item.amount)
+            entityItem?.maxveggie = Int16(valueConfig.maxVeggies)
+            entityItem?.maxfruit = Int16(valueConfig.maxFruits)
            
           })
 
@@ -88,24 +90,14 @@ class DataManager {
         var fruitFilter = Where<Fruits>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date),date)
     
         let totalVeggies = try? UserDataManager.dataStack.queryValue(From<Veggies>(),
-            Select<Veggies,Int16>(.sum("amount")), veggieFilter) ?? 0
+            Select<Veggies,Int16>(.sum("amount")), veggieFilter)
         
         let totalFruits = try? UserDataManager.dataStack.queryValue(From<Fruits>(),
-            Select<Fruits,Int16>(.sum("amount")), fruitFilter) ?? 0
+            Select<Fruits,Int16>(.sum("amount")), fruitFilter)
 
         return (Int(totalVeggies ?? 0),Int(totalFruits ?? 0))
     }
     
-    
-    /*
-     let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
-         
-         let veggieSum = try transaction.queryValue(From<Veggies>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
-         let fruitSum  = try transaction.queryValue(From<Fruits>().select(Int16.self, .sum(\.amount)).where(format: "%K BEGINSWITH[c] %@",#keyPath(DataType.date),date))
-         completion(Int(veggieSum!), Int(fruitSum!))
-         
-     })
-     */
     
     func checkVeggieData(date: String, completion: @escaping ([[String : Any]]) -> Void) {
     
@@ -235,15 +227,7 @@ class DataManager {
             
         })
     }
-    
-    
-    /*
-     let personJSON = try dataStack.queryAttributes(
-         From<MyPersonEntity>(),
-         Select("name", "age")
-     )
-     */
-    
+ 
     func reorderData(date: String, completion: DataDictionary) {
         let _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
             let veggieData = try transaction.queryAttributes(From<Veggies>()
@@ -265,6 +249,20 @@ class DataManager {
     }
     
     
+    
+    func getMaxData(date: String) -> (Int,Int) {
+        var veggieFilter = Where<Veggies>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date),date)
+        var fruitFilter = Where<Fruits>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date),date)
         
+        let maxVeggie = try? UserDataManager.dataStack
+            .queryValue(From<Veggies>(),Select<Veggies,Int16>(.maximum("maxveggie")), veggieFilter)
+        
+        let maxFruit = try? UserDataManager.dataStack
+            .queryValue(From<Fruits>(), Select<Fruits,Int16>(.maximum("maxfruit")), fruitFilter)
+
+        print("GetMaxData(): \(date) \(maxVeggie) \(maxFruit)")
+    
+        return (Int(maxVeggie ?? 0),Int(maxFruit ?? 0))
+    }
 
 }

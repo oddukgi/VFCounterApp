@@ -100,9 +100,7 @@ extension UserItemVC {
             let amount = Int(data.amount)
 
             let dateTime = data.createdDate?.changeDateTime(format: .dateTime)
-
             cell.updateContents(image: image,name: data.name!, amount: amount, date: dateTime!)
-            cell.selectedItem = self.checkedIndexPath.contains(indexPath)
 
             return cell
         }        
@@ -112,10 +110,11 @@ extension UserItemVC {
     func configureTitleDataSource() {
         dataSource.supplementaryViewProvider = { [weak self]
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            guard let self = self, let snapshot = self.currentSnapshot else { return nil }
+            guard let self = self else { return nil }
             
             if let titleSupplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier, for: indexPath) as? TitleSupplementaryView {
                 
+                let snapshot = self.dataSource.snapshot()
                 let category = snapshot.sectionIdentifiers[indexPath.section]
                 titleSupplementary.delegate = self
                 titleSupplementary.updateTitles(title: category.title)
@@ -145,55 +144,108 @@ extension UserItemVC {
     }
 
     func reloadRing(date: String) {
-    
-        let maxVeggies = valueConfig.maxVeggies
-        let maxFruits = valueConfig.maxFruits
-       
         let values = dataManager.getSumItems(date: date)
         self.circularView.updateValue(veggieSum: values.0, fruitSum: values.1)
         self.valueConfig.sumVeggies = values.0
         self.valueConfig.sumFruits = values.1     
     }
     
-    func hideItemView() {
-        checkedIndexPath.removeAll()
-        collectionView.reloadData()
-    }
+
+    // MARK: - ContextMenu Action
+    // this is just here to be able to set a custom tooltip menu item
+    @objc private func modifyTapped(_ sender: UIMenuController) { }
+    @objc private func deleteTapped(_ sender: UIMenuController) { }
+
 }
+
 
 extension UserItemVC: UICollectionViewDelegate {
     
-    // 아이템 값 수정 및 삭제
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 아이템을 선택하면, 홈화면으로 이동
-        let cell = collectionView.cellForItem(at: indexPath) as! VFItemCell
-        var snap = self.dataSource.snapshot()
-        if checkedIndexPath.isEmpty {
-            cell.selectedItem = true
-            checkedIndexPath.insert(indexPath)
-            cell.selectedIndexPath(indexPath)
+    
+    @available(iOS 13.0, *)
+      public func collectionView(_ collectionView: UICollectionView,
+                                 contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
             
-        } else {
-            checkedIndexPath.removeAll()
-             OperationQueue.main.addOperation {
-                self.dataSource.apply(snap, animatingDifferences: false)
-            }
+        let itemCount = fetchingItems[indexPath.section](stringDate).count
+        
+          guard indexPath.item < itemCount else {
+              return nil
+          }
+          
+        guard let cell = collectionView.cellForItem(at: indexPath) as? VFItemCell else { return nil }
+        
+          var actions = [UIAction]()
+          if itemCount > 0 {
+              let editAction = UIAction( title: "Edit",
+                                         image: UIImage(named: "edit")) { [weak self] _ in
+                
+                cell.modifyItem(for: indexPath.item, to: indexPath.section)
+              }
+            
+            
+              let deleteAction = UIAction( title: "Delete",
+                                           image: UIImage(named: "delete")) { [weak self] _ in
+                cell.deleteItem(for: indexPath.item, to: indexPath.section)
+              }
+              
+            
+              actions = [editAction, deleteAction]
+          }
+
+          let actionProvider: UIContextMenuActionProvider = { _ in
+              return UIMenu(title: "", children: actions)
+          }
+          
+          return UIContextMenuConfiguration(
+              identifier: "editItem" as NSCopying,
+              previewProvider: nil,
+              actionProvider: actionProvider)
+      }
+      
+      public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+          
+          // don't show menu for add item cell
+        let itemCount = fetchingItems[indexPath.section](stringDate).count
+
+        guard indexPath.item < itemCount else {
+            return false
         }
         
-    }
+        let editItems = UIMenuItem(title: "Edit", action: #selector(modifyTapped(_:)))
+        let deleteItems = UIMenuItem(title: "Delete", action: #selector(deleteTapped(_:)))
+        UIMenuController.shared.menuItems = [editItems, deleteItems]
+        return true
+      }
+      
+      public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector,
+                                 forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+          
+        // don't show menu for add item cell
+        let itemCount = fetchingItems[indexPath.section](stringDate).count
+        
+        if (action == #selector(modifyTapped) && itemCount > 0) {
+            return true
+        } else if (action == #selector(deleteTapped) && itemCount > 0) {
+            return true
+        }
+        
+        return false
+      }
+      
+      public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+          
+      }
 }
 
 // MARK: - Protocol Extension
 
 extension UserItemVC: PickItemVCProtocol {
     
-
     func addItems(item: VFItemController.Items, tag: Int) {
 
-        self.hideItemView()
         if !item.name.isEmpty {
-            stringDate = String(item.date.split(separator: " ").first!)
-            dataManager.createEntity(item: item, tag: tag)            
+            stringDate = String(item.date.split(separator: " ").first!)            
+            dataManager.createEntity(item: item, tag: tag, valueConfig: valueConfig)            
 		    updateData()
             NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
         }
@@ -204,7 +256,6 @@ extension UserItemVC: PickItemVCProtocol {
         var datatype: DataType.Type!
         tag == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
         
-        self.hideItemView()
         OperationQueue.main.addOperation {
             self.updateData(flag: false)
         }
@@ -220,8 +271,7 @@ extension UserItemVC: PickItemVCProtocol {
 extension UserItemVC: TitleSupplmentaryViewDelegate {
     
     func showPickUpViewController(tag: Int) {
-        self.hideItemView()
-
+   
         if tag == 0 {
             if valueConfig.sumVeggies == valueConfig.maxVeggies ,  valueConfig.sumVeggies > 0{
                 self.presentAlertVC(title: "알림", message: "최대치를 넘었습니다. 아이템을 삭제하세요!", buttonTitle: "OK")
@@ -289,7 +339,6 @@ extension UserItemVC: ItemCellDelegate {
   
     func presentSelectedAlertVC(item: Int, section: Int) {
         
-        self.hideItemView()
         let alert = UIAlertController(title: "", message: "선택한 아이템을 삭제할까요?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { _ in
@@ -300,6 +349,5 @@ extension UserItemVC: ItemCellDelegate {
     }
 
 }
-
 
 

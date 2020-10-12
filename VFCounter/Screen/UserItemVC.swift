@@ -10,6 +10,8 @@ import UIKit
 import CoreStore
 import CoreData
 
+
+
 class UserItemVC: UIViewController {
 
     enum Section: String {     
@@ -31,7 +33,6 @@ class UserItemVC: UIViewController {
     var userSettings = [UserSettings]()
     let dataManager = DataManager()
     var stringDate: String = ""
-    var checkedIndexPath = Set<IndexPath>()
     var valueConfig = ValueConfig()
     private var dateView: DateView!
 
@@ -66,7 +67,6 @@ class UserItemVC: UIViewController {
         configureDataSource()
         configureTitleDataSource()
         checkLoadingStatus()
-        addTapGestureInCollectionView()
         updateData()
     }
 
@@ -88,8 +88,7 @@ class UserItemVC: UIViewController {
     fileprivate func prepareNotificationAddObserver(){
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)), name: .updateTaskPercent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)), name: .updateFetchingData, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTouchDateView(_:)),
-                                               name: .touchDateView, object: nil)
+
     }
     
     func checkLoadingStatus() {
@@ -98,14 +97,6 @@ class UserItemVC: UIViewController {
         } else {
             firstLoadingApp()
         }
-    }
-    
-    func addTapGestureInCollectionView() {
-        // tap the blank place, then save the icons arrangetment changes
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapEmptySpaceGesture))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        self.collectionView?.backgroundView = UIView(frame:(self.collectionView?.bounds)!)
-        self.collectionView?.backgroundView!.addGestureRecognizer(tapGestureRecognizer)
     }
     
     @objc fileprivate func updateTaskRate(_ notification: Notification) {
@@ -133,57 +124,8 @@ class UserItemVC: UIViewController {
             updateData()
         }
     }
-    
-    
-    @objc fileprivate func updateTouchDateView(_ notification: Notification) {
-        if let touchView = notification.userInfo?["dateViewTouch"] as? Set<UITouch>,
-           let dateView = notification.userInfo?["dateView"] as? DateView {
-            
-            self.dateView = dateView
-            self.touchesBegan(touchView, with: nil)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-         let touch = touches.first
-         if touch?.view == self.circularView ||  touch?.view == self.dateView {
-
-            guard let indexPath = checkedIndexPath.first else { return }
-            if let cell = collectionView.cellForItem(at: indexPath) as? VFItemCell {
-                if cell.itemEditView.isHidden == false {
-                    cell.itemEditView.isHidden = true
-                }
-            }
-         }
-    }
-    
-    @objc func handleTapEmptySpaceGesture(recognizer: UITapGestureRecognizer){
-        let tapLocation = recognizer.location(in: self.view)
-        
-        if collectionView.indexPathForItem(at: tapLocation) == nil ||
-            collectionView.backgroundView != nil {
-        
-            //The point is outside of collection cell
-            guard let indexPath = checkedIndexPath.first else { return }
-            if let cell = collectionView.cellForItem(at: indexPath) as? VFItemCell {
-                if cell.selectedItem == true {
-                    cell.selectedItem = false
-                }
-            }
-         
-        }
-    }
 }
 
-
-/*
-
- Delete AllEntity
- DispatchQueue.main.async {
-     UserDataManager.deleteAllEntity()
-     self.updateData()
- }
-*/
 extension UserItemVC {
 
     func reloadDataByRange(date: String) {
@@ -226,15 +168,5 @@ extension UserItemVC {
         }
         
         reloadRing(date: date)
-
     }
 }
-//
-//extension UserItemVC: UIGestureRecognizerDelegate {
-//    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        // only handle tapping empty space (i.e. not a cell)
-//        let point = gestureRecognizer.location(in: collectionView)
-//        let indexPath = collectionView.indexPathForItem(at: point)
-//        return indexPath == nil
-//    }
-//}

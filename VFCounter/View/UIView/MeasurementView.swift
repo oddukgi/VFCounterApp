@@ -46,7 +46,7 @@ class MeasurementView: UIView {
     let slider = CustomSlider(step: 10)
     private var sliderWidth: CGFloat = 0
     private var step: Float = 10
-
+    private let maxLength = 3
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -102,7 +102,7 @@ class MeasurementView: UIView {
         
         addSubViews(labelStackView, slider)
 
-        gramTF.placeholderText("100")
+        gramTF.placeholderText("10")
         lblUnit.text = "g"
         
         labelStackView.addArrangedSubview(gramTF)
@@ -125,25 +125,17 @@ class MeasurementView: UIView {
         gramTF.text = "\(Int(slider.value))"
 
     }
-    
-
-    
-    
+  
     func judgetTextHasNumber(texts:String) -> Bool{
         let scan:Scanner = Scanner.init(string: texts)
        // return scan.scanFloat(&value) && scan.isAtEnd
         return (scan.scanFloat(representation: .decimal) != nil)  && scan.isAtEnd
     }
     
-    func checkAmountTF() {
-        let currentText:NSString = gramTF.text! as NSString
-        if !self.judgetTextHasNumber(texts: currentText as String){
-          
-            return
-        }
+    func checkAmountTF(text: String) {
         gramTF.resignFirstResponder()
        
-        let amount = currentText.floatValue
+        let amount = Float(text) ?? 0
         if slider.minimumValue <= amount && slider.maximumValue >= amount {
 
         let roundedValue = round(amount / step) * step
@@ -151,8 +143,8 @@ class MeasurementView: UIView {
             gramTF.text = String(Int(roundedValue))
             
         } else {
-            gramTF.text = "0"
-            slider.value = 0
+            gramTF.text = "10"
+            slider.value = 10
    
         }
     }
@@ -160,8 +152,23 @@ class MeasurementView: UIView {
 
 extension MeasurementView: UITextFieldDelegate {
     
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == self.gramTF {
+
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+            let convertedString = string.containsNumber()
+        
+            return (newString.length <= maxLength && string == convertedString)
+        }
+        
+        return false
+    }
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.checkAmountTF()
+        self.checkAmountTF(text: textField.text ?? "")
         return true
     }
 }
@@ -173,10 +180,8 @@ extension MeasurementView: SliderUpdateDelegate {
     }
 
     func sliderValueChanged(value: Float,tag: Int)  {
-        
         let amount = Int(slider.value)
         gramTF.text = String(amount)
     }
-
 }
 

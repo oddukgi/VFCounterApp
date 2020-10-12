@@ -8,7 +8,15 @@
 
 import UIKit
 import SnapKit
+import TouchAreaInsets
 
+
+
+// protocol : UserItemVC called --> VFItemCell
+protocol ItemCellDelegate: class {
+    func updateSelectedItem(item: VFItemController.Items, index: Int)
+    func presentSelectedAlertVC(item: Int, section: Int)
+}
 
 class VFItemCell: UICollectionViewCell {
  
@@ -25,25 +33,16 @@ class VFItemCell: UICollectionViewCell {
     private var row = 0
     private var section = 0
     
-    var selectedItem: Bool = false {
-        didSet{
-          if selectedItem == true {
-            itemEditView.isHidden = false
-          } else {
-            itemEditView.isHidden = true
-          }
-       }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
-        showItemEditView()       
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     func setLayout() {
         contentView.addSubViews(imageView,lblTime,lblName,lblAmount)
         
@@ -89,36 +88,6 @@ class VFItemCell: UICollectionViewCell {
         lblAmount.textAlignment = .center
        
     }
-    
-    func showItemEditView() {
-        itemEditView.addedTouchArea = 60
-        contentView.addSubview(itemEditView)
-        itemEditView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(20)
-            make.centerX.equalTo(contentView.snp.centerX).offset(-40)
-        }
-        
-        connectedTarget()
-     }
-
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-
-        guard isUserInteractionEnabled else { return nil }
-
-        guard !isHidden else { return nil }
-
-        guard alpha >= 0.01 else { return nil }
-
-        guard self.point(inside: point, with: event) else { return nil }
-
-        // add one of these blocks for each button in our collection view cell we want to actually work
-        if self.itemEditView.point(inside: convert(point, to: itemEditView), with: event) {
-            return self.itemEditView
-        }
-
-        return super.hitTest(point, with: event)
-    }
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
         imageView.image = image
@@ -130,19 +99,6 @@ class VFItemCell: UICollectionViewCell {
         lblAmount.text = "\(amount)g"
     }
 
-    func connectedTarget() {
-        itemEditView.itemButton[0].addTarget(self, action: #selector(modifyItem(_:)), for: .touchUpInside)
-        itemEditView.itemButton[1].addTarget(self, action: #selector(deleteItem(_:)), for: .touchUpInside)
-    }
-    
-    
-    func selectedIndexPath(_ indexPath: IndexPath) {
-
-        row = indexPath.row
-        section = indexPath.section
-        
-    }
-    
     func retrieveKind(name: String) {
         
         let fruit = [
@@ -164,7 +120,7 @@ class VFItemCell: UICollectionViewCell {
         
     }
 
-    @objc func modifyItem(_ sender: VFButton) {
+    func modifyItem(for row: Int, to section: Int) {
         print("tapped modify item")
 
         var datatype: DataType.Type!
@@ -176,8 +132,7 @@ class VFItemCell: UICollectionViewCell {
         retrieveKind(name: name)
         section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
          dataManager.getData(tag: section, index: row, datatype, newDate: date) { (result) in
-            item = VFItemController.Items(name: name, date: self.date, image: image, amount: Int(amount) ?? 0, entityDT: result)
-             
+            item = VFItemController.Items(name: name, date: self.date, image: image, amount: Int(amount) ?? 0, entityDT: result)            
          }
         
         if let unwrappedItem = item {
@@ -185,9 +140,9 @@ class VFItemCell: UICollectionViewCell {
         }
     }
     
-    @objc func deleteItem(_ sender: VFButton) {
+    func deleteItem(for item: Int, to section: Int) {
         print("tapped delete item")
-        delegate?.presentSelectedAlertVC(item: row, section: section)
+        delegate?.presentSelectedAlertVC(item: item, section: section)
     }
 }
 

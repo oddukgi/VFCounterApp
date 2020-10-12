@@ -177,7 +177,8 @@ class PickItemVC: UIViewController {
         
         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
         datemodel.date = userDTView.dateTime
-
+        
+        checkMaxValueFromDate(date: datemodel.date)
         if compareAmount(amount: pickItems.item.amount) {
             return
         }
@@ -193,6 +194,24 @@ class PickItemVC: UIViewController {
         dismissVC()
     }
 
+    func checkMaxValueFromDate(date: String) {
+        let datamanager = DataManager()
+   
+        var newDate = String(date.split(separator: " ").first!)
+        let maxValues = datamanager.getMaxData(date: newDate)
+        let maxVeggie = (maxValues.0 == 0) ? datemodel.maxV : maxValues.0
+        let maxFruit = (maxValues.1 == 0) ? datemodel.maxF : maxValues.1
+        
+        let sum = datamanager.getSumItems(date: newDate)
+
+        print("Max Value: \(maxVeggie),\(maxFruit)")
+  
+        datemodel.maxV = maxVeggie
+        datemodel.maxF = maxFruit
+        datemodel.sumV = sum.0
+        datemodel.sumF = sum.1
+        
+    }
     
     func compareAmount(amount: Int) -> Bool {
         

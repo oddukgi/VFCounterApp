@@ -28,7 +28,7 @@ class SettingController {
         return info
     }
 
-    private let settings = [ Settings(name: "알림설정", image: UIImage(named: "alarm")),
+    private let settings = [ Settings(name: "최대양 설정", image: UIImage(named: "scale")),
                              Settings(name: "언어설정", image: UIImage(named: "globe")) ]
     private let info = [
                             Settings(name: "앱버전", image: nil),Settings(name: "문의하기", image: nil),

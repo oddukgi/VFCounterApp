@@ -10,7 +10,7 @@ import UIKit
 
 class PeriodListVC: BaseViewController {
 
-    var tableView: CustomTableView!
+    var tableView: UITableView!
     var weekday = Array<String>()
     var datemaps = Array<String>()
     private let reuseIdentifer = "MonthlyList"
@@ -57,7 +57,7 @@ class PeriodListVC: BaseViewController {
 
     func configureTableView() {
         
-        tableView = CustomTableView(frame: view.bounds, style: .grouped)
+        tableView = UITableView(frame: view.bounds, style: .grouped)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(8)
@@ -68,7 +68,16 @@ class PeriodListVC: BaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(ElementCell.self, forCellReuseIdentifier: ElementCell.reuseIdentifier)
+        
+        guard #available(iOS 10.0, *) else {
+            // Manually observe the UIContentSizeCategoryDidChange
+            // notification for iOS 9.
+
+            NotificationCenter.default.addObserver(self, selector: #selector(contentSizeDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+            return
+        }
     }
 
     func updateResource(_ isReloaded: Bool = false) {
@@ -96,9 +105,13 @@ class PeriodListVC: BaseViewController {
             self.updateResource(true)
         }
     }
-
+ 
     @objc func tappedOutsideOfTableView() {
         print("user tapped outside table view")
+    }
+    
+    @objc private func contentSizeDidChange(_ notification: NSNotification) {
+        tableView.reloadData()
     }
     
     lazy var stackView: UIStackView = {
@@ -108,8 +121,7 @@ class PeriodListVC: BaseViewController {
           stackView.distribution = .fill
           return stackView
     }()
-    
-    
+
     lazy var arrowButtons: [UIButton] = {
         var buttons = [UIButton]()
         var img = ["chartL", "chartR"]
@@ -155,7 +167,7 @@ extension PeriodListVC: ElementCellProtocol {
             
             let indexPath = IndexPath(item: item, section: section)
             NotificationCenter.default.post(name: .deleteTableViewItem, object: nil,
-                                             userInfo: [  "indexPath": indexPath ])
+                                             userInfo: [ "indexPath": indexPath ])
         }))
 
         self.present(alert, animated: true, completion: nil)

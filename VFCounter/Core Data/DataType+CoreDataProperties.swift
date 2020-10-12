@@ -1,9 +1,8 @@
 //
 //  DataType+CoreDataProperties.swift
-//  VFCounter
+//  
 //
-//  Created by Sunmi on 2020/09/11.
-//  Copyright © 2020 creativeSun. All rights reserved.
+//  Created by Sunmi on 2020/10/10.
 //
 //
 
@@ -22,5 +21,7 @@ extension DataType {
     @NSManaged public var date: String?
     @NSManaged public var image: Data?
     @NSManaged public var name: String?
+    @NSManaged public var maxveggie: Int16
+    @NSManaged public var maxfruit: Int16
 
 }

@@ -52,7 +52,14 @@ class CustomSlider: UISlider {
         return self
     }
     
-    weak var delegate: SliderUpdateDelegate?
+    
+    
+    #if TARGET_INTERFACE_BUILDER
+    @IBOutlet open weak var delegate: SliderUpdateDelegate?
+    #else
+    open weak var delegate: SliderUpdateDelegate?
+    #endif
+    
     private var step: Float = 1
     
     override init(frame: CGRect) {
@@ -65,8 +72,8 @@ class CustomSlider: UISlider {
         self.step = step
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     // Custom thumb view which will be converted to UIImage
@@ -111,9 +118,9 @@ class CustomSlider: UISlider {
     
     func configure() {
       addTarget(self, action: #selector(valueChangedSlider(_:)), for: .valueChanged)
-      addTarget(self, action: #selector(tocuhSlider(_:)), for: .touchUpInside)
-      addTarget(self, action: #selector(tocuhSlider(_:)), for: .touchUpOutside)
-      addTarget(self, action: #selector(tocuhSlider(_:)), for: .touchCancel)
+      addTarget(self, action: #selector(touchSlider(_:)), for: .touchUpInside)
+      addTarget(self, action: #selector(touchSlider(_:)), for: .touchUpOutside)
+      addTarget(self, action: #selector(touchSlider(_:)), for: .touchCancel)
     }
 
     @objc func valueChangedSlider(_ sender: UISlider) {
@@ -126,9 +133,11 @@ class CustomSlider: UISlider {
         delegate?.sliderValueChanged(value: sender.value, tag: sender.tag)
     }
     
-    @objc func tocuhSlider(_ sender: UISlider) {
+    @objc func touchSlider(_ sender: UISlider) {
         delegate?.sliderTouch(value: sender.value, tag: sender.tag)
     }
+    
+    
 }
 
 

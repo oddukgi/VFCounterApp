@@ -14,7 +14,7 @@ typealias Item = UIImage?
 
 class ItemEditView: UIView {
 
-    let containerView = VFContainerView(frame: CGRect(x: 0, y: 0, width: 80, height: 28))
+    let containerView = VFContainerView(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
     
     lazy var horizontalStackView: UIStackView = {
        let stackView = UIStackView()
@@ -32,6 +32,7 @@ class ItemEditView: UIView {
     var itemButton = [VFButton]()
     // Create a property to store the hit insets:
     var addedTouchArea = CGFloat(0)
+    weak var touchDelegate: UIView? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,18 +74,42 @@ class ItemEditView: UIView {
 
     }
     
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    
+//    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+//
+//        // Generate the new hit area by adding the hitInsets:
+//        
+//        guard event != nil else { return false }
+//        guard self.point(inside: point, with: event) else { return false }
+//        
+//        
+//        let newBound = CGRect(
+//            x: self.bounds.origin.x - addedTouchArea,
+//            y: self.bounds.origin.y - addedTouchArea,
+//            width: self.bounds.width + 2 * addedTouchArea,
+//            height: self.bounds.width + 2 * addedTouchArea
+//        )
+//        // Check if the point is within the new hit area:
+//        return newBound.contains(point)
+//
+//    }
 
-        // Generate the new hit area by adding the hitInsets:
-        let newBound = CGRect(
-            x: self.bounds.origin.x - addedTouchArea,
-            y: self.bounds.origin.y - addedTouchArea,
-            width: self.bounds.width + 2 * addedTouchArea,
-            height: self.bounds.width + 2 * addedTouchArea
-        )
-        // Check if the point is within the new hit area:
-        return newBound.contains(point)
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        
+        guard isUserInteractionEnabled else { return nil }
+        guard !isHidden else { return nil }
+        guard alpha >= 0 else { return nil }
+        guard self.point(inside: point, with: event) else { return nil }
+        
+        
+        guard let view = super.hitTest(point, with: event) else {
+            return nil
+        }
 
+        guard view === self, let point = touchDelegate?.convert(point, from: self) else {
+            return view
+        }
+
+        return touchDelegate?.hitTest(point, with: event)
     }
-
 }

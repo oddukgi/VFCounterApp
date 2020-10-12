@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DataType" representedClassName="VFCounter.DataType" isAbstract="YES" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="maxfruit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="maxveggie" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Fruits" representedClassName="VFCounter.Fruits" parentEntity="DataType" syncable="YES"/>
@@ -20,7 +22,7 @@
     </configuration>
     <configuration name="VeggieTotal"/>
     <elements>
-        <element name="DataType" positionX="-369.58984375" positionY="6.6875" width="128" height="118"/>
+        <element name="DataType" positionX="-369.58984375" positionY="6.6875" width="128" height="148"/>
         <element name="Fruits" positionX="-499.81640625" positionY="-132.23046875" width="128" height="43"/>
         <element name="Veggies" positionX="-255.87109375" positionY="-120.08203125" width="128" height="43"/>
     </elements>

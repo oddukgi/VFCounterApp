@@ -23,8 +23,3 @@ public protocol DateStrategy: class {
     func next()
     
 }
-
-protocol ItemCellDelegate: class {
-    func updateSelectedItem(item: VFItemController.Items, index: Int)
-    func presentSelectedAlertVC(item: Int, section: Int) 
-}

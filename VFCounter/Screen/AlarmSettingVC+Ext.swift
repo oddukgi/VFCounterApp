@@ -11,18 +11,16 @@ import UIKit
 
 extension AlarmSettingVC {
     
-    func calcurateSlider(slider: CustomSlider, amount: Float, step: Float, cell: UITableViewCell) {
-    
-        if slider.minimumValue <= amount && slider.maximumValue >= amount {
-            let roundedValue = round(amount / step) * step
-            slider.value = roundedValue
-            cell.textLabel?.text = String(Int(roundedValue)) + " g"
-            
-        } else {
-            cell.textLabel?.text = "0"
-            slider.value = 0
+    func configure<T: UITableViewCell>(_ tableType: T.Type, for indexPath: IndexPath,
+                                       reuseIdentifer: String) -> T {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as? T
+        else {
+            fatalError("Unable to dequeue \(tableType)")
         }
+
+        return cell
     }
+    
 }
 
 extension AlarmSettingVC: UITableViewDataSource {
@@ -41,39 +39,104 @@ extension AlarmSettingVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath)
-        cell.selectionStyle = .none
-        connectCell(cell, for: indexPath)
-        return cell
+       
+        var tableViewCell = UITableViewCell()
+        if indexPath.section == 0 {
+            
+            switch(indexPath.item) {
+            case 0:
+                guard let cell = self.configure(SwitchVeggieCell.self, for: indexPath, reuseIdentifer: SwitchVeggieCell.reuseIdentifier) as? SwitchVeggieCell else { return UITableViewCell()  }
+                cell.delegate = self
+                tableViewCell = cell
+                
+            default:
+                guard let cell =  self.configure(MaxAmountVeggieCell.self,for: indexPath, reuseIdentifer:  MaxAmountVeggieCell.reuseIdentifier) as? MaxAmountVeggieCell else { return UITableViewCell() }
+                cell.delegate = self
+                tableViewCell = cell
+    
+            }
+        } else {
+            switch(indexPath.item) {
+            case 0:
+                guard let cell = self.configure(SwitchFruitCell.self, for: indexPath, reuseIdentifer: SwitchFruitCell.reuseIdentifier) as? SwitchFruitCell else { return UITableViewCell()  }
+                cell.delegate = self
+                tableViewCell = cell
+            default:
+                guard let cell =  self.configure(MaxAmountFruitCell.self,for: indexPath, reuseIdentifer:  MaxAmountFruitCell.reuseIdentifier) as? MaxAmountFruitCell else { return UITableViewCell() }
+                cell.delegate = self
+                tableViewCell = cell
+            }
+        }
+    
+        return tableViewCell
     }
 }
 
-extension AlarmSettingVC: SliderUpdateDelegate {
-    
-    func sliderTouch(value: Float, tag: Int) {
-        
+
+extension AlarmSettingVC: MaxAmoutVeggieCellDelegate {
+
+    func displayAlertMessageV(value: Float) {
+        let message = "\(value)는 1 ~ 500 사이의 값이 아닙니다."
+        self.presentAlertVC(title: "범위 초과", message: message, buttonTitle: "OK")
     }
     
-    func sliderValueChanged(value: Float, tag: Int) {
-        
-        switch tag {
-        case 1:
-            veggieSettings.taskPercent = value
-            let cell = tableView.cellForRow(at: IndexPath(row: tag, section: 0))
-            print(veggieSettings.taskPercent)
-            calcurateSlider(slider: veggieSlider, amount: value, step: 10.0, cell: cell!)
-            SettingManager.setVeggieTaskRate(percent: value)
-            NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["veggieAmount": Int(veggieSlider.value)])
-
-        default:        
-            fruitsSettings.taskPercent = value
-            let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 1))
-            print(fruitsSettings.taskPercent)
-            calcurateSlider(slider: fruitsSlider, amount: value, step: 10.0, cell: cell!)
-            SettingManager.setFruitsTaskRate(percent: value)
-            NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["fruitAmount": Int(fruitsSlider.value)])
+    func textField(editingDidBeginIn cell: MaxAmountVeggieCell) {
+        if let indexPath = tableView?.indexPath(for: cell) {
+            print("textfield selected in cell at \(indexPath)")
         }
     }
-       
 
+    func textField(editingChangedInTextField newText: String, in cell: MaxAmountVeggieCell) {
+        if let indexPath = tableView?.indexPath(for: cell) {
+            print("updated text in textfield in cell as \(indexPath), value = \"\(newText)\"")
+
+        }
+    }
+}
+
+extension AlarmSettingVC: MaxAmoutFruitCellDelegate {
+    
+    func displayAlertMessageF(value: Float) {
+        let message = "\(value)는 1 ~ 500 사이의 값이 아닙니다."
+        self.presentAlertVC(title: "범위 초과", message: message, buttonTitle: "OK")
+    }
+    
+    func textField(editingDidBeginIn cell: MaxAmountFruitCell) {
+        if let indexPath = tableView?.indexPath(for: cell) {
+            print("textfield selected in cell at \(indexPath)")
+        }
+    }
+
+    func textField(editingChangedInTextField newText: String, in cell: MaxAmountFruitCell) {
+        if let indexPath = tableView?.indexPath(for: cell) {
+            print("updated text in textfield in cell as \(indexPath), value = \"\(newText)\"")
+
+        }
+    }
+}
+
+// MARK: - SwitchControl Delegate
+
+extension AlarmSettingVC: SwitchVeggieDelegate {
+    func updateVeggieSwitch(_ flag: Bool) {
+        // Enable/ Disable slider
+        guard let veggiecell = tableView.cellForRow(at: IndexPath(item: 1, section: 0))
+                as? MaxAmountVeggieCell else { return }
+        
+        veggiecell.maxAmountTF.isEnabled = flag
+        veggiecell.veggieSlider.isEnabled = flag
+    }
+    
+}
+
+
+extension AlarmSettingVC: SwitchFruitDelegate {
+    func updateFruitSwitch(_ flag: Bool) {
+        // Enable/ Disable slider
+        guard let fruitCell = tableView.cellForRow(at: IndexPath(item: 1, section: 1))
+                as? MaxAmountFruitCell else { return }
+
+        fruitCell.maxAmountTF.isEnabled = flag
+        fruitCell.fruitSlider.isEnabled = flag
+    }
 }
