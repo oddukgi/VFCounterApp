@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension UICollectionViewCell {
     /// Call this method from `prepareForReuse`, because the cell needs to be already rendered (and have a size) in order for this to work
     func shadowDecorate() {

@@ -8,25 +8,24 @@
 
 import UIKit
 
-
 class RingItemButton: UIButton {
-    
+
     let ringProgressView = RingItemGroupView()
     let selectionIndicatorView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-    
+
     var contentMargin: CGFloat = 2 {
         didSet {
             setNeedsLayout()
         }
     }
-    
+
     var isRingHidden: Bool = false {
-         didSet{
+         didSet {
             ringProgressView.ring1.isHidden = self.isRingHidden
             ringProgressView.ring2.isHidden = self.isRingHidden
         }
      }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -49,7 +48,7 @@ class RingItemButton: UIButton {
         selectionIndicatorView.isHidden = true
         ringProgressView.isUserInteractionEnabled = false
     }
-    
+
     func configureRing() {
         ringProgressView.ringWidth = 3.5
         ringProgressView.ringSpacing = 1
@@ -57,11 +56,11 @@ class RingItemButton: UIButton {
         ringProgressView.ring1EndColor = RingColor.trackGreen
         ringProgressView.ring2StartColor = RingColor.ringYellow
         ringProgressView.ring2EndColor = RingColor.trackBeige
-        
+
         ringProgressView.ring1.hidesRingForZeroProgress = true
         ringProgressView.ring2.hidesRingForZeroProgress = true
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -72,13 +71,13 @@ class RingItemButton: UIButton {
         selectionIndicatorView.layer.shadowPath = CGPath(__byStroking: UIBezierPath(ovalIn: selectionIndicatorView.bounds.insetBy(dx: -1, dy: -1)).cgPath, transform: nil, lineWidth: 1.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
 //        print("Size: \(size), x Pos: \((bounds.width - size)/2)")
     }
-    
+
     override var isHighlighted: Bool {
         didSet {
             ringProgressView.alpha = isHighlighted ? 0.3 : 1.0
         }
     }
-    
+
     override var isSelected: Bool {
         didSet {
             selectionIndicatorView.isHidden = !isSelected

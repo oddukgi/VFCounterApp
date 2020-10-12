@@ -15,7 +15,7 @@ typealias Item = UIImage?
 class ItemEditView: UIView {
 
     let containerView = VFContainerView(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
-    
+
     lazy var horizontalStackView: UIStackView = {
        let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -23,35 +23,35 @@ class ItemEditView: UIView {
         stackView.frame = containerView.bounds
         return stackView
     }()
-    
+
     let items: [Item] = [
         Item(UIImage(named: "edit")!),
         Item(UIImage(named: "delete")!)
     ]
-    
+
     var itemButton = [VFButton]()
     // Create a property to store the hit insets:
     var addedTouchArea = CGFloat(0)
-    weak var touchDelegate: UIView? = nil
-    
+    weak var touchDelegate: UIView?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure() {
-        
+
         addSubview(containerView)
         containerView.backgroundColor = .white
         containerView.addSubview(horizontalStackView)
 
         containerView.layer.borderColor = ColorHex.darkGreen.cgColor
         containerView.layer.borderWidth = 0.5
-        
+
         items.forEach { item in
             if horizontalStackView.arrangedSubviews.count > 0 {
                 let separator = UIView()
@@ -61,11 +61,11 @@ class ItemEditView: UIView {
                 separator.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor,
                                                   multiplier: 0.6).isActive = true
             }
-            
+
             let button = VFButton(frame: CGRect(x: 0, y: 0, width: 13, height: 13))
             button.setImage(item, for: .normal)
             itemButton.append(button)
-            
+
             horizontalStackView.addArrangedSubview(button)
             if let firstButton = horizontalStackView.arrangedSubviews.first as? VFButton {
                 button.widthAnchor.constraint(equalTo: firstButton.widthAnchor).isActive = true
@@ -73,8 +73,7 @@ class ItemEditView: UIView {
         }
 
     }
-    
-    
+
 //    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
 //
 //        // Generate the new hit area by adding the hitInsets:
@@ -95,13 +94,12 @@ class ItemEditView: UIView {
 //    }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        
+
         guard isUserInteractionEnabled else { return nil }
         guard !isHidden else { return nil }
         guard alpha >= 0 else { return nil }
         guard self.point(inside: point, with: event) else { return nil }
-        
-        
+
         guard let view = super.hitTest(point, with: event) else {
             return nil
         }

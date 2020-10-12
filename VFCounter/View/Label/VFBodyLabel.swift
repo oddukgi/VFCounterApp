@@ -9,24 +9,24 @@
 import UIKit
 
 class VFBodyLabel: UILabel {
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat, fontColor: UIColor) {
         self.init(frame: .zero)
         self.textAlignment = textAlignment
         font               = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         textColor          = fontColor
-          
+
     }
-    
+
     // MARK: - Accessibility : change font size when device's content size change
     private func configure() {
         textColor                                 = .secondaryLabel
@@ -38,7 +38,6 @@ class VFBodyLabel: UILabel {
         translatesAutoresizingMaskIntoConstraints = false
     }
 }
-
 
 /*:
  `adjustsFontForContentSizeCategory`

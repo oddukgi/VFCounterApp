@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension DataType {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DataType> {

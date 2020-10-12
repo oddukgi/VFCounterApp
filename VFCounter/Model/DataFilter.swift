@@ -13,7 +13,7 @@ protocol DateProtocol {
 }
 
 enum SectionFilter {
-    
+
     case main, chart
     var kind: String {
         switch self {
@@ -24,4 +24,3 @@ enum SectionFilter {
         }
     }
 }
-

@@ -8,14 +8,12 @@
 
 import Foundation
 
-
 public class WeeklyDateStrategy: DateStrategy {
 
-
     // MARK: - Properties
-    
+
     public var date: Date = Date()
- 
+
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
     private var oldVDates: Date?
@@ -49,48 +47,47 @@ public class WeeklyDateStrategy: DateStrategy {
         self.date = date
         self.privateMaximumDate = self.date
     }
-    
+
     // MARK: - Setting Date
     public func updateLabel() -> (String?, [String]?, [String]?) {
-    
+
         if DateSettings.default.periodController.weekDate == nil {
              date = date.getStartOfWeek()
          } else {
              date = DateSettings.default.periodController.weekDate!
          }
-        
+
         let datemap = DateProvider.updateDateMap(date: date)
         let weeklyDate = setWeeklyDate(startDate: datemap.first!, endDate: datemap.last!)
         let commonDate = checkDate(datemap: datemap)
 
         return (weeklyDate, commonDate, datemap)
     }
-    
+
     private func checkDate(datemap: [String]) -> [String] {
         var items = Set<String>()
         let dataManager = DataManager()
         datemap.forEach { (element) in
-            
+
             let item = element.components(separatedBy: " ").first
-            
-            dataManager.reorderData(date: item!) { (veggies, fruits) in            
+
+            dataManager.reorderData(date: item!) { (veggies, fruits) in
              if veggies.count > 0 {
                  items.insert(element)
              }
-             
+
              if fruits.count > 0 {
                items.insert(element)
               }
             }
         }
-        
+
         return Array(items).sorted()
     }
-    
-    
+
     private func setWeeklyDate(startDate: String, endDate: String) -> String {
         let startDateArray = startDate.components(separatedBy: [".", " "])
-        let endDateArray = endDate.components(separatedBy: ["."," "])
+        let endDateArray = endDate.components(separatedBy: [".", " "])
 
         var weekPeriod = ""
         let firstMonth = startDateArray[1]
@@ -98,31 +95,30 @@ public class WeeklyDateStrategy: DateStrategy {
 
         if firstMonth == secondMonth {
             weekPeriod = "\(firstMonth).\(startDateArray[2]) ~ \(endDateArray[2])"
-            
+
         } else {
             weekPeriod = "\(firstMonth).\(startDateArray[2]) ~ \(secondMonth).\(endDateArray[2])"
         }
         return weekPeriod
     }
-    
+
     public func fetchedData() {
         let dataManager = DataManager()
-        
+
         dataManager.getDateDictionary { (veggieDates, fruitDates) in
-         
+
             veggieDates.forEach { (item) in
-                _ = item.compactMap ({ if $0 == "date" {  vDates.append($1 as! String) } })
+                _ = item.compactMap({ if $0 == "date" {  vDates.append($1 as? String ?? "" ) } })
             }
-            
-            
+
             fruitDates.forEach { (item) in
-                _ = item.compactMap ({ if $0 == "date" {  fDates.append($1 as! String) } })
+                _ = item.compactMap({ if $0 == "date" {  fDates.append($1 as? String ?? "") } })
             }
         }
-        
+
         oldVDates = vDates.last?.changeDateTime(format: .date)
         oldFDates = fDates.last?.changeDateTime(format: .date)
-        
+
     }
 
     public func setDateRange() {
@@ -140,9 +136,9 @@ public class WeeklyDateStrategy: DateStrategy {
       }
 
     }
-    
+
     public func previous() {
-        
+
         guard let minDate = privateMinimumDate else { return }
         date = self.date.aDayInLastWeek.getStartOfWeek()
 
@@ -153,21 +149,21 @@ public class WeeklyDateStrategy: DateStrategy {
             DateSettings.default.periodController.weekDate = date
         }
     }
-    
+
     public func next() {
-        
+
         let now = Date()
         if date <= now {
             date = self.date.aDayInNextWeek.getStartOfWeek()
             DateSettings.default.periodController.weekDate = date
         }
     }
-    
+
     func getLimitAmount(date: String) {
-     
+
         let dataManager = DataManager()
         configs.maxVeggies = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
         configs.maxFruits = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
 
-    }  
+    }
 }

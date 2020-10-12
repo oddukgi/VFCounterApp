@@ -9,17 +9,16 @@
 import UIKit
 import SnapKit
 
-
 class DateView: UIView {
 
     var btnLeftArrow: VFButton!
     var btnRightArrow: VFButton!
     let weatherIcon = WeatherIconView(frame: .zero)
-    
+
     var horizontalView: [UIStackView] = []
     let dateLabel = VFTitleLabel(textAlignment: .center, fontSize: 18)
     let weatherLabel = VFSubTitleLabel(fontSize: 14)
-    
+
     private var date = Date()
     private var startDate: Date?
     private var endDate: Date?
@@ -31,15 +30,15 @@ class DateView: UIView {
         initialize()
         createDismissKeyboardTapGesture()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func initialize() {
-        
+
         let dateconverter = DateConverter(date: date)
-        dateLabel.text = dateconverter.changeDate(format:"yyyy.MM.dd E", option: 1)
+        dateLabel.text = dateconverter.changeDate(format: "yyyy.MM.dd E", option: 1)
         dateLabel.textColor = UIColor.black
         weatherLabel.text = ""
 
@@ -57,7 +56,7 @@ class DateView: UIView {
         dateLabel.text = newDate
         NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": newDate])
     }
-    
+
     func createDismissKeyboardTapGesture() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
         addGestureRecognizer(tap)
@@ -67,18 +66,18 @@ class DateView: UIView {
 
         if sender.tag == 0 {
             guard date > startDate! else { return }
-            date = date.dayBefore.endOfDay()           
-  
+            date = date.dayBefore.endOfDay()
+
         } else {
-            
+
             let theFuture = date.endOfDay()
             if theFuture >= endDate! { return }
             date = date.dayAfter.endOfDay()
         }
-        
+
         changeDateToResource(to: date)
     }
-    
+
     func updateDate(userdate: String) {
         date = userdate.changeDateTime(format: .date)
         changeDateToResource(to: date)

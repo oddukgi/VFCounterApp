@@ -8,19 +8,18 @@
 
 import UIKit
 
-
 enum UIHelper {
     static let sectionHeaderElement = "sectionHeaderKind"
-    
+
    // MARK: CollectionLayout
     static func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(30))
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return layoutSectionHeader
     }
-    
+
     static func createColumnsLayout() -> NSCollectionLayoutSection {
-        
+
        let itemSize = NSCollectionLayoutSize(
         widthDimension: .fractionalWidth(1.0),
         heightDimension: .absolute(80)
@@ -33,21 +32,21 @@ enum UIHelper {
           bottom: 3,
           trailing: 2
        )
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(80))
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(80))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                              subitem: layoutItem, count: 5)
 //        group.interItemSpacing = .fixed(3.5)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        
+
 //       let sectionHeader = createSectionHeader()
 //       section.boundarySupplementaryItems = [sectionHeader]
 
        return section
     }
-    
+
     static func createHorizontalLayout(titleElemendKind: String, isHeader: Bool = true, isPaddingForSection: Bool = false) -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -60,26 +59,23 @@ enum UIHelper {
                bottom: 3,
                trailing: 2
             )
-             
-             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(SizeManager().getUserItemHeight))
+
+             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(SizeManager().getUserItemHeight))
              let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                                   subitem: layoutItem, count: 5)
      //        group.interItemSpacing = .fixed(3.5)
              let section = NSCollectionLayoutSection(group: group)
              section.orthogonalScrollingBehavior = .continuous
-            
+
             if isPaddingForSection {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
             } else {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
             }
-      
 
-            
 //        titleSupplementary.contentInsets =  NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0)
 //            section.interGroupSpacing = 8
-            
-            
+
             if isHeader {
                 let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                        heightDimension: .estimated(28))
@@ -87,26 +83,23 @@ enum UIHelper {
                     layoutSize: titleSize,
                     elementKind: titleElemendKind,
                     alignment: .top)
-                
+
                 section.boundarySupplementaryItems = [titleSupplementary]
             }
             return section
         }
-        
+
         let config = UICollectionViewCompositionalLayoutConfiguration()
         let layout = UICollectionViewCompositionalLayout(
             sectionProvider: sectionProvider, configuration: config)
-        return layout          
+        return layout
     }
 
-
-
-  
     // MARK: UIViewController
-    static func backToPreviousScreen(_ view: UIViewController){
-        if view.navigationController != nil{
+    static func backToPreviousScreen(_ view: UIViewController) {
+        if view.navigationController != nil {
             view.navigationController?.popViewController(animated: true)
-        }else{
+        } else {
             view.dismiss(animated: true, completion: nil)
         }
     }

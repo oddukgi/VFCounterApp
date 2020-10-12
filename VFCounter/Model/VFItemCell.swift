@@ -8,51 +8,48 @@
 
 import UIKit
 import SnapKit
-import TouchAreaInsets
-
-
 
 // protocol : UserItemVC called --> VFItemCell
+
 protocol ItemCellDelegate: class {
     func updateSelectedItem(item: VFItemController.Items, index: Int)
     func presentSelectedAlertVC(item: Int, section: Int)
 }
 
 class VFItemCell: UICollectionViewCell {
- 
+
     static let reuseIdentifier = "VFItemCell"
     let imageView    = UIImageView()
     let lblTime      =  VFSubTitleLabel()
     let lblName      =  VFSubTitleLabel()
     let lblAmount    =  VFSubTitleLabel()
     let itemEditView = ItemEditView()
-    
+
     private var date     = ""
     weak var delegate: ItemCellDelegate?
+
     private let dataManager = DataManager()
     private var row = 0
     private var section = 0
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     func setLayout() {
-        contentView.addSubViews(imageView,lblTime,lblName,lblAmount)
-        
+        contentView.addSubViews(imageView, lblTime, lblName, lblAmount)
+
         imageView.contentMode = .scaleAspectFit
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView).offset(3)
             make.centerX.equalTo(contentView.snp.centerX)
             make.size.equalTo(CGSize(width: 39, height: 37))
         }
-    
+
         lblTime.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(5)
             make.centerX.equalTo(contentView.snp.centerX)
@@ -63,35 +60,35 @@ class VFItemCell: UICollectionViewCell {
             make.centerX.equalTo(contentView.snp.centerX)
             make.height.equalTo(14.2)
         }
-        
+
         lblAmount.snp.makeConstraints { make in
            make.top.equalTo(lblName.snp.bottom).offset(1.2)
            make.centerX.equalTo(contentView.snp.centerX)
            make.width.equalTo(50)
            make.height.equalTo(18)
         }
-        
+
         lblTime.font = NanumSquareRound.regular.style(sizeOffset: 11)
         lblName.font = NanumSquareRound.bold.style(sizeOffset: 13)
         lblAmount.font = NanumSquareRound.regular.style(sizeOffset: 11)
-        
+
         lblTime.textColor = .black
         lblName.textColor = ColorHex.MilkChocolate.origin
         lblAmount.textColor = ColorHex.darkGreen
-        
+
         lblAmount.layer.cornerRadius = 8
         lblAmount.clipsToBounds = true
         lblAmount.backgroundColor = ColorHex.iceBlue
-        
+
         lblTime.textAlignment = .center
         lblName.textAlignment = .center
         lblAmount.textAlignment = .center
-       
+
     }
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
         imageView.image = image
-    
+
         self.date = String(date.split(separator: " ").first!)
         let time = date.trimmingTime(start: 0, end: -11).trimmingTime(start: 5, end: -3)
         lblTime.text = time
@@ -100,13 +97,13 @@ class VFItemCell: UICollectionViewCell {
     }
 
     func retrieveKind(name: String) {
-        
+
         let fruit = [
-                        "사과","살구","아보카도","바나나","블루베리","체리",
-                        "코코넛","용과","포도","자몽","아오리(초록사과)","샤인머스캣",
-                        "천도복숭아","키위","레몬","망고","망고스틴","멜론",
-                        "오렌지","복숭아","배","감","파인애플","자두",
-                        "석류","라즈베리","딸기","귤","수박"
+                        "사과", "살구", "아보카도", "바나나", "블루베리", "체리",
+                        "코코넛", "용과", "포도", "자몽", "아오리(초록사과)", "샤인머스캣",
+                        "천도복숭아", "키위", "레몬", "망고", "망고스틴", "멜론",
+                        "오렌지", "복숭아", "배", "감", "파인애플", "자두",
+                        "석류", "라즈베리", "딸기", "귤", "수박"
                     ]
 
         for item in fruit {
@@ -117,7 +114,7 @@ class VFItemCell: UICollectionViewCell {
                 section = 0
             }
         }
-        
+
     }
 
     func modifyItem(for row: Int, to section: Int) {
@@ -128,21 +125,21 @@ class VFItemCell: UICollectionViewCell {
         let name     = self.lblName.text!
         let image    = self.imageView.image!
         let amount   = String(self.lblAmount.text!.dropLast())
-        
+
         retrieveKind(name: name)
         section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
          dataManager.getData(tag: section, index: row, datatype, newDate: date) { (result) in
-            item = VFItemController.Items(name: name, date: self.date, image: image, amount: Int(amount) ?? 0, entityDT: result)            
+            item = VFItemController.Items(name: name, date: self.date, image: image, amount: Int(amount) ?? 0, entityDT: result)
+
          }
-        
+
         if let unwrappedItem = item {
             self.delegate?.updateSelectedItem(item: unwrappedItem, index: self.section)
         }
     }
-    
+
     func deleteItem(for item: Int, to section: Int) {
         print("tapped delete item")
         delegate?.presentSelectedAlertVC(item: item, section: section)
     }
 }
-

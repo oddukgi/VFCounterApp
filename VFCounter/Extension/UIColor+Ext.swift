@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 enum GradientColor {
 
     static let firstColor  = UIColor(hexString: "78ACA3")
@@ -18,7 +16,7 @@ enum GradientColor {
 }
 
 struct ColorHex {
- 
+
     static let pale           = UIColor(hexString: "FFF2D2")
     static let dullOrange     = UIColor(hexString: "D68432")
     static let lightGreen     = UIColor(hexString: "1F6151").withAlphaComponent(0.3)
@@ -28,15 +26,14 @@ struct ColorHex {
     static let iceBlue        = UIColor(hexString: "EFF8F8")
     static let dimmedGrey     = UIColor(hexString: "D0D3D9")
     static let lightGreyBlue  = UIColor(hexString: "B3B8B7")
- 
-   
+
     static let brownGrey      = UIColor(hexString: "959595")
     static let lightKhaki     = UIColor(hexString: "E1E6A9")
 
     static let pineGreen      = UIColor(hexString: "3A594D")
     static let jadeGreen      = UIColor(hexString: "2DAD64")
     static let weirdGreen     = UIColor(hexString: "4BD185")
-    
+
     static let dimmedBlack    = UIColor(white: 0.0, alpha: 0.1)
     static let lightlightGrey = UIColor(hexString: "DADADA")
     static let orangeyRed     = UIColor(hexString: "FF5722")
@@ -46,7 +43,7 @@ struct ColorHex {
         static let alpha60 = UIColor(red: 96.0 / 255.0, green: 53.0 / 255.0, blue: 25.0 / 255.0, alpha: 0.6)
         static let button  = UIColor(hexString: "60371A")
     }
-    
+
     static let switchWhite = UIColor(hexString: "E9E9EB")
     static let separator   = UIColor(white: 0.0, alpha: 0.22)
     static let lightBlue  = UIColor(hexString: "00BCD4")
@@ -64,19 +61,17 @@ struct RingColor {
     static let ringYellow   = UIColor(hexString: "FECD01")
     static let trackGreen   = UIColor(red: 47.0 / 255.0, green: 181.0 / 255.0, blue: 73.0 / 255.0, alpha: 0.12)
     static let trackBeige   = UIColor(hexString: "FEF8D8")
-    
+
 }
 
-
-enum ShadowColor {    
+enum ShadowColor {
     static let black = UIColor(white: 0.0, alpha: 0.24)
 }
 
 struct ChartColor {
     static let veggieGreen = UIColor(hexString: "2ECC71")
-    static let fruitYellow = UIColor(hexString: "F1C40F")  
+    static let fruitYellow = UIColor(hexString: "F1C40F")
 }
-
 
 struct SegmentColor {
     static let primary = ColorHex.weirdGreen
@@ -85,7 +80,7 @@ struct SegmentColor {
 }
 
 extension UIColor {
-    
+
    convenience init(hexString: String) {
        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
        var int = UInt64()

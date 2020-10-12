@@ -10,7 +10,7 @@ import UIKit
 import Charts
 
 class MonthAxisValueFormatter: NSObject, IAxisValueFormatter {
-    
+
     weak var chart: BarLineChartViewBase?
     var date: Date!
 
@@ -22,14 +22,14 @@ class MonthAxisValueFormatter: NSObject, IAxisValueFormatter {
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         let days = Int(value)
         let endOfMonth = date.getLastDayMonth()
-        var arrayDay = Array<Int>()
+        var arrayDay = [Int]()
         var count = 1
-        
+
         while count <= endOfMonth {
             arrayDay.append(count)
             count += 1
         }
-        
+
         return String(format: "%d", arrayDay[days])
      }
 }

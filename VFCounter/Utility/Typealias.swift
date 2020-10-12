@@ -8,5 +8,4 @@
 
 import Foundation
 
-
-typealias DataDictionary = ([[String : Any]], [[String : Any]]) -> Void
+typealias DataDictionary = ([[String: Any]], [[String: Any]]) -> Void

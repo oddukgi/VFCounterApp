@@ -8,10 +8,8 @@
 
 import UIKit
 
-
 extension PeriodListVC {
 
-    
     @objc func changedIndexSegment(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -28,7 +26,7 @@ extension PeriodListVC: UITableViewDataSource {
         return weekday.count
 
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -42,8 +40,10 @@ extension PeriodListVC: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: ElementCell.reuseIdentifier, for: indexPath) as! ElementCell
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ElementCell.reuseIdentifier, for: indexPath) as? ElementCell else {
+            return UITableViewCell()
+        }
         let newDate = weekday[indexPath.section].components(separatedBy: " ")[0]
         cell.updateDate(newDate)
         cell.delegate = self

@@ -44,16 +44,16 @@ extension UITextView {
 
     private func resizePlaceholder() {
         let lineFragmentPadding = textContainer.lineFragmentPadding
-        let x: CGFloat = lineFragmentPadding + textContainerInset.left
+        let xPos: CGFloat = lineFragmentPadding + textContainerInset.left
 
         print("lineFragmentPadding: \(lineFragmentPadding)")
         print("textContainerInset.left: \(textContainerInset.left)")
-        print("x: \(x)")
+        print("x: \(xPos)")
 
-        let y: CGFloat = textContainerInset.top
-        let width: CGFloat = bounds.width - x - lineFragmentPadding - textContainerInset.right
+        let yPos: CGFloat = textContainerInset.top
+        let width: CGFloat = bounds.width - xPos - lineFragmentPadding - textContainerInset.right
         let height: CGFloat = placeholderLabel.sizeThatFits(CGSize(width: width, height: 0)).height
-        placeholderLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+        placeholderLabel.frame = CGRect(x: xPos, y: yPos, width: width, height: height)
     }
 
     @IBInspectable

@@ -6,8 +6,6 @@
 // Copyright © 2020 RetailDriver LLC. All rights reserved.
 // Copyright © 2020 creativeSun. All rights reserved.
 
-
-
 import UIKit
 import SnapKit
 
@@ -24,10 +22,9 @@ class WeekdayView: UIView {
         return stackView
     }()
 
-
     // MARK: - Variables
     private let settings: CalendarSettings.WeekView
-    
+
     // MARK: - Lifecycle
     init(settings: CalendarSettings.WeekView) {
         self.settings = settings
@@ -36,16 +33,16 @@ class WeekdayView: UIView {
         self.configureSubviews()
         self.configureConstaints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureUI() {
         self.backgroundColor = self.settings.backgroundColor
         self.layer.cornerRadius = self.settings.cornerRadius
     }
-    
+
     private func configureSubviews() {
         var weekDays = self.settings.calendar.shortWeekdaySymbols
         weekDays.append(weekDays.remove(at: 0))
@@ -54,7 +51,7 @@ class WeekdayView: UIView {
         }
         self.addSubview(self.stackView)
     }
-    
+
    func makeWeekLabel(for text: String) -> UILabel {
         let label = UILabel()
         label.text =  text
@@ -63,19 +60,18 @@ class WeekdayView: UIView {
         label.textAlignment = .center
         return label
     }
-    
+
     private func configureConstaints() {
         self.stackView.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()
             maker.left.right.equalToSuperview().inset(4)
-            
+
         }
         self.snp.makeConstraints { maker in
             maker.height.equalTo(self.settings.height)
         }
     }
 }
-      
 
 extension CalendarSettings {
     struct WeekView {

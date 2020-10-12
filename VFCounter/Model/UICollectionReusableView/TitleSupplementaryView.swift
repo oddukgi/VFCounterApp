@@ -9,30 +9,29 @@
 import UIKit
 import SnapKit
 
-
 protocol TitleSupplmentaryViewDelegate: class {
     func showPickUpViewController(tag: Int)
 }
 
 class TitleSupplementaryView: UICollectionReusableView {
-    
+
     static let reuseIdentifier = "TitleSupplementaryView"
-    
+
     var lblTitle = VFTitleLabel(textAlignment: .left, fontSize: 14)
     var lblSubtitle = VFSubTitleLabel(fontSize: 13)
     weak var delegate: TitleSupplmentaryViewDelegate?
-    
+
     lazy var labels: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [lblTitle, lblSubtitle])
         stackView.alignment = .center
         stackView.spacing = 8
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
-        
+
         self.addSubview(stackView)
         return stackView
     }()
-    
+
     lazy var btnPlus: VFButton = {
         let button = VFButton()
         button.addImage(imageName: "plus")
@@ -44,20 +43,19 @@ class TitleSupplementaryView: UICollectionReusableView {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure() {
-        
+
         labels.snp.makeConstraints { make in
             make.top.equalTo(self).offset(0)
             make.leading.equalTo(5)
             make.height.equalTo(30)
         }
-        
-        
+
         lblTitle.snp.makeConstraints { make in
             make.width.equalTo(30)
         }
@@ -69,24 +67,23 @@ class TitleSupplementaryView: UICollectionReusableView {
             make.top.equalTo(self)
             make.size.equalTo(CGSize(width: 33, height: 33))
         }
-        
+
         lblTitle.textColor = .black
         lblSubtitle.textColor = .lightGray
         btnPlus.setAllSideShadow()
-        
+
     }
-    
+
     func updateTitles(title: String) {
- 
+
         lblTitle.text = title
-        lblSubtitle.text = (title == "야채") ? "야채음식,생야채가 해당됩니다." : "과일음식,주스,생과일이 해당됩니다."        
+        lblSubtitle.text = (title == "야채") ? "야채음식,생야채가 해당됩니다." : "과일음식,주스,생과일이 해당됩니다."
         (title == "야채") ? (btnPlus.tag = 0) : (btnPlus.tag = 1)
         btnPlus.addTarget(self, action: #selector(self.displayItems(sender:)), for: .touchUpInside)
     }
-    
+
     @objc func displayItems( sender: VFButton) {
         delegate?.showPickUpViewController(tag: sender.tag)
     }
-    
-}
 
+}

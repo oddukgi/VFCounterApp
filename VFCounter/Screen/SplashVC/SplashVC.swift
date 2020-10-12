@@ -14,34 +14,32 @@ class SplashVC: UIViewController {
 
     var animationView: AnimationView!
     var window: UIWindow!
-    
+
     let defaultSize: CGFloat = 230
-   
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupAnimationView()
     }
-    
-    
+
     static func instance() -> SplashVC {
         return SplashVC()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         animationView.stop()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
     }
-    
-    
+
     // MARK: - UI Setup
-    
+
     func setupUI() {
-        
+
         view.backgroundColor = .red
         animationView = AnimationView(name: "food-animation")
         animationView.bounds = CGRect(x: 0, y: 0, width: 215, height: 320)
@@ -51,29 +49,24 @@ class SplashVC: UIViewController {
         view.addSubview(animationView)
 
     }
-    
-    
+
     // MARK: - Setup Animationview
     func setupAnimationView() {
-        
-       animationView.play(fromFrame: 40, toFrame: 135, completion: {finished in
+
+       animationView.play(fromFrame: 40, toFrame: 135, completion: {_ in
            UIView.animate(withDuration: 1.5, animations: {
-               
+
                self.animationView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
                self.animationView.alpha = 0
 
                self.loadMainVC()
            })
-           
+
        })
     }
-    
-    func loadMainVC() {     
+
+    func loadMainVC() {
         self.presentOnRoot(with: VFTabBarController())
     }
 
-
 }
-
-
-

@@ -9,11 +9,12 @@
 import Foundation
 
 extension Notification.Name {
-    
+
     static let updateTaskPercent = Notification.Name("updateTaskPercent")
     static let updateFetchingData = Notification.Name("updateFetchingData")
     static let updateDateTime = Notification.Name("updateDateTime")
     static let updateMonth    = Notification.Name("updateMonth")
     static let touchDateView = Notification.Name("TouchDateView")
     static let deleteTableViewItem = Notification.Name("DeleteItemTableView")
+
 }

@@ -10,23 +10,23 @@ import UIKit
 import SnapKit
 
 class SettingItemCell: UITableViewCell {
-    
+
     static let reuseIdentifier = "SettingItemCell"
-    
+
     lazy var itemImgView: UIImageView = {
         let image = UIImage(named: "scale")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
-        return imageView        
+        return imageView
     }()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setLayout()
     }
-    
+
     func setLayout() {
-        
+
         contentView.addSubview(itemImgView)
         itemImgView.snp.makeConstraints { make in
             make.centerY.equalTo(contentView.snp.centerY)

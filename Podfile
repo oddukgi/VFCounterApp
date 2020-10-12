@@ -15,8 +15,7 @@ target 'VFCounter' do
   # Pods for VFCounter
   pod 'MKRingProgressView'
   pod 'Charts'
-  pod 'lottie-ios'
-  pod 'TouchAreaInsets'
+  pod 'SwiftLint'
 
   target 'VFCounterTests' do
     inherit! :search_paths

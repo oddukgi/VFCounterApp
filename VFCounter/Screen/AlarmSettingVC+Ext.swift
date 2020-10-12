@@ -8,9 +8,8 @@
 
 import UIKit
 
-
 extension AlarmSettingVC {
-    
+
     func configure<T: UITableViewCell>(_ tableType: T.Type, for indexPath: IndexPath,
                                        reuseIdentifer: String) -> T {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as? T
@@ -20,58 +19,57 @@ extension AlarmSettingVC {
 
         return cell
     }
-    
+
 }
 
 extension AlarmSettingVC: UITableViewDataSource {
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionKind = Section(rawValue: section)
         return sectionKind?.description()
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
+
         var tableViewCell = UITableViewCell()
         if indexPath.section == 0 {
-            
-            switch(indexPath.item) {
+
+            switch indexPath.item {
             case 0:
                 guard let cell = self.configure(SwitchVeggieCell.self, for: indexPath, reuseIdentifer: SwitchVeggieCell.reuseIdentifier) as? SwitchVeggieCell else { return UITableViewCell()  }
                 cell.delegate = self
                 tableViewCell = cell
-                
+
             default:
-                guard let cell =  self.configure(MaxAmountVeggieCell.self,for: indexPath, reuseIdentifer:  MaxAmountVeggieCell.reuseIdentifier) as? MaxAmountVeggieCell else { return UITableViewCell() }
+                guard let cell =  self.configure(MaxAmountVeggieCell.self, for: indexPath, reuseIdentifer: MaxAmountVeggieCell.reuseIdentifier) as? MaxAmountVeggieCell else { return UITableViewCell() }
                 cell.delegate = self
                 tableViewCell = cell
-    
+
             }
         } else {
-            switch(indexPath.item) {
+            switch indexPath.item {
             case 0:
                 guard let cell = self.configure(SwitchFruitCell.self, for: indexPath, reuseIdentifer: SwitchFruitCell.reuseIdentifier) as? SwitchFruitCell else { return UITableViewCell()  }
                 cell.delegate = self
                 tableViewCell = cell
             default:
-                guard let cell =  self.configure(MaxAmountFruitCell.self,for: indexPath, reuseIdentifer:  MaxAmountFruitCell.reuseIdentifier) as? MaxAmountFruitCell else { return UITableViewCell() }
+                guard let cell =  self.configure(MaxAmountFruitCell.self, for: indexPath, reuseIdentifer: MaxAmountFruitCell.reuseIdentifier) as? MaxAmountFruitCell else { return UITableViewCell() }
                 cell.delegate = self
                 tableViewCell = cell
             }
         }
-    
+
         return tableViewCell
     }
 }
-
 
 extension AlarmSettingVC: MaxAmoutVeggieCellDelegate {
 
@@ -79,7 +77,7 @@ extension AlarmSettingVC: MaxAmoutVeggieCellDelegate {
         let message = "\(value)는 1 ~ 500 사이의 값이 아닙니다."
         self.presentAlertVC(title: "범위 초과", message: message, buttonTitle: "OK")
     }
-    
+
     func textField(editingDidBeginIn cell: MaxAmountVeggieCell) {
         if let indexPath = tableView?.indexPath(for: cell) {
             print("textfield selected in cell at \(indexPath)")
@@ -95,12 +93,12 @@ extension AlarmSettingVC: MaxAmoutVeggieCellDelegate {
 }
 
 extension AlarmSettingVC: MaxAmoutFruitCellDelegate {
-    
+
     func displayAlertMessageF(value: Float) {
         let message = "\(value)는 1 ~ 500 사이의 값이 아닙니다."
         self.presentAlertVC(title: "범위 초과", message: message, buttonTitle: "OK")
     }
-    
+
     func textField(editingDidBeginIn cell: MaxAmountFruitCell) {
         if let indexPath = tableView?.indexPath(for: cell) {
             print("textfield selected in cell at \(indexPath)")
@@ -122,13 +120,12 @@ extension AlarmSettingVC: SwitchVeggieDelegate {
         // Enable/ Disable slider
         guard let veggiecell = tableView.cellForRow(at: IndexPath(item: 1, section: 0))
                 as? MaxAmountVeggieCell else { return }
-        
+
         veggiecell.maxAmountTF.isEnabled = flag
         veggiecell.veggieSlider.isEnabled = flag
     }
-    
-}
 
+}
 
 extension AlarmSettingVC: SwitchFruitDelegate {
     func updateFruitSwitch(_ flag: Bool) {

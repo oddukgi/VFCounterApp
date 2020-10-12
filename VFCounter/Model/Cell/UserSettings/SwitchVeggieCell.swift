@@ -16,7 +16,7 @@ class SwitchVeggieCell: UITableViewCell, SelfConfigCell {
 
     static var reuseIdentifier = "SwitchVeggieCell"
     weak var delegate: SwitchVeggieDelegate?
-    
+
     @IBOutlet weak var veggieSwitch: UISwitch!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +27,7 @@ class SwitchVeggieCell: UITableViewCell, SelfConfigCell {
         super.setSelected(selected, animated: animated)
 
     }
-    
+
     func loadedDefaultValue() {
         if let value = SettingManager.getAlarmValue(keyName: "VeggieAlarm") {
             veggieSwitch.isOn = value

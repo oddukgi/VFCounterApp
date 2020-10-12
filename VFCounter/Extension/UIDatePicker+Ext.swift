@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIDatePicker {
-    
+
     func setDate(from string: String, format: String, animated: Bool = true) {
 
         let formater = DateFormatter()
@@ -17,6 +17,5 @@ extension UIDatePicker {
         let date = formater.date(from: string) ?? Date()
         setDate(date, animated: animated)
     }
-    
-}
 
+}

@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 protocol StructExt {
     func allPropertiesAreNotNull() throws -> Bool
 }

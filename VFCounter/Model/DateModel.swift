@@ -15,7 +15,7 @@ struct DateModel {
     var sumF: Int
     var maxV: Int
     var maxF: Int
-    
+
     init(date: String = "", tag: Int, sumV: Int, sumF: Int, maxV: Int, maxF: Int) {
         self.date = date
         self.tag  = tag
@@ -23,12 +23,12 @@ struct DateModel {
         self.sumF = sumF
         self.maxV = maxV
         self.maxF = maxF
-      
+
         changeDateFormat()
-        
+
     }
-    
+
     mutating func changeDateFormat() {
-        self.date = self.date + Date().changeDateTime(format: .onlyTime)
+        self.date += Date().changeDateTime(format: .onlyTime)
     }
 }

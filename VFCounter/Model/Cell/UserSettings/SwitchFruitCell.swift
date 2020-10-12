@@ -12,12 +12,12 @@ protocol SwitchFruitDelegate: class {
     func updateFruitSwitch(_ flag: Bool)
 }
 
-class SwitchFruitCell: UITableViewCell,SelfConfigCell {
+class SwitchFruitCell: UITableViewCell, SelfConfigCell {
 
     static var reuseIdentifier = "SwitchFruitCell"
     @IBOutlet weak var fruitsSwitch: UISwitch!
     weak var delegate: SwitchFruitDelegate?
-   
+
     override func awakeFromNib() {
         super.awakeFromNib()
         loadedDefaultValue()

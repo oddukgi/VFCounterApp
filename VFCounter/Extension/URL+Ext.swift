@@ -8,15 +8,15 @@
 
 import Foundation
 
-extension URL    {
+extension URL {
     func checkFileExist() -> Bool {
         let path = self.path
-        if (FileManager.default.fileExists(atPath: path))   {
+        if FileManager.default.fileExists(atPath: path) {
             print("FILE AVAILABLE")
             return true
-        }else        {
+        } else {
             print("FILE NOT AVAILABLE")
-            return false;
+            return false
         }
     }
 }

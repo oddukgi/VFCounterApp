@@ -13,7 +13,6 @@ enum StackViewLayout {
     static let stackViewHeight: CGFloat = 50.0
 }
 
-
 enum ScreenSize {
     static let width                    = UIScreen.main.bounds.size.width
     static let height                   = UIScreen.main.bounds.size.height
@@ -43,4 +42,3 @@ enum DeviceTypes {
 enum Images {
     static let placeHolder              = UIImage(named: "smilingsun")
 }
-

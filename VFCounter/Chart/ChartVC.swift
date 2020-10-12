@@ -10,17 +10,16 @@ import UIKit
 import SnapKit
 import CoreStore
 
-
 class ChartVC: UIViewController {
 
     enum TabIndex: Int {
         case firstChildTab = 0
         case secondChildTab = 1
     }
-    
+
     var segmentControl: CustomSegmentedControl!
     var datafilterView: DataFilterView!
-   
+
     let contentView     = UIView()
     let weeklyChartView = UIView()
     var monthlyChartView: UIView!
@@ -32,29 +31,28 @@ class ChartVC: UIViewController {
     }()
 
     var currentVC: UIViewController?
-    
+
     private var dateConfigure = ChartVC.DateConfigure()
     private var dateStrategy: DateStrategy!
     var valueConfig = ValueConfig()
 
     let datamanager = DataManager()
-    var weeklyChartVC:  WeeklyChartVC?
+    var weeklyChartVC: WeeklyChartVC?
     let calendarController = CalendarController(mode: .single)
-    
+
     var currentValue: CalendarValue? {
         didSet {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy.MM.dd"
             formatter.locale = Locale(identifier: "ko_KR")
-            
+
         }
     }
-    
 
     override func viewDidLoad() {
-        
+
         super.viewDidLoad()
-        
+
         self.title = "Chart"
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         view.backgroundColor = .systemBackground
@@ -69,7 +67,7 @@ class ChartVC: UIViewController {
         self.currentVC?.view.removeFromSuperview()
         self.currentVC?.removeFromParent()
     }
-    
+
     private func configureCalendar() {
 
         calendarController.initialValue = self.currentValue as? Date
@@ -77,7 +75,7 @@ class ChartVC: UIViewController {
         calendarController.maximumDate = Date()
         calendarController.isRingVisible = true
     }
-    
+
     fileprivate func configureDataFilterView() {
         datafilterView = DataFilterView()
         view.addSubViews(datafilterView)
@@ -87,57 +85,56 @@ class ChartVC: UIViewController {
             $0.size.equalTo(CGSize(width: 200, height: 38))
         }
         datafilterView.dataSegmentControl.delegate = self
- 
+
     }
-    
+
     fileprivate func showChildVC(_ vc: UIViewController) {
-        
+
         self.addChild(vc)
         self.contentView.addSubview(vc.view)
         vc.view.frame = self.contentView.bounds
         self.currentVC = vc
         vc.didMove(toParent: self)
     }
-    
-    
+
     func viewControllerForSelectedIndex(_ index: Int) -> UIViewController? {
-        
+
         var vc: UIViewController?
-        
+
         switch index {
         case TabIndex.firstChildTab.rawValue:
             calendarController.view.isHidden = true
             dateStrategy =  WeeklyDateStrategy(date: dateConfigure.date)
             let weeklyChartVC = WeeklyChartVC(dateStrategy: dateStrategy)
             vc = weeklyChartVC
-       
+
         default:
             calendarController.view.isHidden = false
             configureCalendar()
             calendarController.present(above: self, contentView: contentView)
         }
-        
+
         return vc
     }
-    
+
     func displayCurrentTab(_ index: Int) {
-        if let vc = viewControllerForSelectedIndex(index) , index == 0 {
+        if let vc = viewControllerForSelectedIndex(index), index == 0 {
             showChildVC(vc)
         }
     }
- 
-    fileprivate func prepareNotificationAddObserver(){
+
+    fileprivate func prepareNotificationAddObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)),
                                                name: .updateMonth, object: nil)
     }
-    
+
     // MARK: action
     @objc fileprivate func updateDateTime(_ notification: Notification) {
         if let userDate = notification.userInfo?["usermonth"] as? Date {
             dateConfigure.calendarDate = userDate
         }
     }
-    
+
     @objc func tappedAdd(_ sender: VFButton) {
         showPickUpViewController(tag: 0)
     }
@@ -146,21 +143,21 @@ class ChartVC: UIViewController {
         let dataManager = DataManager()
         let defaultV = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
         let defaultF = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
-        
+
         let maxValues = datamanager.getMaxData(date: date)
         let maxVeggie = (maxValues.0 == 0) ? defaultV : maxValues.0
         let maxFruit = (maxValues.1 == 0) ? defaultF : maxValues.1
-        
+
         print("Max Value: \(maxVeggie),\(maxFruit)")
-  
+
         valueConfig.maxVeggies = maxVeggie
         valueConfig.maxFruits = maxFruit
     }
-    
+
     func showPickUpViewController(tag: Int) {
-     
+
         let datetime = dateConfigure.date.changeDateTime(format: .date)
-        
+
         checkMaxValueFromDate(date: datetime)
         let datemodel = DateModel(date: datetime, tag: tag, sumV: valueConfig.sumVeggies,
                                   sumF: valueConfig.sumFruits, maxV: valueConfig.maxVeggies,
@@ -172,20 +169,20 @@ class ChartVC: UIViewController {
 
         }
     }
-    
+
     func updateView(dateTime: String) {
-        
+
         let periodIndex = segmentControl.selectedIndex
         let dataIndex = datafilterView.dataSegmentControl.selectedIndex
         if dataIndex == 0 {
-    
+
             dateConfigure.date = dateTime.changeDateTime(format: .date)
             if periodIndex == 0 {
                 change(to: periodIndex)
             } else {
               calendarController.moveToSpecificDate(date: dateConfigure.date)
             }
-            
+
         } else {
             if self.segmentControl.selectedIndex == 0 {
                 dateConfigure.date = dateTime.changeDateTime(format: .date)
@@ -201,7 +198,7 @@ class ChartVC: UIViewController {
 
 extension ChartVC: CustomSegmentedControlDelegate {
     func change(to index: Int) {
-        
+
         if datafilterView.dataSegmentControl.selectedIndex == 0 {
             removeCurrentVC()
             displayCurrentTab(index)
@@ -210,52 +207,49 @@ extension ChartVC: CustomSegmentedControlDelegate {
             valueChangedIndex(to: datafilterView.dataSegmentControl.selectedIndex)
         }
     }
-    
+
     func valueChangedIndex(to index: Int) {
-        
+
         switch index {
         case 0 :
             removeCurrentVC()
             self.displayCurrentTab(self.segmentControl.selectedIndex)
-            
+
         default:
             removeCurrentVC()
             if self.segmentControl.selectedIndex == 0 {
                 self.dateStrategy = WeeklyDateStrategy(date: dateConfigure.date)
             } else {
                 self.dateStrategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
-                
+
                 print("CalendarDate: \(dateConfigure.calendarDate)")
             }
-            
-            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy))            
+
+            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy))
         }
     }
 }
-
 
 extension ChartVC: PickItemVCProtocol {
     func addItems(item: VFItemController.Items, tag: Int) {
-    
+
         if !item.name.isEmpty {
-            
+
             let stringDate = String(item.date.split(separator: " ").first!)
             checkMaxValueFromDate(date: stringDate)
             datamanager.createEntity(item: item, tag: tag, valueConfig: valueConfig)
-            
+
             NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
             updateView(dateTime: stringDate)
-            
+
         }
     }
-    
-    func updateItems(item: VFItemController.Items, time: Date?, tag: Int) {
-        
-    }
-    
-    
-}
 
+    func updateItems(item: VFItemController.Items, time: Date?, tag: Int) {
+
+    }
+
+}
 
 extension ChartVC {
     struct DateConfigure {

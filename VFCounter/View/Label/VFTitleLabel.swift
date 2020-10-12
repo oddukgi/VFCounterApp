@@ -15,20 +15,20 @@ class VFTitleLabel: UILabel {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // default value : 2 param.
     // no need to call all param. 
     convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
         self.init(frame: .zero)
         self.textAlignment = textAlignment
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
-       
+
     }
-    
+
     private func configure() {
         textColor                    = .label
         adjustsFontSizeToFitWidth    = true
@@ -36,5 +36,5 @@ class VFTitleLabel: UILabel {
         lineBreakMode                = .byTruncatingTail
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
 }

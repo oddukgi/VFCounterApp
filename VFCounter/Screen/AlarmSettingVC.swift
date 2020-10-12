@@ -16,10 +16,10 @@ import UIKit
 // Show, Hide (DateTimePicker, Percentage)
 
 class AlarmSettingVC: UIViewController {
-    
+
     enum Section: Int {
         case veggies = 0, fruits
-        
+
         func description() -> String {
             switch self {
             case .veggies:
@@ -28,26 +28,25 @@ class AlarmSettingVC: UIViewController {
                 return "과일"
             }
         }
- 
+
     }
 
-
     var tableView: UITableView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if let flag = SettingManager.getInitialLaunching(keyName: "InitialLaunching"),
            flag == false {
                 SettingManager.setInitialLaunching(flag: true)
             }
-        
+
         configureTableView()
 
     }
 
 }
 
-extension AlarmSettingVC { 
+extension AlarmSettingVC {
 
     func configureTableView() {
         tableView = UITableView(frame: .zero, style: .grouped)
@@ -58,12 +57,12 @@ extension AlarmSettingVC {
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
-        
+
         tableView.register(UINib(nibName: "SwitchVeggieCell", bundle: nil), forCellReuseIdentifier: SwitchVeggieCell.reuseIdentifier)
         tableView.register(UINib(nibName: "SwitchFruitCell", bundle: nil), forCellReuseIdentifier: SwitchFruitCell.reuseIdentifier)
         tableView.register(UINib(nibName: "MaxAmountVeggieCell", bundle: nil), forCellReuseIdentifier: MaxAmountVeggieCell.reuseIdentifier)
         tableView.register(UINib(nibName: "MaxAmountFruitCell", bundle: nil), forCellReuseIdentifier: MaxAmountFruitCell.reuseIdentifier)
-        
+
         let gesture = UITapGestureRecognizer(target: tableView, action: #selector(UITextView.endEditing(_:)))
         tableView.addGestureRecognizer(gesture)
     }

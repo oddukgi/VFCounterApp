@@ -6,7 +6,6 @@
 //  Copyright © 2020 RetailDriver LLC. All rights reserved.
 //  Copyright © 2020 creativeSun. All rights reserved.
 
-
 import UIKit
 import JTAppleCalendar
 import SnapKit
@@ -15,7 +14,7 @@ class CalendarController<Value: CalendarValue>: UIViewController, JTACMonthViewD
 JTACMonthViewDataSource {
 
     // MARK: - Outlets
-    
+
     private lazy var calendarView: JTACMonthView = {
         let monthView = JTACMonthView()
         monthView.backgroundColor = self.appearance.backgroundColor
@@ -34,7 +33,7 @@ JTACMonthViewDataSource {
     private lazy var weekdayView: WeekdayView = {
         return WeekdayView(settings: self.setting.weekView)
     }()
-    
+
     private lazy var currentValueView: MonthSelectView<Value> = {
         let view = MonthSelectView<Value>(settings: self.setting.monthSelectView)
         view.delegate = self
@@ -44,11 +43,9 @@ JTACMonthViewDataSource {
             }
         }
         return view
-        
-    }()
-    
 
-    
+    }()
+
     /**
      Shortcuts array
      
@@ -66,31 +63,31 @@ JTACMonthViewDataSource {
      }
      ```
      */
-    
+
     var shortcuts: [CalendarShortcut<Value>] = []
-    
+
     /**
      Allow to choose `nil` date
      
      If you set `true` done button will be wlways enabled
      */
     var allowToChooseNilDate: Bool = false
-    
+
     /**
      The block to execute after the dismissal finishes
      */
     var dismissHandler: (() -> Void)?
-    
+
     /**
     The block to execute after "Done" button will be tapped
     */
     var doneHandler: ((Value?) -> Void)?
-    
+
     /**
      And initial value which will be selected bu default
      */
     var initialValue: Value?
-    
+
     /**
      Minimal selection date. Dates less then current will be markes as unavailable
      */
@@ -102,7 +99,7 @@ JTACMonthViewDataSource {
             return self.privateMinimumDate
         }
     }
-    
+
     /**
     Maximum selection date. Dates greather then current will be markes as unavailable
     */
@@ -114,42 +111,42 @@ JTACMonthViewDataSource {
             return self.privateMaximumDate
         }
     }
-    
+
     var isRingVisible: Bool {
-        
+
         set {
             CalendarSettings.default.dayCell.isRingVisible = newValue
             self.privateisRingVisible = newValue
         }
-        
+
         get {
             return self.privateisRingVisible
         }
     }
-    
+
     init(setting: CalendarSettings = .default) {
         self.setting = setting
         self.appearance = setting.controller
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         configureUI()
         configureSubviews()
         configureConstraints()
         configureInitialState()
-        
-        calendarView.visibleDates() { visibleDates in
+
+        calendarView.visibleDates { visibleDates in
             if Value.mode == .single {
                 self.value = visibleDates.monthDates.first!.date as? Value
             }
         }
     }
-    
+
     /**
        Present FastisController above current top view controller
        
@@ -160,39 +157,38 @@ JTACMonthViewDataSource {
        
        */
     func present(above viewController: UIViewController, contentView: UIView) {
-    
+
         viewController.addChild(self)
         self.didMove(toParent: self)
         self.view.frame = contentView.bounds
         contentView.addSubview(self.view)
     }
-    
+
     func moveToSpecificDate(date: Date) {
         //default set to todays date
         calendarView.deselectAllDates()
         calendarView.scrollToDate(date, animateScroll: false)
         calendarView.selectDates([date])
-        
+
     }
-    
+
     // MARK: - Configure
     private func configureUI() {
-        view.backgroundColor = self.appearance.backgroundColor        
+        view.backgroundColor = self.appearance.backgroundColor
     }
-    
+
     private func configureSubviews() {
         calendarView.register(DayCell.self, forCellWithReuseIdentifier: self.dayCellReuseIdentifier)
         view.addSubViews(self.currentValueView, self.weekdayView, self.calendarView)
 //        view.layer.borderWidth = 1   
     }
-    
+
     private func configureConstraints() {
 
         var screenWidth: CGFloat = 0.0
         var height: CGFloat = 0.0
         var width: CGFloat = 0.0
-        
-        
+
         if isRingVisible {
             height = SizeManager().calendarHeight
             width = SizeManager().calendarWidth
@@ -200,7 +196,7 @@ JTACMonthViewDataSource {
             height = 280
             width = SizeManager().miniCalendarWidth
         }
-        
+
         currentValueView.snp.makeConstraints { (maker) in
             maker.top.equalTo(view).offset(6)
             maker.centerX.equalTo(view.snp.centerX)
@@ -208,14 +204,12 @@ JTACMonthViewDataSource {
             maker.height.equalTo(40)
         }
 
-    
         weekdayView.snp.makeConstraints { (maker) in
             maker.top.equalTo(currentValueView.snp.bottom).offset(35)
             maker.centerX.equalTo(view.snp.centerX)
             maker.width.equalTo(width)
         }
-    
-        
+
         calendarView.snp.makeConstraints { (maker) in
             maker.top.equalTo(weekdayView.snp.bottom).offset(9)
             maker.centerX.equalTo(view.snp.centerX)
@@ -223,9 +217,9 @@ JTACMonthViewDataSource {
             maker.height.equalTo(height)
 
         }
-        
+
     }
-    
+
     private func configureInitialState() {
         self.value = self.initialValue
         if let date = self.value as? Date {
@@ -234,19 +228,19 @@ JTACMonthViewDataSource {
         } else {
             let nowDate = Date()
             let targetDate = self.privateMaximumDate ?? nowDate
-            
+
             if targetDate < nowDate {
                 calendarView.scrollToHeaderForDate(targetDate)
             } else {
                 calendarView.scrollToHeaderForDate(Date())
             }
         }
-        
+
         calendarView.scrollingMode = .stopAtEachCalendarFrame
     }
-    
+
     private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath, flag: Bool = false) {
-    
+
         guard let cell = cell as? DayCell else { return }
         if var cachedSettings = self.viewSettings[indexPath] {
             cachedSettings.isRingVisible = isRingVisible
@@ -257,10 +251,10 @@ JTACMonthViewDataSource {
             cell.applySettings(self.setting.dayCell)
             newSettings.isRingVisible = isRingVisible
             cell.configure(for: newSettings)
-  
+
         }
     }
-    
+
     private func selectValue(_ value: Value?, in calendar: JTACMonthView) {
         if let date = value as? Date {
             calendar.selectDates([date])
@@ -270,17 +264,17 @@ JTACMonthViewDataSource {
     private func handleDateTap(in calendar: JTACMonthView, date: Date) {
         if Value.mode == .single {
             value = date as? Value
-            selectValue(date as? Value, in: calendar) 
+            selectValue(date as? Value, in: calendar)
         }
     }
-    
+
     private func updateAmount(_ cell: JTACDayCell) {
-    
+
         guard let cell = cell as? DayCell else { return }
 
         let veggieMaxRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
         let fruitMaxRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
-        
+
         let veggie = cell.ringButton.ringProgressView.ring1.progress.clean
         let fruit = cell.ringButton.ringProgressView.ring2.progress.clean
 
@@ -288,8 +282,7 @@ JTACMonthViewDataSource {
         let fruitSum = Float(fruit)! * fruitMaxRate
         currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.up)), fruitSum: Int(fruitSum.rounded(.up)))
     }
-    
-    
+
     private func updateDate(date: Date) {
         currentValueView.updateDate(date: date)
     }
@@ -300,7 +293,7 @@ JTACMonthViewDataSource {
         dateFormatter.locale = currentCalendar.locale
         var startDate = dateFormatter.date(from: "2000 01 01")!
         var endDate = dateFormatter.date(from: "2030 12 01")!
-        
+
         if let maxinumDate = privateMaximumDate {
             let endOfNextMonth = maxinumDate
             endDate = endOfNextMonth
@@ -309,7 +302,7 @@ JTACMonthViewDataSource {
             let startOfPreviousMonth = minimumDate
             startDate = startOfPreviousMonth
         }
-            
+
         let parameters = ConfigurationParameters(startDate: startDate,
                                                  endDate: endDate,
                                                  numberOfRows: 6,
@@ -319,46 +312,46 @@ JTACMonthViewDataSource {
                                                  firstDayOfWeek: .monday,
                                                  hasStrictBoundaries: true)
         return parameters
-        
+
     }
-    
-    // MARK : JTAppleCalendarDelegate & JTAppleCalendarDataSource
+
+    // MARK: JTAppleCalendarDelegate & JTAppleCalendarDataSource
     func calendar(_ calendar: JTACMonthView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTACDayCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: self.dayCellReuseIdentifier, for: indexPath)
         configureCell(cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
     }
-    
+
     func calendar(_ calendar: JTACMonthView, willDisplay cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         configureCell(cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
     }
-    
+
     func calendar(_ calendar: JTACMonthView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
- 
+
         if Value.mode == .single {
             self.value = visibleDates.monthDates.first!.date as? Value
         }
     }
-    
+
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
        if cellState.selectionType == .some(.userInitiated) {
            self.handleDateTap(in: calendar, date: date)
        } else if let cell = cell {
            self.configureCell(cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
-       
+
         if isRingVisible == true {
             self.updateAmount(cell)
         } else {
             self.updateDate(date: date)
-            
+
             if date <= Date() {
                 self.doneHandler?(self.value)
             }
         }
-        
+
        }
     }
-    
+
     public func calendar(_ calendar: JTACMonthView, didDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
 
         if let cell = cell {
@@ -370,35 +363,34 @@ JTACMonthViewDataSource {
         self.viewSettings.removeAll()
         return true
     }
-    
+
     func calendar(_ calendar: JTACMonthView, shouldDeselectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) -> Bool {
         self.viewSettings.removeAll()
         return true
     }
 
-    
      // MARK: - Variables
      private let setting: CalendarSettings
      private var appearance: CalendarSettings.Controller = CalendarSettings.default.controller
-    
+
      private let dayCellReuseIdentifier = "DayCellReuseIdentifier"
      private var viewSettings: [IndexPath: DayCell.ViewSettings] = [:]
      private var currentCalendar: Calendar = .autoupdatingCurrent
      private var privateMinimumDate: Date?
      private var privateMaximumDate: Date?
-    
+
      private var value: Value? {
          didSet {
              self.currentValueView.currentValue = self.value
          }
      }
-    
+
     private var privateisRingVisible: Bool = true
-    
+
 }
 
 extension CalendarController where Value == CalendarRange {
-    
+
     /// Initiate FastisController
     /// - Parameters:
     ///   - mode: Choose `.range` or `.single` mode
@@ -409,7 +401,7 @@ extension CalendarController where Value == CalendarRange {
 }
 
 extension CalendarController where Value == Date {
-    
+
     /// Initiate FastisController
     /// - Parameters:
     ///   - mode: Choose .range or .single mode
@@ -418,7 +410,7 @@ extension CalendarController where Value == Date {
         self.init(setting: setting)
         calendarView.reloadData()
     }
-    
+
 }
 
 extension CalendarSettings {
@@ -429,7 +421,7 @@ extension CalendarSettings {
 }
 
 extension CalendarController: MonthSelectViewProtocol {
-    
+
     func pressedArrow(tag: Int) {
         switch tag {
         case 0:

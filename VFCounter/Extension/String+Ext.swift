@@ -17,14 +17,12 @@ extension String {
             if let arg = $0 as? Int64 { return String(arg) }
             if let arg = $0 as? String { return String(arg) }
 //            if let arg = $0 as? Character { return String(arg) }
-            
+
             return "(null)"
             } as [CVarArg]
-        
+
         return String.init(format: self, arguments: args)
     }
-    
-   
 
     /// Generates a `UIImage` instance from this string using a specified
     /// attributes and size.
@@ -34,7 +32,7 @@ extension String {
     ///     - size: of the image to return.
     /// - Returns: a `UIImage` instance from this string using a specified
     /// attributes and size, or `nil` if the operation fails.
-    
+
     func image(withAttributes attributes: [NSAttributedString.Key: Any]? = nil, size: CGSize? = nil) -> UIImage? {
         let size = size ?? (self as NSString).size(withAttributes: attributes)
         return UIGraphicsImageRenderer(size: size).image { _ in
@@ -59,7 +57,7 @@ extension String {
           }
           return nil
     }
-    
+
     func trimmingTime(start: Int, end: Int) -> String {
         var time = self
         let start = time.index(time.startIndex, offsetBy: start)
@@ -68,7 +66,7 @@ extension String {
         time.removeSubrange(range)
         return time
     }
-    
+
     func changeDateTime(format: Date.Format) -> Date {
        let formatter = DateFormatter()
         formatter.dateFormat = format.rawValue
@@ -76,38 +74,37 @@ extension String {
         formatter.timeZone = TimeZone.current
         return formatter.date(from: self)!
     }
-    
+
     func getWeekdayIndex() -> Int {
-        
+
         let days = ["월", "화", "수", "목", "금", "토", "일"]
         return days.firstIndex(of: self)!
     }
-    
+
     func containsWhitespaceAndNewlines() -> Bool {
         return rangeOfCharacter(from: CharacterSet(charactersIn: "월화수목금토일")) != nil
     }
-    
+
     func containsNumber() -> String {
-        let aSet = NSCharacterSet(charactersIn:"0123456789").inverted
+        let aSet = NSCharacterSet(charactersIn: "0123456789").inverted
         let compSepByCharInSet = self.components(separatedBy: aSet)
         let numberFiltered = compSepByCharInSet.joined(separator: "")
         return numberFiltered
     }
-    
+
     func doesStringContains(input: String) -> Bool {
         return self.range(of: input, options: .caseInsensitive) != nil
     }
+
 }
 
-
 extension Double {
-    
+
     // convert double to string
     func roundValue() -> String {
         return String(format: "%.5f", self)
     }
 }
-
 
 /*
  let numberFormatter = NumberFormatter()

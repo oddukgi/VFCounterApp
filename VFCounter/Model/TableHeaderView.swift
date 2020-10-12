@@ -11,15 +11,14 @@ import SnapKit
 
 class TableHeaderView: UITableViewHeaderFooterView {
 
-    //MARK: - Properties
+    // MARK: - Properties
     static var reuseIdentifier: String {
         return String(describing: self)
     }
 
     let lbTitle = VFTitleLabel(textAlignment: .left, fontSize: 15)
 
-    
-    //MARK: - Init
+    // MARK: - Init
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         configure()
@@ -29,8 +28,8 @@ class TableHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Configure
-    
+    // MARK: - Configure
+
     func configure() {
         contentView.addSubview(lbTitle)
         lbTitle.snp.makeConstraints { make in
@@ -38,7 +37,7 @@ class TableHeaderView: UITableViewHeaderFooterView {
             make.height.equalTo(40)
         }
     }
-    
+
     func setTitle(with section: SettingVC.Section) {
         lbTitle.text = section.title
     }

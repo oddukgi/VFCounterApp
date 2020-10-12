@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 public class Veggies: DataType {
 
 }

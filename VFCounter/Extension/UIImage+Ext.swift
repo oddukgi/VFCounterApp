@@ -8,9 +8,8 @@
 
 import UIKit
 
-
 extension UIImage {
-    
+
     // 이미지 배경을 투명하게 바꾸는 함수
     func imageByMakingWhiteBackgroundTransparent() -> UIImage? {
 
@@ -21,15 +20,15 @@ extension UIImage {
          UIGraphicsBeginImageContext(image.size)            // 비트맵 이미지 생성
 
          let maskedImageRef = rawImageRef.copy(maskingColorComponents: colorMasking)
-         UIGraphicsGetCurrentContext()?.translateBy(x: 0.0,y: image.size.height)
+         UIGraphicsGetCurrentContext()?.translateBy(x: 0.0, y: image.size.height)
          UIGraphicsGetCurrentContext()?.scaleBy(x: 1.0, y: -1.0)
          UIGraphicsGetCurrentContext()?.draw(maskedImageRef!, in: CGRect.init(x: 0, y: 0, width: image.size.width, height: image.size.height))
-         let result = UIGraphicsGetImageFromCurrentImageContext();
-         UIGraphicsEndImageContext();
+         let result = UIGraphicsGetImageFromCurrentImageContext()
+         UIGraphicsEndImageContext()
          return result
 
      }
-    
+
     func transparentImageBackgroundToWhite(color: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         let imageRect: CGRect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
@@ -44,7 +43,7 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
-    
+
    func resized(toWidth width: CGFloat) -> UIImage? {
        let canvasSize = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
@@ -64,7 +63,5 @@ extension UIImage {
     }
 }
 
-
 // MARK: Create watermark text
 // refer to : https://stackoverflow.com/a/41524358
-

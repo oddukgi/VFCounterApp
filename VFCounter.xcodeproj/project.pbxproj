@@ -34,9 +34,6 @@
 		122DF9452534040100303148 /* SwitchFruitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 122DF9442534040100303148 /* SwitchFruitCell.xib */; };
 		122DF94A2534051F00303148 /* SwitchFruitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DF9492534051F00303148 /* SwitchFruitCell.swift */; };
 		122DF94F2534053000303148 /* SwitchVeggieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DF94E2534053000303148 /* SwitchVeggieCell.swift */; };
-		12339B26252C5105004228DB /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12339B25252C5105004228DB /* SplashVC.swift */; };
-		12339B4B252C57DC004228DB /* SplashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12339B4A252C57DC004228DB /* SplashView.xib */; };
-		12339B53252C5A81004228DB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12339B52252C5A81004228DB /* SplashViewController.swift */; };
 		1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236800424D02DB6004F4AE8 /* SectionHeader.swift */; };
 		1236A5B624F1231C00F4FF19 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */; };
 		1239011724FF8B4A001865DD /* UIDatePicker+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */; };
@@ -47,7 +44,6 @@
 		1247F5A324CECB5E00AD34F5 /* PickItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1247F5A224CECB5E00AD34F5 /* PickItemCell.swift */; };
 		1249159D25281C2400FDFFCF /* MonthlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1249159C25281C2400FDFFCF /* MonthlyModel.swift */; };
 		124A446024D28DE4003FFF3A /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124A445F24D28DE4003FFF3A /* Notification+Ext.swift */; };
-		124AD89D252C945F0062E312 /* food_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 124AD89C252C945F0062E312 /* food_animation.json */; };
 		124B917C24CAC755009616A7 /* UserItemVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */; };
 		124B917E24CACC35009616A7 /* VFItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B917D24CACC35009616A7 /* VFItemCell.swift */; };
 		124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B918124CACD85009616A7 /* TitleSupplementaryView.swift */; };
@@ -58,6 +54,7 @@
 		1252A684251CD22500906E9B /* MainRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1252A683251CD22500906E9B /* MainRingView.swift */; };
 		125918BB2519CFD80031790D /* ElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125918BA2519CFD80031790D /* ElementCell.swift */; };
 		125918C92519DD550031790D /* PeriodListVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125918C82519DD550031790D /* PeriodListVC+Ext.swift */; };
+		125E951825347E4E00E7B015 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 125E951725347E4E00E7B015 /* .swiftlint.yml */; };
 		1267B0D12531568A005B373D /* Veggies+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267B0CB2531568A005B373D /* Veggies+CoreDataProperties.swift */; };
 		1267B0D22531568A005B373D /* Fruits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267B0CC2531568A005B373D /* Fruits+CoreDataClass.swift */; };
 		1267B0D32531568A005B373D /* DataType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267B0CD2531568A005B373D /* DataType+CoreDataProperties.swift */; };
@@ -148,7 +145,6 @@
 		12FD255224CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254924CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf */; };
 		12FD255324CEF6BB00E3D5E0 /* NanumSquareRoundEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12FD254A24CEF6BB00E3D5E0 /* NanumSquareRoundEB.ttf */; };
 		12FD255424CEF6BB00E3D5E0 /* I18N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD254B24CEF6BB00E3D5E0 /* I18N.swift */; };
-		12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD255824CEF94F00E3D5E0 /* UILabel+Ext.swift */; };
 		12FD255B24CEFBD700E3D5E0 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD255A24CEFBD700E3D5E0 /* UIFont+Ext.swift */; };
 		12FF76DA24DE7118009542FE /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76D924DE7118009542FE /* UserSettings.swift */; };
 		12FF76DE24DE72C6009542FE /* VFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76DD24DE72C6009542FE /* VFError.swift */; };
@@ -207,9 +203,6 @@
 		122DF9492534051F00303148 /* SwitchFruitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchFruitCell.swift; sourceTree = "<group>"; };
 		122DF94E2534053000303148 /* SwitchVeggieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchVeggieCell.swift; sourceTree = "<group>"; };
 		122E073924EE664A00BC8066 /* VFCounter.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = VFCounter.entitlements; sourceTree = "<group>"; };
-		12339B25252C5105004228DB /* SplashVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
-		12339B4A252C57DC004228DB /* SplashView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashView.xib; sourceTree = "<group>"; };
-		12339B52252C5A81004228DB /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		1236800424D02DB6004F4AE8 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		1236A5B524F1231C00F4FF19 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
 		1239011624FF8B4A001865DD /* UIDatePicker+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+Ext.swift"; sourceTree = "<group>"; };
@@ -220,7 +213,6 @@
 		1247F5A224CECB5E00AD34F5 /* PickItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItemCell.swift; sourceTree = "<group>"; };
 		1249159C25281C2400FDFFCF /* MonthlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyModel.swift; sourceTree = "<group>"; };
 		124A445F24D28DE4003FFF3A /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
-		124AD89C252C945F0062E312 /* food_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = food_animation.json; sourceTree = "<group>"; };
 		124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserItemVC+Ext.swift"; sourceTree = "<group>"; };
 		124B917D24CACC35009616A7 /* VFItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFItemCell.swift; sourceTree = "<group>"; };
 		124B918124CACD85009616A7 /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
@@ -231,6 +223,8 @@
 		1252A683251CD22500906E9B /* MainRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRingView.swift; sourceTree = "<group>"; };
 		125918BA2519CFD80031790D /* ElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementCell.swift; sourceTree = "<group>"; };
 		125918C82519DD550031790D /* PeriodListVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PeriodListVC+Ext.swift"; sourceTree = "<group>"; };
+		125E951725347E4E00E7B015 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../../.swiftlint.yml; sourceTree = "<group>"; };
+		125E951F25347EDA00E7B015 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = /Users/sunmiya/SideProjectForFun/VFCounter.git/.swiftlint.yml; sourceTree = "<absolute>"; };
 		1267B0CB2531568A005B373D /* Veggies+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Veggies+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1267B0CC2531568A005B373D /* Fruits+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fruits+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1267B0CD2531568A005B373D /* DataType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataType+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -325,7 +319,6 @@
 		12FD254924CEF6BB00E3D5E0 /* NanumSquareRoundL.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundL.ttf; sourceTree = "<group>"; };
 		12FD254A24CEF6BB00E3D5E0 /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
 		12FD254B24CEF6BB00E3D5E0 /* I18N.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = I18N.swift; sourceTree = "<group>"; };
-		12FD255824CEF94F00E3D5E0 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		12FD255A24CEFBD700E3D5E0 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
 		12FF76D924DE7118009542FE /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		12FF76DD24DE72C6009542FE /* VFError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFError.swift; sourceTree = "<group>"; };
@@ -445,17 +438,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		12339B70252C6053004228DB /* SplashVC */ = {
-			isa = PBXGroup;
-			children = (
-				124AD89C252C945F0062E312 /* food_animation.json */,
-				12339B4A252C57DC004228DB /* SplashView.xib */,
-				12339B52252C5A81004228DB /* SplashViewController.swift */,
-				12339B25252C5105004228DB /* SplashVC.swift */,
-			);
-			path = SplashVC;
-			sourceTree = "<group>";
-		};
 		123E00FC24ED40B5000457B9 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +501,7 @@
 		126AE52D24C6C6B4000BCF7E = {
 			isa = PBXGroup;
 			children = (
+				125E951F25347EDA00E7B015 /* .swiftlint.yml */,
 				126AE53824C6C6B4000BCF7E /* VFCounter */,
 				127BF74524E530050066AC7D /* code garbage */,
 				126AE54F24C6C6B6000BCF7E /* VFCounterTests */,
@@ -655,7 +638,6 @@
 			children = (
 				123E00FF24ED41E8000457B9 /* Weather */,
 				12A0D6FD252EC46100A16877 /* Launch Screen.storyboard */,
-				12339B70252C6053004228DB /* SplashVC */,
 				125918C72519DCCD0031790D /* List */,
 				12BBF92524CAB08200C11ECD /* UserItemVC.swift */,
 				124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */,
@@ -676,7 +658,6 @@
 				12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */,
 				12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */,
 				12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */,
-				12FD255824CEF94F00E3D5E0 /* UILabel+Ext.swift */,
 				12FD255A24CEFBD700E3D5E0 /* UIFont+Ext.swift */,
 				124A445F24D28DE4003FFF3A /* Notification+Ext.swift */,
 				12CC426824D7D9CC0086B3AE /* String+Ext.swift */,
@@ -798,6 +779,7 @@
 		12FD254524CEF6BB00E3D5E0 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				125E951725347E4E00E7B015 /* .swiftlint.yml */,
 				126AE54724C6C6B6000BCF7E /* Info.plist */,
 				122E073924EE664A00BC8066 /* VFCounter.entitlements */,
 				129116D024F615E600BEF3B2 /* Seoulnamsan */,
@@ -843,6 +825,7 @@
 				126AE53324C6C6B4000BCF7E /* Frameworks */,
 				126AE53424C6C6B4000BCF7E /* Resources */,
 				D299445732A47676C56DC16F /* [CP] Embed Pods Frameworks */,
+				12BDFF4025347B4D00D9CA96 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -952,9 +935,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				122DF9452534040100303148 /* SwitchFruitCell.xib in Resources */,
+				125E951825347E4E00E7B015 /* .swiftlint.yml in Resources */,
 				129116D624F616F700BEF3B2 /* SeoulnamsanB.otf in Resources */,
-				12339B4B252C57DC004228DB /* SplashView.xib in Resources */,
-				124AD89D252C945F0062E312 /* food_animation.json in Resources */,
 				129116D724F616F700BEF3B2 /* SeoulnamsanBL.otf in Resources */,
 				129116D824F616F700BEF3B2 /* SeoulnamsanEB.otf in Resources */,
 				129116D924F616F700BEF3B2 /* SeoulnamsanL.otf in Resources */,
@@ -991,6 +973,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		12BDFF4025347B4D00D9CA96 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/SwiftLint/swiftlint \n";
+		};
 		2E8CECFC37DF9A3CEFC671EA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1124,7 +1124,6 @@
 				12FF76DE24DE72C6009542FE /* VFError.swift in Sources */,
 				1267B0D22531568A005B373D /* Fruits+CoreDataClass.swift in Sources */,
 				123E010124ED4215000457B9 /* WeatherData.swift in Sources */,
-				12FD255924CEF94F00E3D5E0 /* UILabel+Ext.swift in Sources */,
 				12C2FA4024F65A74001CEC30 /* UIButton+Ext.swift in Sources */,
 				12F2EE662509C8A400D0E5FB /* RingItemGroupView.swift in Sources */,
 				123E00FE24ED40CE000457B9 /* NetworkManager.swift in Sources */,
@@ -1153,7 +1152,6 @@
 				12F2EE692509C8A400D0E5FB /* WeekdayView.swift in Sources */,
 				1286EA89250F455C00FDDBE6 /* GradientView.swift in Sources */,
 				12B3733E24DE498A00491FBB /* AlarmSettingVC+Ext.swift in Sources */,
-				12339B26252C5105004228DB /* SplashVC.swift in Sources */,
 				1236800524D02DB6004F4AE8 /* SectionHeader.swift in Sources */,
 				1249159D25281C2400FDFFCF /* MonthlyModel.swift in Sources */,
 				1239011724FF8B4A001865DD /* UIDatePicker+Ext.swift in Sources */,
@@ -1191,7 +1189,6 @@
 				120E97FD24F8AA650095D765 /* DateProvider.swift in Sources */,
 				1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */,
 				12F2EE642509C8A400D0E5FB /* RingItemButton.swift in Sources */,
-				12339B53252C5A81004228DB /* SplashViewController.swift in Sources */,
 				12F2EE652509C8A400D0E5FB /* DayCell.swift in Sources */,
 				121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */,
 				125918BB2519CFD80031790D /* ElementCell.swift in Sources */,

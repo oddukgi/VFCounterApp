@@ -9,17 +9,17 @@
 import UIKit
 
 enum CellIdentifier: String {
-    
+
     case VegieSwitchCell = "VegieSwitchCell"
     case VegieSliderCell = "VegieSliderCell"
     case VegieDatePickerCell = "VegieDatePickerCell"
     case VegieTimePickerCell = "VegieTimePickerCell"
-    
+
     case FruitsSwitchCell = "FruitsSwitchCell"
     case FruitsSliderCell = "FruitsSliderCell"
     case FruitsDatePickerCell = "FruitsDatePickerCell"
     case FruitsTimePickerCell = "FruitsTimePickerCell"
-    
+
     var reuseIdentifier: String {
         return rawValue
     }
@@ -29,12 +29,11 @@ protocol CalendarDelegate {
     func didUpdatedDates(_ selectedDate: String)
 }
 
-
 class AlarmConfigureVC: ModelDetailTableController {
-    
+
     enum Section: Int {
         case vegies = 0, fruits
-        
+
         func description() -> String {
             switch self {
             case .vegies:
@@ -42,9 +41,8 @@ class AlarmConfigureVC: ModelDetailTableController {
             case .fruits:
                 return "과일"
             }
-        }      
+        }
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,31 +50,30 @@ class AlarmConfigureVC: ModelDetailTableController {
         tableView.allowsSelectionDuringEditing = true
         tableView.delegate = self
         tableView.dataSource = self
-        
-        registerCell()  
+
+        registerCell()
     }
- 
+
     func registerCell() {
-        
+
         tableView.register(ModelSwitchCell.self, forCellReuseIdentifier: CellIdentifier.VegieSwitchCell.reuseIdentifier)
         tableView.register(ModelSliderCell.self, forCellReuseIdentifier: CellIdentifier.VegieSliderCell.reuseIdentifier)
-        tableView.register(ModelDateCell.self,   forCellReuseIdentifier: CellIdentifier.VegieDatePickerCell.reuseIdentifier)
+        tableView.register(ModelDateCell.self, forCellReuseIdentifier: CellIdentifier.VegieDatePickerCell.reuseIdentifier)
         tableView.register(ModelPickerCell.self, forCellReuseIdentifier: CellIdentifier.VegieTimePickerCell.reuseIdentifier)
-    
+
     }
 
     override func updateEdit() {
         super.updateEdit()
-        
+
     }
-    
-    
+
 // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionKind = Section(rawValue: section)
         return sectionKind?.description()
     }
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -84,9 +81,9 @@ class AlarmConfigureVC: ModelDetailTableController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
-    
+
     func configure<T: ModelTableCell>(_ cellType: T.Type, for indexPath: IndexPath, id: CellIdentifier) -> T {
-        
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: id.reuseIdentifier, for: indexPath) as? T else {
             fatalError("Unable to dequeue \(cellType)")
         }
@@ -96,18 +93,17 @@ class AlarmConfigureVC: ModelDetailTableController {
         cell.editingAccessoryView?.context(effectiveContext, owner: self)
         return cell
     }
-    
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let item = indexPath.item
         switch item {
-            
+
         case 0:
             let cell = configure(ModelSwitchCell.self, for: indexPath, id: .VegieSwitchCell)
             cell.textLabel?.text = "알림설정"
             return cell
-            
+
         case 1:
             let cell = configure(ModelSliderCell.self, for: indexPath, id: .VegieSliderCell)
             cell.path = "%달성도:,percent,%%"
@@ -121,9 +117,8 @@ class AlarmConfigureVC: ModelDetailTableController {
         default:
             return configure(ModelPickerCell.self, for: indexPath, id: .VegieTimePickerCell)
         }
-    
+
     }
-    
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -132,35 +127,13 @@ class AlarmConfigureVC: ModelDetailTableController {
     override func onTap(indexPath: IndexPath) {
         super.onTap(indexPath: indexPath)
     }
-    
+
     override func onAccessoryTap(indexPath: IndexPath) {
         super.onAccessoryTap(indexPath: indexPath)
     }
 
 }
-  
-    
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 /*
 override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
@@ -206,8 +179,7 @@ override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexP
 }
 */
 
-/*
-/// MARK: - Navigation
+// MARK: - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -215,5 +187,3 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     // Pass the selected object to the new view controller.
 }
 */
-
-

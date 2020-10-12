@@ -9,12 +9,10 @@
 import Foundation
 import CoreData
 
-
 extension Fruits {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Fruits> {
         return NSFetchRequest<Fruits>(entityName: "Fruits")
     }
-
 
 }

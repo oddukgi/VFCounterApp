@@ -8,11 +8,10 @@
 
 import UIKit
 
-
 extension UIStackView {
-    
+
     func addHorizontalSeperators(color: UIColor) {
-        
+
         var i = self.arrangedSubviews.count
         while i >= 0 {
             let separator = createSeparator(color: color)
@@ -21,14 +20,12 @@ extension UIStackView {
             i -= 1
         }
     }
-    
+
     private func createSeparator(color: UIColor) -> UIView {
         let separator = UIView()
         separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         separator.backgroundColor = color
         return separator
     }
-    
+
 }
-
-

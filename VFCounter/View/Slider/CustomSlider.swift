@@ -9,11 +9,10 @@
 import UIKit
 
 protocol SliderUpdateDelegate: AnyObject {
-    
-    func sliderTouch(value: Float, tag: Int) 
+
+    func sliderTouch(value: Float, tag: Int)
     func sliderValueChanged(value: Float, tag: Int)
 }
-
 
 class CustomSlider: UISlider {
 
@@ -51,31 +50,29 @@ class CustomSlider: UISlider {
         self.value = current
         return self
     }
-    
-    
-    
+
     #if TARGET_INTERFACE_BUILDER
     @IBOutlet open weak var delegate: SliderUpdateDelegate?
     #else
     open weak var delegate: SliderUpdateDelegate?
     #endif
-    
+
     private var step: Float = 1
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     convenience init(step: Float) {
         self.init()
         self.step = step
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     // Custom thumb view which will be converted to UIImage
      // and set as thumb. You can customize it's colors, border, etc.
      private lazy var thumbView: UIView = {
@@ -107,7 +104,7 @@ class CustomSlider: UISlider {
              thumbView.layer.render(in: rendererContext.cgContext)
          }
      }
-    
+
     override func trackRect(forBounds bounds: CGRect) -> CGRect {
         // Set custom track height
         // As seen here: https://stackoverflow.com/a/49428606/7235585
@@ -115,7 +112,7 @@ class CustomSlider: UISlider {
         newRect.size.height = trackHeight
         return newRect
     }
-    
+
     func configure() {
       addTarget(self, action: #selector(valueChangedSlider(_:)), for: .valueChanged)
       addTarget(self, action: #selector(touchSlider(_:)), for: .touchUpInside)
@@ -124,20 +121,17 @@ class CustomSlider: UISlider {
     }
 
     @objc func valueChangedSlider(_ sender: UISlider) {
-     
+
         //round : 소수점 이하 반올림
         let roundedValue = round(sender.value / step) * step
         sender.value = roundedValue
-        
+
 //        print("Slider Value: \(roundedValue)")      
         delegate?.sliderValueChanged(value: sender.value, tag: sender.tag)
     }
-    
+
     @objc func touchSlider(_ sender: UISlider) {
         delegate?.sliderTouch(value: sender.value, tag: sender.tag)
     }
-    
-    
+
 }
-
-

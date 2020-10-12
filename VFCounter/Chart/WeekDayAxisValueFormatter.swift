@@ -11,10 +11,10 @@ import Charts
 
 // we'll put label on weekdays from SUN to SAT
 class WeekDayAxisValueFormatter: NSObject, IAxisValueFormatter {
-       
+
     private var calendar: Calendar = .current
     private var weekdays = [String]()
-    
+
     override init() {
         super.init()
         calendar.locale = Locale(identifier: "ko_KR")
@@ -22,9 +22,9 @@ class WeekDayAxisValueFormatter: NSObject, IAxisValueFormatter {
         weekdays = calendar.shortWeekdaySymbols
         weekdays.append(weekdays.remove(at: 0))
     }
-    
+
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-       
+
         let index = Int(value.rounded())
         guard weekdays.indices.contains(index), index == Int(value) else { return "" }
         return weekdays[ index % (weekdays.count)]

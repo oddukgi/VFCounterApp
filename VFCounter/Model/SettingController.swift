@@ -9,21 +9,21 @@
 import UIKit
 
 class SettingController {
-    
+
     struct Settings: Hashable {
         let name: String
         let image: UIImage?
         let identifier = UUID()
-        
-        func hash(into hasher: inout Hasher){
+
+        func hash(into hasher: inout Hasher) {
            hasher.combine(identifier)
         }
     }
-    
+
     var defaults: [Settings] {
         return settings
     }
-    
+
     var appInfo: [Settings] {
         return info
     }
@@ -31,8 +31,6 @@ class SettingController {
     private let settings = [ Settings(name: "최대양 설정", image: UIImage(named: "scale")),
                              Settings(name: "언어설정", image: UIImage(named: "globe")) ]
     private let info = [
-                            Settings(name: "앱버전", image: nil),Settings(name: "문의하기", image: nil),
+                            Settings(name: "앱버전", image: nil), Settings(name: "문의하기", image: nil)
                        ]
 }
-
-
