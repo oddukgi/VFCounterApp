@@ -9,7 +9,6 @@
 import UIKit
 import Charts
 
-// we'll put label on weekdays from SUN to SAT
 class WeekDayAxisValueFormatter: NSObject, IAxisValueFormatter {
 
     private var calendar: Calendar = .current

@@ -1,6 +1,6 @@
 //
 //  VFSubTitleLabel.swift
-//  DrinkCounter
+//  VFCounter
 //
 //  Created by Sunmi on 2020/06/17.
 //  Copyright © 2020 CreativeSuns. All rights reserved.
@@ -19,9 +19,9 @@ class VFSubTitleLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 
-     convenience init(fontSize: CGFloat) {
+    convenience init(font: UIFont) {
         self.init(frame: .zero)
-        font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        self.font = font
     }
 
     private func configure() {

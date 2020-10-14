@@ -20,23 +20,39 @@ extension PeriodListVC {
     }
 }
 
+// MARK: - UITableView delegate
+extension PeriodListVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 44))
+
+        let label = UILabel()
+        label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+        label.text = self.weekday[section]
+        label.font = NanumSquareRound.bold.style(offset: 15)
+        label.textAlignment = .left
+        label.textColor = ColorHex.darkGreen
+        headerView.addSubview(label)
+
+        return headerView
+    }
+}
+// MARK: - UITableView datasource
 extension PeriodListVC: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return weekday.count
-
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel.init(frame: CGRect.init(x: 20, y: 0, width: tableView.frame.size.width, height: 44))
-        label.textColor = UIColor.black
-        label.text = self.weekday[section]
-        label.font = NanumSquareRound.bold.style(sizeOffset: 15)
-        return label
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

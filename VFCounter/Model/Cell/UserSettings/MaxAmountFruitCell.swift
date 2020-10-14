@@ -114,6 +114,8 @@ extension MaxAmountFruitCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
         if let text = textField.text {
+          
+            maxAmountTF.resignFirstResponder()
             var amount = Float(text) ?? 0
             if amount == 0 { amount = 1 }
             guard fruitSlider.minimumValue <= amount && fruitSlider.maximumValue >= amount

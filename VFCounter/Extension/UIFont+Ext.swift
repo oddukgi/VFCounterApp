@@ -15,11 +15,10 @@ enum NanumSquareRound: String {
     case extrabold = "NanumSquareRoundEB"
     case light = "NanumSquareRoundL"
 
-    func style(sizeOffset: CGFloat = 0) -> UIFont {
-      let size = sizeOffset
-      return UIFont(name: rawValue, size: size)!
+    func style(offset: CGFloat = 0) -> UIFont {
+        let size = offset
+        return UIFont(name: rawValue, size: size)!
     }
-
 }
 
 //SeN-CM, SeN-CBL, SeN-CEB, SeN-CB,SeN-CL

@@ -41,9 +41,6 @@ enum UIHelper {
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 
-//       let sectionHeader = createSectionHeader()
-//       section.boundarySupplementaryItems = [sectionHeader]
-
        return section
     }
 
@@ -60,21 +57,17 @@ enum UIHelper {
                trailing: 2
             )
 
-             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(SizeManager().getUserItemHeight))
-             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(SizeManager().getUserItemHeight))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                                   subitem: layoutItem, count: 5)
-     //        group.interItemSpacing = .fixed(3.5)
-             let section = NSCollectionLayoutSection(group: group)
-             section.orthogonalScrollingBehavior = .continuous
-
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            
             if isPaddingForSection {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
             } else {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
             }
-
-//        titleSupplementary.contentInsets =  NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0)
-//            section.interGroupSpacing = 8
 
             if isHeader {
                 let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),

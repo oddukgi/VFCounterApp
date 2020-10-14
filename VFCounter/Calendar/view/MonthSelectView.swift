@@ -48,6 +48,8 @@ class MonthSelectView<Value: CalendarValue>: UIView {
         let label = UILabel(frame: .zero)
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.textColor = ColorHex.darkGreen
+        label.font = NanumSquareRound.regular.style(offset: 11)
         return label
 
     }()
@@ -109,7 +111,7 @@ class MonthSelectView<Value: CalendarValue>: UIView {
 
         lblAmount.snp.makeConstraints {
             $0.top.equalTo(lblMonth.snp.bottom).offset(15)
-            $0.centerX.equalTo(self)
+            $0.centerX.equalTo(self).offset(-10)
             $0.width.equalTo(200)
         }
 

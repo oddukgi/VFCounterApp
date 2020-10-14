@@ -11,7 +11,7 @@ import Charts
 
 class WeeklyChartVC: ChartBaseVC {
 
-    let lblweek = VFTitleLabel(textAlignment: .center, fontSize: 14)
+    let lblweek = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: 18))
     let chartView = BarChartView()
 
     private let dataManager = DataManager()
@@ -31,7 +31,7 @@ class WeeklyChartVC: ChartBaseVC {
 
     lazy var weekStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 105
+        stackView.spacing = 110
         stackView.axis = .horizontal
         stackView.distribution = .fill
         return stackView
@@ -46,7 +46,6 @@ class WeeklyChartVC: ChartBaseVC {
         configureChart()
         applyChartOption()
         configureMarker()
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -70,10 +69,8 @@ class WeeklyChartVC: ChartBaseVC {
         lblweek.snp.makeConstraints { make in
             make.leading.equalTo(arrowButtons[0].snp.trailing)
             make.centerY.equalTo(weekStackView.snp.centerY)
-            make.width.equalTo(105)
+            make.width.equalTo(110)
         }
-
-        lblweek.font = Seoulnamsan.medium.style(offset: 20)
     }
 
     private func changeLabelText() {

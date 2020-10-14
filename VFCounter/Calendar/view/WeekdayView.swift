@@ -75,10 +75,14 @@ class WeekdayView: UIView {
 
 extension CalendarSettings {
     struct WeekView {
-        var calendar: Calendar = .current
+        var calendar: Calendar {
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.locale = NSLocale(localeIdentifier: "ko_KR") as Locale
+            return calendar
+        }
         var backgroundColor: UIColor = .quaternarySystemFill
         var textColor: UIColor = .darkGray
-        var textFont: UIFont = .systemFont(ofSize: 10, weight: .bold)
+        var textFont: UIFont = NanumSquareRound.bold.style(offset: 12)
         var height: CGFloat = 28
         var cornerRadius: CGFloat = 8
     }

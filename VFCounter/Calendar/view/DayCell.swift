@@ -127,7 +127,7 @@ class DayCell: JTACDayCell {
 
             }
 
-        return config
+            return config
         }
 
         config.dateLabelText = state.text

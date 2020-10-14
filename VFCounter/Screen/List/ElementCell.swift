@@ -18,7 +18,7 @@ protocol ElementCellProtocol: class {
 class ElementCell: UITableViewCell, SelfConfigCell {
 
     static let reuseIdentifier = "ElementCell"
-    let sectionHeaderElementKind = "ElementSectionHeaderCell"
+    private let sectionHeaderElementKind = "ElementSectionHeaderCell"
     let datamanager = DataManager()
 
     var collectionView: UICollectionView!
@@ -78,15 +78,11 @@ class ElementCell: UITableViewCell, SelfConfigCell {
     }
 
     // MARK: - SizeFitting
-    // https://medium.com/better-programming/self-sizing-hell-uitableview-and-uicollectionview-cells-509f0fdc7ff1
+    //https://medium.com/better-programming/self-sizing-hell-uitableview-and-uicollectionview-cells-509f0fdc7ff1
     // When this function is not overriden the "table view cell height zero" warning is displayed.
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        // `collectionView.contentSize` has a wrong width because in this nested example, the sizing pass occurs before te layout pass,
-        // so we need to force a force a  layout pass with the corredt width.
-
         self.contentView.frame = self.bounds
         self.contentView.layoutIfNeeded()
-        // Returns `collectionView.contentSize` in order to set the UITableVieweCell height a value greater than 0.
         return self.collectionView.contentSize
     }
 
@@ -135,9 +131,7 @@ extension ElementCell {
             items: SubItems) -> UICollectionViewCell? in
 
             // Get a cell of the desired kind.
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: VFItemCell.reuseIdentifier,
-                for: indexPath) as? VFItemCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VFItemCell.reuseIdentifier, for: indexPath) as? VFItemCell
                 else {
                     fatalError("Cannot create new cell")
                 }
@@ -206,10 +200,8 @@ extension ElementCell: UICollectionViewDelegate {
               return UIMenu(title: "", children: actions)
           }
 
-          return UIContextMenuConfiguration(
-              identifier: "editItem" as NSCopying,
-              previewProvider: nil,
-              actionProvider: actionProvider)
+          return UIContextMenuConfiguration(identifier: "editItem" as NSCopying,
+                                            previewProvider: nil, actionProvider: actionProvider)
       }
 
       public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -233,9 +225,8 @@ extension ElementCell: UICollectionViewDelegate {
         // don't show menu for add item cell
         let itemCount = datamanager.getList(date: date, index: indexPath.section).count
 
-        if action == #selector(modifyTapped) && itemCount > 0 {
-            return true
-        } else if action == #selector(deleteTapped) && itemCount > 0 {
+        if (action == #selector(modifyTapped)
+                ||  action == #selector(deleteTapped)) && itemCount > 0 {
             return true
         }
 
@@ -243,7 +234,6 @@ extension ElementCell: UICollectionViewDelegate {
       }
 
       public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-
       }
 }
 

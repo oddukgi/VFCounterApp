@@ -69,7 +69,6 @@ class RingItemButton: UIButton {
         selectionIndicatorView.frame = ringProgressView.frame
 
         selectionIndicatorView.layer.shadowPath = CGPath(__byStroking: UIBezierPath(ovalIn: selectionIndicatorView.bounds.insetBy(dx: -1, dy: -1)).cgPath, transform: nil, lineWidth: 1.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
-//        print("Size: \(size), x Pos: \((bounds.width - size)/2)")
     }
 
     override var isHighlighted: Bool {

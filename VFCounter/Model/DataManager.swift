@@ -70,17 +70,6 @@ class DataManager {
 
       }
 
-    func getEntity<T: DataType>(_ objectType: T.Type, section: Int) -> T? {
-
-        var configuration = ""
-        section == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
-        guard let entity = try? UserDataManager.dataStack.fetchOne(From<T>(configuration)) else {
-              return nil
-          }
-
-          return entity
-      }
-
     func getSumItems(date: String) -> (Int, Int) {
         var veggieFilter = Where<Veggies>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date), date)
         var fruitFilter = Where<Fruits>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date), date)
@@ -146,7 +135,7 @@ class DataManager {
           })
     }
 
-    func getData<T: DataType>(tag: Int, index: Int, _ objectType: T.Type, newDate: String,
+    func fetchedDate<T: DataType>(tag: Int, index: Int, _ objectType: T.Type, newDate: String,
                               completion: @escaping (Date) -> Void) {
         var configuration = ""
         tag == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
@@ -164,8 +153,6 @@ class DataManager {
             }
          })
     }
-
-    // @paramter: Int
 
     func deleteEntity<T: DataType>(originTime: Date, _ objectType: T.Type) {
 
@@ -196,8 +183,6 @@ class DataManager {
         return subitem
     }
 
-    /// 날짜 가져오기
-
     func getDateDictionary(completion: DataDictionary) {
         _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
 
@@ -217,7 +202,7 @@ class DataManager {
         })
     }
 
-    func reorderData(date: String, completion: DataDictionary) {
+    func getSpecificDate(date: String, completion: DataDictionary) {
         _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
             let veggieData = try transaction.queryAttributes(From<Veggies>()
                                                                 .select(NSDictionary.self,
@@ -246,8 +231,6 @@ class DataManager {
 
         let maxFruit = try? UserDataManager.dataStack
             .queryValue(From<Fruits>(), Select<Fruits, Int16>(.maximum("maxfruit")), fruitFilter)
-
-        print("GetMaxData(): \(date) \(maxVeggie) \(maxFruit)")
 
         return (Int(maxVeggie ?? 0), Int(maxFruit ?? 0))
     }

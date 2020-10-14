@@ -15,26 +15,25 @@ class PickItemCell: UICollectionViewCell {
     static let reuseIdentifier = "PickItemCell"
 
     lazy var veggieImage: UIImageView = {
-        let image = UIImage(named: "lettuce")?.imageByMakingWhiteBackgroundTransparent()
+        let image = UIImage(named: "lettuce")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
     lazy var checkImageView: UIImageView = {
-        let image = UIImage(named: "uncheck")?.imageByMakingWhiteBackgroundTransparent()
+        let image = UIImage(named: "uncheck")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         return imageView
 
     }()
 
-    let uncheckImage = UIImage(named: "uncheck")?.imageByMakingWhiteBackgroundTransparent()
-    let checkImage = UIImage(named: "check")?.imageByMakingWhiteBackgroundTransparent()
+    let uncheckImage = UIImage(named: "uncheck")
+    let checkImage = UIImage(named: "check")
 
-    let lblName = VFSubTitleLabel(fontSize: 12)
+    let lblName = VFSubTitleLabel(font: NanumSquareRound.bold.style(offset: 13))
 
-    let amountLabel = VFBodyLabel()
     var veggieDict: [String: Any] = [:]
 
     // Bool property
@@ -84,7 +83,7 @@ class PickItemCell: UICollectionViewCell {
 
     // data model 형성
     func set(_ image: UIImage?, _ name: String) {
-        veggieImage.image = image?.imageByMakingWhiteBackgroundTransparent()
+        veggieImage.image = image
         lblName.text = name
     }
 

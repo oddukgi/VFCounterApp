@@ -47,10 +47,8 @@ class PeriodListVC: BaseViewController {
         lblPeriod.snp.makeConstraints {
             $0.leading.equalTo(arrowButtons[0].snp.trailing)
             $0.centerY.equalTo(stackView.snp.centerY)
-            $0.width.equalTo(105)
+            $0.width.equalTo(110)
         }
-
-        lblPeriod.textColor = .black
     }
 
     func configureTableView() {
@@ -65,29 +63,18 @@ class PeriodListVC: BaseViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(ElementCell.self, forCellReuseIdentifier: ElementCell.reuseIdentifier)
-
-        guard #available(iOS 10.0, *) else {
-            // Manually observe the UIContentSizeCategoryDidChange
-            // notification for iOS 9.
-
-            NotificationCenter.default.addObserver(self, selector: #selector(contentSizeDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
-            return
-        }
+        tableView.backgroundColor = ColorHex.iceBlue
     }
-
-    func updateResource(_ isReloaded: Bool = false) {
+    
+    fileprivate func updateResource() {
 
         let datemap = dateStrategy.updateLabel()
         lblPeriod.text = datemap.0
         weekday = datemap.1!
         datemaps = datemap.2!
 
-        if isReloaded == true {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
      }
 
     func connectAction() {
@@ -95,26 +82,18 @@ class PeriodListVC: BaseViewController {
         arrowButtons[0].addTargetClosure { _ in
             self.updatePeriod()
             self.dateStrategy.previous()
-            self.updateResource(true)
+            self.updateResource()
         }
         arrowButtons[1].addTargetClosure { _ in
             self.updatePeriod()
             self.dateStrategy.next()
-            self.updateResource(true)
+            self.updateResource()
         }
-    }
-
-    @objc func tappedOutsideOfTableView() {
-        print("user tapped outside table view")
-    }
-
-    @objc private func contentSizeDidChange(_ notification: NSNotification) {
-        tableView.reloadData()
     }
 
     lazy var stackView: UIStackView = {
           let stackView = UIStackView()
-          stackView.spacing = 105
+          stackView.spacing = 110
           stackView.axis = .horizontal
           stackView.distribution = .fill
           return stackView
@@ -133,28 +112,21 @@ class PeriodListVC: BaseViewController {
         return buttons
     }()
 
-    let lblPeriod = VFTitleLabel(textAlignment: .center, fontSize: 14)
-}
-
-extension PeriodListVC: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40.0
-    }
+    let lblPeriod = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: 18))
 }
 
 // MARK: - Protocol Extension
 extension PeriodListVC: ElementCellProtocol {
+
+    func updateTableView() {
+        updatePeriod(true)
+    }
 
     func displayPickItemVC(pickItemVC: PickItemVC) {
         DispatchQueue.main.async {
             let navController = UINavigationController(rootViewController: pickItemVC)
             self.present(navController, animated: true)
         }
-    }
-
-    func updateTableView() {
-        updatePeriod(true)
     }
 
     func presentSelectedAlertVC(item: Int, section: Int) {

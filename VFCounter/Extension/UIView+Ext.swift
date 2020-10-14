@@ -1,6 +1,6 @@
 //
 //  UIView+Ext.swift
-//  DrinkCounter
+//  VFCounter
 //
 //  Created by Sunmi on 2020/07/01.
 //  Copyright © 2020 CreativeSuns. All rights reserved.

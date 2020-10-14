@@ -73,10 +73,11 @@ class UserItemVC: UIViewController {
         height = SizeManager().circularViewHeight(view: view)
         let padding = height + 150
         let newHeight = height - 20
+        
         circularView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom).offset(-padding)
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(newHeight)
+            make.height.equalTo(newHeight + 20)
         }
     }
 

@@ -142,6 +142,11 @@ extension Date {
         return Calendar.current.date(byAdding: .month, value: +1, to: self)!
     }
 
+}
+
+extension Date {
+
+    // get 7 days
     func getWeekDates() -> [Date] {
 
         var arrThisWeek: [Date] = []
@@ -152,6 +157,7 @@ extension Date {
         return arrThisWeek
     }
 
+    // get 30 days
     func getMonthlyDates() -> [Date] {
         var arrThisMonth: [Date] = []
         let lastDayOfMonth = self.getLastDayMonth()
@@ -161,11 +167,7 @@ extension Date {
 
         return arrThisMonth
     }
-
-}
-
-extension Date {
-
+    
     func addDaysToday(days: Int) -> Date? {
         var dateComponents = DateComponents()
         dateComponents.day = days

@@ -80,21 +80,6 @@ class SizeManager {
         return width
     }
 
-    var sectionSpacingForUserItemCV: CGFloat {
-
-        if DeviceTypes.isiPhone8Standard {
-            userItemSection = 10
-        } else if DeviceTypes.isiPhone8PlusStandard {
-            userItemSection = 11
-        } else if DeviceTypes.isiPhoneX {
-            userItemSection = 12
-        } else {
-            userItemSection = 14
-        }
-
-        return userItemSection
-    }
-
     var itemTopPaddingCV: CGFloat {
         if DeviceTypes.isiPhone8Standard {
             itemTopPadding = 5
@@ -105,16 +90,6 @@ class SizeManager {
         return itemTopPadding
     }
 
-    var groupTopPaddingCV: CGFloat {
-        if DeviceTypes.isiPhone8Standard {
-            groupTopPadding = 8
-        } else {
-            groupTopPadding = 10
-        }
-
-        return groupTopPadding
-    }
-
     var getUserItemHeight: CGFloat {
 
         if DeviceTypes.isiPhone8Standard {
@@ -122,11 +97,11 @@ class SizeManager {
         } else if DeviceTypes.isiPhone8PlusStandard {
             return 90
         } else if DeviceTypes.isiPhoneX {
-            return 90
+            return 98
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
-            return 120
+            return 105
         } else {
-            userItemHeight = 140
+            return 105
         }
         return userItemHeight
     }
@@ -183,15 +158,12 @@ class SizeManager {
 
         var height: CGFloat = 0.0
 
-        if DeviceTypes.isiPhoneSE {
-            height = ScreenSize.height - 200
-        } else if DeviceTypes.isiPhone8Standard {
-            height = ScreenSize.height - 350
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            height = ScreenSize.height - 280
         } else if DeviceTypes.isiPhone8PlusStandard {
             height = ScreenSize.height - 300
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
             height = ScreenSize.height - 400
-
         } else if DeviceTypes.isiPhoneX {
             height = ScreenSize.height - 380
         } else {

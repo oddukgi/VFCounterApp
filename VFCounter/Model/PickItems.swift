@@ -79,7 +79,7 @@ extension PickItems {
                         UIImage(named: "broccoli"), UIImage(named: "paprika"),
                         UIImage(named: "cabbage"),
                         UIImage(named: "carrot"), UIImage(named: "corn"),
-                        UIImage(named: "cucumber"), UIImage(named: "custom veggie"),
+                        UIImage(named: "cucumber"),
                         UIImage(named: "eggplant"), UIImage(named: "garlic"),
                         UIImage(named: "kohlrabi"), UIImage(named: "leek"),
                         UIImage(named: "lettuce"), UIImage(named: "mushroom"),
@@ -93,7 +93,7 @@ extension PickItems {
         let koName = [
                         "아스파라거스", "비트", "브로콜리", "파프리카",
                         "양배추", "당근", "옥수수",
-                        "오이", "사용자 설정", "가지",
+                        "오이", "가지",
                         "마늘", "콜라비", "파,부추",
                         "상추", "버섯", "올리브",
                         "양파", "완두콩", "감자",

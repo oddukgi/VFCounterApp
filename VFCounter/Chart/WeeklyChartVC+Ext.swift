@@ -33,7 +33,7 @@ extension WeeklyChartVC {
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .bottom
         xAxis.centerAxisLabelsEnabled = true
-        xAxis.labelFont = NanumSquareRound.regular.style(sizeOffset: 12)
+        xAxis.labelFont = NanumSquareRound.regular.style(offset: 14)
         xAxis.valueFormatter = WeekDayAxisValueFormatter()
         xAxis.axisMinimum = 0
         xAxis.axisMaximum = 7
@@ -50,7 +50,7 @@ extension WeeklyChartVC {
 
         leftAxis.drawAxisLineEnabled = true
         leftAxis.drawGridLinesEnabled = true
-        leftAxis.labelFont = Seoulnamsan.medium.style(offset: 14)
+        leftAxis.labelFont = .systemFont(ofSize: 14.5)
         leftAxis.labelCount = 10
         leftAxis.labelPosition = .outsideChart
         leftAxis.spaceTop = 0.2
@@ -62,7 +62,7 @@ extension WeeklyChartVC {
         l.orientation = .horizontal
         l.drawInside = false
         l.form = .circle
-        l.font = Seoulnamsan.light.style(offset: 9)
+        l.font = NanumSquareRound.bold.style(offset: 11)
 
         l.yOffset = 5
         l.xEntrySpace = 5
@@ -72,7 +72,7 @@ extension WeeklyChartVC {
     func configureMarker() {
 
         let marker = BalloonMarker(color: ColorHex.iceBlue,
-                                   font: NanumSquareRound.bold.style(sizeOffset: 14),
+                                   font: NanumSquareRound.bold.style(offset: 14),
                                    textColor: .black,
                                    insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
 

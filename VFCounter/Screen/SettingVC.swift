@@ -37,6 +37,7 @@ class SettingVC: UIViewController {
         configureTableView()
         configureDataSource()
         updateData()
+        tableView.reloadData() 
     }
 
 }
@@ -52,14 +53,11 @@ extension SettingVC {
         }
         tableView.delegate = self
         tableView.register(SettingItemCell.self, forCellReuseIdentifier: SettingItemCell.reuseIdentifier)
-//        tableView.register(TableHeaderView.self, forCellReuseIdentifier: TableHeaderView.reuseIdentifier)
-        tableView.register(TableHeaderView.self, forHeaderFooterViewReuseIdentifier: TableHeaderView.reuseIdentifier)
         tableView.backgroundColor = ColorHex.iceBlue
     }
 
     func configureDataSource() {
-        dataSource = UITableViewDiffableDataSource<Section, SettingController.Settings>(tableView: tableView) {
-            (tableView: UITableView, indexPath: IndexPath, items: SettingController.Settings) -> UITableViewCell? in
+        dataSource = UITableViewDiffableDataSource<Section, SettingController.Settings>(tableView: tableView) {(tableView: UITableView, indexPath: IndexPath, items: SettingController.Settings) -> UITableViewCell? in
 
             // get a cell
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingItemCell.reuseIdentifier, for: indexPath) as? SettingItemCell
@@ -71,34 +69,48 @@ extension SettingVC {
             return cell
         }
     }
+    
+//    let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 44))
+//
+//    let label = UILabel()
+//    label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+//    label.text = self.weekday[section]
+//    label.font = NanumSquareRound.bold.style(offset: 15)
+//    label.textColor = ColorHex.darkGreen
 
     func setItemStyle(_ cell: UITableViewCell, indexPath: IndexPath, settings: SettingController.Settings) {
 
         let section = indexPath.section
         let item    = indexPath.item
-        let label = VFBodyLabel(textAlignment: .left, fontSize: 18, fontColor: .black)
-        label.frame =  CGRect(x: 0, y: 0, width: 80, height: 30)
-
+        
         cell.selectionStyle = .none
         switch section {
         case 0:
             item == 0 ? (cell.accessoryType = .disclosureIndicator) : (cell.accessoryType = .none)
             cell.imageView?.image = settings.image?.resized(toWidth: 20)
             cell.textLabel?.text = settings.name
+            cell.textLabel?.font = NanumSquareRound.bold.style(offset: 16)
 
         default:
             if item == 0 {
-              cell.accessoryView = label
-              cell.textLabel?.text = settings.name
-              label.text = UIApplication.appVersion!
+                let font = NanumSquareRound.bold.style(offset: 16.5)
+                let label = VFBodyLabel()
+                label.font = font
+                label.textColor = .black
+                label.text = UIApplication.appVersion!
+                label.sizeToFit()
+                
+                cell.accessoryView = label
+                cell.textLabel?.text = settings.name
+                cell.textLabel?.font = NanumSquareRound.bold.style(offset: 16)
 
             } else {
-               cell.accessoryType = .none
-               cell.textLabel?.text = settings.name
+                cell.accessoryType = .none
+                cell.textLabel?.text = settings.name
+                cell.textLabel?.font = NanumSquareRound.bold.style(offset: 16)
+
             }
-
         }
-
     }
     func updateData() {
         currentDataSource = NSDiffableDataSourceSnapshot <Section, SettingController.Settings>()
@@ -154,12 +166,26 @@ extension SettingVC {
 
 extension SettingVC: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 50
+//    }
 
-        let section = Section.allCases[section]
-        guard let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.reuseIdentifier) as? TableHeaderView else { return nil }
-        cell.setTitle(with: section)
-        return cell
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+
+        let label = UILabel()
+        label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+        label.text = Section.allCases[section].title
+        label.font = NanumSquareRound.bold.style(offset: 15)
+        label.textColor = ColorHex.darkGreen
+
+        headerView.addSubview(label)
+
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -48,10 +48,10 @@ extension UserItemVC {
          let flag = SettingManager.getInitialLaunching(keyName: "InitialLaunching")
 
          if flag == true {
-            print("App already launched")
+//            print("App already launched")
             return true
         } else {
-            print("App launched first time")
+//            print("App launched first time")
             SettingManager.setInitialLaunching(flag: true)
             return false
         }

@@ -40,7 +40,6 @@ class VFButton: UIButton {
 
     // MARK: - custom method    
     private func configure() {
-
         titleLabel!.font = UIFont.preferredFont(forTextStyle: .headline)
         setTitleColor(ColorHex.greyBlue, for: .normal)
     }
@@ -87,11 +86,7 @@ class VFButton: UIButton {
     }
 
     func addImage(imageName: String, size: CGFloat = 0.0) {
-        var image = UIImage(named: imageName)?.imageByMakingWhiteBackgroundTransparent()
-
-        if size > 0 {
-            image = image?.resized(toWidth: 18)
-        }
+        var image = UIImage(named: imageName)
         self.setImage(image, for: .normal)
     }
 
@@ -100,7 +95,7 @@ class VFButton: UIButton {
         layer.cornerRadius = 0.5 * self.bounds.size.width
         layer.borderColor = borderColor.cgColor
         clipsToBounds = true
-        let image = UIImage(named: name)?.transparentImageBackgroundToWhite(color: ColorHex.iceBlue)
+        let image = UIImage(named: name)?.transparentImageBackground(color: ColorHex.iceBlue)
 
         self.setImage(image, for: .normal)
     }

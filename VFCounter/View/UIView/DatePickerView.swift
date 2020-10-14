@@ -69,8 +69,6 @@ class DatePickerView: UIView {
 
         let textTime = sender.date.changeDateTime(format: .dateTime)
         userDateTime = textTime
-
-        print(sender.date)
         dtPickerView.date = sender.date
     }
 

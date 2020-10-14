@@ -111,8 +111,6 @@ extension MaxAmountVeggieCell: UITextFieldDelegate {
             let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
 
             let convertedString = string.containsNumber()
-
-            print("NewString: \(newString), ConvertedString \(convertedString)")
             return (newString.length <= maxLength && string == convertedString)
         }
 
@@ -123,6 +121,7 @@ extension MaxAmountVeggieCell: UITextFieldDelegate {
 
         if let text = textField.text {
 
+            maxAmountTF.resignFirstResponder()
             var amount = Float(text) ?? 0
 
             guard veggieSlider.minimumValue <= amount && veggieSlider.maximumValue >= amount

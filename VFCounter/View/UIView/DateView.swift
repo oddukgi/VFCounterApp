@@ -13,11 +13,10 @@ class DateView: UIView {
 
     var btnLeftArrow: VFButton!
     var btnRightArrow: VFButton!
-    let weatherIcon = WeatherIconView(frame: .zero)
-
+ 
     var horizontalView: [UIStackView] = []
-    let dateLabel = VFTitleLabel(textAlignment: .center, fontSize: 18)
-    let weatherLabel = VFSubTitleLabel(fontSize: 14)
+    let dateLabel = VFTitleLabel(textAlignment: .center,
+                                 font: NanumSquareRound.bold.style(offset: 17))
 
     private var date = Date()
     private var startDate: Date?
@@ -25,7 +24,6 @@ class DateView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureStackView()
         setLayout()
         initialize()
         createDismissKeyboardTapGesture()
@@ -37,10 +35,8 @@ class DateView: UIView {
 
     func initialize() {
 
-        let dateconverter = DateConverter(date: date)
-        dateLabel.text = dateconverter.changeDate(format: "yyyy.MM.dd E", option: 1)
+        dateLabel.text = date.changeDateTime(format: .longDate)
         dateLabel.textColor = UIColor.black
-        weatherLabel.text = ""
 
         btnLeftArrow.addTarget(self, action: #selector(changedDateTouched), for: .touchUpInside)
         btnLeftArrow.tag = 0
@@ -48,11 +44,10 @@ class DateView: UIView {
         btnRightArrow.tag = 1
         startDate = date.getFirstMonthDate()
         endDate = date.endOfDay()
-
     }
 
     fileprivate func changeDateToResource(to date: Date) {
-        let newDate = DateConverter(date: date).changeDate(format: "yyyy.MM.dd E", option: 1)
+        let newDate = date.changeDateTime(format: .longDate)
         dateLabel.text = newDate
         NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": newDate])
     }

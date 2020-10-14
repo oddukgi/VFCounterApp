@@ -86,7 +86,7 @@ extension AlarmSettingVC: MaxAmoutVeggieCellDelegate {
 
     func textField(editingChangedInTextField newText: String, in cell: MaxAmountVeggieCell) {
         if let indexPath = tableView?.indexPath(for: cell) {
-            print("updated text in textfield in cell as \(indexPath), value = \"\(newText)\"")
+//            print("updated text in textfield in cell as \(indexPath), value = \"\(newText)\"")
 
         }
     }
@@ -101,13 +101,13 @@ extension AlarmSettingVC: MaxAmoutFruitCellDelegate {
 
     func textField(editingDidBeginIn cell: MaxAmountFruitCell) {
         if let indexPath = tableView?.indexPath(for: cell) {
-            print("textfield selected in cell at \(indexPath)")
+//            print("textfield selected in cell at \(indexPath)")
         }
     }
 
     func textField(editingChangedInTextField newText: String, in cell: MaxAmountFruitCell) {
         if let indexPath = tableView?.indexPath(for: cell) {
-            print("updated text in textfield in cell as \(indexPath), value = \"\(newText)\"")
+//            print("updated text in textfield in cell as \(indexPath), value = \"\(newText)\"")
 
         }
     }

@@ -14,53 +14,52 @@ class VFCircularView: UIView {
 
     // circle
     lazy var veggieCircle: Ring = {
-        let view = Ring(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+        let view = Ring(frame: CGRect(x: 0, y: 0, width: 13, height: 13))
         view.mainColor = RingColor.ringGreen
         view.ringColor = RingColor.ringGreen
         return view
     }()
 
     lazy var fruitsCircle: Ring = {
-        let view = Ring(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+        let view = Ring(frame: CGRect(x: 0, y: 0, width: 13, height: 13))
         view.mainColor = RingColor.ringYellow
         view.ringColor = RingColor.ringYellow
         return view
     }()
 
-    lazy var lbveggie: UILabel = {
-        let lbl = UILabel(frame: .zero)
-        lbl.textAlignment = .center
-        lbl.textColor = ColorHex.brownGrey
-        lbl.font = UIFont.systemFont(ofSize: 13)
+    lazy var lbveggie: VFBodyLabel = {
+        let lbl = VFBodyLabel(textAlignment: .center,
+                              font: NanumSquareRound.regular.style(offset: 13),
+                              fontColor: ColorHex.brownGrey)
         lbl.text = "야채"
         lbl.numberOfLines = 0
         return lbl
     }()
 
-    lazy var lbFruits: UILabel = {
-        let lbl = UILabel(frame: .zero)
-        lbl.textAlignment = .center
-        lbl.textColor = ColorHex.brownGrey
-        lbl.font = UIFont.systemFont(ofSize: 13)
+    lazy var lbFruits: VFBodyLabel = {
+        let lbl = VFBodyLabel(textAlignment: .center,
+                              font: NanumSquareRound.regular.style(offset: 13),
+                              fontColor: ColorHex.brownGrey)
+ 
         lbl.text = "과일"
         lbl.numberOfLines = 0
         return lbl
     }()
 
     // value
-    lazy var totVeggieLabel: UILabel = {
-        let lbl = UILabel(frame: .zero)
-        lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 13)
+    lazy var totVeggieLabel: VFBodyLabel = {
+        let lbl = VFBodyLabel(textAlignment: .center,
+                              font: NanumSquareRound.bold.style(offset: 14),
+                              fontColor: .black)
         lbl.text = " g"
         lbl.numberOfLines = 0
         return lbl
     }()
 
-    lazy var totFruitLabel: UILabel = {
-        let lbl = UILabel(frame: .zero)
-        lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 13)
+    lazy var totFruitLabel: VFBodyLabel = {
+        let lbl = VFBodyLabel(textAlignment: .center,
+                              font: NanumSquareRound.bold.style(offset: 14),
+                              fontColor: .black)
         lbl.text = " g"
         lbl.numberOfLines = 0
         return lbl
@@ -75,7 +74,6 @@ class VFCircularView: UIView {
         super.init(frame: frame)
         setCircularView()
         setsubviewLayout()
-
     }
 
     required init?(coder: NSCoder) {
@@ -110,10 +108,5 @@ class VFCircularView: UIView {
             arrayF[1] = " \(maxFruit)g"
             totFruitLabel.text = arrayF.joined(separator: "/")
         }
-
     }
-
 }
-
-//            if CGFloat(totalVeggies + amount) > outerSlider.maximumValue { return false }
-//            if CGFloat(totalFruits + amount) > insideSlider.maximumValue { return false }

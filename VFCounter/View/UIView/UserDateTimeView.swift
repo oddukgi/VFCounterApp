@@ -8,6 +8,12 @@
 
 import UIKit
 
+// protocol
+// update date
+protocol UserDateTimeDelegate: class {
+    func updateMaxAmount(date: Date)
+}
+
 class UserDateTimeView: UIView {
 
     let containerView = UIView()
@@ -17,7 +23,7 @@ class UserDateTimeView: UIView {
     private var now = Date()
     private var userDateTime: String = ""
     private var flag: Bool = false
-
+    weak var delegate: UserDateTimeDelegate?
     var dateTime: String {
 
         get {
@@ -26,6 +32,14 @@ class UserDateTimeView: UIView {
 
         set (newDT) {
             userDateTime = newDT
+        }
+    }
+    
+    var userDate: Date? {
+        didSet {
+            if let date = userDate, delegate != nil {
+                delegate?.updateMaxAmount(date: date)
+            }
         }
     }
 
@@ -68,9 +82,8 @@ class UserDateTimeView: UIView {
 
         let textTime = sender.date.changeDateTime(format: .dateTime)
         userDateTime = textTime
-
-        print(sender.date)
         dtPickerView.date = sender.date
+        userDate = dtPickerView.date
     }
 
     func compareDate() {
@@ -81,16 +94,5 @@ class UserDateTimeView: UIView {
         } else {
             dtPickerView.date = userDateTime.changeDateTime(format: .dateTime)
         }
-
     }
 }
-
-/*
- 
- let getDate = String(userDateTime.split(separator: " ").first!)
-        var time = ""
-        
- time = getDate + String(userDateTime.dropFirst(10))
-  let newDT = time.replacingOccurrences(of: ".", with: "-")
-  dtPickerView.date = newDT.changeDateTime(format: .dateTime)
- */

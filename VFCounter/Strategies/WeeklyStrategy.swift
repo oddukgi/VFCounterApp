@@ -9,15 +9,14 @@
 import Foundation
 
 public class WeeklyDateStrategy: DateStrategy {
-
     // MARK: - Properties
 
     public var date: Date = Date()
 
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
-    private var oldVDates: Date?
-    private var oldFDates: Date?
+    private var minVeggieDate: Date?
+    private var minFruitDate: Date?
     private var vDates: [String] = []
     private var fDates: [String] = []
     private var configs = ValueConfig()
@@ -45,7 +44,7 @@ public class WeeklyDateStrategy: DateStrategy {
 
     public init(date: Date) {
         self.date = date
-        self.privateMaximumDate = self.date
+        maximumDate = self.date
     }
 
     // MARK: - Setting Date
@@ -71,7 +70,7 @@ public class WeeklyDateStrategy: DateStrategy {
 
             let item = element.components(separatedBy: " ").first
 
-            dataManager.reorderData(date: item!) { (veggies, fruits) in
+            dataManager.getSpecificDate(date: item!) { (veggies, fruits) in
              if veggies.count > 0 {
                  items.insert(element)
              }
@@ -116,14 +115,14 @@ public class WeeklyDateStrategy: DateStrategy {
             }
         }
 
-        oldVDates = vDates.last?.changeDateTime(format: .date)
-        oldFDates = fDates.last?.changeDateTime(format: .date)
+        minVeggieDate = vDates.last?.changeDateTime(format: .date)
+        minFruitDate = fDates.last?.changeDateTime(format: .date)
 
     }
 
-    public func setDateRange() {
-        // compare date
-        switch (oldVDates, oldFDates) {
+    public func setMinimumDate() {
+        
+        switch (minVeggieDate, minFruitDate) {
         case let (oldVDates?, .none):
             privateMinimumDate = oldVDates
         case let (.none, oldFDates?):
@@ -131,39 +130,36 @@ public class WeeklyDateStrategy: DateStrategy {
         case let (.none, .none):
             privateMinimumDate = date
         default:
-            guard let oldVDates = oldVDates, let oldFDates = oldFDates else { return }
+            guard let oldVDates = minVeggieDate, let oldFDates = minFruitDate else { return }
             (oldVDates < oldFDates) ? (privateMinimumDate = oldVDates) : (privateMinimumDate = oldFDates)
       }
-
     }
-
+    public func setMaximumDate() {
+        
+    }
+    
     public func previous() {
 
         guard let minDate = privateMinimumDate else { return }
         date = self.date.aDayInLastWeek.getStartOfWeek()
-
         let dateMap = date.getWeekDates()
-        if dateMap.contains(minDate) {
+
+        // 최소 날짜까지 넘김
+        if date > minDate {
             DateSettings.default.periodController.weekDate = date
         } else {
-            DateSettings.default.periodController.weekDate = date
+            // 최소날짜에 도달
+            if dateMap.contains(minDate) {
+                DateSettings.default.periodController.weekDate = date
+            }
         }
     }
 
     public func next() {
-
         let now = Date()
         if date <= now {
             date = self.date.aDayInNextWeek.getStartOfWeek()
             DateSettings.default.periodController.weekDate = date
         }
-    }
-
-    func getLimitAmount(date: String) {
-
-        let dataManager = DataManager()
-        configs.maxVeggies = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
-        configs.maxFruits = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
-
     }
 }

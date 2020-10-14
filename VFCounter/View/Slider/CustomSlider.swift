@@ -50,13 +50,8 @@ class CustomSlider: UISlider {
         self.value = current
         return self
     }
-
-    #if TARGET_INTERFACE_BUILDER
-    @IBOutlet open weak var delegate: SliderUpdateDelegate?
-    #else
-    open weak var delegate: SliderUpdateDelegate?
-    #endif
-
+ 
+    weak var delegate: SliderUpdateDelegate?
     private var step: Float = 1
 
     override init(frame: CGRect) {

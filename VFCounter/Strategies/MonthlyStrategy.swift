@@ -15,14 +15,19 @@ struct MonthlyList {
 
 }
 
+struct DateValue {
+    var minV: Date?
+    var minF: Date?
+    var maxV: Date?
+    var maxF: Date?
+}
+
 public class MonthlyDateStrategy: DateStrategy {
 
     public var date: Date = Date()
 
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
-    private var oldVDates: Date?
-    private var oldFDates: Date?
 
     // MARK: - Date Setting    
     private var vDates: [String] = []
@@ -48,6 +53,7 @@ public class MonthlyDateStrategy: DateStrategy {
     }
 
     let monthList = MonthlyList()
+    var dateValue = DateValue()
 
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -59,7 +65,6 @@ public class MonthlyDateStrategy: DateStrategy {
     // MARK: - Object Lifecycle
     public init(date: Date) {
         self.date = date
-        privateMaximumDate = self.date
     }
 
     // MARK: - Setting Date
@@ -79,7 +84,7 @@ public class MonthlyDateStrategy: DateStrategy {
 
             let item = element.components(separatedBy: " ").first
 
-            dataManager.reorderData(date: item!) { (veggies, fruits) in
+            dataManager.getSpecificDate(date: item!) { (veggies, fruits) in
              if veggies.count > 0 {
                  items.insert(element)
              }
@@ -106,46 +111,56 @@ public class MonthlyDateStrategy: DateStrategy {
             }
         }
 
-        oldVDates = vDates.last?.changeDateTime(format: .date)
-        oldFDates = fDates.last?.changeDateTime(format: .date)
-
-        print("Old Dates : \(oldVDates), \(oldFDates), \(date)")
+        dateValue.minV = vDates.last?.changeDateTime(format: .date)
+        dateValue.minF = fDates.last?.changeDateTime(format: .date)
+        dateValue.maxV = vDates.first?.changeDateTime(format: .date)
+        dateValue.maxF = fDates.first?.changeDateTime(format: .date)
     }
 
-    public func setDateRange() {
-        // compare date
-        switch (oldVDates, oldFDates) {
+    public func setMinimumDate() {
+
+        switch (dateValue.minV, dateValue.minF) {
         case let (oldVDates?, .none):
-            privateMinimumDate = oldVDates
+            privateMinimumDate = dateValue.minV
         case let (.none, oldFDates?):
-            privateMinimumDate = oldFDates
+            privateMinimumDate = dateValue.minF
         case let (.none, .none):
             privateMinimumDate = date
         default:
-            guard let oldVDates = oldVDates, let oldFDates = oldFDates else { return }
-            (oldVDates < oldFDates) ? (privateMinimumDate = oldVDates) : (privateMinimumDate = oldFDates)
+            guard let minVeggie = dateValue.minV, let minFruit = dateValue.minF else { return }
+            (minVeggie < minFruit) ? (privateMinimumDate = minVeggie) : (privateMinimumDate = minFruit)
+      }
+    }
+
+    public func setMaximumDate() {
+        switch (dateValue.maxV, dateValue.maxF) {
+        case let (oldVDates?, .none):
+            privateMaximumDate = dateValue.maxV
+        case let (.none, oldFDates?):
+            privateMaximumDate = dateValue.maxF
+        case let (.none, .none):
+            privateMaximumDate = date
+        default:
+            guard let maxVeggie = dateValue.maxV, let maxFruit = dateValue.maxF else { return }
+            (maxVeggie < maxFruit) ? (privateMaximumDate = maxFruit) : (privateMaximumDate = maxVeggie)
       }
 
     }
 
     public func previous() {
 
-        print("Previous: \(privateMinimumDate)")
-        if let minDate = privateMinimumDate, date >= minDate.startOfDay() {
+        if let minDate = privateMinimumDate, date > minDate.startOfMonth().dayAfter {
             date = date.lastMonth
             DateSettings.default.periodController.monthDate = date
         }
     }
 
     public func next() {
-
         guard let maxDate = privateMaximumDate else { return }
         let maxYear = maxDate.getYear
         let maxMonth = maxDate.getMonth
         let year = date.getYear
         let month = date.getMonth
-
-        print("MAX Date: \(maxDate)")
 
         if ((year == maxYear) && (month < maxMonth)) || (year != maxYear) {
             date = date.nextMonth

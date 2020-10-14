@@ -1,6 +1,6 @@
 //
 //  VFTitleLabel.swift
-//  DrinkCounter
+//  VFCounter
 //
 //  Created by Sunmi on 2020/06/03.
 //  Copyright © 2020 CreativeSuns. All rights reserved.
@@ -20,13 +20,10 @@ class VFTitleLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // default value : 2 param.
-    // no need to call all param. 
-    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
+    convenience init(textAlignment: NSTextAlignment, font: UIFont) {
         self.init(frame: .zero)
         self.textAlignment = textAlignment
-        self.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
-
+        self.font = font
     }
 
     private func configure() {

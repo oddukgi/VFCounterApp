@@ -17,8 +17,9 @@ class TitleSupplementaryView: UICollectionReusableView {
 
     static let reuseIdentifier = "TitleSupplementaryView"
 
-    var lblTitle = VFTitleLabel(textAlignment: .left, fontSize: 14)
-    var lblSubtitle = VFSubTitleLabel(fontSize: 13)
+    var lblTitle = VFTitleLabel(textAlignment: .left,
+                                font: NanumSquareRound.bold.style(offset: 15))
+    var lblSubtitle = VFSubTitleLabel(font: NanumSquareRound.bold.style(offset: 14.4))
     weak var delegate: TitleSupplmentaryViewDelegate?
 
     lazy var labels: UIStackView = {
@@ -60,10 +61,10 @@ class TitleSupplementaryView: UICollectionReusableView {
             make.width.equalTo(30)
         }
         lblSubtitle.snp.makeConstraints { make in
-            make.width.equalTo(180)
+            make.width.equalTo(138)
         }
         btnPlus.snp.makeConstraints { make in
-            make.leading.equalTo(labels.snp.trailing).offset(23)
+            make.leading.equalTo(labels.snp.trailing).offset(20)
             make.top.equalTo(self)
             make.size.equalTo(CGSize(width: 33, height: 33))
         }
@@ -71,13 +72,12 @@ class TitleSupplementaryView: UICollectionReusableView {
         lblTitle.textColor = .black
         lblSubtitle.textColor = .lightGray
         btnPlus.setAllSideShadow()
-
     }
 
     func updateTitles(title: String) {
 
         lblTitle.text = title
-        lblSubtitle.text = (title == "야채") ? "야채음식,생야채가 해당됩니다." : "과일음식,주스,생과일이 해당됩니다."
+        lblSubtitle.text = (title == "야채") ? "섭취한 야채를 넣어보세요." : "섭취한 과일을 넣어보세요."
         (title == "야채") ? (btnPlus.tag = 0) : (btnPlus.tag = 1)
         btnPlus.addTarget(self, action: #selector(self.displayItems(sender:)), for: .touchUpInside)
     }

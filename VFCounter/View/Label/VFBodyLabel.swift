@@ -1,6 +1,6 @@
 //
 //  VFBodyLabel.swift
-//  DrinkCounter
+//  VFCounter
 //
 //  Created by Sunmi on 2020/06/03.
 //  Copyright © 2020 CreativeSuns. All rights reserved.
@@ -19,14 +19,13 @@ class VFBodyLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 
-    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat, fontColor: UIColor) {
+    convenience init(textAlignment: NSTextAlignment, font: UIFont, fontColor: UIColor) {
         self.init(frame: .zero)
         self.textAlignment = textAlignment
-        font               = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        self.font               = font
         textColor          = fontColor
 
     }
-
     // MARK: - Accessibility : change font size when device's content size change
     private func configure() {
         textColor                                 = .secondaryLabel

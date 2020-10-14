@@ -13,28 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
-        let _: [AnyObject] = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true) as [AnyObject]
-//           let folder: String = path[0] as! String
-//           NSLog("Your NSUserDefaults are stored in this folder: %@/Preferences", folder)
-
-        // SQL File Directory
-//        let applicationSupportDirectories = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-//        let _ = applicationSupportDirectories.first!
-
         return true
-    }
-
-    // get custom font on app
-    // https://stackoverflow.com/a/55487252/13275605
-    func printFonts() {
-    let fontFamilyNames = UIFont.familyNames
-    for familyName in fontFamilyNames {
-        print("------------------------------")
-        print("Font Family Name = [\(familyName)]")
-        let names = UIFont.fontNames(forFamilyName: familyName)
-        print("Font Names = [\(names)]")
-      }
     }
 
     // MARK: UISceneSession Lifecycle
@@ -52,3 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+
+/*
+ 
+ let _: [AnyObject] = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true) as [AnyObject]
+//           let folder: String = path[0] as! String
+//           NSLog("Your NSUserDefaults are stored in this folder: %@/Preferences", folder)
+
+ // SQL File Directory
+//        let applicationSupportDirectories = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+//        let _ = applicationSupportDirectories.first!
+ */

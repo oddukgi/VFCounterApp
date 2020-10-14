@@ -1,6 +1,6 @@
 //
 //  VFTabBarController.swift
-//  DrinkCounter
+//  VFCounter
 //
 //  Created by Sunmi on 2020/07/21.
 //  Copyright © 2020 creativeSun. All rights reserved.

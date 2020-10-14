@@ -1,6 +1,6 @@
 //
 //  UIImage+Ext.swift
-//  DrinkCounter
+//  VFCounter
 //
 //  Created by Sunmi on 2020/07/14.
 //  Copyright © 2020 creativeSun. All rights reserved.
@@ -29,7 +29,7 @@ extension UIImage {
 
      }
 
-    func transparentImageBackgroundToWhite(color: UIColor) -> UIImage {
+    func transparentImageBackground(color: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         let imageRect: CGRect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
         let ctx: CGContext = UIGraphicsGetCurrentContext()!

@@ -94,7 +94,6 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
         chartView.rightAxis.enabled = false
     }
 
-    // TODO: Cannot override from extensions
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         NSLog("chartValueSelected")
 
@@ -117,7 +116,8 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
 
     func updatePeriod(_ reloadData: Bool = false) {
         dateStrategy.fetchedData()
-        dateStrategy.setDateRange()
+        dateStrategy.setMinimumDate()
+        dateStrategy.setMaximumDate()
     }
 
 }

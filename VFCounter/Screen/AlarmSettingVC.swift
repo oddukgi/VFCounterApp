@@ -63,7 +63,7 @@ extension AlarmSettingVC {
         tableView.register(UINib(nibName: "MaxAmountVeggieCell", bundle: nil), forCellReuseIdentifier: MaxAmountVeggieCell.reuseIdentifier)
         tableView.register(UINib(nibName: "MaxAmountFruitCell", bundle: nil), forCellReuseIdentifier: MaxAmountFruitCell.reuseIdentifier)
 
-        let gesture = UITapGestureRecognizer(target: tableView, action: #selector(UITextView.endEditing(_:)))
+        let gesture = UITapGestureRecognizer(target: tableView, action: #selector(UITextField.endEditing(_:)))
         tableView.addGestureRecognizer(gesture)
     }
 }

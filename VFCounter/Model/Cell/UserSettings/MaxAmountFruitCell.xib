@@ -30,7 +30,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="fqI-Fd-Iw0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="NanumSquareRoundB" family="NanumSquareRound" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="NanumSquareRoundB" family="NanumSquareRound" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                 <connections>
                                     <action selector="editingDidBegin:" destination="Rd7-Sf-DeE" eventType="editingDidBegin" id="cdS-2d-4f3"/>
@@ -39,14 +39,14 @@
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="g" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FI2-yh-Utl" userLabel="unitLabel">
                                 <rect key="frame" x="70" y="0.0" width="10" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="NanumSquareRoundB" family="NanumSquareRound" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YVL-IU-SJL"/>
                     </stackView>
-                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="DFP-jW-qg9" userLabel="amountSlider" customClass="CustomSlider" customModule="VFCounter" customModuleProvider="target">
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="DFP-jW-qg9" userLabel="amountSlider">
                         <rect key="frame" x="109" y="8" width="232" height="42"/>
                         <color key="minimumTrackTintColor" red="1" green="0.3411764706" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="maximumTrackTintColor" red="0.70196078431372544" green="0.72156862745098038" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>

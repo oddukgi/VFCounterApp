@@ -16,8 +16,8 @@ public protocol DateStrategy: class {
 
     func updateLabel() -> (String?, [String]?, [String]?)
     func fetchedData()
-    func setDateRange()
+    func setMinimumDate()
+    func setMaximumDate()
     func previous()
     func next()
-
 }

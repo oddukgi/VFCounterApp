@@ -24,12 +24,11 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
 
     func updatePeriod(_ reloadData: Bool = false) {
         dateStrategy.fetchedData()
-        dateStrategy.setDateRange()
-
+        dateStrategy.setMinimumDate()
+        dateStrategy.setMaximumDate()
     }
 }

@@ -28,7 +28,7 @@ class MeasurementView: UIView {
         textField.textColor(ColorHex.MilkChocolate.origin)
         textField.keyboardType = .numbersAndPunctuation
         textField.delegate = self
-        textField.font = NanumSquareRound.bold.style(sizeOffset: 15)
+        textField.font = NanumSquareRound.bold.style(offset: 15)
         textField.isUserInteractionEnabled  = true
         textField.textAlignment = NSTextAlignment.center
         textField.returnKeyType = UIReturnKeyType.done
@@ -37,8 +37,7 @@ class MeasurementView: UIView {
     }()
 
     lazy var lblUnit: VFBodyLabel = {
-        let label = VFBodyLabel(textAlignment: .center, fontSize: 0, fontColor: ColorHex.MilkChocolate.origin)
-        label.font = NanumSquareRound.bold.style(sizeOffset: 15)
+        let label = VFBodyLabel(textAlignment: .center, font: NanumSquareRound.bold.style(offset: 15), fontColor: ColorHex.MilkChocolate.origin)
         return label
     }()
 
@@ -92,11 +91,7 @@ class MeasurementView: UIView {
         slider.maximumTrackTintColor(SliderColor.maximumTrackTint)
         slider.isContinuous = true
     }
-
-    func changeMaximumRange() {
-
-    }
-
+    
     func setLayout() {
 
         addSubViews(labelStackView, slider)
@@ -123,12 +118,6 @@ class MeasurementView: UIView {
         }
         gramTF.text = "\(Int(slider.value))"
 
-    }
-
-    func judgetTextHasNumber(texts: String) -> Bool {
-        let scan: Scanner = Scanner.init(string: texts)
-       // return scan.scanFloat(&value) && scan.isAtEnd
-        return (scan.scanFloat(representation: .decimal) != nil)  && scan.isAtEnd
     }
 
     func checkAmountTF(text: String) {
@@ -173,11 +162,10 @@ extension MeasurementView: UITextFieldDelegate {
 extension MeasurementView: SliderUpdateDelegate {
 
     func sliderTouch(value: Float, tag: Int) {
-        print("Slider Touched: \(value)")
+  
     }
 
     func sliderValueChanged(value: Float, tag: Int) {
-
         let amount = Int(slider.value)
         gramTF.text = String(amount)
     }
