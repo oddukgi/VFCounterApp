@@ -22,7 +22,6 @@ class MaxAmountVeggieCell: UITableViewCell, SelfConfigCell {
     @IBOutlet weak var maxAmountTF: UITextField!
     @IBOutlet weak var veggieSlider: UISlider!
 
-    private var userSetting: UserSettings?
     let maxLength = 3
 
     override func awakeFromNib() {

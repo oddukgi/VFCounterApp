@@ -2,7 +2,7 @@
 //  Veggies+CoreDataProperties.swift
 //  
 //
-//  Created by Sunmi on 2020/10/10.
+//  Created by Sunmi on 2020/10/19.
 //
 //
 

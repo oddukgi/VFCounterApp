@@ -68,6 +68,30 @@ public class MonthlyDateStrategy: DateStrategy {
     }
 
     // MARK: - Setting Date
+    public func fetchedData() {
+        let dataManager = DataManager()
+
+        var vDatemap: [[String: Any]] = []
+        var fDatemap: [[String: Any]] = []
+        dataManager.getDateDictionary { (veggieDates, fruitDates) in
+            vDatemap = veggieDates
+            fDatemap = fruitDates
+        }
+        
+        vDatemap.forEach { (item) in
+            _ = item.compactMap({ if $0 == "date" {  self.vDates.append($1 as? String ?? "" ) } })
+        }
+
+        fDatemap.forEach { (item) in
+            _ = item.compactMap({ if $0 == "date" {  self.fDates.append($1 as? String ?? "") } })
+        }
+
+        dateValue.minV = vDates.last?.changeDateTime(format: .date)
+        dateValue.minF = fDates.last?.changeDateTime(format: .date)
+        dateValue.maxV = vDates.first?.changeDateTime(format: .date)
+        dateValue.maxF = fDates.first?.changeDateTime(format: .date)
+    }
+    
     public func updateLabel() -> (String?, [String]?, [String]?) {
 
         let strDate = dateFormatter.string(from: date)
@@ -98,25 +122,6 @@ public class MonthlyDateStrategy: DateStrategy {
         return Array(items).sorted()
     }
 
-    public func fetchedData() {
-        let dataManager = DataManager()
-        dataManager.getDateDictionary { (veggieDates, fruitDates) in
-
-            veggieDates.forEach { (item) in
-                _ = item.compactMap({ if $0 == "date" {  vDates.append($1 as? String ?? "") } })
-            }
-
-            fruitDates.forEach { (item) in
-                _ = item.compactMap({ if $0 == "date" {  fDates.append($1 as? String ?? "") } })
-            }
-        }
-
-        dateValue.minV = vDates.last?.changeDateTime(format: .date)
-        dateValue.minF = fDates.last?.changeDateTime(format: .date)
-        dateValue.maxV = vDates.first?.changeDateTime(format: .date)
-        dateValue.maxF = fDates.first?.changeDateTime(format: .date)
-    }
-
     public func setMinimumDate() {
 
         switch (dateValue.minV, dateValue.minF) {
@@ -144,12 +149,16 @@ public class MonthlyDateStrategy: DateStrategy {
             guard let maxVeggie = dateValue.maxV, let maxFruit = dateValue.maxF else { return }
             (maxVeggie < maxFruit) ? (privateMaximumDate = maxFruit) : (privateMaximumDate = maxVeggie)
       }
-
+ 
     }
 
     public func previous() {
-
-        if let minDate = privateMinimumDate, date > minDate.startOfMonth().dayAfter {
+        
+        guard let minDate = privateMinimumDate else { return }
+        let stringDate = date.changeDateTime(format: .longDate)
+        
+        if date > minDate {
+//            print("Min Date: \(minDate)")
             date = date.lastMonth
             DateSettings.default.periodController.monthDate = date
         }

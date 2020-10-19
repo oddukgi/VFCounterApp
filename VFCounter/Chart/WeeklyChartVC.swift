@@ -31,7 +31,7 @@ class WeeklyChartVC: ChartBaseVC {
 
     lazy var weekStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 110
+        stackView.spacing = 130
         stackView.axis = .horizontal
         stackView.distribution = .fill
         return stackView
@@ -69,7 +69,7 @@ class WeeklyChartVC: ChartBaseVC {
         lblweek.snp.makeConstraints { make in
             make.leading.equalTo(arrowButtons[0].snp.trailing)
             make.centerY.equalTo(weekStackView.snp.centerY)
-            make.width.equalTo(110)
+            make.width.equalTo(130)
         }
     }
 

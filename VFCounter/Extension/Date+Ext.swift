@@ -13,6 +13,7 @@ extension Date {
     enum Format: String {
         case date = "yyyy.MM.dd"
         case dateTime = "yyyy.MM.dd h:mm:ss a"
+        case shortDT = "yyyy.MM.dd h:mm a"
         case longDate = "yyyy.MM.dd EEE"
         case onlyTime = " h:mm:ss a"
         case pickerTime = " HH:mm:ss"
@@ -150,8 +151,10 @@ extension Date {
     func getWeekDates() -> [Date] {
 
         var arrThisWeek: [Date] = []
+        
         for index in 0 ..< 7 {
             arrThisWeek.append(Calendar.current.date(byAdding: .day, value: index, to: self)!)
+            
         }
 
         return arrThisWeek
@@ -179,10 +182,11 @@ extension Date {
          let dateFormatter = DateFormatter()
          dateFormatter.timeZone = TimeZone.current
          dateFormatter.locale = Locale(identifier: "ko_KR")
-         dateFormatter.dateFormat = "EEE"
-         return dateFormatter.string(from: self)
+         dateFormatter.dateFormat = "E"
+         let weekday = dateFormatter.string(from: self)
+         return weekday
      }
-
+    
     func getFirstMonthDate(in calendar: Calendar = .current) -> Date? {
         var minDateComponent = calendar.dateComponents([.year, .month, .day], from: self)
         minDateComponent.month = 1

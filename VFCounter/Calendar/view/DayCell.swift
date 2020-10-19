@@ -241,9 +241,8 @@ class DayCell: JTACDayCell {
         } else {
 
             self.dateLabel.textColor = self.setting.dateLabelColor
+            let from = Date().startOfDay()
             if !config.isRingVisible {
-
-                let from = Date().startOfDay()
                 if config.state!.date == from {
                     self.dateLabel.textColor = self.setting.todayLabelColor
                 }

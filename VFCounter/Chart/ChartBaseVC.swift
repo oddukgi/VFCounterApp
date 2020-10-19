@@ -114,7 +114,7 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
 
     }
 
-    func updatePeriod(_ reloadData: Bool = false) {
+    func updatePeriod() {
         dateStrategy.fetchedData()
         dateStrategy.setMinimumDate()
         dateStrategy.setMaximumDate()

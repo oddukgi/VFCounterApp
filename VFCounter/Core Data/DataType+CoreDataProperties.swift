@@ -2,7 +2,7 @@
 //  DataType+CoreDataProperties.swift
 //  
 //
-//  Created by Sunmi on 2020/10/10.
+//  Created by Sunmi on 2020/10/19.
 //
 //
 
@@ -19,8 +19,8 @@ extension DataType {
     @NSManaged public var createdDate: Date?
     @NSManaged public var date: String?
     @NSManaged public var image: Data?
-    @NSManaged public var name: String?
-    @NSManaged public var maxveggie: Int16
     @NSManaged public var maxfruit: Int16
+    @NSManaged public var maxveggie: Int16
+    @NSManaged public var name: String?
 
 }

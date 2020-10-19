@@ -61,12 +61,12 @@ class TitleSupplementaryView: UICollectionReusableView {
             make.width.equalTo(30)
         }
         lblSubtitle.snp.makeConstraints { make in
-            make.width.equalTo(138)
+            make.width.equalTo(145)
         }
         btnPlus.snp.makeConstraints { make in
             make.leading.equalTo(labels.snp.trailing).offset(20)
             make.top.equalTo(self)
-            make.size.equalTo(CGSize(width: 33, height: 33))
+            make.size.equalTo(CGSize(width: 40, height: 40))
         }
 
         lblTitle.textColor = .black

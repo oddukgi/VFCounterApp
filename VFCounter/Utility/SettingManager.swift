@@ -43,5 +43,4 @@ class SettingManager {
     class func getInitialLaunching(keyName: String) -> Bool? {
         return userDefaults?.bool(forKey: keyName)
     }
-
 }

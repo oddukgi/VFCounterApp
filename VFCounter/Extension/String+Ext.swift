@@ -81,7 +81,7 @@ extension String {
         return days.firstIndex(of: self)!
     }
 
-    func containsWhitespaceAndNewlines() -> Bool {
+    func containsWeekday() -> Bool {
         return rangeOfCharacter(from: CharacterSet(charactersIn: "월화수목금토일")) != nil
     }
 
@@ -95,7 +95,34 @@ extension String {
     func doesStringContains(input: String) -> Bool {
         return self.range(of: input, options: .caseInsensitive) != nil
     }
+    
+    var extractDate: String {
+        return self.components(separatedBy: " ")[0]
+    }
+    
+    func retrieveKind() -> Int {
 
+        let name = self
+        var section = 0
+        let fruit = [
+                        "사과", "살구", "아보카도", "바나나", "블루베리", "체리",
+                        "코코넛", "용과", "포도", "자몽", "아오리", "샤인머스캣",
+                        "천도복숭아", "키위", "레몬", "망고", "망고스틴", "멜론",
+                        "오렌지", "복숭아", "배", "감", "파인애플", "자두",
+                        "석류", "라즈베리", "딸기", "귤", "수박"
+                    ]
+
+        for item in fruit {
+            if item.doesStringContains(input: name) {
+                section = 1
+                break
+            } else {
+                section = 0
+            }
+        }
+        
+        return section
+    }
 }
 
 extension Double {

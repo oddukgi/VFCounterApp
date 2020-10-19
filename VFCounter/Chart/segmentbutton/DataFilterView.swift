@@ -14,6 +14,13 @@ class DataFilterView: UIView {
     var searchField: UITextField!
     let background = UIView()
  
+    var selectedItem: Int {
+        
+        get {
+            return  dataSegmentControl.selectedIndex
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()

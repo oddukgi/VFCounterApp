@@ -44,7 +44,7 @@ enum UIHelper {
        return section
     }
 
-    static func createHorizontalLayout(titleElemendKind: String, isHeader: Bool = true, isPaddingForSection: Bool = false) -> UICollectionViewCompositionalLayout {
+    static func createHorizontalLayout(titleElemendKind: String = "", isHeader: Bool = true, isPaddingForSection: Bool = false) -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                   heightDimension: .absolute(SizeManager().getUserItemHeight))
@@ -86,14 +86,5 @@ enum UIHelper {
         let layout = UICollectionViewCompositionalLayout(
             sectionProvider: sectionProvider, configuration: config)
         return layout
-    }
-
-    // MARK: UIViewController
-    static func backToPreviousScreen(_ view: UIViewController) {
-        if view.navigationController != nil {
-            view.navigationController?.popViewController(animated: true)
-        } else {
-            view.dismiss(animated: true, completion: nil)
-        }
     }
 }

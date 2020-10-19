@@ -80,7 +80,7 @@ extension AlarmSettingVC: MaxAmoutVeggieCellDelegate {
 
     func textField(editingDidBeginIn cell: MaxAmountVeggieCell) {
         if let indexPath = tableView?.indexPath(for: cell) {
-            print("textfield selected in cell at \(indexPath)")
+//            print("textfield selected in cell at \(indexPath)")
         }
     }
 

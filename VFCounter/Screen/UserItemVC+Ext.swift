@@ -48,10 +48,8 @@ extension UserItemVC {
          let flag = SettingManager.getInitialLaunching(keyName: "InitialLaunching")
 
          if flag == true {
-//            print("App already launched")
             return true
         } else {
-//            print("App launched first time")
             SettingManager.setInitialLaunching(flag: true)
             return false
         }
@@ -134,7 +132,7 @@ extension UserItemVC {
 
             let sectionTitle: Section = (i == 0 ? Section.vTitle : Section.fTitle)
             currentSnapshot.appendSections([sectionTitle])
-            let fetchedItem = fetchingItems[i](stringDate)
+            let fetchedItem = dataManager.fetchedItem(i, stringDate)
             currentSnapshot.appendItems(fetchedItem)
         }
 
@@ -162,9 +160,12 @@ extension UserItemVC: UICollectionViewDelegate {
       public func collectionView(_ collectionView: UICollectionView,
                                  contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 
-        let itemCount = fetchingItems[indexPath.section](stringDate).count
-
-          guard indexPath.item < itemCount else {
+        var itemCount = 0
+        let countmap = dataManager.getEntityCount(date: stringDate)
+       
+        (indexPath.section == 0) ? (itemCount = countmap.0) : (itemCount = countmap.1)
+        
+        guard indexPath.item < itemCount else {
               return nil
           }
 
@@ -175,12 +176,12 @@ extension UserItemVC: UICollectionViewDelegate {
               let editAction = UIAction( title: "Edit",
                                          image: UIImage(named: "edit")) { [weak self] _ in
 
-                cell.modifyItem(for: indexPath.item, to: indexPath.section)
+                cell.modifyItem(for: indexPath.item)
               }
 
               let deleteAction = UIAction( title: "Delete",
                                            image: UIImage(named: "delete")) { [weak self] _ in
-                cell.deleteItem(for: indexPath.item, to: indexPath.section)
+                cell.deleteItem(indexPath: indexPath)
               }
 
               actions = [editAction, deleteAction]
@@ -199,8 +200,10 @@ extension UserItemVC: UICollectionViewDelegate {
       public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
 
           // don't show menu for add item cell
-        let itemCount = fetchingItems[indexPath.section](stringDate).count
-
+        var itemCount = 0
+        let countmap = dataManager.getEntityCount(date: stringDate)
+        (indexPath.section == 0) ? (itemCount = countmap.0) : (itemCount = countmap.1)
+ 
         guard indexPath.item < itemCount else {
             return false
         }
@@ -215,8 +218,10 @@ extension UserItemVC: UICollectionViewDelegate {
                                  forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
 
         // don't show menu for add item cell
-        let itemCount = fetchingItems[indexPath.section](stringDate).count
-
+        var itemCount = 0
+        let countmap = dataManager.getEntityCount(date: stringDate)
+        (indexPath.section == 0) ? (itemCount = countmap.0) : (itemCount = countmap.1)
+   
         if action == #selector(modifyTapped) && itemCount > 0 {
             return true
         } else if action == #selector(deleteTapped) && itemCount > 0 {
@@ -239,8 +244,6 @@ extension UserItemVC: PickItemVCProtocol {
 
         if !item.name.isEmpty {
             stringDate = String(item.date.split(separator: " ").first!)
-
-            //아이템 설정값과 최대양을 저장합니다.
             dataManager.createEntity(item: item, tag: tag, valueConfig: valueConfig)
 		    updateData()
             NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
@@ -327,12 +330,12 @@ extension UserItemVC: ItemCellDelegate {
         }
     }
 
-    func presentSelectedAlertVC(item: Int, section: Int) {
+    func presentSelectedAlertVC(indexPath: IndexPath, selectedDate: String) {
 
         let alert = UIAlertController(title: "", message: "선택한 아이템을 삭제할까요?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { _ in
-            self.deleteSelectedItem(item: item, section: section)
+            self.deleteSelectedItem(item: indexPath.item, section: indexPath.section)
         }))
 
         self.present(alert, animated: true, completion: nil)

@@ -13,7 +13,7 @@ import SnapKit
 
 protocol ItemCellDelegate: class {
     func updateSelectedItem(item: VFItemController.Items, index: Int)
-    func presentSelectedAlertVC(item: Int, section: Int)
+    func presentSelectedAlertVC(indexPath: IndexPath, selectedDate: String)
 }
 
 class VFItemCell: UICollectionViewCell {
@@ -23,14 +23,12 @@ class VFItemCell: UICollectionViewCell {
     let lblTime      =  VFSubTitleLabel(font: NanumSquareRound.regular.style(offset: 11))
     let lblName      =  VFSubTitleLabel(font: NanumSquareRound.bold.style(offset: 13))
     let lblAmount    =  VFSubTitleLabel(font: NanumSquareRound.regular.style(offset: 11))
- 
-    private var date     = ""
     weak var delegate: ItemCellDelegate?
-
-    private let dataManager = DataManager()
-    private var row = 0
+    
+    private var date     = ""
     private var section = 0
-
+    private let dataManager = DataManager()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -91,45 +89,29 @@ class VFItemCell: UICollectionViewCell {
         lblAmount.text = "\(amount)g"
     }
 
-    func retrieveKind(name: String) {
-
-        let fruit = [
-                        "사과", "살구", "아보카도", "바나나", "블루베리", "체리",
-                        "코코넛", "용과", "포도", "자몽", "아오리", "샤인머스캣",
-                        "천도복숭아", "키위", "레몬", "망고", "망고스틴", "멜론",
-                        "오렌지", "복숭아", "배", "감", "파인애플", "자두",
-                        "석류", "라즈베리", "딸기", "귤", "수박"
-                    ]
-
-        for item in fruit {
-            if item.doesStringContains(input: name) {
-                section = 1
-                break
-            } else {
-                section = 0
-            }
-        }
-    }
-
-    func modifyItem(for row: Int, to section: Int) {
+    func modifyItem(for row: Int, itemdate: String = "") {
+        
         var datatype: DataType.Type!
         var item: VFItemController.Items?
         let name     = self.lblName.text!
         let image    = self.imageView.image!
         let amount   = String(self.lblAmount.text!.dropLast())
-
-        retrieveKind(name: name)
+        
+        var itemDate =  (itemdate.count > 0) ? itemdate : date
+        
+        section = name.retrieveKind()
         section == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
-         dataManager.fetchedDate(tag: section, index: row, datatype, newDate: date) { (result) in
-            item = VFItemController.Items(name: name, date: self.date, image: image, amount: Int(amount) ?? 0, entityDT: result)
-         }
+        dataManager.fetchedDate(tag: section, index: row, datatype, newDate: itemDate) { (result) in
+           item = VFItemController.Items(name: name, date: self.date,
+                                         image: image, amount: Int(amount) ?? 0, entityDT: result)
+        }
 
         if let unwrappedItem = item {
             self.delegate?.updateSelectedItem(item: unwrappedItem, index: self.section)
         }
     }
 
-    func deleteItem(for item: Int, to section: Int) {
-        delegate?.presentSelectedAlertVC(item: item, section: section)
+    func deleteItem(indexPath: IndexPath) {
+        delegate?.presentSelectedAlertVC(indexPath: indexPath, selectedDate: "")
     }
 }

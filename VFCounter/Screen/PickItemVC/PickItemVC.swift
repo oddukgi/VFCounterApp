@@ -222,8 +222,6 @@ class PickItemVC: UIViewController {
         let maxVeggie = (maxValues.0 == 0) ? datemodel.maxV : maxValues.0
         let maxFruit = (maxValues.1 == 0) ? datemodel.maxF : maxValues.1
         
-        print("Max Value: \(maxVeggie),\(maxFruit)")
-        
         SettingManager.setVeggieTaskRate(percent: Float(maxVeggie))
         SettingManager.setFruitsTaskRate(percent: Float(maxFruit))
         

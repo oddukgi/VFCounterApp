@@ -28,23 +28,16 @@ class UserItemVC: UIViewController {
     var currentSnapshot: NSDiffableDataSourceSnapshot<Section, DataType>! = nil
     let titleElementKind = "titleElementKind"
     var height: CGFloat = 0
-    var userSettings = [UserSettings]()
     let dataManager = DataManager()
     var stringDate: String = ""
     var valueConfig = ValueConfig()
     private var dateView: DateView!
 
     let defaultRate = 500
-     let fetchingItems =  [ { (newDate) -> [DataType] in
-        // swiftlint:disable:next force_try
-            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
-            .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), newDate).orderBy(.descending(\.createdDate)))
-        }, { (newDate) -> [DataType] in
-            // swiftlint:disable:next force_try
-            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration).where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), newDate).orderBy(.descending(\.createdDate)))
-
-        } ]
-
+    
+    deinit {
+        removeNotification()
+    }
     init(date: String) {
         super.init(nibName: nil, bundle: nil)
         self.stringDate = date
@@ -86,6 +79,11 @@ class UserItemVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)), name: .updateFetchingData, object: nil)
 
     }
+    
+    func removeNotification() {
+        NotificationCenter.default.removeObserver(self, name: .updateTaskPercent, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .updateFetchingData, object: nil)
+    }
 
     func checkLoadingStatus() {
         if getAppLoadingStatus() {
@@ -115,7 +113,10 @@ class UserItemVC: UIViewController {
 
         if let createdDate = notification.userInfo?["createdDate"] as? String {
             var newDate = createdDate
-            newDate.removeLast(2)
+            
+            if newDate.containsWeekday() {
+                newDate.removeLast(2)
+            }
             stringDate = newDate
             updateData()
         }
@@ -129,8 +130,8 @@ extension UserItemVC {
         currentSnapshot = NSDiffableDataSourceSnapshot <Section, DataType>()
 
         var sumA = 0, sumB = 0
-        let veggieFetchedItem = fetchingItems[0](date)
-        let fruitFetchedItem = fetchingItems[1](date)
+        let veggieFetchedItem = dataManager.fetchedItem(0, date)
+        let fruitFetchedItem = dataManager.fetchedItem(1, date)
 
         for (index, item) in veggieFetchedItem.enumerated() {
 

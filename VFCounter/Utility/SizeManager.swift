@@ -203,13 +203,10 @@ class SizeManager {
 
         if DeviceTypes.isiPhoneSE {
             height = ScreenSize.height - 200
-        } else if DeviceTypes.isiPhone8Standard {
+        } else if DeviceTypes.isiPhone8Standard ||  DeviceTypes.isiPhone8PlusStandard {
             height = ScreenSize.height - 350
-        } else if DeviceTypes.isiPhone8PlusStandard {
-            height = ScreenSize.height - 300
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
             height = ScreenSize.height - 500
-
         } else if DeviceTypes.isiPhoneX {
             height = ScreenSize.height - 450
         } else {

@@ -26,9 +26,14 @@ class BaseViewController: UIViewController {
 
     }
 
-    func updatePeriod(_ reloadData: Bool = false) {
+    func updatePeriod() {
         dateStrategy.fetchedData()
         dateStrategy.setMinimumDate()
         dateStrategy.setMaximumDate()
     }
+    
+    func changeDefaultDate(date: Date) {
+        dateStrategy.date = date
+    }
+
 }

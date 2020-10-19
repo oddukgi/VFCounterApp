@@ -169,6 +169,7 @@ JTACMonthViewDataSource {
         calendarView.deselectAllDates()
         calendarView.scrollToDate(date, animateScroll: false)
         calendarView.selectDates([date])
+        calendarView.reloadData()
 
     }
 

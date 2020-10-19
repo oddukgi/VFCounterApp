@@ -10,7 +10,7 @@ import Foundation
 
 public protocol DateStrategy: class {
 
-    var date: Date { get }
+    var date: Date { get set }
     var mininumDate: Date? { get set }
     var maximumDate: Date? { get set }
 

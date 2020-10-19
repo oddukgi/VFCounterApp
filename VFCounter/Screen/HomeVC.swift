@@ -24,6 +24,9 @@ class HomeVC: UIViewController {
     let contentView = UIView()
     let userItemView = UIView()
 
+    deinit {
+        removeNotification()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -46,11 +49,13 @@ class HomeVC: UIViewController {
                                                name: .updateDateTime, object: nil)
     }
     
+    func removeNotification() {
+        NotificationCenter.default.removeObserver(self, name: .updateDateTime, object: nil)
+    }
     // MARK: action
     @objc fileprivate func updateDateTime(_ notification: Notification) {
 
         if let userDate = notification.userInfo?["userdate"] as? String {
-            print(userDate)
             dateView.updateDate(userdate: userDate)
         }
     }

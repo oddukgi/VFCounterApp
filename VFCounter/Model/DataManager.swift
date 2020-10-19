@@ -10,22 +10,43 @@ import Foundation
 import CoreStore
 
 class DataManager {
-
+    
+//    let people = try dataStack.fetchAll(
+//        From<MyPersonEntity>()
+//            .where(\.age > 30),
+//            .orderBy(.ascending(\.name), .descending(.\age)),
+//            .tweak({ $0.includesPendingChanges = false })
+//    )
+    
     // MARK: create entity
-
     private let dateItems  =  [ { (date) -> [DataType] in
-        // swiftlint:disable:next force_try
-            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.veggieConfiguration)
+
+            return try UserDataManager.dataStack.fetchAll(From<Veggies>(UserDataManager.veggieConfiguration)
             .where(format: "%K BEGINSWITH[c] %@",
-            #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)))
+            #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)).tweak({ $0.includesPendingChanges = false }))
+        
         }, { (date) -> [DataType] in
-            // swiftlint:disable:next force_try
-            return try! UserDataManager.dataStack.fetchAll(From<DataType>(UserDataManager.fruitsConfiguration)
+
+            return try UserDataManager.dataStack.fetchAll(From<Fruits>(UserDataManager.fruitsConfiguration)
             .where(format: "%K BEGINSWITH[c] %@",
-                   #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)))
+                   #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)).tweak({ $0.includesPendingChanges = false }))
         }
     ]
+    
+    func fetchedItem(_ index: Int, _ date: String) -> [DataType] {
 
+        var data: [DataType] = []
+        do {
+    
+            data = try dateItems[index](date)
+            
+        } catch {
+            print(error)
+        }
+
+        return data
+    }
+    
     func configureEntity<T: DataType>(_ objectType: T.Type, transaction: SynchronousDataTransaction,
           configuration: String) -> T {
           let entityItem = transaction.create(Into<T>(configuration))
@@ -33,7 +54,7 @@ class DataManager {
           return entityItem
       }
 
-    func createEntity(item: VFItemController.Items, tag: Int, valueConfig: ValueConfig) {
+    func createEntity(item: VFItemController.Items, tag: Int, valueConfig: ValueConfig?) {
 
           var entityItem: DataType?
 
@@ -48,27 +69,19 @@ class DataManager {
               } else {
                 entityItem = configureEntity(Fruits.self, transaction: transaction, configuration: UserDataManager.fruitsConfiguration)
               }
-
+            
+            guard let config = valueConfig else { return }
             entityItem?.name = item.name
             entityItem?.date = newDate[0]
             entityItem?.createdDate = item.entityDT
             entityItem?.image = item.image?.pngData()
             entityItem?.amount = Int16(item.amount)
-            entityItem?.maxveggie = Int16(valueConfig.maxVeggies)
-            entityItem?.maxfruit = Int16(valueConfig.maxFruits)
+            entityItem?.maxveggie = Int16(config.maxVeggies)
+            entityItem?.maxfruit = Int16(config.maxFruits)
 
           })
 
        }
-
-    // MARK: delete all entities
-    func deleteAllEntity() {
-
-        _ = try? UserDataManager.dataStack.perform( synchronous: { (transaction) in
-              try transaction.deleteAll(From<DataType>())
-          })
-
-      }
 
     func getSumItems(date: String) -> (Int, Int) {
         var veggieFilter = Where<Veggies>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date), date)
@@ -81,32 +94,6 @@ class DataManager {
             Select<Fruits, Int16>(.sum("amount")), fruitFilter)
 
         return (Int(totalVeggies ?? 0), Int(totalFruits ?? 0))
-    }
-
-    func checkVeggieData(date: String, completion: @escaping ([[String: Any]]) -> Void) {
-
-        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
-
-            let veggieData = try transaction.queryAttributes(From<Veggies>().select(NSDictionary.self,
-                                                                                      .attribute(\.name),
-                                                                                      .attribute(\.date))
-
-            .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
-             completion(veggieData)
-        })
-
-    }
-
-    func checkFruitData(date: String, completion: @escaping (String?) -> Void) {
-
-        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
-
-            let fruitData = try transaction.queryValue(From<Veggies>()
-            .select(String.self, .attribute(\.name))
-            .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
-            completion(fruitData)
-
-        })
     }
 
     func modfiyEntity<T: DataType>(item: VFItemController.Items, originTime: Date,
@@ -131,7 +118,6 @@ class DataManager {
               updateEntity.image = item.image?.pngData()
               updateEntity.amount = Int16(item.amount)
 
-//            print(">>\(updateEntity.createdDate!)")
           })
     }
 
@@ -154,6 +140,17 @@ class DataManager {
          })
     }
 
+    func getEntity<T: DataType>(originTime: Date, _ objectType: T.Type) -> DataType {
+
+        var configuration = ""
+        objectType == Veggies.self ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
+
+        guard let existingEntity = try? UserDataManager.dataStack.fetchOne(From<T>(configuration)
+                                    .where(\.createdDate == originTime)) else { return DataType() }
+        
+        return existingEntity
+    }
+    
     func deleteEntity<T: DataType>(originTime: Date, _ objectType: T.Type) {
 
         var configuration = ""
@@ -170,58 +167,77 @@ class DataManager {
 
     }
 
-    func getList(date: String, index: Int) -> [SubItems] {
+    func getDateDictionary(completion: @escaping DataDictionary) {
+        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
 
-        var subitem = [SubItems]()
-        let data = dateItems[index](date)
+            let veggieData = try transaction.queryAttributes(From<Veggies>()
+                                                                .select(NSDictionary.self,
+                                                              .attribute(\.name),
+                                                              .attribute(\.date))
+                                                              .orderBy(.descending(\.date)))
 
-        for value in data {
-            let item = SubItems(element: value)
-            subitem.append(item)
+            let fruitData = try transaction.queryAttributes(From<Fruits>()
+                                                                .select(NSDictionary.self,
+                                                              .attribute(\.name),
+                                                              .attribute(\.date))
+                                                              .orderBy(.descending(\.date)))
+            completion(veggieData, fruitData)
+
+        })
+    }
+
+    func getSpecificDate(date: String, completion: @escaping DataDictionary) {
+        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+            let veggieData = try transaction.queryAttributes(From<Veggies>()
+                                                                .select(NSDictionary.self,
+                                                              .attribute(\.name),
+                                                              .attribute(\.amount)).orderBy(.descending(\.createdDate))
+                                                              .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
+
+            let fruitData = try transaction.queryAttributes(From<Fruits>()
+                                                                .select(NSDictionary.self,
+                                                              .attribute(\.name),
+                                                              .attribute(\.amount)).orderBy(.descending(\.createdDate))
+                                                              .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
+
+            completion(veggieData, fruitData)
+
+        })
+
+    }
+
+    func getEntityCount<T: DataType>(date: String, section: Int,
+                                            _ objectType: T.Type, completion: @escaping (Int?) -> Void) {
+ 
+        var configuration = ""
+
+        section == 0 ? (configuration = UserDataManager.veggieConfiguration): (configuration = UserDataManager.fruitsConfiguration)
+        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
+
+            let count = try? transaction.fetchCount(
+                From<T>(configuration), Where<T>("%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
+           
+            completion(count)
+            
+        })
+
+    }
+    
+    func getEntityCount(date: String) -> (Int, Int) {
+        
+        var vCount = 0
+        var fCount = 0
+        getEntityCount(date: date, section: 0, Veggies.self) { (count) in
+            vCount = count ?? 0
         }
-
-        return subitem
+        
+        getEntityCount(date: date, section: 0, Fruits.self) { (count) in
+            vCount = count ?? 0
+        }
+        
+        return (vCount, fCount)
     }
-
-    func getDateDictionary(completion: DataDictionary) {
-        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
-
-            let veggieData = try transaction.queryAttributes(From<Veggies>()
-                                                                .select(NSDictionary.self,
-                                                              .attribute(\.name),
-                                                              .attribute(\.date))
-                                                              .orderBy(.descending(\.date)))
-
-            let fruitData = try transaction.queryAttributes(From<Fruits>()
-                                                                .select(NSDictionary.self,
-                                                              .attribute(\.name),
-                                                              .attribute(\.date))
-                                                              .orderBy(.descending(\.date)))
-            completion(veggieData, fruitData)
-
-        })
-    }
-
-    func getSpecificDate(date: String, completion: DataDictionary) {
-        _ = try? UserDataManager.dataStack.perform(synchronous: { (transaction) in
-            let veggieData = try transaction.queryAttributes(From<Veggies>()
-                                                                .select(NSDictionary.self,
-                                                              .attribute(\.name),
-                                                              .attribute(\.amount)).orderBy(.descending(\.date))
-                                                              .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
-
-            let fruitData = try transaction.queryAttributes(From<Fruits>()
-                                                                .select(NSDictionary.self,
-                                                              .attribute(\.name),
-                                                              .attribute(\.amount)).orderBy(.descending(\.date))
-                                                              .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date))
-
-            completion(veggieData, fruitData)
-
-        })
-
-    }
-
+    
     func getMaxData(date: String) -> (Int, Int) {
         var veggieFilter = Where<Veggies>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date), date)
         var fruitFilter = Where<Fruits>() && Where("%K BEGINSWITH[c] %@", #keyPath(DataType.date), date)
@@ -234,5 +250,5 @@ class DataManager {
 
         return (Int(maxVeggie ?? 0), Int(maxFruit ?? 0))
     }
-
+    
 }

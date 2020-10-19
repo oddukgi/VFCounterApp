@@ -17,16 +17,17 @@ class PeriodListVC: BaseViewController {
     var sectionControl: CustomSegmentedControl!
     var selectedIndex: Int = 0
 
+    var periodData = PeriodData()
+    var tableSection: Int = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
         connectAction()
         configureTableView()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
         updatePeriod()
         updateResource()
+        initializeData()
     }
 
     // MARK: create collectionView layout
@@ -47,34 +48,34 @@ class PeriodListVC: BaseViewController {
         lblPeriod.snp.makeConstraints {
             $0.leading.equalTo(arrowButtons[0].snp.trailing)
             $0.centerY.equalTo(stackView.snp.centerY)
-            $0.width.equalTo(110)
+            $0.width.equalTo(130)
         }
     }
 
     func configureTableView() {
 
-        tableView = UITableView(frame: view.bounds, style: .grouped)
+        tableView = CustomTableView(frame: view.bounds, style: .grouped)
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(8)
             make.leading.trailing.equalTo(view)
-            make.bottom.equalTo(view.snp.bottom).offset(-8)
+            make.bottom.equalTo(view.snp.bottom)
         }
 
+        tableView.rowHeight = SizeManager().getUserItemHeight + 15
+        tableView.sectionHeaderHeight = 44
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ElementCell.self, forCellReuseIdentifier: ElementCell.reuseIdentifier)
         tableView.backgroundColor = ColorHex.iceBlue
     }
     
-    fileprivate func updateResource() {
+    func updateResource() {
 
         let datemap = dateStrategy.updateLabel()
         lblPeriod.text = datemap.0
         weekday = datemap.1!
         datemaps = datemap.2!
-
-        self.tableView.reloadData()
      }
 
     func connectAction() {
@@ -83,17 +84,49 @@ class PeriodListVC: BaseViewController {
             self.updatePeriod()
             self.dateStrategy.previous()
             self.updateResource()
+            self.initializeData()
         }
         arrowButtons[1].addTargetClosure { _ in
             self.updatePeriod()
             self.dateStrategy.next()
             self.updateResource()
+            self.initializeData()
         }
     }
+    
+    // tableViewModel 만들기
+    func initializeData() {
+       
+        let dm = DataManager()
+        var subcategory = [String]()
+        
+        if periodData.arrTBCell.count > 0 {
+            periodData.arrTBCell.removeAll()
+        }
+        weekday.forEach { (item) in
+            
+            let date = item.components(separatedBy: " ")[0]
+            let vData = dm.fetchedItem(0, date)
+            let fData = dm.fetchedItem(1, date)
+          
+            if vData.count > 0 && fData.count > 0 {
+                subcategory = ["야채", "과일"]
+            } else {
+                subcategory = [ (vData.count > 0) ? "야채" : "과일" ]
+            }
 
+            let tbCellModel = TableViewCellModel(date: item,
+                                                 subcategory: subcategory, data: [vData, fData])
+            
+            periodData.arrTBCell.append(tbCellModel)
+        }
+        
+        self.tableView.reloadData()
+    }
+    
     lazy var stackView: UIStackView = {
           let stackView = UIStackView()
-          stackView.spacing = 110
+          stackView.spacing = 130
           stackView.axis = .horizontal
           stackView.distribution = .fill
           return stackView
@@ -113,34 +146,5 @@ class PeriodListVC: BaseViewController {
     }()
 
     let lblPeriod = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: 18))
-}
-
-// MARK: - Protocol Extension
-extension PeriodListVC: ElementCellProtocol {
-
-    func updateTableView() {
-        updatePeriod(true)
-    }
-
-    func displayPickItemVC(pickItemVC: PickItemVC) {
-        DispatchQueue.main.async {
-            let navController = UINavigationController(rootViewController: pickItemVC)
-            self.present(navController, animated: true)
-        }
-    }
-
-    func presentSelectedAlertVC(item: Int, section: Int) {
-
-        let alert = UIAlertController(title: "", message: "선택한 아이템을 삭제할까요?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { _ in
-
-            let indexPath = IndexPath(item: item, section: section)
-            NotificationCenter.default.post(name: .deleteTableViewItem, object: nil,
-                                             userInfo: [ "indexPath": indexPath ])
-        }))
-
-        self.present(alert, animated: true, completion: nil)
-    }
 
 }
