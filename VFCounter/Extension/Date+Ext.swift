@@ -83,31 +83,11 @@ extension Date {
         let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
         return calendar.date(byAdding: .day, value: value, to: startDate)!
     }
-
-    func getFirstDayMonth() -> Int {
-        let date = startOfMonth()
-        let component = date.get(.year, .month, .day)
-        return component.day ?? 30
-    }
-
+    
     func getLastDayMonth() -> Int {
         let date = endOfMonth()
         let component = date.get(.year, .month, .day)
         return component.day ?? 30
-    }
-
-    // This Month Start
-    func getThisMonthStart() -> Date? {
-        let components = Calendar.current.dateComponents([.year, .month], from: self)
-        return Calendar.current.date(from: components)!
-    }
-
-    func getThisMonthEnd() -> Date? {
-        let components: NSDateComponents = Calendar.current.dateComponents([.year, .month], from: self) as NSDateComponents
-        components.month += 1
-        components.day = 1
-        components.day -= 1
-        return Calendar.current.date(from: components as DateComponents)!
     }
 
     func changeDateTime(format: Format) -> String {
@@ -151,7 +131,6 @@ extension Date {
     func getWeekDates() -> [Date] {
 
         var arrThisWeek: [Date] = []
-        
         for index in 0 ..< 7 {
             arrThisWeek.append(Calendar.current.date(byAdding: .day, value: index, to: self)!)
             
@@ -192,12 +171,5 @@ extension Date {
         minDateComponent.month = 1
         minDateComponent.day = 1
         return calendar.date(from: minDateComponent)?.endOfDay()
-    }
-
-    func getLast12Month() -> Date? {
-        return Calendar.current.date(byAdding: .month, value: -12, to: self)
-    }
-    func getLast3Month() -> Date? {
-        return Calendar.current.date(byAdding: .month, value: -3, to: self)
     }
 }

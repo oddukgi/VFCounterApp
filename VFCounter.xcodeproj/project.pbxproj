@@ -47,7 +47,6 @@
 		125918C92519DD550031790D /* PeriodListVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125918C82519DD550031790D /* PeriodListVC+Ext.swift */; };
 		125C0783253AB58D008D4AE0 /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125C0782253AB58D008D4AE0 /* TableViewModel.swift */; };
 		125C07A9253AD11A008D4AE0 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 125C07A8253AD11A008D4AE0 /* .swiftlint.yml */; };
-		125E951825347E4E00E7B015 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 125E951725347E4E00E7B015 /* .swiftlint.yml */; };
 		126AE53A24C6C6B4000BCF7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53924C6C6B4000BCF7E /* AppDelegate.swift */; };
 		126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53B24C6C6B4000BCF7E /* SceneDelegate.swift */; };
 		126AE53E24C6C6B4000BCF7E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE53D24C6C6B4000BCF7E /* HomeVC.swift */; };
@@ -77,11 +76,6 @@
 		1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6524C6FA14008DB339 /* VFSubTitleLabel.swift */; };
 		1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6624C6FA14008DB339 /* VFTitleLabel.swift */; };
 		1290EE6A24C6FA14008DB339 /* VFBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6724C6FA14008DB339 /* VFBodyLabel.swift */; };
-		129116D624F616F700BEF3B2 /* SeoulnamsanB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D524F6160C00BEF3B2 /* SeoulnamsanB.otf */; };
-		129116D724F616F700BEF3B2 /* SeoulnamsanBL.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D124F6160B00BEF3B2 /* SeoulnamsanBL.otf */; };
-		129116D824F616F700BEF3B2 /* SeoulnamsanEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D324F6160B00BEF3B2 /* SeoulnamsanEB.otf */; };
-		129116D924F616F700BEF3B2 /* SeoulnamsanL.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D224F6160B00BEF3B2 /* SeoulnamsanL.otf */; };
-		129116DA24F616F700BEF3B2 /* SeoulnamsanM.otf in Resources */ = {isa = PBXBuildFile; fileRef = 129116D424F6160C00BEF3B2 /* SeoulnamsanM.otf */; };
 		12913EB7253D2D340046D795 /* SumHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12913EB6253D2D340046D795 /* SumHeaderView.swift */; };
 		1291B18E24C9834600625BE6 /* VFCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B18D24C9834600625BE6 /* VFCircularView.swift */; };
 		1291B19124C983F400625BE6 /* Ring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291B19024C983F400625BE6 /* Ring.swift */; };
@@ -136,9 +130,9 @@
 		12FF76E424DE8658009542FE /* VFContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76E324DE8658009542FE /* VFContainerView.swift */; };
 		12FF76E624DE97CE009542FE /* Struct+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF76E524DE97CE009542FE /* Struct+Ext.swift */; };
 		12FFDA642538714A00A6357F /* ElementCell+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FFDA632538714A00A6357F /* ElementCell+Ext.swift */; };
-		51583DA2F7AD15BEF7C0A044 /* Pods_VFCounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A848E160EB15FBFD8750060 /* Pods_VFCounterTests.framework */; };
+		32D48C3D658D732E74B6FE32 /* Pods_VFCounter_VFCounterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2808D8CF4EEDE624D33EBDB8 /* Pods_VFCounter_VFCounterTests.framework */; };
+		5076E18B2CA7DC3F23E33BC2 /* Pods_VFCounter_VFCounterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2283DF0D6C421BB8ECB049F4 /* Pods_VFCounter_VFCounterUITests.framework */; };
 		8DB8854FA680A3C7FD8383D4 /* Pods_VFCounter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC0F288B255ADC94F347FE9 /* Pods_VFCounter.framework */; };
-		F7A7E6D618597F3BE12128ED /* Pods_VFCounter_VFCounterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C5706E13915565484939E3 /* Pods_VFCounter_VFCounterUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -235,11 +229,6 @@
 		1290EE6524C6FA14008DB339 /* VFSubTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFSubTitleLabel.swift; sourceTree = "<group>"; };
 		1290EE6624C6FA14008DB339 /* VFTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFTitleLabel.swift; sourceTree = "<group>"; };
 		1290EE6724C6FA14008DB339 /* VFBodyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFBodyLabel.swift; sourceTree = "<group>"; };
-		129116D124F6160B00BEF3B2 /* SeoulnamsanBL.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanBL.otf; sourceTree = "<group>"; };
-		129116D224F6160B00BEF3B2 /* SeoulnamsanL.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanL.otf; sourceTree = "<group>"; };
-		129116D324F6160B00BEF3B2 /* SeoulnamsanEB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanEB.otf; sourceTree = "<group>"; };
-		129116D424F6160C00BEF3B2 /* SeoulnamsanM.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanM.otf; sourceTree = "<group>"; };
-		129116D524F6160C00BEF3B2 /* SeoulnamsanB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulnamsanB.otf; sourceTree = "<group>"; };
 		12913EB6253D2D340046D795 /* SumHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SumHeaderView.swift; sourceTree = "<group>"; };
 		1291B18D24C9834600625BE6 /* VFCircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFCircularView.swift; sourceTree = "<group>"; };
 		1291B19024C983F400625BE6 /* Ring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ring.swift; sourceTree = "<group>"; };
@@ -293,13 +282,17 @@
 		12FF76E324DE8658009542FE /* VFContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFContainerView.swift; sourceTree = "<group>"; };
 		12FF76E524DE97CE009542FE /* Struct+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Struct+Ext.swift"; sourceTree = "<group>"; };
 		12FFDA632538714A00A6357F /* ElementCell+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ElementCell+Ext.swift"; sourceTree = "<group>"; };
+		1E54C5C8337499BB50547A9D /* Pods-VFCounterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounterUITests.debug.xcconfig"; path = "Target Support Files/Pods-VFCounterUITests/Pods-VFCounterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		2283DF0D6C421BB8ECB049F4 /* Pods_VFCounter_VFCounterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VFCounter_VFCounterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2808D8CF4EEDE624D33EBDB8 /* Pods_VFCounter_VFCounterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VFCounter_VFCounterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D49AAB621F65BAE1ED1E328 /* Pods-VFCounter-VFCounterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounter-VFCounterUITests.release.xcconfig"; path = "Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests.release.xcconfig"; sourceTree = "<group>"; };
-		40C5706E13915565484939E3 /* Pods_VFCounter_VFCounterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VFCounter_VFCounterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		685CE6CBCEAAB6687C388347 /* Pods-VFCounterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounterUITests.release.xcconfig"; path = "Target Support Files/Pods-VFCounterUITests/Pods-VFCounterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6EDC181B7F46442AE89C225E /* Pods-VFCounter-VFCounterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounter-VFCounterUITests.debug.xcconfig"; path = "Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		7A848E160EB15FBFD8750060 /* Pods_VFCounterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VFCounterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4DB6C1E41AB7961B262D7C7 /* Pods-VFCounter-VFCounterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounter-VFCounterTests.debug.xcconfig"; path = "Target Support Files/Pods-VFCounter-VFCounterTests/Pods-VFCounter-VFCounterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8508EB8F8D6D5B734949F8D /* Pods-VFCounterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounterTests.debug.xcconfig"; path = "Target Support Files/Pods-VFCounterTests/Pods-VFCounterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CBC0F288B255ADC94F347FE9 /* Pods_VFCounter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VFCounter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64448F7FEDCEEF60D14BA07 /* Pods-VFCounter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounter.release.xcconfig"; path = "Target Support Files/Pods-VFCounter/Pods-VFCounter.release.xcconfig"; sourceTree = "<group>"; };
+		E01D285A9C44D44B49F91D60 /* Pods-VFCounter-VFCounterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounter-VFCounterTests.release.xcconfig"; path = "Target Support Files/Pods-VFCounter-VFCounterTests/Pods-VFCounter-VFCounterTests.release.xcconfig"; sourceTree = "<group>"; };
 		FAB65FBD148A0EF0674F6EF5 /* Pods-VFCounterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VFCounterTests.release.xcconfig"; path = "Target Support Files/Pods-VFCounterTests/Pods-VFCounterTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -320,7 +313,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51583DA2F7AD15BEF7C0A044 /* Pods_VFCounterTests.framework in Frameworks */,
+				32D48C3D658D732E74B6FE32 /* Pods_VFCounter_VFCounterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +321,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7A7E6D618597F3BE12128ED /* Pods_VFCounter_VFCounterUITests.framework in Frameworks */,
+				5076E18B2CA7DC3F23E33BC2 /* Pods_VFCounter_VFCounterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +344,7 @@
 		121666652528B727008B7360 /* SegmentControl */ = {
 			isa = PBXGroup;
 			children = (
+				1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */,
 				121666662528B74B008B7360 /* CustomSegmentedControl.swift */,
 			);
 			path = SegmentControl;
@@ -386,8 +380,8 @@
 			children = (
 				12F2EE6A2509C96E00D0E5FB /* MKRingProgressView.framework */,
 				CBC0F288B255ADC94F347FE9 /* Pods_VFCounter.framework */,
-				40C5706E13915565484939E3 /* Pods_VFCounter_VFCounterUITests.framework */,
-				7A848E160EB15FBFD8750060 /* Pods_VFCounterTests.framework */,
+				2808D8CF4EEDE624D33EBDB8 /* Pods_VFCounter_VFCounterTests.framework */,
+				2283DF0D6C421BB8ECB049F4 /* Pods_VFCounter_VFCounterUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -516,7 +510,6 @@
 				127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */,
 				1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */,
 				12024F7C24F7A58000A91FDA /* WeeklyChartVC+Ext.swift */,
-				12E04BB92535A6FE0068E146 /* segmentbutton */,
 				127BF74324E52FB90066AC7D /* BalloonMarker.swift */,
 				12885B5D24E50607001586EA /* ChartBaseVC.swift */,
 				12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */,
@@ -548,18 +541,6 @@
 				1290EE6624C6FA14008DB339 /* VFTitleLabel.swift */,
 			);
 			path = Label;
-			sourceTree = "<group>";
-		};
-		129116D024F615E600BEF3B2 /* Seoulnamsan */ = {
-			isa = PBXGroup;
-			children = (
-				129116D524F6160C00BEF3B2 /* SeoulnamsanB.otf */,
-				129116D124F6160B00BEF3B2 /* SeoulnamsanBL.otf */,
-				129116D324F6160B00BEF3B2 /* SeoulnamsanEB.otf */,
-				129116D224F6160B00BEF3B2 /* SeoulnamsanL.otf */,
-				129116D424F6160C00BEF3B2 /* SeoulnamsanM.otf */,
-			);
-			path = Seoulnamsan;
 			sourceTree = "<group>";
 		};
 		12B50CF924C6EB2200C87956 /* Screen */ = {
@@ -668,14 +649,6 @@
 			path = UIView;
 			sourceTree = "<group>";
 		};
-		12E04BB92535A6FE0068E146 /* segmentbutton */ = {
-			isa = PBXGroup;
-			children = (
-				1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */,
-			);
-			path = segmentbutton;
-			sourceTree = "<group>";
-		};
 		12E5DE3E251AF7D300D4CCC5 /* Strategies */ = {
 			isa = PBXGroup;
 			children = (
@@ -708,7 +681,6 @@
 				125E951725347E4E00E7B015 /* .swiftlint.yml */,
 				126AE54724C6C6B6000BCF7E /* Info.plist */,
 				122E073924EE664A00BC8066 /* VFCounter.entitlements */,
-				129116D024F615E600BEF3B2 /* Seoulnamsan */,
 				12FD254624CEF6BB00E3D5E0 /* NanumSquareRound */,
 				12FD254B24CEF6BB00E3D5E0 /* I18N.swift */,
 			);
@@ -735,6 +707,10 @@
 				3D49AAB621F65BAE1ED1E328 /* Pods-VFCounter-VFCounterUITests.release.xcconfig */,
 				C8508EB8F8D6D5B734949F8D /* Pods-VFCounterTests.debug.xcconfig */,
 				FAB65FBD148A0EF0674F6EF5 /* Pods-VFCounterTests.release.xcconfig */,
+				1E54C5C8337499BB50547A9D /* Pods-VFCounterUITests.debug.xcconfig */,
+				685CE6CBCEAAB6687C388347 /* Pods-VFCounterUITests.release.xcconfig */,
+				C4DB6C1E41AB7961B262D7C7 /* Pods-VFCounter-VFCounterTests.debug.xcconfig */,
+				E01D285A9C44D44B49F91D60 /* Pods-VFCounter-VFCounterTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -775,6 +751,7 @@
 				126AE54824C6C6B6000BCF7E /* Sources */,
 				126AE54924C6C6B6000BCF7E /* Frameworks */,
 				126AE54A24C6C6B6000BCF7E /* Resources */,
+				00961A07867A812AC7253F47 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -794,7 +771,7 @@
 				126AE55324C6C6B6000BCF7E /* Sources */,
 				126AE55424C6C6B6000BCF7E /* Frameworks */,
 				126AE55524C6C6B6000BCF7E /* Resources */,
-				AA39D1001D400412375CF0F7 /* [CP] Embed Pods Frameworks */,
+				E7AC051CC1FF1BA4E45AD0EB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -862,13 +839,7 @@
 			files = (
 				122DF9452534040100303148 /* SwitchFruitCell.xib in Resources */,
 				125C07A9253AD11A008D4AE0 /* .swiftlint.yml in Resources */,
-				125E951825347E4E00E7B015 /* .swiftlint.yml in Resources */,
-				129116D624F616F700BEF3B2 /* SeoulnamsanB.otf in Resources */,
-				129116D724F616F700BEF3B2 /* SeoulnamsanBL.otf in Resources */,
-				129116D824F616F700BEF3B2 /* SeoulnamsanEB.otf in Resources */,
-				129116D924F616F700BEF3B2 /* SeoulnamsanL.otf in Resources */,
 				12231CAC25341F0400847885 /* MaxAmountFruitCell.xib in Resources */,
-				129116DA24F616F700BEF3B2 /* SeoulnamsanM.otf in Resources */,
 				121A909424D18C8C00AE0780 /* Fruits.xcassets in Resources */,
 				12FD255324CEF6BB00E3D5E0 /* NanumSquareRoundEB.ttf in Resources */,
 				12A0D6FE252EC46100A16877 /* Launch Screen.storyboard in Resources */,
@@ -899,6 +870,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		00961A07867A812AC7253F47 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterTests/Pods-VFCounter-VFCounterTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterTests/Pods-VFCounter-VFCounterTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterTests/Pods-VFCounter-VFCounterTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		12BDFF4025347B4D00D9CA96 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -939,23 +927,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AA39D1001D400412375CF0F7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D299445732A47676C56DC16F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -973,6 +944,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VFCounter/Pods-VFCounter-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E7AC051CC1FF1BA4E45AD0EB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VFCounter-VFCounterUITests/Pods-VFCounter-VFCounterUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EEE0E77153D014467F39A94C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -988,7 +976,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VFCounterTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-VFCounter-VFCounterTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1166,6 +1154,7 @@
 		126AE55E24C6C6B6000BCF7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1230,6 +1219,7 @@
 		126AE55F24C6C6B6000BCF7E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1289,6 +1279,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 020945D958AE09D73DA43793 /* Pods-VFCounter.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VFCounter/Support Files/VFCounter.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -1300,11 +1291,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.creativeSun.VFCounter;
+				MARKETING_VERSION = 0.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunmi.VFCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1312,6 +1303,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D64448F7FEDCEEF60D14BA07 /* Pods-VFCounter.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VFCounter/Support Files/VFCounter.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -1323,19 +1315,19 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.creativeSun.VFCounter;
+				MARKETING_VERSION = 0.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunmi.VFCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		126AE56424C6C6B6000BCF7E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C8508EB8F8D6D5B734949F8D /* Pods-VFCounterTests.debug.xcconfig */;
+			baseConfigurationReference = C4DB6C1E41AB7961B262D7C7 /* Pods-VFCounter-VFCounterTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
@@ -1356,9 +1348,9 @@
 		};
 		126AE56524C6C6B6000BCF7E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FAB65FBD148A0EF0674F6EF5 /* Pods-VFCounterTests.release.xcconfig */;
+			baseConfigurationReference = E01D285A9C44D44B49F91D60 /* Pods-VFCounter-VFCounterTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
@@ -1381,7 +1373,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EDC181B7F46442AE89C225E /* Pods-VFCounter-VFCounterUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
 				INFOPLIST_FILE = VFCounterUITests/Info.plist;
@@ -1402,7 +1394,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D49AAB621F65BAE1ED1E328 /* Pods-VFCounter-VFCounterUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
 				INFOPLIST_FILE = VFCounterUITests/Info.plist;

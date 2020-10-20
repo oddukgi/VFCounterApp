@@ -15,12 +15,10 @@
         <memberEntity name="Fruits"/>
         <memberEntity name="DataType"/>
     </configuration>
-    <configuration name="FruitTotal"/>
     <configuration name="Veggies">
         <memberEntity name="Veggies"/>
         <memberEntity name="DataType"/>
     </configuration>
-    <configuration name="VeggieTotal"/>
     <elements>
         <element name="DataType" positionX="-369.58984375" positionY="6.6875" width="128" height="148"/>
         <element name="Fruits" positionX="-499.81640625" positionY="-132.23046875" width="128" height="43"/>

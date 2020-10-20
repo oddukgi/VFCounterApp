@@ -15,5 +15,4 @@ extension Notification.Name {
     static let updateDateTime = Notification.Name("updateDateTime")
     static let updateMonth    = Notification.Name("updateMonth")
     static let deleteTableViewItem = Notification.Name("DeleteItemTableView")
-    static let selecteTableViewItem = Notification.Name("SeleteItemTableView")
 }

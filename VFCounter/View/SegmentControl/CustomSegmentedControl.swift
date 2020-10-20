@@ -12,8 +12,8 @@ import UIKit
 /// refer to : https://github.com/Code-With-Coffee/CustomSegmentedControl
 
 protocol CustomSegmentedControlDelegate: class {
-    func change(to index: Int)
-    func valueChangedIndex(to index: Int)
+    func valueChangedPeriod(to index: Int)
+    func valueChangedData(to index: Int)
 }
 
 class CustomSegmentedControl: UIView {
@@ -74,11 +74,12 @@ class CustomSegmentedControl: UIView {
         selectedIndex = index
         button.setTitleColor(selectorTextColor, for: .normal)
         let selectorPosition = frame.width / CGFloat(buttonTitles.count) * CGFloat(index)
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.1) {
             self.selectorView.frame.origin.x = selectorPosition
         }
+        
     }
-
+    
     @objc func buttonAction(sender: UIButton) {
 
         for (buttonIndex, btn) in buttons.enumerated() {
@@ -88,14 +89,15 @@ class CustomSegmentedControl: UIView {
                 selectedIndex = buttonIndex
 
                 if resourceType == .timeSection {
-                    delegate?.change(to: selectedIndex)
+                    delegate?.valueChangedPeriod(to: selectedIndex)
                 } else {
-                    delegate?.valueChangedIndex(to: selectedIndex)
+                    delegate?.valueChangedData(to: selectedIndex)
                 }
 
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.12) {
                     self.selectorView.frame.origin.x = selectorPosition
                 }
+                
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
         }

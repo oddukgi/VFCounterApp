@@ -38,9 +38,9 @@ JTACMonthViewDataSource {
         let view = MonthSelectView<Value>(settings: self.setting.monthSelectView)
         view.delegate = self
         self.calendarView.visibleDates { (segment) in
-            UIView.performWithoutAnimation {
+//            UIView.performWithoutAnimation {
                 self.calendarView.reloadItems(at: (segment.outdates + segment.indates).map({ $0.indexPath }))
-            }
+//            }
         }
         return view
 
@@ -123,7 +123,7 @@ JTACMonthViewDataSource {
             return self.privateisRingVisible
         }
     }
-
+    
     init(setting: CalendarSettings = .default) {
         self.setting = setting
         self.appearance = setting.controller
@@ -166,11 +166,11 @@ JTACMonthViewDataSource {
 
     func moveToSpecificDate(date: Date) {
         //default set to todays date
-        calendarView.deselectAllDates()
-        calendarView.scrollToDate(date, animateScroll: false)
-        calendarView.selectDates([date])
-        calendarView.reloadData()
-
+        calendarView.scrollingMode = .stopAtEachCalendarFrame
+        calendarView.scrollToDate( date )
+        self.value = date as? Value
+        self.selectValue(self.value, in: self.calendarView)
+      
     }
 
     // MARK: - Configure
@@ -282,6 +282,7 @@ JTACMonthViewDataSource {
         let veggieSum = Float(veggie)! * veggieMaxRate
         let fruitSum = Float(fruit)! * fruitMaxRate
         currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.up)), fruitSum: Int(fruitSum.rounded(.up)))
+        
     }
 
     private func updateDate(date: Date) {

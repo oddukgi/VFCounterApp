@@ -93,8 +93,6 @@ extension ElementCell: UICollectionViewDelegate {
                 let section = parentVC.tableSection
                 self.config.deleteItemName = cell.lblName.text!
                 var newDate = parentVC.weekday[section]
-        
-                print(self.config.deleteItemName)
                 cell.delegate?.presentSelectedAlertVC(indexPath: indexPath,
                                                       selectedDate: newDate.extractDate)
             }
@@ -162,11 +160,27 @@ extension ElementCell: ItemCellDelegate {
     func presentSelectedAlertVC(indexPath: IndexPath, selectedDate: String) {
         delegate?.presentSelectedAlertVC(indexPath: indexPath, selectedDate: selectedDate, elementCell: self)
     }
+    
+    func getEntityCount(date: String, section: Int) -> Int {
+        
+        var itemCount = 0
+
+        if section == 0 {
+            itemCount = config.datamanager.fetchedVeggies(date).count
+        } else {
+            itemCount = config.datamanager.fetchedFruits(date).count
+        }
+        
+        return itemCount
+     
+    }
 
     func isEmptyEntity(oldDate: String) -> Bool {
-        let countMap = config.datamanager.getEntityCount(date: oldDate)
-
-        if countMap.0 == 0 && countMap.1 == 0 {
+        
+        let cntV = getEntityCount(date: oldDate, section: 0)
+        let cntF = getEntityCount(date: oldDate, section: 1)
+        
+        if cntV == 0 && cntF == 0 {
             return true
         }
         

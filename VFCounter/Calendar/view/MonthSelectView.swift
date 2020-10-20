@@ -48,7 +48,7 @@ class MonthSelectView<Value: CalendarValue>: UIView {
         let label = UILabel(frame: .zero)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = ColorHex.darkGreen
+        label.textColor = ColorHex.MilkChocolate.origin
         label.font = NanumSquareRound.regular.style(offset: 11)
         return label
 
@@ -111,14 +111,13 @@ class MonthSelectView<Value: CalendarValue>: UIView {
 
         lblAmount.snp.makeConstraints {
             $0.top.equalTo(lblMonth.snp.bottom).offset(15)
-            $0.centerX.equalTo(self).offset(-10)
-            $0.width.equalTo(200)
+            $0.centerX.equalTo(self)
+            $0.width.equalTo(150)
         }
 
         lblAmount.font = setting.amountFont
         arrowButtons[0].addTarget(self, action: #selector(previous(_:)), for: .touchUpInside)
         arrowButtons[1].addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
-
     }
 
     func updateMonth() {
@@ -136,7 +135,7 @@ class MonthSelectView<Value: CalendarValue>: UIView {
     }
 
     func updateAmount(veggieSum: Int, fruitSum: Int) {
-        lblAmount.text = "야채: \(veggieSum)g \t 과일: \(fruitSum)g"
+        lblAmount.text = "야채: \(veggieSum)g   과일: \(fruitSum)g"
     }
 
     @objc func previous(_ sender: UIButton) {

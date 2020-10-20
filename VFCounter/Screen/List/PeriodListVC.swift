@@ -25,11 +25,16 @@ class PeriodListVC: BaseViewController {
         configureView()
         connectAction()
         configureTableView()
+        
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updatePeriod()
         updateResource()
         initializeData()
     }
-
+    
     // MARK: create collectionView layout
     private func configureView() {
         view.backgroundColor = .white
@@ -106,8 +111,8 @@ class PeriodListVC: BaseViewController {
         weekday.forEach { (item) in
             
             let date = item.components(separatedBy: " ")[0]
-            let vData = dm.fetchedItem(0, date)
-            let fData = dm.fetchedItem(1, date)
+            let vData = dm.fetchedVeggies(date)
+            let fData = dm.fetchedFruits(date)
           
             if vData.count > 0 && fData.count > 0 {
                 subcategory = ["야채", "과일"]
@@ -121,7 +126,9 @@ class PeriodListVC: BaseViewController {
             periodData.arrTBCell.append(tbCellModel)
         }
         
-        self.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     lazy var stackView: UIStackView = {

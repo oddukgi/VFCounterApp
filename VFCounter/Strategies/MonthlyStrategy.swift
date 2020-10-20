@@ -155,10 +155,16 @@ public class MonthlyDateStrategy: DateStrategy {
     public func previous() {
         
         guard let minDate = privateMinimumDate else { return }
-        let stringDate = date.changeDateTime(format: .longDate)
-        
+       
         if date > minDate {
-//            print("Min Date: \(minDate)")
+
+            var firstDate = minDate.startOfMonth()
+            let map = firstDate.getMonthlyDates()
+            
+            if map.contains(date) {
+                return
+            }
+            
             date = date.lastMonth
             DateSettings.default.periodController.monthDate = date
         }

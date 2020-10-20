@@ -11,7 +11,7 @@ import UIKit
 extension UIImage {
 
     // 이미지 배경을 투명하게 바꾸는 함수
-    func imageByMakingWhiteBackgroundTransparent() -> UIImage? {
+    func changeTransparentBg() -> UIImage? {
 
          let image = UIImage(data: self.jpegData(compressionQuality: 1.0)!)!
          let rawImageRef: CGImage = image.cgImage!

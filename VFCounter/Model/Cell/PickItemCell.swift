@@ -14,7 +14,7 @@ class PickItemCell: UICollectionViewCell {
 
     static let reuseIdentifier = "PickItemCell"
 
-    lazy var veggieImage: UIImageView = {
+    lazy var itemImage: UIImageView = {
         let image = UIImage(named: "lettuce")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
@@ -40,9 +40,9 @@ class PickItemCell: UICollectionViewCell {
     var isChecked: Bool = false {
         didSet {
           if isChecked == true {
-            checkImageView.image = checkImage
+            checkImageView.image = checkImage?.changeTransparentBg()
           } else {
-            checkImageView.image = uncheckImage
+            checkImageView.image = uncheckImage?.changeTransparentBg()
           }
        }
     }
@@ -58,9 +58,9 @@ class PickItemCell: UICollectionViewCell {
     }
 
     func setLayout() {
-        contentView.addSubViews(veggieImage, lblName, checkImageView)
+        contentView.addSubViews(itemImage, lblName, checkImageView)
 
-        veggieImage.snp.makeConstraints {
+        itemImage.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(4)
             $0.leading.equalTo(contentView).offset(11)
             $0.size.equalTo(CGSize(width: 39, height: 37))
@@ -83,7 +83,7 @@ class PickItemCell: UICollectionViewCell {
 
     // data model 형성
     func set(_ image: UIImage?, _ name: String) {
-        veggieImage.image = image
+        itemImage.image = image?.changeTransparentBg()
         lblName.text = name
     }
 

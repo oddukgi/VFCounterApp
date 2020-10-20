@@ -9,6 +9,10 @@
 import UIKit
 import Charts
 
+protocol WeeklyChartDelegate: class {
+    func sendChartDate(date: Date)
+}
+
 class WeeklyChartVC: ChartBaseVC {
 
     let lblweek = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: 18))
@@ -16,6 +20,8 @@ class WeeklyChartVC: ChartBaseVC {
 
     private let dataManager = DataManager()
     private var weekday = [String]()
+    
+    weak var delegate: WeeklyChartDelegate?
 
     lazy var arrowButtons: [UIButton] = {
         var buttons = [UIButton]()
@@ -77,6 +83,9 @@ class WeeklyChartVC: ChartBaseVC {
         let data = dateStrategy.updateLabel()
         lblweek.text = data.0
         let datamap = data.2!
+        let date = datamap[0].changeDateTime(format: .longDate)
+        delegate?.sendChartDate(date: date)
+        
         setDataCount(datemap: datamap)
     }
 

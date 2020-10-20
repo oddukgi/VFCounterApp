@@ -207,7 +207,8 @@ class DayCell: JTACDayCell {
         var squaredRightHidden: Bool = true
 
         var isHidden: Bool {
-            return self.roundedLeftHidden && self.roundedRightHidden && self.squaredLeftHidden && self.squaredRightHidden
+            return self.roundedLeftHidden && self.roundedRightHidden
+                && self.squaredLeftHidden && self.squaredRightHidden
         }
 
     }

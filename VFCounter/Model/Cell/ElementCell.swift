@@ -47,7 +47,10 @@ class ElementCell: UITableViewCell, SelfConfigCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
         configureDataSource()
-        updateData()
+        
+        DispatchQueue.main.async {
+            self.updateData()
+        }
     }
    
     required init?(coder: NSCoder) {

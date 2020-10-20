@@ -43,4 +43,21 @@ class SettingManager {
     class func getInitialLaunching(keyName: String) -> Bool? {
         return userDefaults?.bool(forKey: keyName)
     }
+    
+    class func setPeriodSegment(index: Int) {
+        userDefaults?.set(index, forKey: "PeriodSegment")
+    }
+    
+    class func setDataSegment(index: Int) {
+        userDefaults?.set(index, forKey: "DataSegment")
+    }
+    
+    class func getPeriodSegment(keyName: String) -> Int? {
+        return userDefaults?.integer(forKey: "PeriodSegment")
+    }
+    
+    class func getDataSegment(keyName: String) -> Int? {
+        return userDefaults?.integer(forKey: "DataSegment")
+    }
+    
 }

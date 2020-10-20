@@ -15,10 +15,8 @@ struct TableViewCellModel {
 }
 
 struct PeriodData {
-   
     var arrTBCell: [TableViewCellModel] = []
     init() { }
-    
 }
 
 struct ItemModel {

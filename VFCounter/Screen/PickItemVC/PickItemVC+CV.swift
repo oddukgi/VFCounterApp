@@ -155,8 +155,8 @@ extension PickItemVC: UICollectionViewDelegate {
         checkedIndexPath.insert(indexPath)
         cell.isChecked = true
 
-        let name = cell.lblName.text!
-        let image = cell.veggieImage.image
+        let name = cell.lblName.text ?? ""
+        let image = cell.itemImage.image
 
         storeItems(name: name, dateTime: datemodel.date, image: image)
     }

@@ -52,19 +52,14 @@ class SizeManager {
     func sliderSize() -> (CGSize) {
 
         if DeviceTypes.isiPhone8Standard {
-            outerSliderSize = CGSize(width: 150, height: 150)
-
+            outerSliderSize = CGSize(width: 170, height: 170)
         } else if DeviceTypes.isiPhone8PlusStandard {
-
             outerSliderSize = CGSize(width: 180, height: 180)
-
         } else if DeviceTypes.isiPhoneX {
-
             outerSliderSize = CGSize(width: 190, height: 190)
-
         } else {
-            outerSliderSize = CGSize(width: 210, height: 210)
-         }
+           outerSliderSize = CGSize(width: 210, height: 210)
+        }
 
         return (outerSliderSize)
     }
@@ -92,12 +87,8 @@ class SizeManager {
 
     var getUserItemHeight: CGFloat {
 
-        if DeviceTypes.isiPhone8Standard {
+        if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX || DeviceTypes.isiPhone8PlusStandard {
             userItemHeight = 98
-        } else if DeviceTypes.isiPhone8PlusStandard {
-            return 90
-        } else if DeviceTypes.isiPhoneX {
-            return 98
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
             return 105
         } else {
@@ -162,12 +153,10 @@ class SizeManager {
             height = ScreenSize.height - 280
         } else if DeviceTypes.isiPhone8PlusStandard {
             height = ScreenSize.height - 300
-        } else if DeviceTypes.isiPhoneXsMaxAndXr {
-            height = ScreenSize.height - 400
         } else if DeviceTypes.isiPhoneX {
-            height = ScreenSize.height - 380
-        } else {
-            height = ScreenSize.height - 380
+            height = ScreenSize.height - 360
+        } else if DeviceTypes.isiPhoneXsMaxAndXr {
+            height = ScreenSize.height - 370
         }
 
         return height
@@ -210,12 +199,29 @@ class SizeManager {
         } else if DeviceTypes.isiPhoneX {
             height = ScreenSize.height - 450
         } else {
-            height = ScreenSize.height - 380
+            height = ScreenSize.height - 370
         }
 
         return height
     }
 
+    var ringViewPadding: CGFloat {
+        var height: CGFloat = 0.0
+
+        if DeviceTypes.isiPhoneSE {
+            height = 8
+        } else if DeviceTypes.isiPhone8Standard ||  DeviceTypes.isiPhone8PlusStandard {
+            height = 12
+        } else if DeviceTypes.isiPhoneXsMaxAndXr {
+            height = 25
+        } else {
+            height = 28
+        }
+
+        return height
+        
+    }
+    
     fileprivate var headerViewHeight: CGFloat
     fileprivate var circularViewHeight: CGFloat
     fileprivate var outerSliderSize: CGSize

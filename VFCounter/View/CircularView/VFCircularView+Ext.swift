@@ -15,9 +15,10 @@ extension VFCircularView {
         ringView = MainRingView()
         addSubview(ringView)
         let sliderSize = SizeManager().sliderSize()
-
+        let padding = SizeManager().ringViewPadding
+        
         ringView.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(28)
+            make.bottom.equalTo(self).offset(-padding)
             make.trailing.equalTo(self.snp.trailing).offset(-18)
             make.size.equalTo(sliderSize)
         }

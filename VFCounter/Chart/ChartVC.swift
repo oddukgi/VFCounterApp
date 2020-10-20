@@ -30,7 +30,7 @@ class ChartVC: UIViewController {
     private var valueConfig = ValueConfig()
     private var currentVC: UIViewController?
     private let datamanager = DataManager()
-    private var dateConfigure = ChartVC.DateConfigure()
+    var dateConfigure = ChartVC.DateConfigure()
     private var dateStrategy: DateStrategy!
     private var currentValue: CalendarValue? {
         didSet {
@@ -45,6 +45,8 @@ class ChartVC: UIViewController {
         removeNotification()
     }
     
+    static var firstLoading: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,10 +58,10 @@ class ChartVC: UIViewController {
         prepareNotificationAddObserver()
         configureDataFilterView()
         configure()
-       
-        displayCurrentTab(0)
-    }
+        valueChangedPeriod(to: 0)
 
+    }
+    
     func removeCurrentVC() {
         self.currentVC?.view.removeFromSuperview()
         self.currentVC?.removeFromParent()
@@ -101,6 +103,7 @@ class ChartVC: UIViewController {
             dateStrategy =  WeeklyDateStrategy(date: dateConfigure.date)
             let weeklyChartVC = WeeklyChartVC(dateStrategy: dateStrategy)
             vc = weeklyChartVC
+            weeklyChartVC.delegate = self
 
         default:
             calendarController.view.isHidden = false
@@ -113,7 +116,7 @@ class ChartVC: UIViewController {
 
     func displayCurrentTab(_ index: Int) {
         if let vc = viewControllerForSelectedIndex(index) {
-            showChildVC(vc)
+            self.showChildVC(vc)
         }
     }
 
@@ -137,7 +140,6 @@ class ChartVC: UIViewController {
     }
 
     fileprivate func checkMaxValueFromDate(date: String) {
-        let dataManager = DataManager()
         let defaultV = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
         let defaultF = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
 
@@ -150,11 +152,10 @@ class ChartVC: UIViewController {
     }
 
     fileprivate func showPickUpViewController(tag: Int) {
-
-        let datetime = dateConfigure.date.changeDateTime(format: .date)
-
-        checkMaxValueFromDate(date: datetime)
-        let datemodel = DateModel(date: datetime, tag: tag, sumV: valueConfig.sumVeggies,
+        
+        let date = getCurrentDate()
+        checkMaxValueFromDate(date: date)
+        let datemodel = DateModel(date: date, tag: tag, sumV: valueConfig.sumVeggies,
                                   sumF: valueConfig.sumFruits, maxV: valueConfig.maxVeggies,
                                   maxF: valueConfig.maxFruits)
         DispatchQueue.main.async {
@@ -172,21 +173,19 @@ class ChartVC: UIViewController {
         if periodIndex == 0 {
             dateConfigure.date = dateTime
           
-            change(to: periodIndex)
+            valueChangedPeriod(to: periodIndex)
         } else {
             dateConfigure.calendarDate = dateTime
             if dataIndex == 0 {
-                calendarController.moveToSpecificDate(date: dateConfigure.calendarDate)
+                
+                DispatchQueue.main.async {
+                    self.calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
+                }
             } else {
-                change(to: periodIndex)
+                valueChangedPeriod(to: periodIndex)
             }
         }
-        
-//        SettingManager.setDataSegmentCtrl(index: dataIndex)
-//        SettingManager.setPeriodSegmentCtrl(index: periodIndex)
-         
         displayMessage(name: name, dateTime: dateTime)
-//        print("ChartVC Date: \(dateConfigure.date),\(dateConfigure.calendarDate)")
     }
     
     func displayMessage(name: String, dateTime: Date) {
@@ -197,27 +196,24 @@ class ChartVC: UIViewController {
             self.presentAlertVC(title: "알림", message: text, buttonTitle: "OK")
         }
     }
+
 }
 
 extension ChartVC: CustomSegmentedControlDelegate {
-    func change(to index: Int) {
-
-        if datafilterView.dataSegmentControl.selectedIndex == 0 {
+    
+    func valueChangedPeriod(to index: Int) {
+        
+        var dataIndex = datafilterView.dataSegmentControl.selectedIndex
+        if dataIndex == 0 {
             removeCurrentVC()
-
-            DispatchQueue.main.async {
-                self.displayCurrentTab(index)
-            }
+            self.displayCurrentTab(index)
         } else {
             removeCurrentVC()
-            DispatchQueue.main.async {
-                self.valueChangedIndex(to: self.datafilterView.dataSegmentControl.selectedIndex)
-            }
+            self.valueChangedData(to: self.datafilterView.dataSegmentControl.selectedIndex)
         }
     }
 
-    // datafilter
-    func valueChangedIndex(to index: Int) {
+    func valueChangedData(to index: Int) {
 
         switch index {
         case 0 :
@@ -231,11 +227,12 @@ extension ChartVC: CustomSegmentedControlDelegate {
             } else {
                 
                 if dateConfigure.calendarDate > dateConfigure.date {  dateConfigure.calendarDate = Date() }
-                self.dateStrategy = MonthlyDateStrategy(date: dateConfigure.date)
+                self.dateStrategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
            }
             
             self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy))
         }
+    
     }
 }
 
@@ -266,5 +263,32 @@ extension ChartVC {
         var indexPeriod: Int = 0
         var indexData: Int = 0
         
+    }
+    
+    // synchronize date with current view
+    func getCurrentDate() -> String {
+        
+        // segment control 인덱스 가져오기 (0:주, 1:월) / (0: 데이터, 1:리스트)
+        let periodIndex = periodSegmentCtrl.selectedIndex
+      
+        switch periodIndex {
+        case 0:
+            let date = dateConfigure.date.changeDateTime(format: .date)
+            return date
+            
+        default:
+            return dateConfigure.calendarDate.changeDateTime(format: .date)
+        }
+        
+        return ""
+        
+    }
+
+}
+
+extension ChartVC: WeeklyChartDelegate {
+    
+    func sendChartDate(date: Date) {
+        dateConfigure.date = date
     }
 }

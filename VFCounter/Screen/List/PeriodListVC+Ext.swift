@@ -37,24 +37,24 @@ extension PeriodListVC {
     func displayMessage(model: ItemModel, nKind: Int, indexPath: IndexPath) {
         
         var text = ""
-        DispatchQueue.main.async {
         
-            if indexPath.section > 5 {
+            if indexPath.section > 3 {
                 self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
             }
         
             switch nKind {
             case 0:
-                text = "\(model.oldItem) 삭제완료!"
+                text = "\(model.oldItem) 삭제완료"
             case 1:
-                text = "\(model.oldItem): \(model.oldItem) -> \(model.newItem)\n 업데이트."
+                text = "\(model.oldItem) -> \(model.newItem)\n 업데이트"
             case 2:
-                text = "\(model.oldItem): \(model.oldDate) -> \(model.newDate) \n 업데이트."
+                text = "\(model.oldItem): \(model.oldDate) -> \(model.newDate) \n 업데이트"
             default:
-                text = "\(model.oldItem): \(model.newItem), \(model.newDate) \n 업데이트."
+                text = "\(model.oldItem) -> \(model.newItem), \(model.newDate) \n 업데이트"
             }
             
-            self.presentAlertVC(title: "알림", message: text, buttonTitle: "OK")
+        DispatchQueue.main.async {
+            self.presentAlertVC(title: "", message: text, buttonTitle: "OK")
         }
     }
 }
@@ -125,7 +125,9 @@ extension PeriodListVC: ElementCellProtocol {
         changeDefaultDate(date: date)
         updatePeriod()
         updateResource()
-        initializeData()
+        
+        self.initializeData()
+        
         if deletedSection { updateEmptyItem(date: model.oldDate) }
         
         if model.oldItem == model.newItem {
@@ -154,7 +156,9 @@ extension PeriodListVC: ElementCellProtocol {
     func updateDeleteItem(date: Date, model: ItemModel) {
         updatePeriod()
         updateResource()
-        initializeData()
+        DispatchQueue.main.async {
+            self.initializeData()
+        }
         tableView.reloadData()
         
         scrollToItem(date: date, model: model, nKind: 0)

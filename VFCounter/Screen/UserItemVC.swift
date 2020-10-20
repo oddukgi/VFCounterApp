@@ -32,7 +32,7 @@ class UserItemVC: UIViewController {
     var stringDate: String = ""
     var valueConfig = ValueConfig()
     private var dateView: DateView!
-
+    
     let defaultRate = 500
     
     deinit {
@@ -56,7 +56,10 @@ class UserItemVC: UIViewController {
         configureDataSource()
         configureTitleDataSource()
         checkLoadingStatus()
-        updateData()
+        
+        DispatchQueue.main.async {
+            self.updateData()
+        }
     }
 
     func setupLayout() {
@@ -130,9 +133,9 @@ extension UserItemVC {
         currentSnapshot = NSDiffableDataSourceSnapshot <Section, DataType>()
 
         var sumA = 0, sumB = 0
-        let veggieFetchedItem = dataManager.fetchedItem(0, date)
-        let fruitFetchedItem = dataManager.fetchedItem(1, date)
-
+        let veggieFetchedItem = dataManager.fetchedVeggies(date)
+        let fruitFetchedItem = dataManager.fetchedFruits(date)
+        
         for (index, item) in veggieFetchedItem.enumerated() {
 
             sumA += Int(item.amount)

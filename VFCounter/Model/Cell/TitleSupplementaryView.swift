@@ -35,7 +35,8 @@ class TitleSupplementaryView: UICollectionReusableView {
 
     lazy var btnPlus: VFButton = {
         let button = VFButton()
-        button.addImage(imageName: "plus")
+        let image = UIImage(named: "plus")?.changeTransparentBg()
+        button.setImage(image, for: .normal)
         self.addSubview(button)
         return button
     }()
@@ -66,7 +67,7 @@ class TitleSupplementaryView: UICollectionReusableView {
         btnPlus.snp.makeConstraints { make in
             make.leading.equalTo(labels.snp.trailing).offset(20)
             make.top.equalTo(self)
-            make.size.equalTo(CGSize(width: 40, height: 40))
+            make.size.equalTo(CGSize(width: 35, height: 35))
         }
 
         lblTitle.textColor = .black

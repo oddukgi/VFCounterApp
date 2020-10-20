@@ -127,13 +127,14 @@ extension UserItemVC {
     func updateData(flag: Bool = true) {
 
         currentSnapshot = NSDiffableDataSourceSnapshot <Section, DataType>()
-
+        var data: [DataType] = []
         for i in 0..<2 {
 
             let sectionTitle: Section = (i == 0 ? Section.vTitle : Section.fTitle)
             currentSnapshot.appendSections([sectionTitle])
-            let fetchedItem = dataManager.fetchedItem(i, stringDate)
-            currentSnapshot.appendItems(fetchedItem)
+            (i == 0) ? (data = dataManager.fetchedVeggies(stringDate)) : (data = dataManager.fetchedFruits(stringDate))
+    
+            currentSnapshot.appendItems(data)
         }
 
         self.dataSource.apply(self.currentSnapshot, animatingDifferences: flag)
@@ -145,6 +146,20 @@ extension UserItemVC {
         self.circularView.updateValue(veggieSum: values.0, fruitSum: values.1)
         self.valueConfig.sumVeggies = values.0
         self.valueConfig.sumFruits = values.1
+    }
+    
+    func getEntityCount(date: String, section: Int) -> Int {
+        
+        var itemCount = 0
+
+        if section == 0 {
+            itemCount = self.dataManager.fetchedVeggies(date).count
+        } else {
+            itemCount = self.dataManager.fetchedFruits(date).count
+        }
+        
+        return itemCount
+     
     }
 
     // MARK: - ContextMenu Action
@@ -161,13 +176,13 @@ extension UserItemVC: UICollectionViewDelegate {
                                  contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 
         var itemCount = 0
-        let countmap = dataManager.getEntityCount(date: stringDate)
-       
-        (indexPath.section == 0) ? (itemCount = countmap.0) : (itemCount = countmap.1)
-        
+        let section = indexPath.section
+
+        itemCount = getEntityCount(date: stringDate, section: section)
+    
         guard indexPath.item < itemCount else {
-              return nil
-          }
+            return nil
+        }
 
         guard let cell = collectionView.cellForItem(at: indexPath) as? VFItemCell else { return nil }
 
@@ -201,9 +216,10 @@ extension UserItemVC: UICollectionViewDelegate {
 
           // don't show menu for add item cell
         var itemCount = 0
-        let countmap = dataManager.getEntityCount(date: stringDate)
-        (indexPath.section == 0) ? (itemCount = countmap.0) : (itemCount = countmap.1)
- 
+        
+        let section = indexPath.section
+        itemCount = getEntityCount(date: stringDate, section: section)
+    
         guard indexPath.item < itemCount else {
             return false
         }
@@ -219,9 +235,10 @@ extension UserItemVC: UICollectionViewDelegate {
 
         // don't show menu for add item cell
         var itemCount = 0
-        let countmap = dataManager.getEntityCount(date: stringDate)
-        (indexPath.section == 0) ? (itemCount = countmap.0) : (itemCount = countmap.1)
-   
+        
+        let section = indexPath.section
+        itemCount = getEntityCount(date: stringDate, section: section)
+    
         if action == #selector(modifyTapped) && itemCount > 0 {
             return true
         } else if action == #selector(deleteTapped) && itemCount > 0 {
@@ -255,7 +272,7 @@ extension UserItemVC: PickItemVCProtocol {
         var datatype: DataType.Type!
         tag == 0 ? (datatype = Veggies.self) : (datatype = Fruits.self)
 
-        OperationQueue.main.addOperation {
+        DispatchQueue.main.async {
             self.updateData(flag: false)
         }
 
@@ -321,6 +338,7 @@ extension UserItemVC: ItemCellDelegate {
         let datemodel = DateModel(tag: index, sumV: self.valueConfig.sumVeggies,
                                   sumF: self.valueConfig.sumFruits, maxV: self.valueConfig.maxVeggies,
                                   maxF: self.valueConfig.maxFruits)
+        
         DispatchQueue.main.async {
 
             let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)

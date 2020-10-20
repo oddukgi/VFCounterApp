@@ -80,7 +80,7 @@ class VFItemCell: UICollectionViewCell {
     }
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
-        imageView.image = image?.imageByMakingWhiteBackgroundTransparent()
+        imageView.image = image?.changeTransparentBg()
 
         self.date = String(date.split(separator: " ").first!)
         let time = date.trimmingTime(start: 0, end: -11).trimmingTime(start: 5, end: -3)

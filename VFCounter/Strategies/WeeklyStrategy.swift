@@ -168,9 +168,13 @@ public class WeeklyDateStrategy: DateStrategy {
     public func previous() {
 
         guard let minDate = privateMinimumDate else { return }
-        let dateMap = date.getWeekDates()
-        // 최소 날짜까지 넘김
-        if date > minDate && dateMap.contains(date) {
+    
+        if date > minDate {
+            let datemap = minDate.getWeekDates()
+            if datemap.contains(date) {
+                return
+            }
+            
             date = self.date.aDayInLastWeek.getStartOfWeek()
         }
     }
