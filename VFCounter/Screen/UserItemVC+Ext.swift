@@ -188,13 +188,13 @@ extension UserItemVC: UICollectionViewDelegate {
 
           var actions = [UIAction]()
           if itemCount > 0 {
-              let editAction = UIAction( title: "Edit",
+              let editAction = UIAction( title: "수정",
                                          image: UIImage(named: "edit")) { [weak self] _ in
 
                 cell.modifyItem(for: indexPath.item)
               }
 
-              let deleteAction = UIAction( title: "Delete",
+              let deleteAction = UIAction( title: "삭제",
                                            image: UIImage(named: "delete")) { [weak self] _ in
                 cell.deleteItem(indexPath: indexPath)
               }
@@ -224,8 +224,8 @@ extension UserItemVC: UICollectionViewDelegate {
             return false
         }
 
-        let editItems = UIMenuItem(title: "Edit", action: #selector(modifyTapped(_:)))
-        let deleteItems = UIMenuItem(title: "Delete", action: #selector(deleteTapped(_:)))
+        let editItems = UIMenuItem(title: "수정", action: #selector(modifyTapped(_:)))
+        let deleteItems = UIMenuItem(title: "삭제", action: #selector(deleteTapped(_:)))
         UIMenuController.shared.menuItems = [editItems, deleteItems]
         return true
       }
@@ -263,7 +263,9 @@ extension UserItemVC: PickItemVCProtocol {
             stringDate = String(item.date.split(separator: " ").first!)
             dataManager.createEntity(item: item, tag: tag, valueConfig: valueConfig)
 		    updateData()
-            NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": stringDate])
+            
+            guard let date = item.entityDT else { return }
+            delegate?.updateDate(date: date, isUpdateCalendar: true)
         }
 
     }
@@ -277,9 +279,8 @@ extension UserItemVC: PickItemVCProtocol {
         }
 
         dataManager.modfiyEntity(item: item, originTime: time!, datatype)
-        let date = item.entityDT?.changeDateTime(format: .selectedDT)
-        let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
-        NotificationCenter.default.post(name: .updateDateTime, object: nil, userInfo: ["userdate": newDate[0]])
+        guard let date = item.entityDT else { return }
+        delegate?.updateDate(date: date, isUpdateCalendar: true)
     }
 
 }

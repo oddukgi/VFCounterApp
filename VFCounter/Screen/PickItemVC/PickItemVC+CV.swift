@@ -15,18 +15,20 @@ extension PickItemVC {
        stackView.addArrangedSubview(lblRemain)
        stackView.addArrangedSubview(lblTotal)
        
+       let width = (ScreenSize.width / 2) - 50
        stackView.snp.makeConstraints { make in
            make.top.equalTo(collectionView.snp.bottom).offset(15)
            make.centerX.equalTo(view.snp.centerX)
-           make.height.equalTo(66)
+           make.width.equalTo(width).priority(.low)
        }
 
+       let labelWidth = (ScreenSize.width / 2) + 80
        lblRemain.snp.makeConstraints { make in
-           make.size.equalTo(CGSize(width: 88, height: 66))
+           make.size.equalTo(CGSize(width: labelWidth, height: 30))
        }
        
        lblTotal.snp.makeConstraints { make in
-           make.size.equalTo(CGSize(width: 88, height: 66))
+           make.size.equalTo(CGSize(width: labelWidth, height: 30))
        }
        
        lblRemain.backgroundColor = ColorHex.dimmedBlack
@@ -125,7 +127,7 @@ extension PickItemVC {
     // MARK: - update text showing (remain, total)
     func updateRemainTotalText() {
 
-        let title = ["추가할 무게\n", "최대 무게\n"]
+        let title = ["추가할 무게: ", "최대 무게: "]
         var value = ""
         switch datemodel.tag {
         case 0:

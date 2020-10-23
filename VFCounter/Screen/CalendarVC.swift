@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol CalendarVCDelegate: class {
-    func updateDate(date: Date)
-}
-
 class CalendarVC: UIViewController {
 
     let containerView = VFContainerView()
@@ -40,7 +36,7 @@ class CalendarVC: UIViewController {
         let button = VFButton()
         button.setTitle("Apply", for: .normal)
         button.backgroundColor    = ColorHex.middleGreen
-        button.setFont(clr: .white, font: NanumSquareRound.extrabold.style(offset: 17))
+        button.setFont(clr: .white, font: NanumSquareRound.extrabold.style(offset: 15))
         button.layer.cornerRadius = 20
         button.addTarget(self, action: #selector(applyDate), for: .touchUpInside)
         return button
@@ -63,18 +59,27 @@ class CalendarVC: UIViewController {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubViews(containerView, calendarView, closeBtn, applyBtn)
 
+        let calendarSize = SizeManager().calendarPopupSize()
         containerView.snp.makeConstraints { (maker) in
             maker.center.equalTo(view.snp.center)
-            maker.size.equalTo(CGSize(width: 350, height: 490))
+            maker.size.equalTo(calendarSize)
         }
+        
+        containerView.layoutSubviews()
 
-        calendarView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(containerView).offset(30)
-            maker.leading.equalTo(containerView).offset(5)
-            maker.trailing.equalTo(containerView).offset(-5)
-            maker.bottom.equalTo(containerView).offset(-30)
-
+        let padding = SizeManager().miniCalendarPadding
+        
+        let newHeight = calendarSize.height - 100
+        calendarView.snp.makeConstraints { make in
+            make.top.equalTo(containerView).offset(30)
+            make.left.right.equalTo(containerView)
+            make.height.equalTo(newHeight)
         }
+        calendarView.layoutIfNeeded()
+        
+        print(calendarView.frame.size)
+        calendarView.layer.borderWidth = 1
+        calendarView.layer.borderColor = UIColor.red.cgColor
 
         closeBtn.snp.makeConstraints { (maker) in
             maker.top.equalTo(containerView).offset(10)
@@ -85,9 +90,9 @@ class CalendarVC: UIViewController {
         applyBtn.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(containerView)
             maker.bottom.equalTo(containerView).offset(-10)
-            maker.size.equalTo(CGSize(width: 70, height: 40))
+            maker.size.equalTo(CGSize(width: 70, height: 35))
         }
-
+        
         calendarController.present(above: self, contentView: calendarView)
     }
 
@@ -101,7 +106,7 @@ class CalendarVC: UIViewController {
     @objc private func cancel() {
 
         if let date = currentValue as? Date {
-            delegate?.updateDate(date: date)
+            delegate?.updateDate(date: date, isUpdateCalendar: false)
         }
         dismiss(animated: true)
     }
@@ -119,6 +124,7 @@ class CalendarVC: UIViewController {
     func moveCalendar() {
         calendarController.moveToSpecificDate(date: date!)
     }
+    
 }
 
 extension CalendarVC {

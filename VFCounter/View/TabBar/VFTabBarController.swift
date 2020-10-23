@@ -33,7 +33,7 @@ class VFTabBarController: UITabBarController {
         let chartVC = ChartVC()
         let selectedChartImg = UIImage(named: "selected chart")?.withRenderingMode(.alwaysOriginal) // select image
         let chartImg = UIImage(named: "chart")?.withRenderingMode(.alwaysOriginal)
-        chartVC.tabBarItem = UITabBarItem(title: "차트", image: chartImg, selectedImage: selectedChartImg)
+        chartVC.tabBarItem = UITabBarItem(title: "데이터", image: chartImg, selectedImage: selectedChartImg)
         chartVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
         return UINavigationController(rootViewController: chartVC)
     }

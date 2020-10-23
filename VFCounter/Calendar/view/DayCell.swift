@@ -72,9 +72,9 @@ class DayCell: JTACDayCell {
         self.dateLabel.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-
+        
         self.selectionBackgroundView.snp.makeConstraints { (maker) in
-            maker.height.equalTo(90).priority(.low)
+            maker.height.equalTo(100).priority(.low)
             maker.top.left.greaterThanOrEqualToSuperview()
             maker.right.bottom.lessThanOrEqualToSuperview()
             maker.center.equalToSuperview()
@@ -310,8 +310,8 @@ class DayCell: JTACDayCell {
 extension CalendarSettings {
 
     struct DayCell {
-
-        var dateLabelFont: UIFont = .systemFont(ofSize: 16.5)
+        
+        var dateLabelFont = UIFont.systemFont(ofSize: 16.5)
         var dateLabelColor: UIColor = .black
         var todayLabelColor: UIColor = .red
         var dateLabelUnavailableColor: UIColor = .lightGray

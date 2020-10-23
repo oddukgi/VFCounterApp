@@ -15,7 +15,7 @@ protocol WeeklyChartDelegate: class {
 
 class WeeklyChartVC: ChartBaseVC {
 
-    let lblweek = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: 18))
+    let lblweek = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: SizeManager().dateViewFontSize))
     let chartView = BarChartView()
 
     private let dataManager = DataManager()

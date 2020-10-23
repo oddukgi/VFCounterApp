@@ -11,7 +11,7 @@
 		12024F7D24F7A58000A91FDA /* WeeklyChartVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12024F7C24F7A58000A91FDA /* WeeklyChartVC+Ext.swift */; };
 		120E97FB24F8A9DD0095D765 /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E97FA24F8A9DD0095D765 /* Typealias.swift */; };
 		120E97FD24F8AA650095D765 /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120E97FC24F8AA650095D765 /* DateProvider.swift */; };
-		12143CD324CA8F800080ADFE /* DateView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143CD224CA8F800080ADFE /* DateView+Constraint.swift */; };
+		12143CD324CA8F800080ADFE /* DateView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143CD224CA8F800080ADFE /* DateView+Ext.swift */; };
 		12143CD624CA93F80080ADFE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12143CD524CA93F80080ADFE /* Constants.swift */; };
 		121666672528B74B008B7360 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121666662528B74B008B7360 /* CustomSegmentedControl.swift */; };
 		1217CE3D24DA792C00521D49 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1217CE3C24DA792C00521D49 /* SettingController.swift */; };
@@ -22,6 +22,7 @@
 		121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B197324CC198500CC6EEF /* PickItemVC.swift */; };
 		12231CAC25341F0400847885 /* MaxAmountFruitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12231CAB25341F0400847885 /* MaxAmountFruitCell.xib */; };
 		12231D08253436D300847885 /* MaxAmountVeggieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12231D07253436D300847885 /* MaxAmountVeggieCell.swift */; };
+		1224C41E2541752E004AC023 /* SizeManager+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224C41D2541752E004AC023 /* SizeManager+Ext.swift */; };
 		122625E224DA549900AC2962 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122625E124DA549900AC2962 /* SettingVC.swift */; };
 		1226FEC924E790270092BDAF /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 1226FEC824E790270092BDAF /* CoreStore */; };
 		12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */; };
@@ -70,7 +71,7 @@
 		128C14D8252432CF00AB62EE /* DateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128C14D7252432CF00AB62EE /* DateModel.swift */; };
 		1290EE5C24C6ED45008DB339 /* VFTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5B24C6ED45008DB339 /* VFTabBarController.swift */; };
 		1290EE5E24C6EDE5008DB339 /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5D24C6EDE5008DB339 /* ChartVC.swift */; };
-		1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */; };
+		1290EE6024C6F17E008DB339 /* HomeVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE5F24C6F17E008DB339 /* HomeVC+Ext.swift */; };
 		1290EE6224C6F725008DB339 /* VFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6124C6F725008DB339 /* VFButton.swift */; };
 		1290EE6424C6F91F008DB339 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6324C6F91F008DB339 /* DateView.swift */; };
 		1290EE6824C6FA14008DB339 /* VFSubTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290EE6524C6FA14008DB339 /* VFSubTitleLabel.swift */; };
@@ -158,7 +159,7 @@
 		12024F7C24F7A58000A91FDA /* WeeklyChartVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WeeklyChartVC+Ext.swift"; sourceTree = "<group>"; };
 		120E97FA24F8A9DD0095D765 /* Typealias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
 		120E97FC24F8AA650095D765 /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
-		12143CD224CA8F800080ADFE /* DateView+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateView+Constraint.swift"; sourceTree = "<group>"; };
+		12143CD224CA8F800080ADFE /* DateView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateView+Ext.swift"; sourceTree = "<group>"; };
 		12143CD524CA93F80080ADFE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		121666662528B74B008B7360 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		1217CE3C24DA792C00521D49 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		121B197324CC198500CC6EEF /* PickItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItemVC.swift; sourceTree = "<group>"; };
 		12231CAB25341F0400847885 /* MaxAmountFruitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaxAmountFruitCell.xib; sourceTree = "<group>"; };
 		12231D07253436D300847885 /* MaxAmountVeggieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxAmountVeggieCell.swift; sourceTree = "<group>"; };
+		1224C41D2541752E004AC023 /* SizeManager+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SizeManager+Ext.swift"; sourceTree = "<group>"; };
 		122625E124DA549900AC2962 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		12283B0224CFBD0200AE93E6 /* PickItemVC+CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PickItemVC+CV.swift"; sourceTree = "<group>"; };
 		12283B0424CFBDA900AE93E6 /* PickItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItems.swift; sourceTree = "<group>"; };
@@ -223,7 +225,7 @@
 		128C14D7252432CF00AB62EE /* DateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateModel.swift; sourceTree = "<group>"; };
 		1290EE5B24C6ED45008DB339 /* VFTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFTabBarController.swift; sourceTree = "<group>"; };
 		1290EE5D24C6EDE5008DB339 /* ChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVC.swift; sourceTree = "<group>"; };
-		1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Constraint.swift"; sourceTree = "<group>"; };
+		1290EE5F24C6F17E008DB339 /* HomeVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeVC+Ext.swift"; sourceTree = "<group>"; };
 		1290EE6124C6F725008DB339 /* VFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFButton.swift; sourceTree = "<group>"; };
 		1290EE6324C6F91F008DB339 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		1290EE6524C6FA14008DB339 /* VFSubTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VFSubTitleLabel.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				12143CD524CA93F80080ADFE /* Constants.swift */,
 				121A909924D18F6000AE0780 /* SelfConfigCell.swift */,
 				129C7FB924D54C4C00E5A719 /* SizeManager.swift */,
+				1224C41D2541752E004AC023 /* SizeManager+Ext.swift */,
 				12AD3BA424EB647300443803 /* SettingManager.swift */,
 				120E97FA24F8A9DD0095D765 /* Typealias.swift */,
 			);
@@ -403,7 +406,6 @@
 		124B918024CACD5D009616A7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				12231D002534367300847885 /* UserSettings */,
 				1247F5A224CECB5E00AD34F5 /* PickItemCell.swift */,
 				124B917D24CACC35009616A7 /* VFItemCell.swift */,
 				1217CE3E24DA832800521D49 /* SettingItemCell.swift */,
@@ -546,6 +548,7 @@
 		12B50CF924C6EB2200C87956 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				12231D002534367300847885 /* UserSettings */,
 				127A497B24CC152D0032194E /* PickItemVC */,
 				125918C72519DCCD0031790D /* List */,
 				123F83322530288200F751D9 /* BaseViewController.swift */,
@@ -554,7 +557,7 @@
 				12B3733B24DE498A00491FBB /* AlarmSettingVC.swift */,
 				12B3733C24DE498A00491FBB /* AlarmSettingVC+Ext.swift */,
 				126AE53D24C6C6B4000BCF7E /* HomeVC.swift */,
-				1290EE5F24C6F17E008DB339 /* HomeVC+Constraint.swift */,
+				1290EE5F24C6F17E008DB339 /* HomeVC+Ext.swift */,
 				12445D3A251F630B00330FFE /* CalendarVC.swift */,
 				122625E124DA549900AC2962 /* SettingVC.swift */,
 			);
@@ -635,13 +638,13 @@
 		12C64CFE24E0F88B00677D5A /* UIView */ = {
 			isa = PBXGroup;
 			children = (
+				1290EE6324C6F91F008DB339 /* DateView.swift */,
+				12143CD224CA8F800080ADFE /* DateView+Ext.swift */,
 				12913EB6253D2D340046D795 /* SumHeaderView.swift */,
-				12143CD224CA8F800080ADFE /* DateView+Constraint.swift */,
 				12CBCF0A24FCD9C100529535 /* UserDateTimeView.swift */,
 				12C64CF824E0F7D400677D5A /* MeasurementView.swift */,
 				12FF76E324DE8658009542FE /* VFContainerView.swift */,
 				1291B19024C983F400625BE6 /* Ring.swift */,
-				1290EE6324C6F91F008DB339 /* DateView.swift */,
 				12C64CFF24E0F8D100677D5A /* VFTextField.swift */,
 				1252A683251CD22500906E9B /* MainRingView.swift */,
 				12C58B1B251F2301001055EE /* DatePickerView.swift */,
@@ -1074,9 +1077,10 @@
 				122DF9092533F02F00303148 /* MaxAmountFruitCell.swift in Sources */,
 				1290EE5C24C6ED45008DB339 /* VFTabBarController.swift in Sources */,
 				124F561724DED284006CE413 /* CustomSlider.swift in Sources */,
-				12143CD324CA8F800080ADFE /* DateView+Constraint.swift in Sources */,
+				12143CD324CA8F800080ADFE /* DateView+Ext.swift in Sources */,
 				12024F7D24F7A58000A91FDA /* WeeklyChartVC+Ext.swift in Sources */,
 				12D4067F2513777F00DFE7FC /* DateController.swift in Sources */,
+				1224C41E2541752E004AC023 /* SizeManager+Ext.swift in Sources */,
 				1251729024F4DB91002B9927 /* WeeklyChartVC.swift in Sources */,
 				121666672528B74B008B7360 /* CustomSegmentedControl.swift in Sources */,
 				12F2EE682509C8A400D0E5FB /* CalendarSettings.swift in Sources */,
@@ -1101,7 +1105,7 @@
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
 				1289CF46253DA5F000BEF9DE /* Veggies+CoreDataClass.swift in Sources */,
 				123F83332530288200F751D9 /* BaseViewController.swift in Sources */,
-				1290EE6024C6F17E008DB339 /* HomeVC+Constraint.swift in Sources */,
+				1290EE6024C6F17E008DB339 /* HomeVC+Ext.swift in Sources */,
 				12445D3B251F630B00330FFE /* CalendarVC.swift in Sources */,
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,
 				12A0DCDD24EFC4400002F15F /* DataManager.swift in Sources */,

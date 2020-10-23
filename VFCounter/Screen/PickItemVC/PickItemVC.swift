@@ -114,9 +114,9 @@ class PickItemVC: UIViewController {
         measurementView = MeasurementView(tag: datemodel.tag)
         view.addSubview(measurementView)
         measurementView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(45)
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(70)
+            make.height.equalTo(50)
         }
     }
 
@@ -130,7 +130,7 @@ class PickItemVC: UIViewController {
         
         _ = (view.bounds.height / 2) - SizeManager().veggiePickCVHeight
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(measurementView.snp.bottom).offset(10)
+            $0.top.equalTo(measurementView.snp.bottom).offset(8)
             $0.leading.trailing.equalTo(view)
             $0.height.equalTo(100)
         }
@@ -149,15 +149,16 @@ class PickItemVC: UIViewController {
         userDTView.delegate = self
         view.addSubViews(userDTView, btnAdd)
        
+        let dateViewHeight = SizeManager().dateViewHeight
+        print(dateViewHeight)
         userDTView.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(20)
-            make.leading.equalTo(view).offset(20)
-            make.trailing.equalTo(view).offset(-20)
-            make.height.equalTo(120)
+            make.top.equalTo(stackView.snp.bottom).offset(15)
+            make.left.right.equalTo(view).inset(10)
+            make.height.equalTo(dateViewHeight)
         }
         
         btnAdd.snp.makeConstraints { make in
-            make.top.equalTo(userDTView.snp.bottom).offset(25)
+            make.top.equalTo(userDTView.snp.bottom).offset(15)
             make.centerX.equalTo(view.snp.centerX)
             make.size.equalTo(CGSize(width: 58, height: 38))
         }
@@ -290,10 +291,10 @@ class PickItemVC: UIViewController {
     
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
+        stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.alignment = .center
-        stackView.spacing = 12
+        stackView.spacing = 8
         return stackView
     }()
     

@@ -41,10 +41,12 @@ class VFItemCell: UICollectionViewCell {
         contentView.addSubViews(imageView, lblTime, lblName, lblAmount)
 
         imageView.contentMode = .scaleAspectFit
+        
+        let imgSize = SizeManager().itemImgSize()
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView).offset(3)
             make.centerX.equalTo(contentView.snp.centerX)
-            make.size.equalTo(CGSize(width: 39, height: 37))
+            make.size.equalTo(imgSize)
         }
 
         lblTime.snp.makeConstraints { make in
@@ -59,10 +61,10 @@ class VFItemCell: UICollectionViewCell {
         }
 
         lblAmount.snp.makeConstraints { make in
-           make.top.equalTo(lblName.snp.bottom).offset(1.2)
-           make.centerX.equalTo(contentView.snp.centerX)
-           make.width.equalTo(50)
-           make.height.equalTo(18)
+            make.top.equalTo(lblName.snp.bottom).offset(0.2)
+            make.centerX.equalTo(contentView.snp.centerX)
+            make.width.equalTo(50)
+            make.height.equalTo(18)
         }
 
         lblTime.textColor = .black

@@ -27,6 +27,7 @@ class HomeVC: UIViewController {
     deinit {
         removeNotification()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -44,14 +45,10 @@ class HomeVC: UIViewController {
     }
 
     // MARK: - notificationCenter
-    fileprivate func prepareNotificationAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)),
-                                               name: .updateDateTime, object: nil)
-    }
-    
-    func removeNotification() {
-        NotificationCenter.default.removeObserver(self, name: .updateDateTime, object: nil)
-    }
+     fileprivate func prepareNotificationAddObserver() {
+         NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)),
+                                                name: .updateDateTime, object: nil)
+     }
     // MARK: action
     @objc fileprivate func updateDateTime(_ notification: Notification) {
 
@@ -59,7 +56,11 @@ class HomeVC: UIViewController {
             dateView.updateDate(userdate: userDate)
         }
     }
-
+    
+    func removeNotification() {
+        NotificationCenter.default.removeObserver(self, name: .updateDateTime, object: nil)
+    }
+    
     @objc func dateLabelTapped(_ sender: UITapGestureRecognizer) {
         var dateTxt = dateView.dateLabel.text!
         var shortDate = String(dateTxt.split(separator: " ").first!)
@@ -83,8 +84,14 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: CalendarVCDelegate {
-    func updateDate(date: Date) {
-        let date = date.changeDateTime(format: .date)
-        dateView.updateDate(userdate: date)
+    func updateDate(date: Date, isUpdateCalendar: Bool) {
+        let newDate = date.changeDateTime(format: .date)
+        dateView.updateDate(userdate: newDate)
+        
+        if isUpdateCalendar {
+            // notification
+            NotificationCenter.default.post(name: .selectDateCalendar, object: nil, userInfo: ["selectdate": date])
+        }
+        
     }
 }

@@ -20,9 +20,9 @@ JTACMonthViewDataSource {
         monthView.backgroundColor = self.appearance.backgroundColor
         monthView.ibCalendarDelegate = self
         monthView.ibCalendarDataSource = self
-        monthView.minimumLineSpacing  = 0.5
-        monthView.minimumInteritemSpacing = 0.5
-        monthView.cellSize = 48
+        monthView.minimumLineSpacing  = 2
+        monthView.minimumInteritemSpacing = 0
+        monthView.cellSize = SizeManager().calendarItemSize
         monthView.allowsMultipleSelection = false
         monthView.allowsRangedSelection = false
         monthView.contentInsetAdjustmentBehavior = .always
@@ -38,9 +38,9 @@ JTACMonthViewDataSource {
         let view = MonthSelectView<Value>(settings: self.setting.monthSelectView)
         view.delegate = self
         self.calendarView.visibleDates { (segment) in
-//            UIView.performWithoutAnimation {
+            UIView.performWithoutAnimation {
                 self.calendarView.reloadItems(at: (segment.outdates + segment.indates).map({ $0.indexPath }))
-//            }
+            }
         }
         return view
 
@@ -160,7 +160,11 @@ JTACMonthViewDataSource {
 
         viewController.addChild(self)
         self.didMove(toParent: self)
+        
+        let width = contentView.frame.width
+        let height = contentView.frame.height
         self.view.frame = contentView.bounds
+        
         contentView.addSubview(self.view)
     }
 
@@ -171,6 +175,11 @@ JTACMonthViewDataSource {
         self.value = date as? Value
         self.selectValue(self.value, in: self.calendarView)
       
+    }
+    
+    func refreshCalendar(date: Date) {
+        self.value = date as? Value
+        self.selectValue(self.value, in: self.calendarView)
     }
 
     // MARK: - Configure
@@ -187,38 +196,28 @@ JTACMonthViewDataSource {
     private func configureConstraints() {
 
         var screenWidth: CGFloat = 0.0
-        var height: CGFloat = 0.0
-        var width: CGFloat = 0.0
-
-        if isRingVisible {
-            height = SizeManager().calendarHeight
-            width = SizeManager().calendarWidth
-        } else {
-            height = 280
-            width = SizeManager().miniCalendarWidth
-        }
 
         currentValueView.snp.makeConstraints { (maker) in
             maker.top.equalTo(view).offset(6)
-            maker.centerX.equalTo(view.snp.centerX)
-            maker.width.equalTo(180)
-            maker.height.equalTo(40)
+            maker.left.right.equalToSuperview().inset(8)
         }
+
+        let newWidth = view.frame.width
 
         weekdayView.snp.makeConstraints { (maker) in
             maker.top.equalTo(currentValueView.snp.bottom).offset(35)
-            maker.centerX.equalTo(view.snp.centerX)
-            maker.width.equalTo(width)
+            maker.left.right.equalToSuperview().inset(10)
         }
 
+        let padding = SizeManager().calendarItemPadding
         calendarView.snp.makeConstraints { (maker) in
             maker.top.equalTo(weekdayView.snp.bottom).offset(9)
-            maker.centerX.equalTo(view.snp.centerX)
-            maker.width.equalTo(width)
-            maker.height.equalTo(height)
-
+            maker.left.right.equalToSuperview().inset(padding)
+            maker.bottom.equalToSuperview()
         }
-
+        
+        calendarView.layer.borderWidth = 1
+        calendarView.layer.borderColor = UIColor.blue.cgColor
     }
 
     private func configureInitialState() {
@@ -281,7 +280,7 @@ JTACMonthViewDataSource {
 
         let veggieSum = Float(veggie)! * veggieMaxRate
         let fruitSum = Float(fruit)! * fruitMaxRate
-        currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.up)), fruitSum: Int(fruitSum.rounded(.up)))
+        currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.towardZero)), fruitSum: Int(fruitSum.rounded(.towardZero)))
         
     }
 

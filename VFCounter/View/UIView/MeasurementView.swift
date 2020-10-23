@@ -69,12 +69,6 @@ class MeasurementView: UIView {
 
     func setSlider() {
 
-        let width = ScreenSize.width
-        let btnWidt: CGFloat = 25
-        let padding: CGFloat = (btnWidt * 2.0) + CGFloat(25)
-
-        sliderWidth = width - padding
-
         let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
         let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
 
@@ -101,23 +95,22 @@ class MeasurementView: UIView {
 
         labelStackView.addArrangedSubview(gramTF)
         labelStackView.addArrangedSubview(lblUnit)
-
+    
         labelStackView.snp.makeConstraints { make in
-              make.top.equalTo(self).offset(20)
-              make.leading.equalTo(self).offset(36)
-              make.width.equalTo(105)
-              make.height.equalTo(30)
-          }
-
+            make.top.equalTo(self).offset(10)
+            make.leading.equalTo(self).offset(15)
+            make.width.equalTo(100).priority(.high)
+            make.height.equalTo(30)
+        }
+        
         slider.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(20)
+            make.top.equalTo(self).offset(10)
             make.leading.equalTo(labelStackView.snp.trailing).offset(18)
-            make.width.equalTo(180)
+            make.trailing.greaterThanOrEqualTo(self).offset(-15)
             make.height.equalTo(30)
 
         }
         gramTF.text = "\(Int(slider.value))"
-
     }
 
     func checkAmountTF(text: String) {

@@ -22,7 +22,7 @@ extension VFCircularView {
             make.trailing.equalTo(self.snp.trailing).offset(-18)
             make.size.equalTo(sliderSize)
         }
-
+   
         for _ in 0 ..< 2 {
             let stackview          = UIStackView()
             stackview.axis         = .horizontal
@@ -42,13 +42,13 @@ extension VFCircularView {
         horizontalStackView[1].addArrangedSubview(lbFruits)
         addSubViews(horizontalStackView[1], totFruitLabel)
 
+        let legendPadding = SizeManager().legendPadding
         horizontalStackView[1].snp.makeConstraints { make in
-            make.top.equalTo(self).offset(110)
+            make.top.equalTo(self).offset(legendPadding)
             make.leading.equalTo(self).offset(18)
             make.height.equalTo(20)
 
         }
-        
         horizontalStackView[0].snp.makeConstraints { make in
             make.top.equalTo(horizontalStackView[1].snp.top).offset(-60)
             make.leading.equalTo(self).offset(18)

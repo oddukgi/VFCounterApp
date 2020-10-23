@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol CalendarVCDelegate: class {
+    func updateDate(date: Date, isUpdateCalendar: Bool)
+}
+
 struct DateModel {
     var date: String
     var tag: Int

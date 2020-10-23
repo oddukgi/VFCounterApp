@@ -76,7 +76,7 @@ extension ElementCell: UICollectionViewDelegate {
         
         if itemCount > 0 {
             
-            let editAction = UIAction( title: "Edit", image: UIImage(named: "edit")) { [weak self] _ in
+            let editAction = UIAction( title: "수정", image: UIImage(named: "edit")) { [weak self] _ in
 
                 guard let self = self, let parentVC = self.parentVC else { return }
                 let section = parentVC.tableSection
@@ -87,7 +87,7 @@ extension ElementCell: UICollectionViewDelegate {
                 }
             }
 
-            let deleteAction = UIAction( title: "Delete",
+            let deleteAction = UIAction( title: "삭제",
                                          image: UIImage(named: "delete")) { [weak self] _ in
                 guard let self = self, let parentVC = self.parentVC else { return }
                 let section = parentVC.tableSection
@@ -113,8 +113,8 @@ extension ElementCell: UICollectionViewDelegate {
         let itemCount = data.count
         guard itemCount > 0 else { return false }
         
-        let editItems = UIMenuItem(title: "Edit", action: #selector(modifyTapped(_:)))
-        let deleteItems = UIMenuItem(title: "Delete", action: #selector(deleteTapped(_:)))
+        let editItems = UIMenuItem(title: "수정", action: #selector(modifyTapped(_:)))
+        let deleteItems = UIMenuItem(title: "삭제", action: #selector(deleteTapped(_:)))
         UIMenuController.shared.menuItems = [editItems, deleteItems]
         
         return true

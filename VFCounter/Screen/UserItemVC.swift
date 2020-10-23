@@ -33,13 +33,16 @@ class UserItemVC: UIViewController {
     var valueConfig = ValueConfig()
     private var dateView: DateView!
     
+    weak var delegate: CalendarVCDelegate?
+    
     let defaultRate = 500
     
     deinit {
         removeNotification()
     }
-    init(date: String) {
+    init(delegate: CalendarVCDelegate?, date: String) {
         super.init(nibName: nil, bundle: nil)
+        self.delegate = delegate
         self.stringDate = date
 
     }
@@ -68,12 +71,11 @@ class UserItemVC: UIViewController {
 
         height = SizeManager().circularViewHeight(view: view)
         let padding = height + 150
-        let newHeight = height - 20
         
         circularView.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.bottom).offset(-padding)
             make.leading.trailing.equalTo(view)
-            make.height.equalTo(newHeight + 20)
+            make.height.equalTo(height + 30)
         }
     }
 

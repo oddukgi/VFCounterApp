@@ -85,6 +85,10 @@ class TitleSupplementaryView: UICollectionReusableView {
 
     @objc func displayItems( sender: VFButton) {
         delegate?.showPickUpViewController(tag: sender.tag)
+        
+        // haptic feedback with UIFeedbackGenerator
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
     }
 
 }

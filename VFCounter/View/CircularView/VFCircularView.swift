@@ -14,14 +14,14 @@ class VFCircularView: UIView {
 
     // circle
     lazy var veggieCircle: Ring = {
-        let view = Ring(frame: CGRect(x: 0, y: 0, width: 13, height: 13))
+        let view = Ring(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         view.mainColor = RingColor.ringGreen
         view.ringColor = RingColor.ringGreen
         return view
     }()
 
     lazy var fruitsCircle: Ring = {
-        let view = Ring(frame: CGRect(x: 0, y: 0, width: 13, height: 13))
+        let view = Ring(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         view.mainColor = RingColor.ringYellow
         view.ringColor = RingColor.ringYellow
         return view
@@ -49,7 +49,7 @@ class VFCircularView: UIView {
     // value
     lazy var totVeggieLabel: VFBodyLabel = {
         let lbl = VFBodyLabel(textAlignment: .center,
-                              font: NanumSquareRound.bold.style(offset: 14),
+                              font: NanumSquareRound.bold.style(offset: 13),
                               fontColor: .black)
         lbl.text = " g"
         lbl.numberOfLines = 0
@@ -58,7 +58,7 @@ class VFCircularView: UIView {
 
     lazy var totFruitLabel: VFBodyLabel = {
         let lbl = VFBodyLabel(textAlignment: .center,
-                              font: NanumSquareRound.bold.style(offset: 14),
+                              font: NanumSquareRound.bold.style(offset: 13),
                               fontColor: .black)
         lbl.text = " g"
         lbl.numberOfLines = 0

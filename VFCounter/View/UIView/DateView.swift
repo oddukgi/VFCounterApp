@@ -16,7 +16,7 @@ class DateView: UIView {
  
     var horizontalView: [UIStackView] = []
     let dateLabel = VFTitleLabel(textAlignment: .center,
-                                 font: NanumSquareRound.bold.style(offset: 17))
+                                 font: NanumSquareRound.bold.style(offset: SizeManager().dateViewFontSize))
 
     private var date = Date()
     private var startDate: Date?

@@ -152,6 +152,6 @@ class PeriodListVC: BaseViewController {
         return buttons
     }()
 
-    let lblPeriod = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: 18))
+    let lblPeriod = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: SizeManager().dateViewFontSize))
 
 }

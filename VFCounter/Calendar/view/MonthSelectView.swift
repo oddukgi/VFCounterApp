@@ -118,6 +118,10 @@ class MonthSelectView<Value: CalendarValue>: UIView {
         lblAmount.font = setting.amountFont
         arrowButtons[0].addTarget(self, action: #selector(previous(_:)), for: .touchUpInside)
         arrowButtons[1].addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
+        
+        self.snp.makeConstraints { maker in
+            maker.height.equalTo(self.setting.height)
+        }
     }
 
     func updateMonth() {
@@ -156,5 +160,6 @@ extension CalendarSettings {
         var currentDate = Date()
         var monthFont: UIFont = .systemFont(ofSize: 14, weight: .bold)
         var amountFont: UIFont = .systemFont(ofSize: 13, weight: .medium)
+        let height: CGFloat = 40
     }
 }

@@ -55,16 +55,24 @@ class CustomSegmentedControl: UIView {
     convenience init(frame: CGRect, buttonTitle: [String]) {
         self.init(frame: frame)
         self.buttonTitles = buttonTitle
+
     }
 
     override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        self.backgroundColor = UIColor.white
-        updateView()
-    }
-
+          super.draw(rect)
+          self.backgroundColor = UIColor.white
+        
+        let periodIndex = SettingManager.getPeriodSegment(keyName: "PeriodSegment")
+        let dataIndex = SettingManager.getDataSegment(keyName: "DataSegment")
+        
+        if periodIndex == dataIndex {
+          updateView()
+        }
+      }
+    
     func setButtonTitles(buttonTitles: [String]) {
         self.buttonTitles = buttonTitles
+        
         self.updateView()
     }
 
@@ -74,8 +82,16 @@ class CustomSegmentedControl: UIView {
         selectedIndex = index
         button.setTitleColor(selectorTextColor, for: .normal)
         let selectorPosition = frame.width / CGFloat(buttonTitles.count) * CGFloat(index)
-        UIView.animate(withDuration: 0.1) {
+        UIView.animate(withDuration: 0.2) {
             self.selectorView.frame.origin.x = selectorPosition
+        }
+        
+        if resourceType == .timeSection {
+            delegate?.valueChangedPeriod(to: selectedIndex)
+            SettingManager.setPeriodSegment(index: selectedIndex)
+        } else {
+            delegate?.valueChangedData(to: selectedIndex)
+            SettingManager.setDataSegment(index: selectedIndex)
         }
         
     }
@@ -90,11 +106,13 @@ class CustomSegmentedControl: UIView {
 
                 if resourceType == .timeSection {
                     delegate?.valueChangedPeriod(to: selectedIndex)
+                    SettingManager.setPeriodSegment(index: selectedIndex)
                 } else {
                     delegate?.valueChangedData(to: selectedIndex)
+                    SettingManager.setDataSegment(index: selectedIndex)
                 }
 
-                UIView.animate(withDuration: 0.12) {
+                UIView.animate(withDuration: 0.2) {
                     self.selectorView.frame.origin.x = selectorPosition
                 }
                 

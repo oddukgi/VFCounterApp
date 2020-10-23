@@ -64,7 +64,7 @@ enum UIHelper {
             section.orthogonalScrollingBehavior = .continuous
             
             if isPaddingForSection {
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
+                section.contentInsets = SizeManager().getSectionEdgeInsects()
             } else {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
             }
