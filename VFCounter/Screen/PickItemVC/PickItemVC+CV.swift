@@ -15,7 +15,7 @@ extension PickItemVC {
        stackView.addArrangedSubview(lblRemain)
        stackView.addArrangedSubview(lblTotal)
        
-       let width = (ScreenSize.width / 2) - 50
+       let width = (ScreenSize.width / 2) - 80
        stackView.snp.makeConstraints { make in
            make.top.equalTo(collectionView.snp.bottom).offset(15)
            make.centerX.equalTo(view.snp.centerX)
@@ -165,13 +165,13 @@ extension PickItemVC: UICollectionViewDelegate {
 }
 
 extension PickItemVC: UserDateTimeDelegate {
+
     func updateMaxAmount(date: Date) {
         let dt = date.changeDateTime(format: .date)
         checkMaxValueFromDate(date: dt)
         updateRemainTotalText()
-
+        
         NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["veggieAmount": datemodel.maxV])
-
         NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["fruitAmount": datemodel.maxF])
     }
 }

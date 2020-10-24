@@ -13,7 +13,7 @@ import UIKit
 class SizeManager {
 
     init() {
-        circularViewHeight = 0
+    
         outerSliderSize = CGSize()
         insideSliderSize = CGSize()
         userItemSection = 0
@@ -23,24 +23,33 @@ class SizeManager {
 
     }
     var getHeaderviewHeight: CGFloat {
-        return 110
+        
+        var height: CGFloat = 0
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            height = 80
+        } else {
+            height = 100
+        }
+        
+        return height
     }
 
-    func circularViewHeight(view: UIView) -> CGFloat {
+    var circularViewHeight: CGFloat {
 
-        let halfSize = (view.frame.height / 2)
-        
-        if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneSE {
-            circularViewHeight = halfSize - 160
+        var halfSize: CGFloat = ScreenSize.height / 2
+        var height: CGFloat = 0
+    
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            height = halfSize - 120
         } else if DeviceTypes.isiPhone8PlusStandard {
-            circularViewHeight = halfSize - 150
+            height = halfSize - 140
         } else if DeviceTypes.isiPhoneX {
-            circularViewHeight = halfSize - 170
+            height = halfSize - 160
         } else {
-            circularViewHeight = halfSize - 180
+            height = halfSize - 180
         }
 
-        return circularViewHeight
+        return height
     }
 
     func sliderSize() -> (CGSize) {
@@ -49,14 +58,10 @@ class SizeManager {
             outerSliderSize = CGSize(width: 140, height: 140)
         } else if DeviceTypes.isiPhone8Standard {
             outerSliderSize = CGSize(width: 170, height: 170)
-        } else if DeviceTypes.isiPhone8PlusStandard {
-            outerSliderSize = CGSize(width: 180, height: 180)
-        } else if DeviceTypes.isiPhoneX {
+        } else if DeviceTypes.isiPhone8PlusStandard || DeviceTypes.isiPhoneX {
             outerSliderSize = CGSize(width: 190, height: 190)
-        } else if DeviceTypes.isiPhoneXsMaxAndXr {
+        } else if DeviceTypes.isiPhoneXsMaxAndXr || DeviceTypes.isiPhone12Pro {
            outerSliderSize = CGSize(width: 210, height: 210)
-        } else if DeviceTypes.isiPhone12Pro {
-            outerSliderSize = CGSize(width: 210, height: 210)
         } else if DeviceTypes.isiPhone12ProMax {  //92
             outerSliderSize = CGSize(width: 230, height: 230)
         }
@@ -69,23 +74,15 @@ class SizeManager {
         
         if DeviceTypes.isiPhoneSE {
             width = 13
-        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhone8PlusStandard {
+        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
             width = 15
+        } else if DeviceTypes.isiPhone8PlusStandard {
+            width = 17
         } else {
             width = 18
         }
 
         return width
-    }
-
-    var itemTopPaddingCV: CGFloat {
-        if DeviceTypes.isiPhone8Standard {
-            itemTopPadding = 5
-        } else {
-            itemTopPadding = 5
-        }
-
-        return itemTopPadding
     }
 
     var getUserItemHeight: CGFloat {
@@ -101,35 +98,8 @@ class SizeManager {
         return userItemHeight
     }
     
-    var getUserItemHeightM: CGFloat {
-    
-        if  DeviceTypes.isiPhone8Standard,
-            DeviceTypes.isiPhone8PlusStandard,
-            DeviceTypes.isiPhoneX {
-            userItemHeight = 98
-        } else {
-            userItemHeight = 105
-        }
-        
-        return userItemHeight
-    }
     var veggiePickCVHeight: CGFloat {
         return  DeviceTypes.isiPhone8Standard ? 190 : 130
-    }
-
-    var paddingForRulerView: CGFloat {
-
-        if DeviceTypes.isiPhone8Standard {
-           return -170
-        } else if DeviceTypes.isiPhone8PlusStandard {
-            return -200
-        } else if DeviceTypes.isiPhoneX {
-            return -180
-        } else if DeviceTypes.isiPhoneXsMaxAndXr {
-            return -230
-        } else {
-            return -230
-        }
     }
 
     var pickItemVCPadding: CGFloat {
@@ -150,14 +120,12 @@ class SizeManager {
     var chartHeight: CGFloat {
 
         var height: CGFloat = 0.0
-        if DeviceTypes.isiPhone8Standard {
-            height = ScreenSize.height - 180
-        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneSE {
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
             height = ScreenSize.height - 280  //387
         } else if DeviceTypes.isiPhone8PlusStandard {
-            height = ScreenSize.height - 300
+            height = ScreenSize.height - 290
         } else if DeviceTypes.isiPhoneX {
-            height = ScreenSize.height - 360
+            height = ScreenSize.height - 340
         } else if DeviceTypes.isiPhoneXsMaxAndXr {
             height = ScreenSize.height - 370
        } else if DeviceTypes.isiPhone12Pro {
@@ -168,53 +136,13 @@ class SizeManager {
 
         return height
     }
-    var calendarWidth: CGFloat {
-
-        var screenWidth: CGFloat = 0.0
-        if DeviceTypes.isiPhoneSE {
-            screenWidth = ScreenSize.width - 10
-        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
-            screenWidth = ScreenSize.width - 39 //336
-        } else if DeviceTypes.isiPhoneXsMaxAndXr || DeviceTypes.isiPhone8PlusStandard {
-            screenWidth = ScreenSize.width - 78
-        } else if DeviceTypes.isiPhone12Pro {
-            screenWidth = ScreenSize.width - 54
-        } else if DeviceTypes.isiPhone12ProMax {  //92
-            screenWidth = ScreenSize.width - 92
-        }
-
-        return screenWidth
-    }
-    
-    var calendarHeight: CGFloat {
-
-        var height: CGFloat = 0.0
-        
-        if DeviceTypes.isiPhoneSE {
-            height = ScreenSize.height - 350
-        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhone8PlusStandard {
-            height = ScreenSize.height - 400
-        } else if DeviceTypes.isiPhoneX {
-            height = ScreenSize.height - 480
-        } else if DeviceTypes.isiPhoneXsMaxAndXr {
-            height = ScreenSize.height - 500
-        } else if DeviceTypes.isiPhone12Pro {
-            height = ScreenSize.height - 522
-        } else if DeviceTypes.isiPhone12ProMax {
-            height = ScreenSize.height - 540
-        } else {
-            height = ScreenSize.height - 360
-        }
-
-        return height
-    }
-
+   
     var ringViewPadding: CGFloat {
         var height: CGFloat = 0.0
 
         if DeviceTypes.isiPhoneSE {
             height = 8
-        } else if DeviceTypes.isiPhone8Standard ||  DeviceTypes.isiPhone8PlusStandard {
+        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhone8PlusStandard {
             height = 12
         } else if DeviceTypes.isiPhoneX {
             height = 16
@@ -267,72 +195,18 @@ class SizeManager {
         return padding
     }
     
-// MARK: Calendar Size
-    func calendarPopupSize() -> (CGSize) {
-
-        var calendarSize: CGSize = CGSize()
-        
-        if DeviceTypes.isiPhoneSE {
-            calendarSize = CGSize(width: 320, height: 420)
-        } else {
-            calendarSize = CGSize(width: 340, height: 420)
-        }
-
-        return (calendarSize)
-    }
-    
-    var miniCalendarWidth: CGFloat {
-
-        var screenWidth: CGFloat = 0.0
-        
-        if DeviceTypes.isiPhoneSE {
-            screenWidth = ScreenSize.width - 28
-        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
-            screenWidth = ScreenSize.width - 39
-        } else {
-            screenWidth = ScreenSize.width - 78
-        }
-
-        return screenWidth
-    }
-    
-    var miniCalendarHeight: CGFloat {
-        
-        var height: CGFloat = 0.0
-        
-        if DeviceTypes.isiPhoneSE {
-            height = 250
-        } else {
-            height = 280
-        }
-        return height
-    }
-    
-    var miniCalendarPadding: CGFloat {
+    var bottomLegendPadding: CGFloat {
         var padding: CGFloat = 0.0
         
         if DeviceTypes.isiPhoneSE {
-            padding = 5
+            padding = 50
         } else {
-            padding = 5
-        }
-        
-        return padding
-    }
-    
-    var legendPadding: CGFloat {
-        var padding: CGFloat = 0.0
-        
-        if DeviceTypes.isiPhoneSE {
             padding = 60
-        } else {
-            padding = 110
         }
         
         return padding
     }
 
-    fileprivate var circularViewHeight: CGFloat
     fileprivate var outerSliderSize: CGSize
     fileprivate var insideSliderSize: CGSize
     fileprivate var userItemSection: CGFloat

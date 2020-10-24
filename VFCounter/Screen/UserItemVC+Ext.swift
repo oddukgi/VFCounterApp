@@ -60,11 +60,11 @@ extension UserItemVC {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind, isPaddingForSection: true))
         collectionView.backgroundColor = ColorHex.iceBlue
         view.addSubview(collectionView)
-
+     
+        let height = circularView.frame.height
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(circularView.snp.bottom)
-            make.width.equalTo(view.frame.width)
-            make.bottom.equalTo(view)
+            make.left.right.bottom.equalToSuperview()
         }
 
         collectionView.delegate = self
@@ -79,8 +79,7 @@ extension UserItemVC {
         dataSource = UICollectionViewDiffableDataSource<Section, DataType>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath,
             data: DataType) -> UICollectionViewCell? in
-
-            // Get a cell of the desired kind.
+            
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: VFItemCell.reuseIdentifier,
                 for: indexPath) as? VFItemCell

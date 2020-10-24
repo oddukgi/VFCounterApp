@@ -22,15 +22,15 @@ class UserItemVC: UIViewController {
     }
 
     let circularView = VFCircularView()
-    var collectionView: UICollectionView! = nil
-
-    var dataSource: UICollectionViewDiffableDataSource<Section, DataType>! = nil
-    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, DataType>! = nil
     let titleElementKind = "titleElementKind"
-    var height: CGFloat = 0
     let dataManager = DataManager()
+
+    var height: CGFloat = 0
     var stringDate: String = ""
     var valueConfig = ValueConfig()
+    var collectionView: UICollectionView! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section, DataType>! = nil
+    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, DataType>! = nil
     private var dateView: DateView!
     
     weak var delegate: CalendarVCDelegate?
@@ -69,13 +69,11 @@ class UserItemVC: UIViewController {
 
         view.addSubview(circularView)
 
-        height = SizeManager().circularViewHeight(view: view)
-        let padding = height + 150
-        
+        let height = SizeManager().circularViewHeight
+    
         circularView.snp.makeConstraints { make in
-            make.bottom.equalTo(view.snp.bottom).offset(-padding)
-            make.leading.trailing.equalTo(view)
-            make.height.equalTo(height + 30)
+            make.top.left.right.equalToSuperview()
+            make.height.equalTo(height)
         }
     }
 

@@ -78,7 +78,6 @@ class VFItemCell: UICollectionViewCell {
         lblTime.textAlignment = .center
         lblName.textAlignment = .center
         lblAmount.textAlignment = .center
-
     }
 
     func updateContents(image: UIImage?, name: String, amount: Int, date: String) {
@@ -114,6 +113,9 @@ class VFItemCell: UICollectionViewCell {
     }
 
     func deleteItem(indexPath: IndexPath) {
-        delegate?.presentSelectedAlertVC(indexPath: indexPath, selectedDate: "")
+    
+        DispatchQueue.main.async {
+            self.delegate?.presentSelectedAlertVC(indexPath: indexPath, selectedDate: "")
+        }
     }
 }

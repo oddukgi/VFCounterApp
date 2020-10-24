@@ -22,12 +22,13 @@ extension DateView {
         let centerX = UIScreen.main.bounds.width / 2
         let leftPadding = (centerX / 2) + 20
 
-        btnLeftArrow = VFButton(frame: CGRect(x: 0, y: 0, width: 50, height: 48))
+        btnLeftArrow = VFButton(frame: CGRect(x: 0, y: 0, width: 48, height: 44))
         btnLeftArrow.setLeftTriangle()
-        btnRightArrow = VFButton(frame: CGRect(x: 0, y: 0, width: 50, height: 48))
+        btnRightArrow = VFButton(frame: CGRect(x: 0, y: 0, width: 48, height: 44))
         btnRightArrow.setRightTriangle()
 
         self.addSubViews(horizontalView[0], dateLabel)
+        
         horizontalView[0].addArrangedSubview(btnLeftArrow)
         horizontalView[0].addArrangedSubview(btnRightArrow)
         horizontalView[0].spacing = 135
@@ -36,7 +37,7 @@ extension DateView {
         horizontalView[0].snp.makeConstraints { make in
             make.top.equalTo(self).offset(padding)
             make.centerX.equalTo(self).offset(5)
-            make.height.equalTo(48)
+            make.height.equalTo(44)
         }
 
         dateLabel.snp.makeConstraints { make in
@@ -44,6 +45,7 @@ extension DateView {
             make.leading.equalTo(btnLeftArrow.snp.trailing)
             make.width.equalTo(135)
         }
+
 	}
 
 }

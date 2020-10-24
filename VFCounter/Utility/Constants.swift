@@ -32,8 +32,6 @@ enum DeviceTypes {
     static let isiPhone8PlusZoomed      = idiom == .phone && ScreenSize.maxLength == 736.0 && nativeScale < scale
     static let isiPhoneX                = idiom == .phone && ScreenSize.maxLength == 812.0
     static let isiPhoneXsMaxAndXr       = idiom == .phone && ScreenSize.maxLength == 896.0
-    
-    static let isiPhone12Mini           = idiom == .phone && ScreenSize.maxLength == 812.0
     static let isiPhone12               = idiom == .phone && ScreenSize.maxLength == 844.0
     static let isiPhone12Pro            = idiom == .phone && ScreenSize.maxLength == 844.0
     static let isiPhone12ProMax         = idiom == .phone && ScreenSize.maxLength == 926.0

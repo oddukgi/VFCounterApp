@@ -11,21 +11,15 @@ import UIKit
 class PeriodListVC: BaseViewController {
 
     var tableView: UITableView!
-    var weekday = [String]()
-    var datemaps = [String]()
+
     private let reuseIdentifer = "MonthlyList"
     var sectionControl: CustomSegmentedControl!
-    var selectedIndex: Int = 0
-
-    var periodData = PeriodData()
-    var tableSection: Int = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
         connectAction()
-        configureTableView()
-        
+        configureTableView()       
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +75,10 @@ class PeriodListVC: BaseViewController {
         lblPeriod.text = datemap.0
         weekday = datemap.1!
         datemaps = datemap.2!
-     }
+        
+        let date = datemaps[0].changeDateTime(format: .longDate)
+        delegate?.sendChartDate(date: date)
+    }
 
     func connectAction() {
 
@@ -98,8 +95,7 @@ class PeriodListVC: BaseViewController {
             self.initializeData()
         }
     }
-    
-    // tableViewModel 만들기
+
     func initializeData() {
        
         let dm = DataManager()
@@ -125,10 +121,20 @@ class PeriodListVC: BaseViewController {
             
             periodData.arrTBCell.append(tbCellModel)
         }
+        self.tableView.reloadData()
         
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        if self.isAddedItem {
+            let date = self.dateStrategy.date.changeDateTime(format: .longDate)
+            
+            for (index, item) in self.weekday.enumerated() {
+                if item == date {
+                    self.tableView.scrollToTop(animated: true, section: index)
+                }
+            }
+            
+            self.isAddedItem = false
         }
+        
     }
     
     lazy var stackView: UIStackView = {

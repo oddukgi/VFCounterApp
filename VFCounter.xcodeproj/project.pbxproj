@@ -93,6 +93,8 @@
 		12B50CFE24C6EBB700C87956 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */; };
 		12B50CFF24C6EBB700C87956 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */; };
 		12B50D0024C6EBB700C87956 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */; };
+		12BBF15D2543D59C008C0380 /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF15C2543D59C008C0380 /* ValueFormatter.swift */; };
+		12BBF1742543E28A008C0380 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF1732543E28A008C0380 /* UITableView+Ext.swift */; };
 		12BBF92624CAB08200C11ECD /* UserItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92524CAB08200C11ECD /* UserItemVC.swift */; };
 		12BBF92924CABE7B00C11ECD /* VFItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BBF92824CABE7B00C11ECD /* VFItemController.swift */; };
 		12BCF6E22519AB6300461BF0 /* PeriodListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BCF6E12519AB6300461BF0 /* PeriodListVC.swift */; };
@@ -106,7 +108,6 @@
 		12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */; };
 		12D4067D2512FE1D00DFE7FC /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D4067C2512FE1D00DFE7FC /* UIHelper.swift */; };
 		12D4067F2513777F00DFE7FC /* DateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D4067E2513777F00DFE7FC /* DateController.swift */; };
-		12DDC4132526CFC900FFCD09 /* ValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DDC4122526CFC900FFCD09 /* ValueFormatter.swift */; };
 		12E5DE40251AF7F500D4CCC5 /* DateStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E5DE3F251AF7F500D4CCC5 /* DateStrategy.swift */; };
 		12E5DE4C251AF82000D4CCC5 /* WeeklyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E5DE4B251AF82000D4CCC5 /* WeeklyStrategy.swift */; };
 		12E5DE71251B19CA00D4CCC5 /* MonthlyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E5DE70251B19CA00D4CCC5 /* MonthlyStrategy.swift */; };
@@ -247,6 +248,8 @@
 		12B50CFB24C6EBB700C87956 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		12B50CFC24C6EBB700C87956 /* UIView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		12B50CFD24C6EBB700C87956 /* UIColor+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		12BBF15C2543D59C008C0380 /* ValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueFormatter.swift; sourceTree = "<group>"; };
+		12BBF1732543E28A008C0380 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		12BBF92524CAB08200C11ECD /* UserItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemVC.swift; sourceTree = "<group>"; };
 		12BBF92824CABE7B00C11ECD /* VFItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VFItemController.swift; sourceTree = "<group>"; };
 		12BCF6E12519AB6300461BF0 /* PeriodListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodListVC.swift; sourceTree = "<group>"; };
@@ -260,7 +263,6 @@
 		12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		12D4067C2512FE1D00DFE7FC /* UIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		12D4067E2513777F00DFE7FC /* DateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateController.swift; sourceTree = "<group>"; };
-		12DDC4122526CFC900FFCD09 /* ValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueFormatter.swift; sourceTree = "<group>"; };
 		12E5DE3F251AF7F500D4CCC5 /* DateStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateStrategy.swift; sourceTree = "<group>"; };
 		12E5DE4B251AF82000D4CCC5 /* WeeklyStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyStrategy.swift; sourceTree = "<group>"; };
 		12E5DE70251B19CA00D4CCC5 /* MonthlyStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStrategy.swift; sourceTree = "<group>"; };
@@ -508,6 +510,7 @@
 		12885B5C24E505E9001586EA /* Chart */ = {
 			isa = PBXGroup;
 			children = (
+				12BBF15C2543D59C008C0380 /* ValueFormatter.swift */,
 				1290EE5D24C6EDE5008DB339 /* ChartVC.swift */,
 				127ADC1A24E4F4BA00E8F3B7 /* ChartVC+Ext.swift */,
 				1251728F24F4DB91002B9927 /* WeeklyChartVC.swift */,
@@ -516,7 +519,6 @@
 				12885B5D24E50607001586EA /* ChartBaseVC.swift */,
 				12885B5F24E50D7F001586EA /* WeekDayAxisValueFormatter.swift */,
 				12B3456F24E5182B00F2ABA2 /* MonthAxisValueFormatter.swift */,
-				12DDC4122526CFC900FFCD09 /* ValueFormatter.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -552,13 +554,13 @@
 				127A497B24CC152D0032194E /* PickItemVC */,
 				125918C72519DCCD0031790D /* List */,
 				123F83322530288200F751D9 /* BaseViewController.swift */,
+				12445D3A251F630B00330FFE /* CalendarVC.swift */,
 				12BBF92524CAB08200C11ECD /* UserItemVC.swift */,
 				124B917B24CAC755009616A7 /* UserItemVC+Ext.swift */,
 				12B3733B24DE498A00491FBB /* AlarmSettingVC.swift */,
 				12B3733C24DE498A00491FBB /* AlarmSettingVC+Ext.swift */,
 				126AE53D24C6C6B4000BCF7E /* HomeVC.swift */,
 				1290EE5F24C6F17E008DB339 /* HomeVC+Ext.swift */,
-				12445D3A251F630B00330FFE /* CalendarVC.swift */,
 				122625E124DA549900AC2962 /* SettingVC.swift */,
 			);
 			path = Screen;
@@ -581,6 +583,7 @@
 				127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */,
 				12D1B5CC24EB829400F0FABB /* UIApplication+Ext.swift */,
 				125146222524C16200D83C92 /* Double+Ext.swift */,
+				12BBF1732543E28A008C0380 /* UITableView+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1018,7 +1021,6 @@
 				12FF76E424DE8658009542FE /* VFContainerView.swift in Sources */,
 				1290EE6924C6FA14008DB339 /* VFTitleLabel.swift in Sources */,
 				12E5DE71251B19CA00D4CCC5 /* MonthlyStrategy.swift in Sources */,
-				12DDC4132526CFC900FFCD09 /* ValueFormatter.swift in Sources */,
 				12885B6024E50D7F001586EA /* WeekDayAxisValueFormatter.swift in Sources */,
 				1252A684251CD22500906E9B /* MainRingView.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
@@ -1063,6 +1065,7 @@
 				125918C92519DD550031790D /* PeriodListVC+Ext.swift in Sources */,
 				12A655D824DD578900B0E042 /* Date+Ext.swift in Sources */,
 				1289CF45253DA5F000BEF9DE /* Fruits+CoreDataClass.swift in Sources */,
+				12BBF1742543E28A008C0380 /* UITableView+Ext.swift in Sources */,
 				128C14D8252432CF00AB62EE /* DateModel.swift in Sources */,
 				12283B0324CFBD0200AE93E6 /* PickItemVC+CV.swift in Sources */,
 				1289CF44253DA5F000BEF9DE /* Veggies+CoreDataProperties.swift in Sources */,
@@ -1077,6 +1080,7 @@
 				122DF9092533F02F00303148 /* MaxAmountFruitCell.swift in Sources */,
 				1290EE5C24C6ED45008DB339 /* VFTabBarController.swift in Sources */,
 				124F561724DED284006CE413 /* CustomSlider.swift in Sources */,
+				12BBF15D2543D59C008C0380 /* ValueFormatter.swift in Sources */,
 				12143CD324CA8F800080ADFE /* DateView+Ext.swift in Sources */,
 				12024F7D24F7A58000A91FDA /* WeeklyChartVC+Ext.swift in Sources */,
 				12D4067F2513777F00DFE7FC /* DateController.swift in Sources */,
@@ -1287,6 +1291,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VFCounter/Support Files/VFCounter.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "VFCounter/Support Files/Info.plist";
@@ -1311,6 +1316,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "VFCounter/Support Files/VFCounter.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_TEAM = 39Q9GA8PN8;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "VFCounter/Support Files/Info.plist";

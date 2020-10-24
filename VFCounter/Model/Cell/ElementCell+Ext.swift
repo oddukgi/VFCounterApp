@@ -150,15 +150,18 @@ extension ElementCell: ItemCellDelegate {
         let maxValues = getDefaultMaxValue(date: item.date)
         datemodel = DateModel(date: item.date, tag: index, sumV: values.0, sumF: values.1,
                               maxV: maxValues.0, maxF: maxValues.1)
-        OperationQueue.main.addOperation {
-            let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
-            itemPickVC.items = item.copy() as? VFItemController.Items
-            self.delegate?.displayPickItemVC(pickItemVC: itemPickVC)
-        }
+                              
+        let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel)
+        itemPickVC.items = item.copy() as? VFItemController.Items
+        self.delegate?.displayPickItemVC(pickItemVC: itemPickVC)
     }
 
     func presentSelectedAlertVC(indexPath: IndexPath, selectedDate: String) {
-        delegate?.presentSelectedAlertVC(indexPath: indexPath, selectedDate: selectedDate, elementCell: self)
+        
+        DispatchQueue.main.async {
+            self.delegate?.presentSelectedAlertVC(indexPath: indexPath,
+                                                  selectedDate: selectedDate, elementCell: self)
+        }
     }
     
     func getEntityCount(date: String, section: Int) -> Int {
@@ -220,7 +223,6 @@ extension ElementCell: PickItemVCProtocol {
         config.itemModel.newDate = date
         config.itemModel.newItem = item.name
         
-        //(date: Date, imodel: ItemModel, deletedSection: Bool)
         if date == oldDate {
             self.delegate?.updateItem(date: entityDT, model: config.itemModel,
                                          deletedSection: isEmptyEntity(oldDate: config.itemModel.oldDate))

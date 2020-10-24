@@ -18,7 +18,7 @@ extension VFCircularView {
         let padding = SizeManager().ringViewPadding
         
         ringView.snp.makeConstraints { make in
-            make.bottom.equalTo(self).offset(-padding)
+            make.top.equalTo(self).offset(20)
             make.trailing.equalTo(self.snp.trailing).offset(-18)
             make.size.equalTo(sliderSize)
         }
@@ -42,27 +42,27 @@ extension VFCircularView {
         horizontalStackView[1].addArrangedSubview(lbFruits)
         addSubViews(horizontalStackView[1], totFruitLabel)
 
-        let legendPadding = SizeManager().legendPadding
+        let bottomPadding = SizeManager().bottomLegendPadding
         horizontalStackView[1].snp.makeConstraints { make in
-            make.top.equalTo(self).offset(legendPadding)
+            make.centerY.equalTo(self.snp.centerY).offset(15)
             make.leading.equalTo(self).offset(18)
             make.height.equalTo(20)
-
         }
+        
         horizontalStackView[0].snp.makeConstraints { make in
-            make.top.equalTo(horizontalStackView[1].snp.top).offset(-60)
+            make.top.equalTo(horizontalStackView[1].snp.top).offset(-bottomPadding)
             make.leading.equalTo(self).offset(18)
             make.height.equalTo(20)
         }
         
         totVeggieLabel.snp.makeConstraints { make in
-            make.top.equalTo(horizontalStackView[0].snp.bottom).offset(5)
+            make.top.equalTo(horizontalStackView[0].snp.bottom).offset(3)
             make.leading.equalTo(self).offset(18)
             make.height.equalTo(23)
         }
         
         totFruitLabel.snp.makeConstraints { make in
-            make.top.equalTo(horizontalStackView[1].snp.bottom).offset(5)
+            make.top.equalTo(horizontalStackView[1].snp.bottom).offset(3)
             make.leading.equalTo(self).offset(18)
             make.height.equalTo(23)
         }

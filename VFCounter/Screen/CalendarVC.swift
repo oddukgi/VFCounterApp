@@ -37,7 +37,7 @@ class CalendarVC: UIViewController {
         button.setTitle("Apply", for: .normal)
         button.backgroundColor    = ColorHex.middleGreen
         button.setFont(clr: .white, font: NanumSquareRound.extrabold.style(offset: 15))
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(applyDate), for: .touchUpInside)
         return button
     }()
@@ -67,32 +67,26 @@ class CalendarVC: UIViewController {
         
         containerView.layoutSubviews()
 
-        let padding = SizeManager().miniCalendarPadding
-        
-        let newHeight = calendarSize.height - 100
+        let newHeight = calendarSize.height - 80
         calendarView.snp.makeConstraints { make in
-            make.top.equalTo(containerView).offset(30)
+            make.top.equalTo(containerView).offset(44)
             make.left.right.equalTo(containerView)
             make.height.equalTo(newHeight)
         }
         calendarView.layoutIfNeeded()
-        
-        print(calendarView.frame.size)
-        calendarView.layer.borderWidth = 1
-        calendarView.layer.borderColor = UIColor.red.cgColor
 
         closeBtn.snp.makeConstraints { (maker) in
-            maker.top.equalTo(containerView).offset(10)
-            maker.trailing.equalTo(containerView).offset(-10)
-            maker.size.equalTo(CGSize(width: 24, height: 24))
+            maker.top.equalTo(containerView).offset(12)
+            maker.trailing.equalTo(containerView).offset(-20)
+            maker.size.equalTo(CGSize(width: 20, height: 20))
         }
 
         applyBtn.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(containerView)
-            maker.bottom.equalTo(containerView).offset(-10)
-            maker.size.equalTo(CGSize(width: 70, height: 35))
+            maker.bottom.equalTo(containerView).offset(-2)
+            maker.size.equalTo(CGSize(width: 65, height: 35))
         }
-        
+ 
         calendarController.present(above: self, contentView: calendarView)
     }
 
@@ -101,6 +95,7 @@ class CalendarVC: UIViewController {
         calendarController.minimumDate = date?.getFirstMonthDate()
         calendarController.maximumDate = Date()
         calendarController.isRingVisible = false
+        calendarController.isPopupVisible = true
     }
 
     @objc private func cancel() {

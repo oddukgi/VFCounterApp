@@ -38,24 +38,21 @@ extension PeriodListVC {
         
         var text = ""
         
-            if indexPath.section > 3 {
-                self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-            }
+        let section = indexPath.section
+        self.tableView.scrollToTop(animated: true, section: section)
         
-            switch nKind {
-            case 0:
-                text = "\(model.oldItem) 삭제완료"
-            case 1:
-                text = "\(model.oldItem) -> \(model.newItem)\n 업데이트"
-            case 2:
-                text = "\(model.oldItem): \(model.oldDate) -> \(model.newDate) \n 업데이트"
-            default:
-                text = "\(model.oldItem) -> \(model.newItem), \(model.newDate) \n 업데이트"
-            }
-            
-        DispatchQueue.main.async {
-            self.presentAlertVC(title: "", message: text, buttonTitle: "OK")
+        switch nKind {
+        case 0:
+            text = "\(model.oldItem) 삭제완료"
+        case 1:
+            text = "\(model.oldItem) -> \(model.newItem)\n 업데이트"
+        case 2:
+            text = "\(model.oldItem): \(model.oldDate) -> \(model.newDate) \n 업데이트"
+        default:
+            text = "\(model.oldItem) -> \(model.newItem), \(model.newDate) \n 업데이트"
         }
+            
+        self.presentAlertVC(title: "", message: text, buttonTitle: "OK")
     }
 }
 
@@ -160,7 +157,6 @@ extension PeriodListVC: ElementCellProtocol {
             self.initializeData()
         }
         tableView.reloadData()
-        
         scrollToItem(date: date, model: model, nKind: 0)
         NotificationCenter.default.post(name: .updateFetchingData, object: nil, userInfo: ["createdDate": date])
     }

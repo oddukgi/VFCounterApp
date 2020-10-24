@@ -11,8 +11,6 @@ import CoreLocation
 
 class HomeVC: UIViewController {
 
-   let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 16 : 0
-
    lazy var headerView: UIView = {
       let subview = UIView()
       subview.backgroundColor = UIColor.white
@@ -31,7 +29,7 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-       // 초기 실행시, 날짜 저장
+        
         setupConstraints()
         setContentView()
         connectTapGesture()
@@ -62,6 +60,10 @@ class HomeVC: UIViewController {
     }
     
     @objc func dateLabelTapped(_ sender: UITapGestureRecognizer) {
+        
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+       
         var dateTxt = dateView.dateLabel.text!
         var shortDate = String(dateTxt.split(separator: " ").first!)
         var date = shortDate.changeDateTime(format: .date)
@@ -89,7 +91,6 @@ extension HomeVC: CalendarVCDelegate {
         dateView.updateDate(userdate: newDate)
         
         if isUpdateCalendar {
-            // notification
             NotificationCenter.default.post(name: .selectDateCalendar, object: nil, userInfo: ["selectdate": date])
         }
         

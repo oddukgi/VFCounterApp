@@ -8,6 +8,21 @@
 
 import Foundation
 
+
+
+protocol UpdateDateDelegate: class {
+    func sendChartDate(date: Date)
+}
+
+struct ValueConfig {
+    var maxVeggies: Int = 0
+    var maxFruits: Int  = 0
+    var sumVeggies: Int  = 0
+    var sumFruits: Int  = 0
+
+    init() {}
+}
+
 class DateProvider {
 
     class func updateDateMap(date: Date, isWeekly: Bool = true) -> [String] {
@@ -18,13 +33,4 @@ class DateProvider {
         let arrDates = dates.map { $0.changeDateTime(format: .longDate)}
         return arrDates
     }
-}
-
-struct ValueConfig {
-    var maxVeggies: Int = 0
-    var maxFruits: Int  = 0
-    var sumVeggies: Int  = 0
-    var sumFruits: Int  = 0
-
-    init() {}
 }

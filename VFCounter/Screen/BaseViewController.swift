@@ -9,11 +9,21 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-
+    
+    var weekday = [String]()
+    var datemaps = [String]()
+    var selectedIndex: Int = 0
+    var periodData = PeriodData()
+    var tableSection: Int = 0
     var dateStrategy: DateStrategy!
+    var isAddedItem = false
+    
+    weak var delegate: UpdateDateDelegate?
 
-    init(dateStrategy: DateStrategy) {
+    init(dateStrategy: DateStrategy, delegate: UpdateDateDelegate, isAddedItem: Bool) {
         self.dateStrategy = dateStrategy
+        self.delegate = delegate
+        self.isAddedItem = isAddedItem
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -23,7 +33,6 @@ class BaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
     func updatePeriod() {

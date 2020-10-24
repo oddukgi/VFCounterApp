@@ -10,7 +10,7 @@ import UIKit
 
 class VFButton: UIButton {
 
-    private let targetSize = CGSize(width: 29.0, height: 29.0)
+    private let targetSize = CGSize(width: 44.0, height: 44.0)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,9 +29,18 @@ class VFButton: UIButton {
 
     // MARK: Tap Area
     override func setImage(_ image: UIImage?, for state: UIControl.State) {
+     
         guard let image = image else { return }
-        self.contentMode = .scaleAspectFit
         super.setImage(image, for: state)
+        self.contentMode = .scaleAspectFit
+        let verticalMarginToAdd = max(0, (targetSize.height - image.size.height) / 2)
+        let horizontalMarginToAdd = max(0, (targetSize.width - image.size.width) / 2)
+        
+        let insets = UIEdgeInsets(top: verticalMarginToAdd,
+                                  left: horizontalMarginToAdd,
+                                  bottom: verticalMarginToAdd,
+                                  right: horizontalMarginToAdd)
+        contentEdgeInsets = insets
     }
 
     override var alignmentRectInsets: UIEdgeInsets {

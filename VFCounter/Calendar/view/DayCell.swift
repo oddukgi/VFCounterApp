@@ -279,7 +279,10 @@ class DayCell: JTACDayCell {
                 if config.state!.dateBelongsTo == .thisMonth && config.state!.date > Date() {
                     self.ringButton.isHidden = true
                 } else {
-                    self.ringButton.isHidden = false
+                    
+                    if self.ringButton != nil {
+                        self.ringButton.isHidden = false
+                    }
                 }
                 self.ringButton.isSelected = !config.isSelectedItem
                 updateRing(date: config.date!)
@@ -325,6 +328,6 @@ extension CalendarSettings {
         var onRangeLabelColor: UIColor = .black
         var insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         var isRingVisible = false
-
+        var isPopupVisible = false
     }
 }

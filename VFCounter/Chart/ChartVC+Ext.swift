@@ -44,11 +44,10 @@ extension ChartVC {
         view.addSubview(contentView)
         contentView.snp.makeConstraints {
             $0.top.equalTo(periodSegmentCtrl.snp.bottom).offset(13)
-            $0.width.equalTo(view.bounds.width)
+            $0.left.right.equalToSuperview()
             $0.bottom.equalTo(datafilterView.snp.top).offset(-8)
         }
         
         contentView.layoutIfNeeded()
-        
     }
 }

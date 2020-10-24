@@ -124,6 +124,17 @@ JTACMonthViewDataSource {
         }
     }
     
+    var isPopupVisible: Bool {
+        set {
+            CalendarSettings.default.dayCell.isPopupVisible = newValue
+            self.privateisPopupVisible = newValue
+        }
+
+        get {
+            return self.privateisPopupVisible
+        }
+    }
+    
     init(setting: CalendarSettings = .default) {
         self.setting = setting
         self.appearance = setting.controller
@@ -197,27 +208,27 @@ JTACMonthViewDataSource {
 
         var screenWidth: CGFloat = 0.0
 
+        var cellSize = (privateisPopupVisible) ? SizeManager().calendarItemSize : SizeManager().bigCalendarItemSize
+        calendarView.cellSize = cellSize
+        
         currentValueView.snp.makeConstraints { (maker) in
             maker.top.equalTo(view).offset(6)
             maker.left.right.equalToSuperview().inset(8)
         }
 
-        let newWidth = view.frame.width
-
+        var padding = (privateisPopupVisible) ? SizeManager().calendarItemPadding : SizeManager().bigCalendarPadding
+        
         weekdayView.snp.makeConstraints { (maker) in
             maker.top.equalTo(currentValueView.snp.bottom).offset(35)
-            maker.left.right.equalToSuperview().inset(10)
+            maker.left.right.equalToSuperview().inset(padding)
         }
-
-        let padding = SizeManager().calendarItemPadding
+       
         calendarView.snp.makeConstraints { (maker) in
             maker.top.equalTo(weekdayView.snp.bottom).offset(9)
             maker.left.right.equalToSuperview().inset(padding)
             maker.bottom.equalToSuperview()
         }
         
-        calendarView.layer.borderWidth = 1
-        calendarView.layer.borderColor = UIColor.blue.cgColor
     }
 
     private func configureInitialState() {
@@ -236,14 +247,14 @@ JTACMonthViewDataSource {
             }
         }
 
-        calendarView.scrollingMode = .stopAtEachCalendarFrame
+        calendarView.scrollingMode = .stopAtEachSection
     }
 
     private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath, flag: Bool = false) {
 
         guard let cell = cell as? DayCell else { return }
         if var cachedSettings = self.viewSettings[indexPath] {
-            cachedSettings.isRingVisible = isRingVisible
+            cachedSettings.isRingVisible = privateisRingVisible
             cell.configure(for: cachedSettings)
         } else {
             var newSettings = DayCell.makeViewSettings(for: cellState, minimumDate: self.privateMinimumDate, maximumDate: self.privateMaximumDate, rangeValue: self.value as? CalendarRange, flag: flag)
@@ -287,6 +298,7 @@ JTACMonthViewDataSource {
     private func updateDate(date: Date) {
         currentValueView.updateDate(date: date)
     }
+    
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy MM dd"
@@ -340,7 +352,7 @@ JTACMonthViewDataSource {
        } else if let cell = cell {
            self.configureCell(cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
 
-        if isRingVisible == true {
+        if privateisRingVisible == true {
             self.updateAmount(cell)
         } else {
             self.updateDate(date: date)
@@ -387,6 +399,7 @@ JTACMonthViewDataSource {
      }
 
     private var privateisRingVisible: Bool = true
+    private var privateisPopupVisible: Bool = true
 
 }
 

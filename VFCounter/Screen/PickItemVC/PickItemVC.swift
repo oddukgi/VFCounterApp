@@ -150,7 +150,6 @@ class PickItemVC: UIViewController {
         view.addSubViews(userDTView, btnAdd)
        
         let dateViewHeight = SizeManager().dateViewHeight
-        print(dateViewHeight)
         userDTView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(15)
             make.left.right.equalTo(view).inset(10)
@@ -170,9 +169,10 @@ class PickItemVC: UIViewController {
         btnAdd.setRadiusWithShadow(18)
         btnAdd.addTarget(self, action: #selector(pressedAdd), for: .touchUpInside)
     }
+    
     // MARK: Add Button
     @objc func pressedAdd() {
-   
+        
         guard !checkedIndexPath.isEmpty else { return }
             
         let indexPath = checkedIndexPath.first!

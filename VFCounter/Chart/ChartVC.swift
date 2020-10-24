@@ -32,6 +32,8 @@ class ChartVC: UIViewController {
     private let datamanager = DataManager()
     var dateConfigure = ChartVC.DateConfigure()
     private var dateStrategy: DateStrategy!
+    private var isAddedItem = false
+    
     private var currentValue: CalendarValue? {
         didSet {
             let formatter = DateFormatter()
@@ -44,8 +46,6 @@ class ChartVC: UIViewController {
     deinit {
         removeNotification()
     }
-    
-    static var firstLoading: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,14 +61,7 @@ class ChartVC: UIViewController {
         periodSegmentCtrl.setIndex(index: 0)
         datafilterView.dataSegmentControl.setIndex(index: 0)
     }
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        let periodIndex = SettingManager.getPeriodSegment(keyName: "PeriodSegment") ?? 0
-//        let dataIndex = SettingManager.getDataSegment(keyName: "DataSegment") ?? 0
-//
-//        periodSegmentCtrl.setIndex(index: periodIndex)
-//        datafilterView.dataSegmentControl.setIndex(index: dataIndex)
-//    }
+
     func removeCurrentVC() {
         self.currentVC?.view.removeFromSuperview()
         self.currentVC?.removeFromParent()
@@ -79,6 +72,7 @@ class ChartVC: UIViewController {
         calendarController.minimumDate = Date().getFirstMonthDate()
         calendarController.maximumDate = Date()
         calendarController.isRingVisible = true
+        calendarController.isPopupVisible = false
     }
 
     fileprivate func configureDataFilterView() {
@@ -158,6 +152,9 @@ class ChartVC: UIViewController {
     }
 
     @objc func tappedAdd(_ sender: VFButton) {
+        // haptic feedback with UIImpactFeedbackGenerator
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         showPickUpViewController(tag: 0)
     }
 
@@ -215,10 +212,9 @@ class ChartVC: UIViewController {
     func displayMessage(name: String, dateTime: Date) {
         
         let txtTime = dateTime.changeDateTime(format: .shortDT)
-        DispatchQueue.main.async {
-            let text = "\(name), \(txtTime) \n 추가완료"
-            self.presentAlertVC(title: "알림", message: text, buttonTitle: "OK")
-        }
+        let text = "\(name), \(txtTime) \n 추가완료"
+        self.presentAlertVC(title: "알림", message: text, buttonTitle: "OK")
+        self.isAddedItem = false
     }
     
     func switchViewWithDataFilter(for pIndex: Int) {
@@ -263,8 +259,9 @@ extension ChartVC: CustomSegmentedControlDelegate {
                 if dateConfigure.calendarDate > dateConfigure.date {  dateConfigure.calendarDate = Date() }
                 self.dateStrategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
            }
-            
-            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy))
+        
+            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy,
+                                          delegate: self, isAddedItem: isAddedItem))
         }
     }
 }
@@ -277,6 +274,7 @@ extension ChartVC: PickItemVCProtocol {
             checkMaxValueFromDate(date: stringDate)
             datamanager.createEntity(item: item, tag: tag, valueConfig: valueConfig)
 
+            isAddedItem = true
             NotificationCenter.default.post(name: .updateDateTime,
                                             object: nil, userInfo: ["userdate": stringDate])
             updateView(name: item.name, dateTime: item.entityDT!)
@@ -290,36 +288,39 @@ extension ChartVC: PickItemVCProtocol {
 }
 
 extension ChartVC {
+
     struct DateConfigure {
         var calendarDate = Date()
         var date = Date()
         var indexPeriod: Int = 0
-        var indexData: Int = 0
-        
+        var indexData: Int = 0       
     }
-    
-    // synchronize date with current view
+
     func getCurrentDate() -> String {
         
         // segment control 인덱스 가져오기 (0:주, 1:월) / (0: 데이터, 1:리스트)
         let periodIndex = periodSegmentCtrl.selectedIndex
-      
+        let dataIndex = datafilterView.dataSegmentControl.selectedIndex
+        var strDate = ""
         switch periodIndex {
         case 0:
             let date = dateConfigure.date.changeDateTime(format: .date)
             return date
             
         default:
-            return dateConfigure.calendarDate.changeDateTime(format: .date)
+            if dataIndex == 0 {
+                strDate = dateConfigure.calendarDate.changeDateTime(format: .date)
+            } else {
+                strDate = dateConfigure.date.changeDateTime(format: .date)
+            }
+            return strDate
         }
-        
-        return ""
-        
+
     }
 
 }
 
-extension ChartVC: WeeklyChartDelegate {
+extension ChartVC: UpdateDateDelegate {
     
     func sendChartDate(date: Date) {
         dateConfigure.date = date

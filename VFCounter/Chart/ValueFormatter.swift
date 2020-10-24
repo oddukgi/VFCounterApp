@@ -12,7 +12,6 @@ import Charts
 public class ValueFormatter: NSObject, IValueFormatter, IAxisValueFormatter {
 
     /// Suffix to be appended after the values
-    public var suffix = "g"
     public var appendix: String?
 
     public init(appendix: String? = nil) {
@@ -21,11 +20,7 @@ public class ValueFormatter: NSObject, IValueFormatter, IAxisValueFormatter {
 
     fileprivate func format(value: Double) -> String {
         var newValue = value
-
-        var r = String(format: "%.0f", newValue) + suffix
-        if let appendix = appendix {
-            r + appendix
-        }
+        var r = String(format: "%.0f", newValue)
 
         return r
     }

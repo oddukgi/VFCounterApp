@@ -16,7 +16,7 @@ extension HomeVC {
     func setupConstraints() {
 
         headerView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(8)
             make.width.equalToSuperview()
             make.height.equalTo(SizeManager().getHeaderviewHeight)
             make.leading.equalToSuperview()
@@ -27,9 +27,6 @@ extension HomeVC {
             make.leading.trailing.equalTo(view)
             make.height.equalTo(headerView.snp.height)
         }
-
-//        headerView.layer.borderWidth = 1
-//        dateView.layer.borderWidth = 1
     }
 
     func add(childVC: UIViewController, to containerView: UIView) {
@@ -45,8 +42,7 @@ extension HomeVC {
 
         contentView.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
-            make.width.equalTo(view.snp.width)
-            make.bottom.equalTo(view.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         }
 
         contentView.addSubview(userItemView)
@@ -54,8 +50,9 @@ extension HomeVC {
         newDate?.removeLast(2)
 
         userItemView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
-       }
+            make.edges.equalTo(contentView)
+        }
+        userItemView.layoutIfNeeded()
         self.add(childVC: UserItemVC(delegate: self, date: newDate!), to: self.userItemView)
     }
 

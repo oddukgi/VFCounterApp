@@ -9,19 +9,14 @@
 import UIKit
 import Charts
 
-protocol WeeklyChartDelegate: class {
-    func sendChartDate(date: Date)
-}
-
 class WeeklyChartVC: ChartBaseVC {
 
     let lblweek = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: SizeManager().dateViewFontSize))
     let chartView = BarChartView()
 
     private let dataManager = DataManager()
-    private var weekday = [String]()
-    
-    weak var delegate: WeeklyChartDelegate?
+    private var weekday = [String]()    
+    weak var delegate: UpdateDateDelegate?
 
     lazy var arrowButtons: [UIButton] = {
         var buttons = [UIButton]()
@@ -80,12 +75,12 @@ class WeeklyChartVC: ChartBaseVC {
     }
 
     private func changeLabelText() {
+    
         let data = dateStrategy.updateLabel()
         lblweek.text = data.0
         let datamap = data.2!
         let date = datamap[0].changeDateTime(format: .longDate)
         delegate?.sendChartDate(date: date)
-        
         setDataCount(datemap: datamap)
     }
 
@@ -137,8 +132,6 @@ class WeeklyChartVC: ChartBaseVC {
         let data = BarChartData(dataSets: [set1, set2])
         data.setValueFont(.systemFont(ofSize: 10, weight: .light))
         data.setValueFormatter(ValueFormatter())
-
-        // specify the width each bar should have
         data.barWidth = barWidth
         data.groupBars(fromX: Double(0), groupSpace: groupSpace, barSpace: barSpace)
 

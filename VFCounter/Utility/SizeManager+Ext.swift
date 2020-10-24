@@ -41,7 +41,7 @@ extension SizeManager {
         
         if DeviceTypes.isiPhoneSE {
             segmentSize = CGSize(width: 140, height: 30)
-        } else if DeviceTypes.isiPhone8Standard {
+        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
             segmentSize = CGSize(width: 170, height: 30)
         } else if DeviceTypes.isiPhone8PlusStandard {
             segmentSize = CGSize(width: 180, height: 30)
@@ -52,14 +52,12 @@ extension SizeManager {
         return segmentSize
         
     }
-    
-    // NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
-    
+   
     func getSectionEdgeInsects() -> NSDirectionalEdgeInsets {
         var edgeIndests = NSDirectionalEdgeInsets()
         
         if DeviceTypes.isiPhoneSE {
-            edgeIndests = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 10, trailing: 10)
+            edgeIndests = NSDirectionalEdgeInsets(top: 8, leading: 9, bottom: 9, trailing: 9)
         } else {
             edgeIndests = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
         }
@@ -67,34 +65,60 @@ extension SizeManager {
         
     }
     
-    //calendar cell size
-    
+    // MARK: Calendar Size
+    func calendarPopupSize() -> (CGSize) {
+
+        var calendarSize: CGSize = CGSize()
+        
+        if DeviceTypes.isiPhoneSE {
+            calendarSize = CGSize(width: 320, height: 449)
+        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
+            calendarSize = CGSize(width: ScreenSize.width - 39, height: 469)
+        } else if DeviceTypes.isiPhone12ProMax {
+           calendarSize = CGSize(width: ScreenSize.width - 62, height: 489)
+        } else {
+            calendarSize = CGSize(width: ScreenSize.width - 48, height: 489)
+        }
+
+        return (calendarSize)
+    }
     var calendarItemSize: CGFloat {
         var itemSize: CGFloat = 0.0
         
-        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+        if DeviceTypes.isiPhoneSE {
+            itemSize = 40
+        } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhone12Pro
+                    || DeviceTypes.isiPhoneX {
             itemSize = 42
-        } else if DeviceTypes.isiPhone8Standard {
-            itemSize = 45
         } else {
             itemSize = 46
         }
-        
         return itemSize
     }
     
     var calendarItemPadding: CGFloat {
-        var padding: CGFloat = 0.0
-        
-        if DeviceTypes.isiPhoneSE {
-            padding = 13
-        } else if DeviceTypes.isiPhone8Standard {
-            padding = 20
-        } else {
-            padding = 16
-        }
-        
+        let padding = (ScreenSize.width - (calendarItemSize * 7)) / 2
         return padding
     }
     
+    var bigCalendarItemSize: CGFloat {
+        
+        var itemSize: CGFloat = 0
+        if DeviceTypes.isiPhoneSE {
+            itemSize = 40
+        } else if DeviceTypes.isiPhone12Pro {
+            itemSize = 49
+        } else if DeviceTypes.isiPhone12ProMax {
+            itemSize = 54
+        } else {
+            itemSize = 48
+        }
+            
+        return itemSize
+    }
+    
+    var bigCalendarPadding: CGFloat {
+        let padding = (ScreenSize.width - (bigCalendarItemSize * 7)) / 2
+        return padding
+    }
 }
