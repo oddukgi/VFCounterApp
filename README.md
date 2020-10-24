@@ -1,19 +1,21 @@
 # VFCounterApp 🥦🥬🍓🍉
-Calcurate how much take some vegie or fruits in a day
+[![license](https://img.shields.io/github/license/oddukgi/VFCounterApp)](https://github.com/oddukgi/VFCounterApp/blob/master/LICENSE) 
+[![platform](https://img.shields.io/badge/platform-iOS_13+-lightgrey.svg)](https://img.shields.io/badge/platform-iOS_13+-lightgrey.svg)\
+하루에 섭취한 야채, 과일의 양을 기록할 수 있는 앱입니다.
 
-### Project Start
-2020.07.22 (Wed) ~ in progress
+## 기능
+- 날짜를 설정하여, 섭취한 야채나 과일을 선택하고 무게를 추가할 수 있습니다.
+- 지난 기록은 메인화면의 화살표를 터치하면 과거와 현재를 이동할 수 있습니다.
+- 메인 화면의 날짜를 누르면 달력 팝업이 나옵니다.
+- 저장된 데이터는 주간, 월간으로 나누어 그래프나 달력으로 불 수 있습니다.
+- 잘못 입력 했나요?  아이템을 길게 누르면 수정/삭제를 할 수 있습니다.
+- 권장량 500g을 안지켜도 됩니다. 원하는 양을 설정창에서 설정할 수 있습니다.
 
-### 핵심 목표
-사용자가 야채나 과일을 지속적으로 섭취할 수 있도록 도와준다.
+## 스크린샷
+<img src = "Screenshots/homevc.jpeg" width = "200">  <img src = "Screenshots/fruitvc.jpeg" width = "200">  <img src = "Screenshots/monthlylist.jpeg" width = "200">  <img src = "Screenshots/graphvc.jpeg" width = "200"> <img src = "Screenshots/calendar.jpeg" width= "200"> <img src = "Screenshots/settings.jpeg" width = "200">
+<img src = "Screenshots/notice.jpeg" width = "200">
 
-### 기능
-- 사용자가 야채나 과일 아이템을 선택하면 몇시에 얼마나 먹었는지 볼 수 있다.
-- 야채는 권장양까지 먹을 수 있도록, 알려준다. (미정)
-- 야채와 과일을 먹은양은 링을 채우며, 달성하도록 한다.
-- 주간 데이터는 차트로, 월간 데이터는 달력으로 보여준다.
-
-### Used library 
+## 사용한 라이브러리
 **Swift Package**\
 [SnapKit](http://snapkit.io/)\
 [Charts](https://github.com/danielgindi/Charts)\
@@ -23,5 +25,9 @@ Calcurate how much take some vegie or fruits in a day
 [Calendar by Fastis](https://github.com/retailcrm/Fastis)
 
 **CocoaPods**\
-[MKRingProgressView](https://github.com/maxkonovalov/MKRingProgressView)
+[MKRingProgressView](https://github.com/maxkonovalov/MKRingProgressView)\
+[SwiftLint](https://github.com/realm/SwiftLint)
 
+## License
+VFCounter App은  **MIT License** 등록 되어있습니다. <br>
+자세한 [라이센스](https://github.com/oddukgi/VFCounterApp/blob/master/LICENSE)는 확인해주세요.
