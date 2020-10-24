@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 protocol UpdateDateDelegate: class {
     func sendChartDate(date: Date)
 }

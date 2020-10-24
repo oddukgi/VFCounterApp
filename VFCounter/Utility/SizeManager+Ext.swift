@@ -97,7 +97,9 @@ extension SizeManager {
     }
     
     var calendarItemPadding: CGFloat {
-        let padding = (ScreenSize.width - (calendarItemSize * 7)) / 2
+        
+        let screenSize = calendarPopupSize().width
+        let padding = (screenSize - (calendarItemSize * 7)) / 2
         return padding
     }
     
