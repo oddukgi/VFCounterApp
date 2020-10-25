@@ -1,0 +1,74 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+ProjectName = 'VFCounter'
+AppIdentifier = 'com.sunmi.VFCounter'
+Target_Folder_Name = 'build' 
+DerivedDataPath = 'DerivedData'
+
+
+$version_number_to_set = '0.0.1'
+$build_number_to_set = number_of_commits.to_s
+$ipaName = "#{ProjectName}-#{$version_number_to_set}-#{$build_number_to_set}"
+
+
+def buildApp
+  time_string = Time.new.strftime('%Y.%m.%d')
+  $ipaName = "#{$ipaName}-#{time_string}"
+
+  build_ios_app(
+    scheme: Scheme,
+    output_name: $ipaName,
+    output_directory: Target_Folder_Name
+  )
+end
+
+desc 'Build the release app locally'
+lane :build do
+  buildApp
+end
+
+desc 'Update build + version number, commit changes and tag with version'
+lane :release do 
+  increment_build_number(
+     build_number: latest_testflight_build_number + 0.1
+  )
+
+  increment_version_number(
+    version_number: $version_number_to_set
+  )
+
+  sh("git commit -a -m \"Release version #{$version_number_to_set}\"")
+
+  add_git_tag(tag: $version_number_to_set)
+end
+
+desc 'Build and upload the release app to TestFlight'
+lane :beta do 
+  buildApp
+
+  changelog = sh("cd .. && ./get-changelog-for-version.sh #{$version_number_to_set}")
+
+  upload_to_testflight(
+    changelog: changelog,
+    distribute_external: true,
+    groups: 'CreativeSun',
+    ipa: "#{Target_Folder_Name}/#{$ipaName}.ipa",
+    notify_external_testers: true,
+    username: 'sm.kang666@gmail.com'
+  )
+end

@@ -13,7 +13,7 @@
 
 ## 스크린샷
 <img src = "Screenshots/homevc.jpeg" width = "200">  <img src = "Screenshots/fruitvc.jpeg" width = "200">  <img src = "Screenshots/monthlylist.jpeg" width = "200">  <img src = "Screenshots/graphvc.jpeg" width = "200"> <img src = "Screenshots/calendar.jpeg" width= "200"> <img src = "Screenshots/settings.jpeg" width = "200">
-<img src = "Screenshots/notice.jpeg" width = "200">
+<img src = "Screenshots/notice.jpg" width = "200">
 
 ## 사용한 라이브러리
 **Swift Package**\
