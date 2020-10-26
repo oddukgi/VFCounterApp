@@ -24,5 +24,6 @@ struct ItemModel {
     var newItem: String = ""
     var oldDate: String = ""
     var newDate: String = ""
+    var entityDT: Date = Date()
     init() { }
 }

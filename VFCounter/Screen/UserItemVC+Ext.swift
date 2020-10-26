@@ -131,8 +131,7 @@ extension UserItemVC {
 
             let sectionTitle: Section = (i == 0 ? Section.vTitle : Section.fTitle)
             currentSnapshot.appendSections([sectionTitle])
-            (i == 0) ? (data = dataManager.fetchedVeggies(stringDate)) : (data = dataManager.fetchedFruits(stringDate))
-    
+            data = fetchedItems[i](stringDate)
             currentSnapshot.appendItems(data)
         }
 
@@ -145,20 +144,6 @@ extension UserItemVC {
         self.circularView.updateValue(veggieSum: values.0, fruitSum: values.1)
         self.valueConfig.sumVeggies = values.0
         self.valueConfig.sumFruits = values.1
-    }
-    
-    func getEntityCount(date: String, section: Int) -> Int {
-        
-        var itemCount = 0
-
-        if section == 0 {
-            itemCount = self.dataManager.fetchedVeggies(date).count
-        } else {
-            itemCount = self.dataManager.fetchedFruits(date).count
-        }
-        
-        return itemCount
-     
     }
 
     // MARK: - ContextMenu Action
@@ -177,7 +162,7 @@ extension UserItemVC: UICollectionViewDelegate {
         var itemCount = 0
         let section = indexPath.section
 
-        itemCount = getEntityCount(date: stringDate, section: section)
+        itemCount = dataManager.getEntityCount(date: stringDate, section: section)
     
         guard indexPath.item < itemCount else {
             return nil
@@ -217,7 +202,7 @@ extension UserItemVC: UICollectionViewDelegate {
         var itemCount = 0
         
         let section = indexPath.section
-        itemCount = getEntityCount(date: stringDate, section: section)
+        itemCount = dataManager.getEntityCount(date: stringDate, section: section)
     
         guard indexPath.item < itemCount else {
             return false
@@ -236,7 +221,7 @@ extension UserItemVC: UICollectionViewDelegate {
         var itemCount = 0
         
         let section = indexPath.section
-        itemCount = getEntityCount(date: stringDate, section: section)
+        itemCount = dataManager.getEntityCount(date: stringDate, section: section)
     
         if action == #selector(modifyTapped) && itemCount > 0 {
             return true
@@ -321,9 +306,9 @@ extension UserItemVC: TitleSupplmentaryViewDelegate {
         var snapshot = self.dataSource.snapshot()
 
         if let listData = self.dataSource.itemIdentifier(for: IndexPath(item: item, section: section)) {
-            dataManager.deleteEntity(originTime: listData.createdDate!, datatype)
             snapshot.deleteItems([listData])
             self.dataSource.apply(snapshot, animatingDifferences: true)
+            dataManager.deleteEntity(originTime: listData.createdDate!, datatype)
         }
 
         reloadRing(date: stringDate)

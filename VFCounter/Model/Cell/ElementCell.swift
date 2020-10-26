@@ -13,7 +13,7 @@ protocol ElementCellProtocol: class {
     func displayPickItemVC(pickItemVC: PickItemVC)
     func updateItem(date: Date, model: ItemModel, deletedSection: Bool)
     func updateNewItem(date: Date, model: ItemModel, deletedSection: Bool)
-    func updateDeleteItem(date: Date, model: ItemModel)
+    func updateDeleteItem(model: ItemModel, deletedSection: Bool, elementCell: ElementCell)
     func updateEmptyItem(date: String)
     func presentSelectedAlertVC(indexPath: IndexPath, selectedDate: String, elementCell: ElementCell)
     func getSelectedDate(index: Int, tableViewCell: ElementCell) -> String
@@ -42,6 +42,12 @@ class ElementCell: UITableViewCell, SelfConfigCell {
         let parentVC = self.parentViewController as? PeriodListVC
         return parentVC
     }
+    
+    let fetchedItems =  [ { (newDate) -> [DataType] in
+        return DataManager.fetchVeggieData(date: newDate)
+     }, { (newDate) -> [DataType] in
+        return DataManager.fetchFruitData(date: newDate)
+     } ]
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -92,13 +98,19 @@ class ElementCell: UITableViewCell, SelfConfigCell {
 
         guard let newDate = entityDate else { return }
         let entity = config.datamanager.getEntity(originTime: newDate, datatype)
-        config.datamanager.deleteEntity(originTime: newDate, datatype)
         snapshot.deleteItems([entity])
         self.dataSource.apply(snapshot, animatingDifferences: true)
+        config.datamanager.deleteEntity(originTime: newDate, datatype)
         
         var model = ItemModel()
-        model.oldItem = entity.name ?? ""
-        delegate?.updateDeleteItem(date: newDate, model: model)
+        if let date = entityDate {
+            
+           model.oldItem = entity.name ?? ""
+           model.oldDate = date.changeDateTime(format: .longDate)
+           model.entityDT = date
+            let date = model.oldDate.extractDate
+            delegate?.updateDeleteItem(model: model, deletedSection: isEmptyEntity(oldDate: date), elementCell: self)
+        }
     }
 
     func configure() {

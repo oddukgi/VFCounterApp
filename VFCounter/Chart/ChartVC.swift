@@ -260,8 +260,10 @@ extension ChartVC: CustomSegmentedControlDelegate {
                 self.dateStrategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
            }
         
-            self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy,
-                                          delegate: self, isAddedItem: isAddedItem))
+            DispatchQueue.main.async {
+                self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy,
+                                              delegate: self, isAddedItem: self.isAddedItem))
+            }
         }
     }
 }

@@ -12,32 +12,33 @@ import CoreStore
 class DataManager {
     
     // MARK: Fetched Data
-    func fetchedVeggies(_ date: String) -> [DataType] {
     
-        var object: [DataType] = []
-        do {
-            object = try UserDataManager.dataStack
-                .fetchAll(From<Veggies>(UserDataManager.veggieConfiguration)
-                .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)))
-            
-        } catch {
-            print(error)
-        }
+    static func fetchVeggieData(date: String) -> [DataType] {
         
-        return object
+        return try! UserDataManager.dataStack
+            .fetchAll(From<Veggies>(UserDataManager.veggieConfiguration)
+            .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)))
+    }
+    
+    static func fetchFruitData(date: String) -> [DataType] {
+        
+        return try! UserDataManager.dataStack
+            .fetchAll(From<Fruits>(UserDataManager.fruitsConfiguration)
+            .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)))
     }
 
-    func fetchedFruits(_ date: String) -> [DataType] {
+    func getEntityCount(date: String, section: Int) -> Int {
         
-        var object: [DataType] = []
-        do {
-            object = try UserDataManager.dataStack.fetchAll(From<Fruits>(UserDataManager.fruitsConfiguration)
-                .where(format: "%K BEGINSWITH[c] %@", #keyPath(DataType.date), date).orderBy(.descending(\.createdDate)))
-        } catch {
-            print(error)
+        var itemCount = 0
+        
+        if section == 0 {
+            itemCount = DataManager.fetchVeggieData(date: date).count
+        } else {
+            itemCount = DataManager.fetchFruitData(date: date).count
         }
         
-        return object
+        return itemCount
+     
     }
 
     // MARK: Create Entity

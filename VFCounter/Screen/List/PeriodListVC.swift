@@ -21,12 +21,20 @@ class PeriodListVC: BaseViewController {
         connectAction()
         configureTableView()       
     }
-
+    
+     private let fetchedItems =  [ { (newDate) -> [DataType] in
+        return DataManager.fetchVeggieData(date: newDate)
+     }, { (newDate) -> [DataType] in
+        return DataManager.fetchFruitData(date: newDate)
+     } ]
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updatePeriod()
         updateResource()
-        initializeData()
+        self.initializeData()
+        self.tableView.reloadData()
+        
     }
     
     // MARK: create collectionView layout
@@ -87,42 +95,50 @@ class PeriodListVC: BaseViewController {
             self.dateStrategy.previous()
             self.updateResource()
             self.initializeData()
+            self.tableView.reloadData()
+            
         }
         arrowButtons[1].addTargetClosure { _ in
             self.updatePeriod()
             self.dateStrategy.next()
             self.updateResource()
             self.initializeData()
+            self.tableView.reloadData()
         }
     }
 
     func initializeData() {
        
-        let dm = DataManager()
         var subcategory = [String]()
+     
+        var vData: [DataType] = []
+        var fData: [DataType] = []
         
+        var dtArray = [String]()
         if periodData.arrTBCell.count > 0 {
             periodData.arrTBCell.removeAll()
         }
         weekday.forEach { (item) in
-            
-            let date = item.components(separatedBy: " ")[0]
-            let vData = dm.fetchedVeggies(date)
-            let fData = dm.fetchedFruits(date)
-          
-            if vData.count > 0 && fData.count > 0 {
-                subcategory = ["야채", "과일"]
-            } else {
-                subcategory = [ (vData.count > 0) ? "야채" : "과일" ]
-            }
+  
+           vData = self.fetchedItems[0](item.extractDate)
+           fData = self.fetchedItems[1](item.extractDate)
+           
+           if vData.count > 0  && fData.count > 0 {
+               subcategory = ["야채", "과일"]
+           } else {
+               subcategory = [ (vData.count > 0) ? "야채" : "과일" ]
+           }
 
-            let tbCellModel = TableViewCellModel(date: item,
-                                                 subcategory: subcategory, data: [vData, fData])
-            
-            periodData.arrTBCell.append(tbCellModel)
-        }
-        self.tableView.reloadData()
-        
+           let tbCellModel = TableViewCellModel(date: item,
+                                                subcategory: subcategory, data: [vData, fData])
+           
+           self.periodData.arrTBCell.append(tbCellModel)
+ 
+       }
+    
+    }
+
+    func moveToScrollAddingItem() {
         if self.isAddedItem {
             let date = self.dateStrategy.date.changeDateTime(format: .longDate)
             
@@ -134,9 +150,7 @@ class PeriodListVC: BaseViewController {
             
             self.isAddedItem = false
         }
-        
     }
-    
     lazy var stackView: UIStackView = {
           let stackView = UIStackView()
           stackView.spacing = 130

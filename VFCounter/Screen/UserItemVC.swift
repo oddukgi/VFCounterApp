@@ -34,7 +34,12 @@ class UserItemVC: UIViewController {
     private var dateView: DateView!
     
     weak var delegate: CalendarVCDelegate?
-    
+    let fetchedItems =  [ { (newDate) -> [DataType] in
+       return DataManager.fetchVeggieData(date: newDate)
+    }, { (newDate) -> [DataType] in
+       return DataManager.fetchFruitData(date: newDate)
+    } ]
+   
     let defaultRate = 500
     
     deinit {
@@ -133,19 +138,20 @@ extension UserItemVC {
         currentSnapshot = NSDiffableDataSourceSnapshot <Section, DataType>()
 
         var sumA = 0, sumB = 0
-        let veggieFetchedItem = dataManager.fetchedVeggies(date)
-        let fruitFetchedItem = dataManager.fetchedFruits(date)
+        let veggieFetchedItem = fetchedItems[0](date)
+        let fruitFetchedItem = fetchedItems[1](date)
         
         for (index, item) in veggieFetchedItem.enumerated() {
 
             sumA += Int(item.amount)
             if sumA > valueConfig.maxVeggies {
-                dataManager.deleteEntity(originTime: item.createdDate!, Veggies.self)
-
+     
                 if let veggieData = self.dataSource.itemIdentifier(for: IndexPath(item: index, section: 0)) {
-                     var snap = self.dataSource.snapshot()
-                     snap.deleteItems([veggieData])
-                     self.dataSource.apply(snap, animatingDifferences: true)
+                    var snap = self.dataSource.snapshot()
+                    snap.deleteItems([veggieData])
+                    self.dataSource.apply(snap, animatingDifferences: true)
+                    dataManager.deleteEntity(originTime: item.createdDate!, Veggies.self)
+
                  }
             }
         }
@@ -154,12 +160,12 @@ extension UserItemVC {
 
             sumB += Int(item.amount)
             if sumB > valueConfig.maxFruits {
-                dataManager.deleteEntity(originTime: item.createdDate!, Fruits.self)
-
+      
                 if let fruitData = self.dataSource.itemIdentifier(for: IndexPath(item: index, section: 1)) {
                     var snap = self.dataSource.snapshot()
                     snap.deleteItems([fruitData])
                     self.dataSource.apply(snap, animatingDifferences: true)
+                    dataManager.deleteEntity(originTime: item.createdDate!, Fruits.self)
 
                 }
 

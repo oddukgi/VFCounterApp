@@ -19,6 +19,7 @@ class BaseViewController: UIViewController {
     var isAddedItem = false
     
     weak var delegate: UpdateDateDelegate?
+    var sectionHandler: ((String?) -> Int)?
 
     init(dateStrategy: DateStrategy, delegate: UpdateDateDelegate, isAddedItem: Bool) {
         self.dateStrategy = dateStrategy

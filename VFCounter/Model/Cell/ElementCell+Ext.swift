@@ -93,8 +93,10 @@ extension ElementCell: UICollectionViewDelegate {
                 let section = parentVC.tableSection
                 self.config.deleteItemName = cell.lblName.text!
                 var newDate = parentVC.weekday[section]
-                cell.delegate?.presentSelectedAlertVC(indexPath: indexPath,
+                DispatchQueue.main.async {
+                    cell.delegate?.presentSelectedAlertVC(indexPath: indexPath,
                                                       selectedDate: newDate.extractDate)
+                }
             }
 
             actions = [editAction, deleteAction]
@@ -143,10 +145,9 @@ extension ElementCell: ItemCellDelegate {
 
     func updateSelectedItem(item: VFItemController.Items, index: Int) {
 
-        let dataManager = DataManager()
         var datemodel: DateModel!
 
-        let values = dataManager.getSumItems(date: item.date)
+        let values = config.datamanager.getSumItems(date: item.date)
         let maxValues = getDefaultMaxValue(date: item.date)
         datemodel = DateModel(date: item.date, tag: index, sumV: values.0, sumF: values.1,
                               maxV: maxValues.0, maxF: maxValues.1)
@@ -164,24 +165,10 @@ extension ElementCell: ItemCellDelegate {
         }
     }
     
-    func getEntityCount(date: String, section: Int) -> Int {
-        
-        var itemCount = 0
-
-        if section == 0 {
-            itemCount = config.datamanager.fetchedVeggies(date).count
-        } else {
-            itemCount = config.datamanager.fetchedFruits(date).count
-        }
-        
-        return itemCount
-     
-    }
-
     func isEmptyEntity(oldDate: String) -> Bool {
         
-        let cntV = getEntityCount(date: oldDate, section: 0)
-        let cntF = getEntityCount(date: oldDate, section: 1)
+        let cntV = config.datamanager.getEntityCount(date: oldDate, section: 0)
+        let cntF = config.datamanager.getEntityCount(date: oldDate, section: 1)
         
         if cntV == 0 && cntF == 0 {
             return true
