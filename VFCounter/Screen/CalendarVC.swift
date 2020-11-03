@@ -34,7 +34,7 @@ class CalendarVC: UIViewController {
 
     private lazy var applyBtn: VFButton = {
         let button = VFButton()
-        button.setTitle("Apply", for: .normal)
+        button.setTitle("OK", for: .normal)
         button.backgroundColor    = ColorHex.middleGreen
         button.setFont(clr: .white, font: NanumSquareRound.extrabold.style(offset: 15))
         button.layer.cornerRadius = 8
@@ -67,9 +67,9 @@ class CalendarVC: UIViewController {
         
         containerView.layoutSubviews()
 
-        let newHeight = calendarSize.height - 80
+        let newHeight = calendarSize.height - 90
         calendarView.snp.makeConstraints { make in
-            make.top.equalTo(containerView).offset(44)
+            make.top.equalTo(containerView).offset(40)
             make.left.right.equalTo(containerView)
             make.height.equalTo(newHeight)
         }
@@ -83,7 +83,7 @@ class CalendarVC: UIViewController {
 
         applyBtn.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(containerView)
-            maker.bottom.equalTo(containerView).offset(-2)
+            maker.bottom.equalTo(containerView).offset(-8)
             maker.size.equalTo(CGSize(width: 65, height: 35))
         }
  

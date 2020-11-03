@@ -30,6 +30,7 @@ class VFTabBarController: UITabBarController {
     }
 
     func createChartVC() -> UINavigationController {
+    
         let chartVC = ChartVC()
         let selectedChartImg = UIImage(named: "selected chart")?.withRenderingMode(.alwaysOriginal) // select image
         let chartImg = UIImage(named: "chart")?.withRenderingMode(.alwaysOriginal)
@@ -37,7 +38,7 @@ class VFTabBarController: UITabBarController {
         chartVC.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
         return UINavigationController(rootViewController: chartVC)
     }
-
+//
     func createSettings() -> UINavigationController {
         let settingsVC = SettingVC()
         let selectedSettingsImg = UIImage(named: "selected setting")?.withRenderingMode(.alwaysOriginal) // select image

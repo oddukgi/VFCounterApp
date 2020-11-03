@@ -44,7 +44,7 @@ enum UIHelper {
        return section
     }
 
-    static func createHorizontalLayout(titleElemendKind: String = "", isHeader: Bool = true, isPaddingForSection: Bool = false) -> UICollectionViewCompositionalLayout {
+    static func createHorizontalLayout(titleElemendKind: String = "", isHeader: Bool = true, isPaddingForSection: Bool = false, nKind: Int = 0) -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                   heightDimension: .absolute(SizeManager().getUserItemHeight))
@@ -63,15 +63,29 @@ enum UIHelper {
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .continuous
             
+            //8, left: 9, bottom: 9, right: 9)
             if isPaddingForSection {
-                section.contentInsets = SizeManager().getSectionEdgeInsects()
+                
+                if nKind == 0 {
+                    section.contentInsets = SizeManager().getSectionEdgeInsects()
+                } else {
+                    section.contentInsets = SizeManager().getListEdgeInsects()
+                }
             } else {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10)
             }
 
             if isHeader {
-                let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                var titleSize: NSCollectionLayoutSize!
+             
+                if nKind == 1 {
+                    titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.1),
+                                                       heightDimension: .estimated(0.1))
+                } else {
+                    titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                        heightDimension: .estimated(28))
+                }
+                
                 let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: titleSize,
                     elementKind: titleElemendKind,
@@ -85,6 +99,30 @@ enum UIHelper {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         let layout = UICollectionViewCompositionalLayout(
             sectionProvider: sectionProvider, configuration: config)
+        return layout
+    }
+    
+    static func createFlowLayout() -> UICollectionViewFlowLayout {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = SizeManager().getSectionInsectFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 3
+        
+        let screenWidth = UIScreen.main.bounds.inset(by: layout.sectionInset).width
+        let cellsPerRow: CGFloat = 5
+        
+        // iphone SE : 44
+        let cellWidth = min(
+            230,
+            floor((screenWidth - ((cellsPerRow - 1) * layout.minimumInteritemSpacing)) / cellsPerRow)
+        )
+        layout.itemSize = .init(
+            width: cellWidth,
+            height: ceil(cellWidth * (6 / 5))
+        )
+        
         return layout
     }
 }

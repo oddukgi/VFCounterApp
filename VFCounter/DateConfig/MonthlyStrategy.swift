@@ -7,34 +7,19 @@
 //
 
 import Foundation
-
-struct MonthlyList {
-    var startDate: Date?
-    var format: String = "YYYY MM"
-    var locale = Locale(identifier: "ko_KR")
-
-}
-
-struct DateValue {
-    var minV: Date?
-    var minF: Date?
-    var maxV: Date?
-    var maxF: Date?
-}
+import CoreStore
 
 public class MonthlyDateStrategy: DateStrategy {
-
+    
     public var date: Date = Date()
-
+    
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
-
-    // MARK: - Date Setting    
     private var vDates: [String] = []
     private var fDates: [String] = []
+    private var dateValue = DateValue()
 
     public var mininumDate: Date? {
-
         set {
             self.privateMinimumDate = newValue
         }
@@ -52,13 +37,10 @@ public class MonthlyDateStrategy: DateStrategy {
         }
     }
 
-    let monthList = MonthlyList()
-    var dateValue = DateValue()
-
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = monthList.locale
-        formatter.dateFormat = monthList.format
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "YYYY MM"
         return formatter
     }()
 
@@ -66,17 +48,14 @@ public class MonthlyDateStrategy: DateStrategy {
     public init(date: Date) {
         self.date = date
     }
-
-    // MARK: - Setting Date
+    
     public func fetchedData() {
         let dataManager = DataManager()
 
-        var vDatemap: [[String: Any]] = []
-        var fDatemap: [[String: Any]] = []
-        dataManager.getDateDictionary { (veggieDates, fruitDates) in
-            vDatemap = veggieDates
-            fDatemap = fruitDates
-        }
+        let type = ["야채", "과일"]
+        // 전체 데이터 가져오기
+        let vDatemap = getDateMap(type: type[0])
+        let fDatemap = getDateMap(type: type[1])
         
         vDatemap.forEach { (item) in
             _ = item.compactMap({ if $0 == "date" {  self.vDates.append($1 as? String ?? "" ) } })
@@ -92,31 +71,31 @@ public class MonthlyDateStrategy: DateStrategy {
         dateValue.maxF = fDates.first?.changeDateTime(format: .date)
     }
     
-    public func updateLabel() -> (String?, [String]?, [String]?) {
-
+    // MARK: - Setting Date
+    public func getDateMap(type: String) -> [[String: Any]] {
+        guard let queryDict = try? Storage.dataStack
+                .queryAttributes(From<Category>().select(NSDictionary.self, .attribute(\.$date))
+                .where(\.$type == type).orderBy(.descending(\.$date))) else { return [[:]] }
+        return queryDict
+    }
+    
+    public func getDates() -> (String?, [String]?, [String]?) {
         let strDate = dateFormatter.string(from: date)
         let datemap = DateProvider.updateDateMap(date: date, isWeekly: false)
-        let monthlyDate = checkDate(datemap: datemap)
+        let commonDate = getCommonDate(datemap: datemap)
 
-        return (strDate, monthlyDate, datemap)
+        return (strDate, commonDate, datemap)
     }
 
-    private func checkDate(datemap: [String]) -> [String] {
+    private func getCommonDate(datemap: [String]) -> [String] {
         var items = Set<String>()
-        let dataManager = DataManager()
+        let dataManager = CoreDataManager()
+        var shortDate = ""
         datemap.forEach { (element) in
-
-            let item = element.components(separatedBy: " ").first
-
-            dataManager.getSpecificDate(date: item!) { (veggies, fruits) in
-             if veggies.count > 0 {
-                 items.insert(element)
-             }
-
-             if fruits.count > 0 {
-               items.insert(element)
-              }
-            }
+            // get yyyy.MM.dd
+            shortDate = element.extractDate
+            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
+            items.insert(element)
         }
 
         return Array(items).sorted()
@@ -161,12 +140,10 @@ public class MonthlyDateStrategy: DateStrategy {
             var firstDate = minDate.startOfMonth()
             let map = firstDate.getMonthlyDates()
             
-            if map.contains(date) {
-                return
-            }
+            if map.contains(date) { return }
             
             date = date.lastMonth
-            DateSettings.default.periodController.monthDate = date
+//            DateSettings.default.periodController.monthDate = date
         }
     }
 
@@ -179,7 +156,7 @@ public class MonthlyDateStrategy: DateStrategy {
 
         if ((year == maxYear) && (month < maxMonth)) || (year != maxYear) {
             date = date.nextMonth
-            DateSettings.default.periodController.monthDate = date
+//            DateSettings.default.periodController.monthDate = date
         }
     }
 

@@ -69,7 +69,7 @@ extension PickItemVC {
         currentSnapshot = NSDiffableDataSourceSnapshot<Section, PickItems.Element>()
 
         currentSnapshot.appendSections([.main])
-        if datemodel.tag == 0 {
+        if model.type == "야채" {
             currentSnapshot.appendItems(pickItems.collections.first!.elements)
 
         } else {
@@ -107,19 +107,25 @@ extension PickItemVC {
         kindSegmentControl.backgroundColor = ColorHex.iceBlue
         kindSegmentControl.tintColor = ColorHex.lightBlue
         kindSegmentControl.addTarget(self, action: #selector(changedIndexSegment), for: .valueChanged)
+        
+        let type = SettingManager.getKindSegment(keyName: "KindOfItem") ?? ""
+        (type == "야채") ? (kindSegmentControl.selectedSegmentIndex = 0) : (kindSegmentControl.selectedSegmentIndex = 1)
+        
     }
 
     @objc func changedIndexSegment(sender: UISegmentedControl) {
 
         switch sender.selectedSegmentIndex {
         case 0:
-            datemodel.tag = 0
+            model.type = "야채"
+            SettingManager.setKindSegment(kind: model.type)
 
         default:
-            datemodel.tag = 1
+            model.type = "과일"
+            SettingManager.setKindSegment(kind: model.type)
 
         }
-        updateNaviTitle(to: datemodel.tag)
+        updateNaviTitle(for: model.type)
         updateData()
         updateRemainTotalText()
     }
@@ -127,18 +133,20 @@ extension PickItemVC {
     // MARK: - update text showing (remain, total)
     func updateRemainTotalText() {
 
+        var config = model.valueConfig
         let title = ["추가할 무게: ", "최대 무게: "]
         var value = ""
-        switch datemodel.tag {
-        case 0:
-            let remain = datemodel.maxV - datemodel.sumV
+        var remain = 0
+        switch model.type {
+        case "야채":
+            remain = config.maxVeggies - config.sumVeggies
             lblRemain.text = title[0] + "\(remain)g"
-            lblTotal.text = title[1] + "\(datemodel.maxV)g"
+            lblTotal.text = title[1] + "\(config.maxVeggies)g"
        
         default:
-            let remain = datemodel.maxF - datemodel.sumF
+            remain = config.maxFruits - config.sumFruits
             lblRemain.text = title[0] + "\(remain)g"
-            lblTotal.text = title[1] + "\(datemodel.maxF)g"
+            lblTotal.text = title[1] + "\(config.maxFruits)g"
         }
     }
 }
@@ -160,7 +168,7 @@ extension PickItemVC: UICollectionViewDelegate {
         let name = cell.lblName.text ?? ""
         let image = cell.itemImage.image
 
-        storeItems(name: name, dateTime: datemodel.date, image: image)
+        storeItems(name: name, dateTime: model.date, image: image)
     }
 }
 
@@ -171,7 +179,9 @@ extension PickItemVC: UserDateTimeDelegate {
         checkMaxValueFromDate(date: dt)
         updateRemainTotalText()
         
-        NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["veggieAmount": datemodel.maxV])
-        NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["fruitAmount": datemodel.maxF])
+        NotificationCenter.default.post(name: .updateTaskPercent, object: nil,
+                                        userInfo: ["veggieAmount": model.valueConfig.maxVeggies])
+        NotificationCenter.default.post(name: .updateTaskPercent, object: nil,
+                                        userInfo: ["fruitAmount": model.valueConfig.maxFruits])
     }
 }

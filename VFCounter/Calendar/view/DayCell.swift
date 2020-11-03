@@ -258,10 +258,12 @@ class DayCell: JTACDayCell {
 
         let maxVeggie = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
         let maxFruit = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
-        let values = dataManager.getSumItems(date: dateArray.first!)
+        let values = 10
+        
+        // maxvalue
 
-        self.ringButton.ringProgressView.ring1.progress = Double(values.0) / Double(maxVeggie)
-        self.ringButton.ringProgressView.ring2.progress = Double(values.1) / Double(maxFruit)
+//        self.ringButton.ringProgressView.ring1.progress = Double(values.0) / Double(maxVeggie)
+//        self.ringButton.ringProgressView.ring2.progress = Double(values.1) / Double(maxFruit)
 
     }
 

@@ -23,12 +23,11 @@ struct ValueConfig {
 
 class DateProvider {
 
-    class func updateDateMap(date: Date, isWeekly: Bool = true) -> [String] {
+    class func updateDateMap(date: Date, isWeekly: Bool = true) -> [Date] {
 
         var dates = [Date]()
         let startOfMonth = date.startOfMonth(in: Calendar.current)
         isWeekly ? (dates = date.getWeekDates()) : (dates = startOfMonth.getMonthlyDates())
-        let arrDates = dates.map { $0.changeDateTime(format: .longDate)}
-        return arrDates
+        return dates
     }
 }

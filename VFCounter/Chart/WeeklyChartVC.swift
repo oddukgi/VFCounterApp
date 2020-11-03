@@ -17,7 +17,7 @@ class WeeklyChartVC: ChartBaseVC {
     private let dataManager = DataManager()
     private var weekday = [String]()    
     weak var delegate: UpdateDateDelegate?
-
+    
     lazy var arrowButtons: [UIButton] = {
         var buttons = [UIButton]()
         var img = ["chartL", "chartR"]
@@ -37,7 +37,10 @@ class WeeklyChartVC: ChartBaseVC {
         stackView.distribution = .fill
         return stackView
     }()
-
+    
+    deinit {
+        model.removeobserver()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,14 +49,16 @@ class WeeklyChartVC: ChartBaseVC {
         connectAction()
         configureChart()
         applyChartOption()
+        connectHandler()
         configureMarker()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        model.loadChart()
         self.updatePeriod()
-        self.changeLabelText()
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        model.removeobserver()
+//    }
 
     private func configure() {
         view.addSubViews(weekStackView, lblweek)
@@ -72,29 +77,36 @@ class WeeklyChartVC: ChartBaseVC {
             make.centerY.equalTo(weekStackView.snp.centerY)
             make.width.equalTo(130)
         }
+        changedWeekLabel(period: strategy.period)
     }
 
-    private func changeLabelText() {
+    func changedWeekLabel(period: String) {
+        lblweek.text = period
+    }
     
-        let data = dateStrategy.updateLabel()
-        lblweek.text = data.0
-        let datamap = data.2!
-        let date = datamap[0].changeDateTime(format: .longDate)
-        delegate?.sendChartDate(date: date)
-        setDataCount(datemap: datamap)
+    func displayData() {
+        let datemap = strategy.strDateMap
+        
+        print("Chart DateMap: \(datemap)")
+        setDataCount(datemap: datemap)
     }
-
     func connectAction() {
 
         arrowButtons[0].addTargetClosure { _ in
             self.updatePeriod()
-            self.dateStrategy.previous()
-            self.changeLabelText()
+            self.strategy.previous()
+            self.changedWeekLabel(period: self.strategy.period)
         }
         arrowButtons[1].addTargetClosure { _ in
             self.updatePeriod()
-            self.dateStrategy.next()
-            self.changeLabelText()
+            self.strategy.next()
+            self.changedWeekLabel(period: self.strategy.period)
+        }
+    }
+    
+    func connectHandler() {
+        model.refreshChartHandler = { h_refresh in
+            self.displayData()
         }
     }
 
@@ -105,14 +117,16 @@ class WeeklyChartVC: ChartBaseVC {
 
         var veggieChartEntry: [BarChartDataEntry] = []
         var fruitChartEntry: [BarChartDataEntry] = []
-
+        let type = ["야채", "과일"]
+        
         for (index, item) in datemap.enumerated() {
 
-            let customDate = item.components(separatedBy: " ").first!
-            let values = dataManager.getSumItems(date: customDate)
-
-            let item1 = BarChartDataEntry(x: Double(index), y: Double(values.0))
-            let item2 = BarChartDataEntry(x: Double(index), y: Double(values.1))
+            let customDate = item.extractDate
+            let sum = model.getSumItems(date: customDate)
+            
+            print("Chart Sum: \(sum.0), \(sum.1)")
+            let item1 = BarChartDataEntry(x: Double(index), y: Double(sum.0))
+            let item2 = BarChartDataEntry(x: Double(index), y: Double(sum.1))
 
             veggieChartEntry.append(item1)
             fruitChartEntry.append(item2)

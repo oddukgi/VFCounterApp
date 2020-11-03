@@ -15,10 +15,12 @@ import Charts
 class ChartBaseVC: UIViewController, ChartViewDelegate {
 
     var shouldHideData: Bool = false
-    var dateStrategy: DateStrategy!
-
-    init(dateStrategy: DateStrategy) {
-        self.dateStrategy = dateStrategy
+    var strategy: DateStrategy!
+    var model: PeriodListModel!
+    
+    init(strategy: DateStrategy) {
+        self.strategy = strategy
+        model = PeriodListModel(strategy: strategy, kind: .chart)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -115,9 +117,8 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
     }
 
     func updatePeriod() {
-        dateStrategy.fetchedData()
-        dateStrategy.setMinimumDate()
-        dateStrategy.setMaximumDate()
+        strategy.fetchedData()
+        strategy.setMinimumDate()
+        strategy.setMaximumDate()
     }
-
 }

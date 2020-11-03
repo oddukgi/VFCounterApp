@@ -9,10 +9,9 @@
 import UIKit
 import SnapKit
 
-protocol PickItemVCProtocol: class {
-
-    func addItems(item: VFItemController.Items, tag: Int)
-    func updateItems(item: VFItemController.Items, time: Date?, tag: Int)
+protocol PickItemProtocol: class {
+    func addItems(item: Items, pickItemVC: PickItemVC?)
+    func updateItems(item: Items, oldDate: Date)
 }
 
 class PickItemVC: UIViewController {
@@ -34,30 +33,30 @@ class PickItemVC: UIViewController {
     var collectionView: UICollectionView! = nil
     var dataSource: UICollectionViewDiffableDataSource<Section, PickItems.Element>! = nil
     var currentSnapshot: NSDiffableDataSourceSnapshot<Section, PickItems.Element>! = nil
-    
-    let pickItems = PickItems()
-    var vfItems: VFItemController.Items!
-    weak var delegate: PickItemVCProtocol?
 
+    weak var delegate: PickItemProtocol?
+    weak var pickItemModel: PickItemModel?
+    let pickItems = PickItems()
     var checkedIndexPath = Set<IndexPath>()
-    var datemodel: DateModel!
+    var model: ItemModel!
     var kindSegmentControl: UISegmentedControl!
   
-    init(delegate: PickItemVCProtocol, datemodel: DateModel, sectionFilter: SectionFilter = .main) {
+    init(delegate: PickItemProtocol? = nil,
+         model: ItemModel, sectionFilter: SectionFilter = .main) {
         super.init(nibName: nil, bundle: nil)
         self.delegate        = delegate
-        self.datemodel       = datemodel
+        self.model           = model
         self.sectionFilter   = sectionFilter
     }
-    
-    var items: VFItemController.Items? {
+
+    var items: Items? {
         didSet {
             self.fetchedItem = self.items
         }
     }
 
     var newDate: String {
-        return String(datemodel.date.split(separator: " ").first!)
+        return model.date.extractDate
     }
     
     required init?(coder: NSCoder) {
@@ -89,8 +88,8 @@ class PickItemVC: UIViewController {
         updateRemainTotalText()
     }
 
-    func updateNaviTitle(to tag: Int) {
-        tag == 0 ? (navigationItem.title = NavTitle.veggie.text)
+    func updateNaviTitle(for type: String) {
+        type == "야채" ? (navigationItem.title = NavTitle.veggie.text)
             : (navigationItem.title = NavTitle.fruit.text)
     }
     
@@ -100,7 +99,7 @@ class PickItemVC: UIViewController {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self,
                                          action: #selector(dismissVC))
     
-        updateNaviTitle(to: datemodel.tag)
+        updateNaviTitle(for: model.type)
         navigationItem.rightBarButtonItem = doneButton
         self.setupToHideKeyboardOnTapOnView()
     }
@@ -111,7 +110,7 @@ class PickItemVC: UIViewController {
 
     func configureMeasurementView() {
     
-        measurementView = MeasurementView(tag: datemodel.tag)
+        measurementView = MeasurementView(tag: model.type)
         view.addSubview(measurementView)
         measurementView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(45)
@@ -140,10 +139,10 @@ class PickItemVC: UIViewController {
     func configureSubview() {
 
         if fetchedItem != nil {
-            datemodel.date = fetchedItem!.date
+            model.date = fetchedItem!.date
         }
         
-        userDTView = UserDateTimeView(dateTime: datemodel.date,
+        userDTView = UserDateTimeView(dateTime: model.date,
                                      entityTime: fetchedItem?.entityDT)
     
         userDTView.delegate = self
@@ -171,46 +170,53 @@ class PickItemVC: UIViewController {
     }
     
     // MARK: Add Button
+    
+    func copyItem() -> Items {
+            
+        let indexPath = checkedIndexPath.first!
+        let item = currentSnapshot.itemIdentifiers[indexPath.row]
+        
+        pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
+        model.date = userDTView.dateTime
+      
+        let remain = pickItemModel?.compareAmount(amount: pickItems.item.amount, type: model.type)
+        if let remain = remain, remain > 0 {
+            self.presentAlertVC(title: "알림", message: "\(remain)g 추가할 수 있습니다.", buttonTitle: "OK")
+        }
+        
+         return Items(name: item.name, date: model.date,
+                                      image: item.image, amount: pickItems.item.amount,
+                                      entityDT: userDTView.dtPickerView.date, type: model.type)
+    }
+    
     @objc func pressedAdd() {
         
         guard !checkedIndexPath.isEmpty else { return }
-            
-        let indexPath = checkedIndexPath.first!
-        let row = indexPath.row
-        let item = currentSnapshot.itemIdentifiers[row]
+        let selectedItem = copyItem()
+        dismiss(animated: true)
         
-        pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
-        datemodel.date = userDTView.dateTime
-        if compareAmount(amount: pickItems.item.amount) {
-            return
-        }
-   
-        let selectedItem = VFItemController.Items(name: item.name, date: datemodel.date, image: item.image, amount: pickItems.item.amount, entityDT: userDTView.dtPickerView.date)
-        
-        if fetchedItem != nil {
-            delegate?.updateItems(item: selectedItem, time: fetchedItem?.entityDT, tag: datemodel.tag)
+        if let entityDT = fetchedItem?.entityDT {
+            delegate?.updateItems(item: selectedItem, oldDate: entityDT)
         } else {
-            delegate?.addItems(item: selectedItem, tag: datemodel.tag)
+            delegate?.addItems(item: selectedItem, pickItemVC: self)
         }
-
-        dismissVC()
     }
 
     func getSumValue() {
         let datamanager = DataManager()
-        let sum = datamanager.getSumItems(date: newDate)
-        datemodel.sumV = sum.0
-        datemodel.sumF = sum.1
+        let sum = 10
+        model.valueConfig.sumVeggies = sum
+        model.valueConfig.sumFruits = sum
     }
     
     func updateCurrentMaxValue() {
         let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
         let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
         
-        let maxV = (veggieRate > 0) ? Int(veggieRate) : datemodel.maxV
-        let maxF = (fruitRate > 0) ? Int(fruitRate) : datemodel.maxF
-        datemodel.maxV = maxV
-        datemodel.maxF = maxF
+        let maxV = (veggieRate > 0) ? Int(veggieRate) : model.valueConfig.maxVeggies
+        let maxF = (fruitRate > 0) ? Int(fruitRate) : model.valueConfig.maxFruits
+        model.valueConfig.maxVeggies = maxV
+        model.valueConfig.maxFruits = maxF
         getSumValue()
     }
 
@@ -218,46 +224,16 @@ class PickItemVC: UIViewController {
     func checkMaxValueFromDate(date: String) {
        
         let datamanager = DataManager()
-        datemodel.date = date
-        let maxValues = datamanager.getMaxData(date: newDate)
-        let maxVeggie = (maxValues.0 == 0) ? datemodel.maxV : maxValues.0
-        let maxFruit = (maxValues.1 == 0) ? datemodel.maxF : maxValues.1
+        model.date = date
+        let maxVeggie = 500
+        let maxFruit =  500
         
         SettingManager.setVeggieTaskRate(percent: Float(maxVeggie))
         SettingManager.setFruitsTaskRate(percent: Float(maxFruit))
         
-        datemodel.maxV = maxVeggie
-        datemodel.maxF = maxFruit
+        model.valueConfig.maxVeggies = maxVeggie
+        model.valueConfig.maxFruits = maxFruit
         getSumValue()
-    }
-    
-    func compareAmount(amount: Int) -> Bool {
-        
-        var sumV = datemodel.sumV
-        var sumF = datemodel.sumF
-          
-        if datemodel.tag == 0 {
-            
-            let simulatedVeggie = sumV + amount
-            let remain = datemodel.maxV - sumV
-            
-            if (simulatedVeggie > datemodel.maxV) && amount > 0 {
-                self.presentAlertVC(title: "알림", message: "\(remain)g 추가할 수 있습니다.", buttonTitle: "OK")
-                return true
-            }
-            
-        } else {
-            
-            let simulatedFruit = sumF + amount
-            let remain = datemodel.maxF - sumF
-            
-            if (simulatedFruit > datemodel.maxF) && amount > 0 {
-                self.presentAlertVC(title: "알림", message: "\(remain)g 추가할 수 있습니다.", buttonTitle: "OK")
-                return true
-            }
-        }
-        
-        return false
     }
     
     // MARK: modify value
@@ -286,7 +262,7 @@ class PickItemVC: UIViewController {
     private var btnAdd = VFButton()
     private var measurementView: MeasurementView!
     private var userDTView: UserDateTimeView!
-    private var fetchedItem: VFItemController.Items?
+    private var fetchedItem: Items?
     private var sectionFilter: SectionFilter?
     
     lazy var stackView: UIStackView = {

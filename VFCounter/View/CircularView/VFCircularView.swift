@@ -51,7 +51,6 @@ class VFCircularView: UIView {
         let lbl = VFBodyLabel(textAlignment: .center,
                               font: NanumSquareRound.bold.style(offset: 13.5),
                               fontColor: .black)
-        lbl.text = " g"
         lbl.numberOfLines = 0
         return lbl
     }()
@@ -60,7 +59,6 @@ class VFCircularView: UIView {
         let lbl = VFBodyLabel(textAlignment: .center,
                               font: NanumSquareRound.bold.style(offset: 13.5),
                               fontColor: .black)
-        lbl.text = " g"
         lbl.numberOfLines = 0
         return lbl
     }()

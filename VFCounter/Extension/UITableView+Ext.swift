@@ -10,6 +10,11 @@ import UIKit
 
 // This code refers to
 extension UITableView {
+    
+    func dequeueCell<T: UITableViewCell>(indexPath: IndexPath) -> T? {
+        return self.dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as? T
+    }
+    
     func hasRowAtIndexPath(indexPath: IndexPath) -> Bool {
         return indexPath.section < self.numberOfSections && indexPath.row < self.numberOfRows(inSection: indexPath.section)
     }

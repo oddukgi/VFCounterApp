@@ -11,7 +11,7 @@ import SnapKit
 
 class MeasurementView: UIView {
 
-    var tags = 0
+    var type = ""
     lazy var labelStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -54,9 +54,9 @@ class MeasurementView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    convenience init(tag: Int) {
+    convenience init(tag: String) {
         self.init(frame: .zero)
-        self.tags = tag
+        self.type = tag
         setSlider()
         setLayout()
         createDismissKeyboardTapGesture()
@@ -72,7 +72,7 @@ class MeasurementView: UIView {
         let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
         let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
 
-        if tags == 0 {
+        if type == "야채" {
             slider.values(min: 1, max: veggieRate, current: 10)
         } else {
             slider.values(min: 1, max: fruitRate, current: 10)

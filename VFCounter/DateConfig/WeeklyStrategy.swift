@@ -7,24 +7,20 @@
 //
 
 import Foundation
+import CoreStore
 
 public class WeeklyDateStrategy: DateStrategy {
-    // MARK: - Properties
-    struct DateValue {
-        var minV: Date?
-        var minF: Date?
-        var maxV: Date?
-        var maxF: Date?
-    }
+
     public var date: Date = Date()
+
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
     private var vDates: [String] = []
     private var fDates: [String] = []
     private var configs = ValueConfig()
-    var dateValue = DateValue()
+    private var dateValue = DateValue()
 
-    public var mininumDate: Date? {
+    private var mininumDate: Date? {
 
         set {
             self.privateMinimumDate = newValue
@@ -34,7 +30,7 @@ public class WeeklyDateStrategy: DateStrategy {
         }
     }
 
-   public var maximumDate: Date? {
+    private var maximumDate: Date? {
         set {
             self.privateMaximumDate = newValue?.endOfMonth()
         }
@@ -42,22 +38,39 @@ public class WeeklyDateStrategy: DateStrategy {
             return self.privateMaximumDate
         }
     }
-
+    
+    public func getDateMap() -> [Date] {
+        
+        let weeks = date.getCurrentWeek()
+        return weeks
+    }
+    
+    public var strDateMap: [String] {
+        
+        let datemap = getDateMap()
+        let strDates = datemap.map { $0.changeDateTime(format: .longDate) }
+        return strDates
+    }
+    
     public init(date: Date) {
         self.date = date
-       
+    }
+    
+    private func getDateDictionary(type: String) -> [[String: Any]] {
+        guard let queryDict = try? Storage.dataStack
+                .queryAttributes(From<Category>().select(NSDictionary.self, .attribute(\.$date))
+                                    .where(\.$type == type).orderBy(.descending(\.$date))) else { return [[:]] }
+        
+        return queryDict
     }
 
-    // MARK: - Setting Date
     public func fetchedData() {
         let dataManager = DataManager()
 
-        var vDatemap: [[String: Any]] = []
-        var fDatemap: [[String: Any]] = []
-        dataManager.getDateDictionary { (veggieDates, fruitDates) in
-            vDatemap = veggieDates
-            fDatemap = fruitDates
-        }
+        let type = ["야채", "과일"]
+        // 전체 데이터 가져오기
+        let vDatemap = getDateDictionary(type: type[0])
+        let fDatemap = getDateDictionary(type: type[1])
         
         vDatemap.forEach { (item) in
             _ = item.compactMap({ if $0 == "date" {  self.vDates.append($1 as? String ?? "" ) } })
@@ -71,54 +84,32 @@ public class WeeklyDateStrategy: DateStrategy {
         dateValue.minF = fDates.last?.changeDateTime(format: .date)
         dateValue.maxV = vDates.first?.changeDateTime(format: .date)
         dateValue.maxF = fDates.first?.changeDateTime(format: .date)
+
     }
     
-    public func updateLabel() -> (String?, [String]?, [String]?) {
-
-        var isSunday = false
-        var datemap = [String]()
-        let weekend = ["토", "일"]
-        
-        let newDate = date.dayBefore.dayOfWeek() ?? ""
-       
-        if weekend.contains(newDate) {
-            let tmpDate = date.getStartOfWeek(value: -5)
-            datemap = DateProvider.updateDateMap(date: tmpDate)
-        } else {
-            
-            date = date.getStartOfWeek()
-            datemap = DateProvider.updateDateMap(date: date)
-        }
+    public func getCommonDate() -> [String] {
     
-        let weeklyDate = setWeeklyDate(startDate: datemap.first!, endDate: datemap.last!)
-        let commonDate = checkDate(datemap: datemap)
-
-        return (weeklyDate, commonDate, datemap)
-    }
-
-    // 공통 날짜 가져오기
-    private func checkDate(datemap: [String]) -> [String] {
+        let strDates = strDateMap
+        let dataManager = CoreDataManager()
         var items = Set<String>()
-        let dataManager = DataManager()
-        datemap.forEach { (element) in
-
-            let item = element.components(separatedBy: " ").first
-
-            dataManager.getSpecificDate(date: item!) { (veggies, fruits) in
-             if veggies.count > 0 {
-                 items.insert(element)
-             }
-
-             if fruits.count > 0 {
-               items.insert(element)
-              }
-            }
+    
+        strDates.forEach { (element) in
+            // get yyyy.MM.dd
+            let shortDate = element.extractDate
+            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
+            items.insert(element)
         }
-
+    
         return Array(items).sorted()
     }
+    
+    public var period: String {
+        
+        let strDates = strDateMap
+        return getWeeklyDate(startDate: strDates.first!, endDate: strDates.last!)
+    }
 
-    private func setWeeklyDate(startDate: String, endDate: String) -> String {
+    private func getWeeklyDate(startDate: String, endDate: String) -> String {
         let startDateArray = startDate.components(separatedBy: [".", " "])
         let endDateArray = endDate.components(separatedBy: [".", " "])
 
@@ -137,6 +128,7 @@ public class WeeklyDateStrategy: DateStrategy {
 
     public func setMinimumDate() {
         
+//        print("Min Date: \(dateValue.minV), \(dateValue.minF)")
         switch (dateValue.minV, dateValue.minF) {
         case let (oldVDates?, .none):
             privateMinimumDate = oldVDates
@@ -149,7 +141,9 @@ public class WeeklyDateStrategy: DateStrategy {
             (oldVDates < oldFDates) ? (privateMinimumDate = oldVDates) : (privateMinimumDate = oldFDates)
         }
     }
+    
     public func setMaximumDate() {
+        
         switch (dateValue.maxV, dateValue.maxF) {
         case let (oldVDates?, .none):
             privateMaximumDate = dateValue.maxV
@@ -162,26 +156,45 @@ public class WeeklyDateStrategy: DateStrategy {
             (maxVeggie < maxFruit) ? (privateMaximumDate = maxFruit) : (privateMaximumDate = maxVeggie)
       }
 
-//        print("Weekly: \(privateMinimumDate),\(privateMaximumDate)")
+        print("Weekly: \(privateMinimumDate),\(privateMaximumDate)")
     }
     
     public func previous() {
 
         guard let minDate = privateMinimumDate else { return }
-    
-        if date > minDate {
-            let datemap = minDate.getWeekDates()
-            if datemap.contains(date) {
-                return
-            }
-            
-            date = self.date.aDayInLastWeek.getStartOfWeek()
+      
+        print("Previous: \(date)")
+        if date >= minDate {
+
+            print("\(date) is next \(minDate)")
+            date = self.date.aDayInLastWeek.startOfWeek()
+  
         }
     }
 
     public func next() {
-        if date <= privateMaximumDate! {
-            date = self.date.aDayInNextWeek.getStartOfWeek()
+        
+        guard let maxDate = privateMaximumDate else { return }
+    
+        print("Next: \(date)")
+        if date <= maxDate {
+            
+            print("\(date) is before \(maxDate)")
+            date = self.date.aDayInNextWeek.startOfWeek()
         }
+    }
+        
+//
+//        if date <= maxDate {
+//            print(maxDate)
+//
+//            date = self.date.aDayInNextWeek.startOfWeek()
+//
+//        }
+    
+    private func updatePeriod() {
+        fetchedData()
+        setMinimumDate()
+        setMaximumDate()
     }
 }

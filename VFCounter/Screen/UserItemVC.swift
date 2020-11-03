@@ -12,46 +12,29 @@ import CoreData
 
 class UserItemVC: UIViewController {
 
-    enum Section: String {
-        case vTitle = "야채"
-        case fTitle = "과일"
-
-        var title: String {
-            return rawValue
-        }
-    }
-
+    /// section
     let circularView = VFCircularView()
-    let titleElementKind = "titleElementKind"
-    let dataManager = DataManager()
-
-    var height: CGFloat = 0
-    var stringDate: String = ""
-    var valueConfig = ValueConfig()
-    var collectionView: UICollectionView! = nil
-    var dataSource: UICollectionViewDiffableDataSource<Section, DataType>! = nil
-    var currentSnapshot: NSDiffableDataSourceSnapshot<Section, DataType>! = nil
+    var collectionView: UICollectionView!
+    /// private
     private var dateView: DateView!
-    
+    var itemSetting = ItemSettings()
+    var mainListModel: MainListModel!
     weak var delegate: CalendarVCDelegate?
-    let fetchedItems =  [ { (newDate) -> [DataType] in
-       return DataManager.fetchVeggieData(date: newDate)
-    }, { (newDate) -> [DataType] in
-       return DataManager.fetchFruitData(date: newDate)
-    } ]
-   
+
     let defaultRate = 500
+
+    init(delegate: CalendarVCDelegate?, date: String) {
+        self.delegate = delegate
+        itemSetting.stringDate = date
+        mainListModel = MainListModel(date: date)
+        super.init(nibName: nil, bundle: nil)
+    }
     
     deinit {
         removeNotification()
+        mainListModel.removeobserver()
     }
-    init(delegate: CalendarVCDelegate?, date: String) {
-        super.init(nibName: nil, bundle: nil)
-        self.delegate = delegate
-        self.stringDate = date
-
-    }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -59,21 +42,18 @@ class UserItemVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareNotificationAddObserver()
+        checkLoadingStatus()
         setupLayout()
         configureHierarchy()
-        configureDataSource()
-        configureTitleDataSource()
-        checkLoadingStatus()
-        
-        DispatchQueue.main.async {
-            self.updateData()
-        }
+        connectHandler()
+        mainListModel.configureDataSource(collectionView: collectionView)
+        mainListModel.configureTitleDataSource(delegate: self)
+        mainListModel.connectHandler()
+        mainListModel.loadData()    
     }
-
+    
     func setupLayout() {
-
         view.addSubview(circularView)
-
         let height = SizeManager().circularViewHeight
     
         circularView.snp.makeConstraints { make in
@@ -83,8 +63,10 @@ class UserItemVC: UIViewController {
     }
 
     fileprivate func prepareNotificationAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)), name: .updateTaskPercent, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)), name: .updateFetchingData, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)),
+                                               name: .updateTaskPercent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)),
+                                               name: .updateFetchingData, object: nil)
 
     }
     
@@ -104,17 +86,18 @@ class UserItemVC: UIViewController {
     @objc fileprivate func updateTaskRate(_ notification: Notification) {
 
         if let veggieAmount = notification.userInfo?["veggieAmount"] as? Int {
-            valueConfig.maxVeggies = veggieAmount
+            itemSetting.valueConfig.maxVeggies = veggieAmount
             circularView.ringView.maxVeggies = Double(veggieAmount)
             circularView.updateMaxValue(tag: 0)
         }
 
         if let fruitAmount = notification.userInfo?["fruitAmount"] as? Int {
-            valueConfig.maxFruits = fruitAmount
+            itemSetting.valueConfig.maxFruits = fruitAmount
             circularView.ringView.maxFruits = Double(fruitAmount)
             circularView.updateMaxValue(tag: 1)
         }
-        reloadDataByRange(date: stringDate)
+        
+        mainListModel.reloadRingWithMax(config: itemSetting.valueConfig, strDate: itemSetting.stringDate)
     }
 
     @objc fileprivate func updateFetchingData(_ notification: Notification) {
@@ -125,53 +108,62 @@ class UserItemVC: UIViewController {
             if newDate.containsWeekday() {
                 newDate.removeLast(2)
             }
-            stringDate = newDate
-            updateData()
+            itemSetting.stringDate = newDate
+            mainListModel.refetch(date: itemSetting.stringDate)
+        }
+        
+    }
+    func connectHandler() {
+        mainListModel.updateRingHandler = { value in
+           guard let date = value else { return }
+            self.reloadRing(date: date)
         }
     }
+    
+    func reloadRing(date: String) {
+        let sum = mainListModel.getSumItems(date: date)
+    
+        self.circularView.updateValue(veggieSum: sum.0, fruitSum: sum.1)
+        itemSetting.valueConfig.sumVeggies = sum.0
+        itemSetting.valueConfig.sumFruits = sum.1
+    
+    }
+
+    // MARK: Delegate
+    func updateDateHomeView(date: Date) {
+        delegate?.updateDate(date: date, isUpdateCalendar: true)
+    }
+    
+     func displayPickItemVC(_ model: ItemModel, _ item: Items? = nil) {
+        DispatchQueue.main.async {
+            let itemPickVC = PickItemModule.build(userVC: self, model: model)
+            
+            if let item = item {
+                itemPickVC.items = item.copy() as? Items
+            }
+            
+            let navController = UINavigationController(rootViewController: itemPickVC)
+            self.present(navController, animated: true)
+        }
+    }
+    
+    func updateSelectedItem(item: Items) {
+
+        guard !self.presentAmountWarning(config: itemSetting.valueConfig, type: item.type) else { return }
+        let model = ItemModel(date: itemSetting.stringDate, type: item.type, config: itemSetting.valueConfig)
+        displayPickItemVC(model, item)
+    }
+    
 }
 
 extension UserItemVC {
-
-    func reloadDataByRange(date: String) {
-
-        currentSnapshot = NSDiffableDataSourceSnapshot <Section, DataType>()
-
-        var sumA = 0, sumB = 0
-        let veggieFetchedItem = fetchedItems[0](date)
-        let fruitFetchedItem = fetchedItems[1](date)
+    
+    struct ItemSettings {
         
-        for (index, item) in veggieFetchedItem.enumerated() {
-
-            sumA += Int(item.amount)
-            if sumA > valueConfig.maxVeggies {
-     
-                if let veggieData = self.dataSource.itemIdentifier(for: IndexPath(item: index, section: 0)) {
-                    var snap = self.dataSource.snapshot()
-                    snap.deleteItems([veggieData])
-                    self.dataSource.apply(snap, animatingDifferences: true)
-                    dataManager.deleteEntity(originTime: item.createdDate!, Veggies.self)
-
-                 }
-            }
-        }
-
-        for (index, item) in fruitFetchedItem.enumerated() {
-
-            sumB += Int(item.amount)
-            if sumB > valueConfig.maxFruits {
-      
-                if let fruitData = self.dataSource.itemIdentifier(for: IndexPath(item: index, section: 1)) {
-                    var snap = self.dataSource.snapshot()
-                    snap.deleteItems([fruitData])
-                    self.dataSource.apply(snap, animatingDifferences: true)
-                    dataManager.deleteEntity(originTime: item.createdDate!, Fruits.self)
-
-                }
-
-            }
-        }
-
-        reloadRing(date: date)
+        let circularView = VFCircularView()
+        let titleElementKind = "titleElementKind"
+        var height: CGFloat = 0
+        var stringDate: String = ""
+        var valueConfig = ValueConfig()
     }
 }

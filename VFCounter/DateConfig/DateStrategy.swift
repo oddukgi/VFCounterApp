@@ -8,16 +8,27 @@
 
 import Foundation
 
+struct DateValue {
+    var minV: Date?
+    var minF: Date?
+    var maxV: Date?
+    var maxF: Date?
+}
+
 public protocol DateStrategy: class {
 
     var date: Date { get set }
-    var mininumDate: Date? { get set }
-    var maximumDate: Date? { get set }
+    var strDateMap: [String] { get }
+    var period: String { get }
 
-    func updateLabel() -> (String?, [String]?, [String]?)
     func fetchedData()
+    func getDateMap() -> [Date]
+    func getCommonDate() -> [String] 
     func setMinimumDate()
     func setMaximumDate()
     func previous()
     func next()
 }
+
+//    var mininumDate: Date? { get set }
+//    var maximumDate: Date? { get set }

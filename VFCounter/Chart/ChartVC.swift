@@ -12,34 +12,18 @@ import CoreStore
 
 class ChartVC: UIViewController {
 
-    var periodSegmentCtrl: CustomSegmentedControl!
-    var datafilterView: DataFilterView!
-
-    let contentView     = UIView()
-    let weeklyChartView = UIView()
-    var monthlyChartView: UIView!
-
-    lazy var btnAdd: VFButton = {
-        let button = VFButton()
-        button.addImage(imageName: "add")
-        return button
-    }()
-
-    private var weeklyChartVC: WeeklyChartVC?
-    private let calendarController = CalendarController(mode: .single)
-    private var valueConfig = ValueConfig()
-    private var currentVC: UIViewController?
-    private let datamanager = DataManager()
+    var uiconfig = ChartVC.UIConfigure()
     var dateConfigure = ChartVC.DateConfigure()
-    private var dateStrategy: DateStrategy!
-    private var isAddedItem = false
+    var currentVC: UIViewController?
+    var strategy: DateStrategy!
+    let chartModel = ChartModel()
+    var pickItemVC: PickItemVC!
     
     private var currentValue: CalendarValue? {
         didSet {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy.MM.dd"
             formatter.locale = Locale(identifier: "ko_KR")
-
         }
     }
 
@@ -47,52 +31,55 @@ class ChartVC: UIViewController {
         removeNotification()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    fileprivate func setNavigationBar() {
         self.title = "데이터"
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         view.backgroundColor = .systemBackground
-        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         self.currentValue = nil
+        setNavigationBar()
         prepareNotificationAddObserver()
         configureDataFilterView()
-        configure()
-        periodSegmentCtrl.setIndex(index: 0)
-        datafilterView.dataSegmentControl.setIndex(index: 0)
-    }
+        configureSubviews()
 
+        uiconfig.periodSegmentCtrl.setIndex(index: 0)
+        uiconfig.datafilterView.dataSegmentControl.setIndex(index: 0)
+    }
+    
     func removeCurrentVC() {
         self.currentVC?.view.removeFromSuperview()
         self.currentVC?.removeFromParent()
     }
 
     private func configureCalendar() {
-        calendarController.initialValue = self.currentValue as? Date
-        calendarController.minimumDate = Date().getFirstMonthDate()
-        calendarController.maximumDate = Date()
-        calendarController.isRingVisible = true
-        calendarController.isPopupVisible = false
+        uiconfig.calendarController.initialValue = self.currentValue as? Date
+        uiconfig.calendarController.minimumDate = Date().getFirstMonthDate()
+        uiconfig.calendarController.maximumDate = Date()
+        uiconfig.calendarController.isRingVisible = true
+        uiconfig.calendarController.isPopupVisible = false
     }
 
     fileprivate func configureDataFilterView() {
-        datafilterView = DataFilterView()
-        view.addSubViews(datafilterView)
+        uiconfig.datafilterView = DataFilterView()
+        view.addSubViews(uiconfig.datafilterView)
         
         let segmentSize = SizeManager().segmentSize()
   
-        datafilterView.snp.makeConstraints {
+        uiconfig.datafilterView.snp.makeConstraints {
             $0.bottom.equalTo(view.snp.bottom).offset(-8)
             $0.centerX.equalTo(view.snp.centerX)
             $0.size.equalTo(segmentSize)
         }
-        datafilterView.dataSegmentControl.delegate = self
+        uiconfig.datafilterView.dataSegmentControl.delegate = self
     }
 
     fileprivate func showChildVC(_ vc: UIViewController) {
         self.addChild(vc)
-        self.contentView.addSubview(vc.view)
-        vc.view.frame = self.contentView.bounds
+        uiconfig.contentView.addSubview(vc.view)
+        vc.view.frame = uiconfig.contentView.bounds
         self.currentVC = vc
         vc.didMove(toParent: self)
     }
@@ -103,14 +90,16 @@ class ChartVC: UIViewController {
 
         switch index {
         case 0:
-            dateStrategy =  WeeklyDateStrategy(date: dateConfigure.date)
-            let weeklyChartVC = WeeklyChartVC(dateStrategy: dateStrategy)
-            vc = weeklyChartVC
+            
+            print("Chart Date: \(dateConfigure.date)")
+            strategy =  WeeklyDateStrategy(date: dateConfigure.date)
+            let weeklyChartVC = WeeklyChartVC(strategy: strategy)
             weeklyChartVC.delegate = self
+            vc = weeklyChartVC
 
         default:
             configureCalendar()
-            vc = calendarController
+            vc = uiconfig.calendarController
             currentVC = vc
         }
 
@@ -118,9 +107,14 @@ class ChartVC: UIViewController {
     }
 
     func displayCurrentTab(_ index: Int) {
+        
         if let vc = viewControllerForSelectedIndex(index) {
-            (index == 0) ? self.showChildVC(vc) : (calendarController.present(above: self, contentView: contentView))
-            
+            switch index {
+            case 0:
+                self.showChildVC(vc)
+            default:
+                (uiconfig.calendarController.present(above: self, contentView: uiconfig.contentView))
+            }
         }
     }
 
@@ -140,6 +134,7 @@ class ChartVC: UIViewController {
     @objc fileprivate func updateCalendarDate(_ notification: Notification) {
         if let userDate = notification.userInfo?["usermonth"] as? Date {
             dateConfigure.calendarDate = userDate
+//            calendarController.refreshCalendar(date: userDate)
         }
     }
     
@@ -147,7 +142,7 @@ class ChartVC: UIViewController {
 
         if let userDate = notification.userInfo?["selectdate"] as? Date {
             dateConfigure.calendarDate = userDate
-            calendarController.refreshCalendar(date: userDate)
+            uiconfig.calendarController.refreshCalendar(date: userDate)
         }
     }
 
@@ -155,58 +150,53 @@ class ChartVC: UIViewController {
         // haptic feedback with UIImpactFeedbackGenerator
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
-        showPickUpViewController(tag: 0)
+        showPickUpViewController()
     }
 
-    fileprivate func checkMaxValueFromDate(date: String) {
-        let defaultV = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
-        let defaultF = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
-
-        let maxValues = datamanager.getMaxData(date: date)
-        let maxVeggie = (maxValues.0 == 0) ? defaultV : maxValues.0
-        let maxFruit = (maxValues.1 == 0) ? defaultF : maxValues.1
-
-        valueConfig.maxVeggies = maxVeggie
-        valueConfig.maxFruits = maxFruit
-    }
-
-    fileprivate func showPickUpViewController(tag: Int) {
+    fileprivate func showPickUpViewController() {
         
-        let date = getCurrentDate()
-        checkMaxValueFromDate(date: date)
-        let datemodel = DateModel(date: date, tag: tag, sumV: valueConfig.sumVeggies,
-                                  sumF: valueConfig.sumFruits, maxV: valueConfig.maxVeggies,
-                                  maxF: valueConfig.maxFruits)
+        let date = currentDate()
+        chartModel.checkMaxValueFromDate(date: date)
+        
+        let kinds = SettingManager.getKindSegment(keyName: "KindOfItem") ?? ""
+        
+        var type = (kinds == "") ? ("야채") : kinds
+        
+        let model = ItemModel(date: date, type: type, config: chartModel.valueConfig)
         DispatchQueue.main.async {
-            let itemPickVC = PickItemVC(delegate: self, datemodel: datemodel, sectionFilter: .chart)
-            let navController = UINavigationController(rootViewController: itemPickVC)
+            let pickItemVC = PickItemVC(delegate: self, model: model, sectionFilter: .chart)
+            let navController = UINavigationController(rootViewController: pickItemVC)
             self.present(navController, animated: true)
         }
     }
 
-    fileprivate func updateView(name: String, dateTime: Date) {
+    func updateView(name: String, dateTime: Date) {
         
-        let periodIndex = periodSegmentCtrl.selectedIndex
-        let dataIndex = datafilterView.selectedItem
-      
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.selectedItem
+        
+        print("New DateTime: \(dateTime)")
         if periodIndex == 0 {
             dateConfigure.date = dateTime
             valueChangedPeriod(to: periodIndex)
             
         } else {
             dateConfigure.calendarDate = dateTime
-            if dataIndex == 0 {
+            switch dataIndex {
+            case 0:
+                
                 DispatchQueue.main.async {
-                    self.calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
+                    self.uiconfig.calendarController
+                        .moveToSpecificDate(date: self.dateConfigure.calendarDate)
                 }
-            } else {
+            default:
                 valueChangedPeriod(to: periodIndex)
             }
         }
         
-        if name.count > 0 {
-            displayMessage(name: name, dateTime: dateTime)
-        }
+        guard name.count > 0 else { return }
+        displayMessage(name: name, dateTime: dateTime)
+    
     }
     
     func displayMessage(name: String, dateTime: Date) {
@@ -214,17 +204,21 @@ class ChartVC: UIViewController {
         let txtTime = dateTime.changeDateTime(format: .shortDT)
         let text = "\(name), \(txtTime) \n 추가완료"
         self.presentAlertVC(title: "알림", message: text, buttonTitle: "OK")
-        self.isAddedItem = false
     }
     
     func switchViewWithDataFilter(for pIndex: Int) {
-        let dfIndex = datafilterView.dataSegmentControl.selectedIndex
+        let dfIndex = uiconfig.datafilterView.dataSegmentControl.selectedIndex
         
         if dfIndex == 0 {
             self.displayCurrentTab(pIndex)
         } else {
             self.valueChangedData(to: dfIndex)
         }
+    }
+    
+    func displayPeriodList() {
+        let periodListVC = PeriodListVC(delegate: self, strategy: strategy)
+        self.showChildVC(periodListVC)
     }
 
 }
@@ -248,83 +242,46 @@ extension ChartVC: CustomSegmentedControlDelegate {
         switch index {
         case 0 :
             removeCurrentVC()
-            self.displayCurrentTab(self.periodSegmentCtrl.selectedIndex)
+            self.displayCurrentTab(uiconfig.periodSegmentCtrl.selectedIndex)
 
         default:
             removeCurrentVC()
-            if self.periodSegmentCtrl.selectedIndex == 0 {
-                self.dateStrategy = WeeklyDateStrategy(date: dateConfigure.date)
+            if uiconfig.periodSegmentCtrl.selectedIndex == 0 {
+                strategy = WeeklyDateStrategy(date: dateConfigure.date)
             } else {
                 
                 if dateConfigure.calendarDate > dateConfigure.date {  dateConfigure.calendarDate = Date() }
-                self.dateStrategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
+//                strategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
            }
-        
-            DispatchQueue.main.async {
-                self.showChildVC(PeriodListVC(dateStrategy: self.dateStrategy,
-                                              delegate: self, isAddedItem: self.isAddedItem))
-            }
+            
+            displayPeriodList()
         }
     }
-}
-
-extension ChartVC: PickItemVCProtocol {
-    func addItems(item: VFItemController.Items, tag: Int) {
-
-        if !item.name.isEmpty {
-            let stringDate = String(item.date.split(separator: " ").first!)
-            checkMaxValueFromDate(date: stringDate)
-            datamanager.createEntity(item: item, tag: tag, valueConfig: valueConfig)
-
-            isAddedItem = true
-            NotificationCenter.default.post(name: .updateDateTime,
-                                            object: nil, userInfo: ["userdate": stringDate])
-            updateView(name: item.name, dateTime: item.entityDT!)
-        }
-    }
-
-    func updateItems(item: VFItemController.Items, time: Date?, tag: Int) {
-
-    }
-
 }
 
 extension ChartVC {
-
+    
     struct DateConfigure {
         var calendarDate = Date()
         var date = Date()
         var indexPeriod: Int = 0
-        var indexData: Int = 0       
-    }
-
-    func getCurrentDate() -> String {
+        var indexData: Int = 0
         
-        // segment control 인덱스 가져오기 (0:주, 1:월) / (0: 데이터, 1:리스트)
-        let periodIndex = periodSegmentCtrl.selectedIndex
-        let dataIndex = datafilterView.dataSegmentControl.selectedIndex
-        var strDate = ""
-        switch periodIndex {
-        case 0:
-            let date = dateConfigure.date.changeDateTime(format: .date)
-            return date
-            
-        default:
-            if dataIndex == 0 {
-                strDate = dateConfigure.calendarDate.changeDateTime(format: .date)
-            } else {
-                strDate = dateConfigure.date.changeDateTime(format: .date)
-            }
-            return strDate
-        }
-
     }
+    struct UIConfigure {
+        
+        let contentView     = UIView()
+        let weeklyChartView = UIView()
+        var monthlyChartView: UIView!
+        var periodSegmentCtrl: CustomSegmentedControl!
+        var datafilterView: DataFilterView!
 
-}
-
-extension ChartVC: UpdateDateDelegate {
-    
-    func sendChartDate(date: Date) {
-        dateConfigure.date = date
+        lazy var btnAdd: VFButton = {
+            let button = VFButton()
+            button.addImage(imageName: "add")
+            return button
+        }()
+        
+        let calendarController = CalendarController(mode: .single)
     }
 }

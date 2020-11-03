@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol TitleSupplmentaryViewDelegate: class {
-    func showPickUpViewController(tag: Int)
+    func showPickUpViewController(type: String)
 }
 
 class TitleSupplementaryView: UICollectionReusableView {
@@ -84,7 +84,7 @@ class TitleSupplementaryView: UICollectionReusableView {
     }
 
     @objc func displayItems( sender: VFButton) {
-        delegate?.showPickUpViewController(tag: sender.tag)
+        delegate?.showPickUpViewController(type: lblTitle.text!)
         
         // haptic feedback with UIImpactFeedbackGenerator
         let generator = UIImpactFeedbackGenerator(style: .light)

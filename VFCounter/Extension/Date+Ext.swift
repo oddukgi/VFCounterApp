@@ -16,6 +16,7 @@ extension Date {
         case shortDT = "yyyy.MM.dd h:mm a"
         case longDate = "yyyy.MM.dd EEE"
         case onlyTime = " h:mm:ss a"
+        case time = " h:mm a"
         case pickerTime = " HH:mm:ss"
         case selectedDT = "yyyy-MM-dd HH:mm:ss"
         case day       = "EEE"
@@ -74,12 +75,12 @@ extension Date {
     }
 
     // Start Of Week, End Of Week
-    func getStartOfWeek(in calendar: Calendar = .current, value: Int = 1) -> Date {
+    func startOfWeek(in calendar: Calendar = .current, value: Int = 1) -> Date {
         let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
         return calendar.date(byAdding: .day, value: value, to: startDate)!
     }
 
-    func getEndOfWeek(in calendar: Calendar = .current, value: Int = 7) -> Date {
+    func endOfWeek(in calendar: Calendar = .current, value: Int = 7) -> Date {
         let startDate = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
         return calendar.date(byAdding: .day, value: value, to: startDate)!
     }
@@ -172,4 +173,26 @@ extension Date {
         minDateComponent.day = 1
         return calendar.date(from: minDateComponent)?.endOfDay()
     }
+    
+    func compareTo(date: Date, toGranularity: Calendar.Component ) -> ComparisonResult {
+        var cal = Calendar.current
+        return cal.compare(self, to: date, toGranularity: toGranularity)
+    }
+    
+    func getCurrentWeek() -> [Date] {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 2 // Start on Monday (or 1 for Sunday)
+        let today = calendar.startOfDay(for: self)
+        var week = [Date]()
+        if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) {
+            for i in 0...6 {
+                if let day = calendar.date(byAdding: .day, value: i, to: weekInterval.start) {
+                    week += [day]
+                }
+            }
+        }
+        
+        return week
+    }
+
 }

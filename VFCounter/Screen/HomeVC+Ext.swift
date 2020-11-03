@@ -53,7 +53,9 @@ extension HomeVC {
             make.edges.equalTo(contentView)
         }
         userItemView.layoutIfNeeded()
-        self.add(childVC: UserItemVC(delegate: self, date: newDate!), to: self.userItemView)
+        
+        guard let date = newDate else { return }
+        self.add(childVC: UserItemVC(delegate: self, date: date), to: self.userItemView)
     }
 
 }

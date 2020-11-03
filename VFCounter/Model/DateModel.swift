@@ -12,22 +12,15 @@ protocol CalendarVCDelegate: class {
     func updateDate(date: Date, isUpdateCalendar: Bool)
 }
 
-struct DateModel {
+struct ItemModel {
     var date: String
-    var tag: Int
-    var sumV: Int
-    var sumF: Int
-    var maxV: Int
-    var maxF: Int
+    var type: String
+    var valueConfig: ValueConfig
 
-    init(date: String = "", tag: Int, sumV: Int, sumF: Int, maxV: Int, maxF: Int) {
+    init(date: String = "", type: String, config: ValueConfig) {
         self.date = date
-        self.tag  = tag
-        self.sumV = sumV
-        self.sumF = sumF
-        self.maxV = maxV
-        self.maxF = maxF
-
+        self.type  = type
+        self.valueConfig = config
         changeDateFormat()
 
     }
@@ -35,4 +28,13 @@ struct DateModel {
     mutating func changeDateFormat() {
         self.date += Date().changeDateTime(format: .onlyTime)
     }
+}
+
+struct ItemDate {
+    var oldItem: String = ""
+    var newItem: String = ""
+    var oldDate: String = ""
+    var newDate: String = ""
+    var entityDT: Date = Date()
+    init() { }
 }

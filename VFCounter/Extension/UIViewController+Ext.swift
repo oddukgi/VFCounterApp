@@ -32,4 +32,24 @@ extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    func presentAmountWarning(config: ValueConfig, type: String) -> Bool {
+        
+        switch type {
+        
+        case "야채":
+            if config.sumVeggies == config.maxVeggies, config.sumVeggies > 0 {
+                self.presentAlertVC(title: "알림", message: "최대치를 넘었습니다. 아이템을 삭제하세요!", buttonTitle: "OK")
+                return true
+            }
+
+        default:
+            if config.sumFruits == config.maxFruits, config.sumFruits > 0 {
+                self.presentAlertVC(title: "알림", message: "최대치를 넘었습니다. 아이템을 삭제하세요!", buttonTitle: "OK")
+                return true
+            }
+        }
+        
+        return false
+    }
 }

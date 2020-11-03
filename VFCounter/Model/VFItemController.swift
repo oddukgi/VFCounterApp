@@ -1,5 +1,5 @@
 //
-//  VFItemController.swift
+//  swift
 //  VFCounter
 //
 //  Created by Sunmi on 2020/07/24.
@@ -8,19 +8,18 @@
 
 import UIKit
 
-class VFItemController {
+struct Items: Hashable {
+    
+    var name: String
+    var date: String
+    var image: UIImage?
+    var amount: Int
+    var entityDT: Date? 
+    var type: String
 
-    struct Items: Hashable {
-        var name: String
-        var date: String
-        var image: UIImage?
-        var amount: Int
-        var entityDT: Date?
-
-        func copy(with zone: NSZone? = nil) -> Any {
-            let copy = Items(name: name, date: date, image: image,
-                             amount: amount, entityDT: entityDT)
-            return copy
-        }
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = Items(name: name, date: date, image: image,
+                         amount: amount, entityDT: entityDT, type: type)
+        return copy
     }
 }

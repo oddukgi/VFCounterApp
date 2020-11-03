@@ -93,7 +93,7 @@ class UserDateTimeView: UIView {
             dtPickerView.date = entityDT!
 
         } else {
-            dtPickerView.date = userDateTime.changeDateTime(format: .dateTime)
+            dtPickerView.date = userDateTime.changeDateTime(format: .dateTime)            
         }
     }
 }

@@ -60,4 +60,12 @@ class SettingManager {
         return userDefaults?.integer(forKey: "DataSegment")
     }
     
+    class func setKindSegment(kind: String) {
+        userDefaults?.set(kind, forKey: "KindOfItem")
+    }
+    
+    class func getKindSegment(keyName: String) -> String? {
+        return userDefaults?.string(forKey: "KindOfItem")
+    }
+    
 }

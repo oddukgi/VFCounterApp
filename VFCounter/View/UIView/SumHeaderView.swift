@@ -60,6 +60,5 @@ class SumHeaderView: UIView {
     func updateHeader(date: String, sumV: Int, sunF: Int) {
         lblDate.text = date
         lblSum.text = "아채:\(sumV)g , 과일: \(sunF)g"
-        
     }
 }

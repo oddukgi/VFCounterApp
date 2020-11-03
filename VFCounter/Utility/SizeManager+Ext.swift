@@ -54,14 +54,28 @@ extension SizeManager {
     }
    
     func getSectionEdgeInsects() -> NSDirectionalEdgeInsets {
-        var edgeIndests = NSDirectionalEdgeInsets()
-        
-        if DeviceTypes.isiPhoneSE {
-            edgeIndests = NSDirectionalEdgeInsets(top: 8, leading: 9, bottom: 9, trailing: 9)
+       var edgeIndests = NSDirectionalEdgeInsets()
+       
+       if DeviceTypes.isiPhoneSE {
+           edgeIndests = NSDirectionalEdgeInsets(top: 8, leading: 9, bottom: 9, trailing: 9)
+       } else {
+           edgeIndests = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
+       }
+       return edgeIndests
+   }
+    
+    func getListEdgeInsects() -> NSDirectionalEdgeInsets {
+       return NSDirectionalEdgeInsets(top: 3, leading: 5, bottom: 3, trailing: 5)
+   }
+    
+    func getSectionInsectFlowLayout() -> UIEdgeInsets {
+        var edgeInsects = UIEdgeInsets()
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
+            edgeInsects = UIEdgeInsets(top: 8, left: 9, bottom: 9, right: 9)
         } else {
-            edgeIndests = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 18, trailing: 10)
+            edgeInsects = UIEdgeInsets(top: 8, left: 10, bottom: 12, right: 10)
         }
-        return edgeIndests
+        return edgeInsects
         
     }
     
@@ -71,7 +85,7 @@ extension SizeManager {
         var calendarSize: CGSize = CGSize()
         
         if DeviceTypes.isiPhoneSE {
-            calendarSize = CGSize(width: 320, height: 449)
+            calendarSize = CGSize(width: 320, height: 450)
         } else if DeviceTypes.isiPhone8Standard || DeviceTypes.isiPhoneX {
             calendarSize = CGSize(width: ScreenSize.width - 39, height: 469)
         } else if DeviceTypes.isiPhone12ProMax {

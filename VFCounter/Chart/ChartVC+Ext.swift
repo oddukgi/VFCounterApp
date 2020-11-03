@@ -10,44 +10,83 @@ import UIKit
 
 extension ChartVC {
 
-    func configure() {
+    func currentDate() -> String {
+        
+        // segment control 인덱스 가져오기 (0:주, 1:월) / (0: 데이터, 1:리스트)
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.dataSegmentControl.selectedIndex
+        return chartModel.getCurrentDate(periodIndex: periodIndex,
+                                         dataIndex: dataIndex, configure: dateConfigure)
+    }
+    
+    func configureSubviews() {
 
         let defaultFont = NanumSquareRound.bold.style(offset: 15)
-        periodSegmentCtrl = CustomSegmentedControl()
-        periodSegmentCtrl.setButtonTitles(buttonTitles: [ "주", "월"])
-        periodSegmentCtrl.selectorViewColor = ColorHex.jadeGreen
-        periodSegmentCtrl.selectorTextColor = ColorHex.jadeGreen
-        periodSegmentCtrl.titleFont = defaultFont
-        periodSegmentCtrl.resourceType = .timeSection
-        periodSegmentCtrl.delegate = self
+        uiconfig.periodSegmentCtrl = CustomSegmentedControl()
+        uiconfig.periodSegmentCtrl.setButtonTitles(buttonTitles: [ "주", "월"])
+        uiconfig.periodSegmentCtrl.selectorViewColor = ColorHex.jadeGreen
+        uiconfig.periodSegmentCtrl.selectorTextColor = ColorHex.jadeGreen
+        uiconfig.periodSegmentCtrl.titleFont = defaultFont
+        uiconfig.periodSegmentCtrl.resourceType = .timeSection
+        uiconfig.periodSegmentCtrl.delegate = self
 
         let width = 200
-        view.addSubViews(periodSegmentCtrl, btnAdd)
+        view.addSubViews(uiconfig.periodSegmentCtrl, uiconfig.btnAdd)
 
         let segmentSize = SizeManager().segmentSize()
-        periodSegmentCtrl.snp.makeConstraints { make in
+        uiconfig.periodSegmentCtrl.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.centerX.equalTo(view.snp.centerX)
             make.size.equalTo(segmentSize)
         }
 
         let btnSize = SizeManager().chartAddBtnSize()
-        btnAdd.snp.makeConstraints {
+        uiconfig.btnAdd.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             $0.trailing.equalTo(view).offset(-20)
             $0.size.equalTo(btnSize)
         }
 
-        btnAdd.addTarget(self, action: #selector(tappedAdd), for: .touchUpInside)
+        uiconfig.btnAdd.addTarget(self, action: #selector(tappedAdd), for: .touchUpInside)
         
         let height = SizeManager().chartHeight
-        view.addSubview(contentView)
-        contentView.snp.makeConstraints {
-            $0.top.equalTo(periodSegmentCtrl.snp.bottom).offset(13)
+        view.addSubview(uiconfig.contentView)
+        uiconfig.contentView.snp.makeConstraints {
+            $0.top.equalTo(uiconfig.periodSegmentCtrl.snp.bottom).offset(13)
             $0.left.right.equalToSuperview()
-            $0.bottom.equalTo(datafilterView.snp.top).offset(-8)
+            $0.bottom.equalTo(uiconfig.datafilterView.snp.top).offset(-8)
         }
         
-        contentView.layoutIfNeeded()
+        uiconfig.contentView.layoutIfNeeded()
+    }
+    
+    func dismissPopup() {
+        if let vc = pickItemVC {
+            vc.dismiss(animated: true)
+        }
+    }
+}
+
+extension ChartVC: PickItemProtocol {
+    
+    func addItems(item: Items, pickItemVC: PickItemVC?) {
+        let dm = CoreDataManager()
+        let strDate = item.date.extractDate
+        self.pickItemVC = pickItemVC
+        chartModel.checkMaxValueFromDate(date: strDate)
+        self.updateView(name: item.name, dateTime: item.entityDT!)
+        dm.createEntity(item: item, config: chartModel.valueConfig)
+
+    }
+    
+    func updateItems(item: Items, oldDate: Date) {
+        
+    }
+}
+
+extension ChartVC: UpdateDateDelegate {
+
+    func sendChartDate(date: Date) {
+        dateConfigure.date = date
     }
 }
