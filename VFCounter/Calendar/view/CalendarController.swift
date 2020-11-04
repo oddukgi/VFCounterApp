@@ -82,6 +82,8 @@ JTACMonthViewDataSource {
     The block to execute after "Done" button will be tapped
     */
     var doneHandler: ((Value?) -> Void)?
+    
+    var updateMonthHandler: ((Date?) -> Void)?
 
     /**
      And initial value which will be selected bu default
@@ -182,10 +184,8 @@ JTACMonthViewDataSource {
     func moveToSpecificDate(date: Date) {
         //default set to todays date
         calendarView.scrollingMode = .stopAtEachCalendarFrame
-        calendarView.scrollToDate( date )
-        self.value = date as? Value
-        self.selectValue(self.value, in: self.calendarView)
-      
+        calendarView.scrollToDate(date)
+        refreshCalendar(date: date)
     }
     
     func refreshCalendar(date: Date) {
@@ -204,6 +204,11 @@ JTACMonthViewDataSource {
 //        view.layer.borderWidth = 1   
     }
 
+    func connectDatehandler() {
+        currentValueView.monthHandler = { value in
+            self.updateMonthHandler?(value)
+        }
+    }
     private func configureConstraints() {
 
         var screenWidth: CGFloat = 0.0
@@ -268,6 +273,8 @@ JTACMonthViewDataSource {
 
     private func selectValue(_ value: Value?, in calendar: JTACMonthView) {
         if let date = value as? Date {
+            
+            print("Select Value: \(date)")
             calendar.selectDates([date])
         }
     }

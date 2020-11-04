@@ -58,4 +58,5 @@ class ChartModel {
         valueConfig.maxVeggies = maxVeggie
         valueConfig.maxFruits = maxFruit
     }
+
 }

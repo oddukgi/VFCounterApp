@@ -13,7 +13,7 @@ class CoreDataManager {
         // MARK: create entity
     private var itemList: ListPublisher<Category>?
     var workHandler: ((Int?) -> Void)?
-    
+
     init(itemList: ListPublisher<Category>?) {
         self.itemList = itemList
     }
@@ -44,6 +44,7 @@ class CoreDataManager {
                 print(error.localizedDescription)
             case .success:
                 print("Success")
+//                self.updateView?(item.entityDT)
               }
            }
         )
@@ -86,7 +87,7 @@ class CoreDataManager {
                 case .failure(let error):
                     print(error)
                 case .success:
-                    
+                    print("Success Modify")
                     //refetch
                     self.workHandler?(1)
                 }
@@ -107,9 +108,9 @@ class CoreDataManager {
             case .failure(let error):
                 print(error)
             case .success:
-                
+                print("Success")
                 //loaddata
-                self.workHandler?(0)
+//                self.workHandler?(0)
             }
         }
         )

@@ -50,20 +50,30 @@ class ElementModel {
     }
     
     // MARK: Reload TableView
-    func reloadCV(titles: [String], category: [Category], flag: Bool = false) {
+    func reloadCV(category: [Category], flag: Bool = false) {
 
         var snapshot = NSDiffableDataSourceSnapshot<String, ItemGroup>()
-        titles.forEach { (title) in
-            snapshot.appendSections([title])
+        var section = [String]()
+        
+        let veggieItem = category.filter { $0.type == "야채" }
+        let fruitItem = category.filter { $0.type == "과일" }
+        
+        if veggieItem.count > 0 { section.append(veggieItem[0].type!) }
+        if fruitItem.count > 0 { section.append(fruitItem[0].type!) }
+        
+        snapshot.appendSections(section)
+        let sections = snapshot.sectionIdentifiers
+        
+        veggieItem.forEach { (item) in
+            let itemGroup = ItemGroup(date: item.date, category: item)
+            snapshot.appendItems([itemGroup], toSection: item.type)
         }
         
-        let sections = snapshot.sectionIdentifiers
-        category.forEach { (element) in
-            
-            let itemGroup = ItemGroup(date: element.date, category: element)
-            snapshot.appendItems([itemGroup], toSection: element.type)
+        fruitItem.forEach { (item) in
+            let itemGroup = ItemGroup(date: item.date, category: item)
+            snapshot.appendItems([itemGroup], toSection: item.type)
         }
-
+        
         dataSource.apply(snapshot, animatingDifferences: flag)
     }
 

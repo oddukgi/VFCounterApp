@@ -25,6 +25,7 @@ class MainListModel {
     private var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Category>!
     private var listPublisher: ListPublisher<Category>!
     private var date: String?
+
     private var dataManager: CoreDataManager!
     
     var dm: CoreDataManager? {
@@ -45,7 +46,7 @@ class MainListModel {
                                                         .where(\.$date == date)
                                                                 .orderBy(.descending(\.$createdDate)))
         
-        print(listPublisher.count())
+//        print(listPublisher.count())
     }
     
     // MARK: create collectionView datasource
@@ -123,6 +124,15 @@ class MainListModel {
         dataSource.apply(currentSnapshot, animatingDifferences: flag)
 //        reloadRing(date: itemSetting.stringDate)
         self.updateRingHandler?(date)
+    }
+    
+    func updateSum() -> [Int] {
+        var arraySum = [Int]()
+        
+        guard let date = date else { return [] }
+        let values = self.getSumItems(date: date)
+        arraySum  = [values.0, values.1]
+        return arraySum
     }
 
     func connectHandler() {

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import JTAppleCalendar
+import CoreStore
 
 class DayCell: JTACDayCell {
 
@@ -31,6 +32,7 @@ class DayCell: JTACDayCell {
     // MARK: - Variables
     private var setting: CalendarSettings.DayCell = CalendarSettings.default.dayCell
     private let dataManager = DataManager()
+    private var mainListModel: MainListModel!
 
     // MARK: - Lifecycle
 
@@ -251,19 +253,23 @@ class DayCell: JTACDayCell {
         }
     }
 
-    func updateRing(date: Date) {
+    func publishList(_ date: Date) {
+        let strDate = date.changeDateTime(format: .date)
+        mainListModel = MainListModel(date: strDate)
+        
+    }
+  
+    func updateRing() {
 
-        let strDate = date.changeDateTime(format: .longDate)
-        let dateArray = strDate.components(separatedBy: [" "])
-
+        let sumValue = mainListModel.updateSum()
         let maxVeggie = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
         let maxFruit = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
-        let values = 10
-        
+    
         // maxvalue
-
-//        self.ringButton.ringProgressView.ring1.progress = Double(values.0) / Double(maxVeggie)
-//        self.ringButton.ringProgressView.ring2.progress = Double(values.1) / Double(maxFruit)
+        
+        print("Sum Value: \(sumValue[0]), \(sumValue[1])")
+        self.ringButton.ringProgressView.ring1.progress = Double(sumValue[0]) / Double(maxVeggie)
+        self.ringButton.ringProgressView.ring2.progress = Double(sumValue[1]) / Double(maxFruit)
 
     }
 
@@ -275,7 +281,7 @@ class DayCell: JTACDayCell {
             self.dateLabel.isHidden = false
 
             self.dateLabel.text = dateLabelText
-
+            
             if config.isRingVisible {
 
                 if config.state!.dateBelongsTo == .thisMonth && config.state!.date > Date() {
@@ -287,7 +293,8 @@ class DayCell: JTACDayCell {
                     }
                 }
                 self.ringButton.isSelected = !config.isSelectedItem
-                updateRing(date: config.date!)
+                publishList(config.state!.date)
+                updateRing()
 
             } else {
 

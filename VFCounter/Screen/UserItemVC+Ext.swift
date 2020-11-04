@@ -11,7 +11,7 @@ import CoreStore
 
 extension UserItemVC: PickItemProtocol {
   
-    func addItems(item: Items, pickItemVC: PickItemVC?) {
+    func addItems(item: Items) {
         
         if !item.name.isEmpty {
             itemSetting.stringDate = item.date.extractDate

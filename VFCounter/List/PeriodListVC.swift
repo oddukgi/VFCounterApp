@@ -13,10 +13,23 @@ class PeriodListVC: UIViewController {
   
     weak var delegate: UpdateDateDelegate?
     var sectionControl: CustomSegmentedControl!
-    var strategy: DateStrategy!    
-    var model: PeriodListModel!
+    var strategy: DateStrategy!
+    private var model: PeriodListModel!
     var tableView: UITableView!
-  
+    
+    var listmodel: PeriodListModel? {
+        return model
+    }
+    
+    var date: Date? {
+        didSet {
+            
+            if let newDate = date {
+                strategy.date = newDate
+                updatePeriod()
+            }
+        }
+    }
     init(delegate: UpdateDateDelegate, strategy: DateStrategy) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
@@ -24,9 +37,6 @@ class PeriodListVC: UIViewController {
         self.updatePeriod()
         model = PeriodListModel(strategy: strategy, kind: .list)
 
-    }
-    deinit {
-        model.removeobserver()
     }
     
     required init?(coder: NSCoder) {
@@ -39,6 +49,11 @@ class PeriodListVC: UIViewController {
         connectAction()
         configureTableView()
         model.loadTableView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        model.removeobserver()
     }
     // MARK: create collectionView layout
     private func configureView() {
@@ -105,6 +120,10 @@ class PeriodListVC: UIViewController {
     }
     func changeDefaultDate(date: Date) {
         strategy.date = date
+    }
+    
+    func createEntity(item: Items, config: ValueConfig) {
+        model.createEntity(item: item, config: config)
     }
     
     lazy var stackView: UIStackView = {

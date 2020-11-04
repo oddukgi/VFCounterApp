@@ -19,6 +19,7 @@
 		121A909424D18C8C00AE0780 /* Fruits.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121A909324D18C8C00AE0780 /* Fruits.xcassets */; };
 		121A909A24D18F6000AE0780 /* SelfConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121A909924D18F6000AE0780 /* SelfConfigCell.swift */; };
 		121B197424CC198500CC6EEF /* PickItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B197324CC198500CC6EEF /* PickItemVC.swift */; };
+		12203A3F2552822E00F99E89 /* MonthlyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12203A3E2552822E00F99E89 /* MonthlyStrategy.swift */; };
 		12231CAC25341F0400847885 /* MaxAmountFruitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12231CAB25341F0400847885 /* MaxAmountFruitCell.xib */; };
 		12231D08253436D300847885 /* MaxAmountVeggieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12231D07253436D300847885 /* MaxAmountVeggieCell.swift */; };
 		1224C41E2541752E004AC023 /* SizeManager+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224C41D2541752E004AC023 /* SizeManager+Ext.swift */; };
@@ -171,6 +172,7 @@
 		121A909324D18C8C00AE0780 /* Fruits.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Fruits.xcassets; sourceTree = "<group>"; };
 		121A909924D18F6000AE0780 /* SelfConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfConfigCell.swift; sourceTree = "<group>"; };
 		121B197324CC198500CC6EEF /* PickItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickItemVC.swift; sourceTree = "<group>"; };
+		12203A3E2552822E00F99E89 /* MonthlyStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonthlyStrategy.swift; sourceTree = "<group>"; };
 		12231CAB25341F0400847885 /* MaxAmountFruitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MaxAmountFruitCell.xib; sourceTree = "<group>"; };
 		12231D07253436D300847885 /* MaxAmountVeggieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxAmountVeggieCell.swift; sourceTree = "<group>"; };
 		1224C41D2541752E004AC023 /* SizeManager+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SizeManager+Ext.swift"; sourceTree = "<group>"; };
@@ -556,10 +558,13 @@
 			isa = PBXGroup;
 			children = (
 				12ED8C152547C3F7002C3DE0 /* Module */,
+				12D155AC254D134900D3A4DD /* ChartModel.swift */,
 				124B918024CACD5D009616A7 /* Cell */,
 				12A26C0C254D527D00060524 /* PickItemCell.swift */,
 				12E4A5A225517D2D0061F57C /* MainListModel.swift */,
+				127A4150254D277E0092DB83 /* CoreDataManager.swift */,
 				128145D72548322600C89322 /* DataManager.swift */,
+				12A26C07254D51FC00060524 /* PeriodListModel.swift */,
 				12BBF92824CABE7B00C11ECD /* VFItemController.swift */,
 				1286EA86250F3C7600FDDBE6 /* DataFilter.swift */,
 				12283B0424CFBDA900AE93E6 /* PickItems.swift */,
@@ -632,7 +637,6 @@
 				12D1558B254D11E300D3A4DD /* MonthAxisValueFormatter.swift */,
 				12D1558C254D11E300D3A4DD /* ValueFormatter.swift */,
 				12D1558D254D11E400D3A4DD /* WeekDayAxisValueFormatter.swift */,
-				12D155AC254D134900D3A4DD /* ChartModel.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -640,6 +644,7 @@
 		12D155A7254D124800D3A4DD /* DateConfig */ = {
 			isa = PBXGroup;
 			children = (
+				12203A3E2552822E00F99E89 /* MonthlyStrategy.swift */,
 				12D1559F254D124200D3A4DD /* DateStrategy.swift */,
 				12D1559E254D124200D3A4DD /* WeeklyStrategy.swift */,
 			);
@@ -656,7 +661,6 @@
 				1232DCAF254E86A800633BCA /* ElementCell+Ext.swift */,
 				1232DC9C254E73EF00633BCA /* PeriodListVC+Ext.swift */,
 				1278F1D8255016F7003601BD /* ElementGroup.swift */,
-				12A26C07254D51FC00060524 /* PeriodListModel.swift */,
 				123D98EC254FCD4E00E157BB /* HeaderView.swift */,
 			);
 			path = List;
@@ -665,7 +669,6 @@
 		12ED8C152547C3F7002C3DE0 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				127A4150254D277E0092DB83 /* CoreDataManager.swift */,
 				12A83F1225492EAD00504EBA /* VCModule.swift */,
 				12ED8C2A2547C76E002C3DE0 /* VFModel.swift */,
 				12ED8C252547C4CD002C3DE0 /* Storage.swift */,
@@ -1123,6 +1126,7 @@
 				124B918224CACD85009616A7 /* TitleSupplementaryView.swift in Sources */,
 				12D1B5CD24EB829400F0FABB /* UIApplication+Ext.swift in Sources */,
 				12FF76E024DE7EA8009542FE /* UIViewController+Ext.swift in Sources */,
+				12203A3F2552822E00F99E89 /* MonthlyStrategy.swift in Sources */,
 				1290EE6024C6F17E008DB339 /* HomeVC+Ext.swift in Sources */,
 				12445D3B251F630B00330FFE /* CalendarVC.swift in Sources */,
 				126AE53C24C6C6B4000BCF7E /* SceneDelegate.swift in Sources */,

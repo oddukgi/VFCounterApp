@@ -13,23 +13,12 @@ extension PeriodListVC {
     @objc func changedIndexSegment(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            model.setting.selectedIndex = sender.selectedSegmentIndex
+            listmodel?.setting.selectedIndex = sender.selectedSegmentIndex
         default:
-            model.setting.selectedIndex = sender.selectedSegmentIndex
+            listmodel?.setting.selectedIndex = sender.selectedSegmentIndex
         }
     }
-    
-//    func findsection(for date: String) -> Int {
-//        var section = 0
-//        model.setting.weekday.forEach { (item) in
-//            if item.contains(date) {
-//                section = presenter.weekday.firstIndex(of: date) ?? 0
-//            }
-//        }
-//
-//        return section
-//    }
-//
+
 
     func displayMessage(model: ItemDate, nKind: Int) {
         
@@ -56,7 +45,7 @@ extension PeriodListVC: UITableViewDelegate {
     // MARK: - UITableViewDelegate
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.model.sectionTitle(forSection: section) == nil ? CGFloat.leastNormalMagnitude : 35
+        return self.listmodel?.sectionTitle(forSection: section) == nil ? CGFloat.leastNormalMagnitude : 35
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -67,6 +56,7 @@ extension PeriodListVC: UITableViewDelegate {
         sumheaderView.frame = CGRect(x: 10, y: -2, width: width - 20, height: 35)
         headerView.addSubview(sumheaderView)
         
+        guard let model = listmodel, model.datemaps.count > 0 else { return nil }
         let date = model.datemaps[section]
         let sum = model.getSumItems(date: date)
         sumheaderView.updateHeader(date: date, sumV: sum.0, sunF: sum.1)

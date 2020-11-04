@@ -27,14 +27,16 @@ class PeriodListModel {
     private var dataSource: EditableListDataSource<String, Category>!
     private var listPublisher: ListPublisher<Category>!
     private var strategy: DateStrategy?
-    private var sections = [Set<String>]()
     private var kind: Kind?
-
+    
+    var dm: CoreDataManager { return CoreDataManager(itemList: listPublisher) }
+ 
     init(strategy: DateStrategy, kind: Kind) {
         self.strategy = strategy
         self.kind = kind
-        publishList()
         connectHandler()
+        publishList()
+
     }
     
     var datemaps: [String] {
@@ -47,12 +49,17 @@ class PeriodListModel {
         datemap = strategy.getCommonDate()
         let dates = strategy.getDateMap()
 
-        let firstDate = dates.first
-        let lastDate = dates.last?.addingTimeInterval(50)
+//        let firstDate = dates.first
+//        let lastDate = dates.last?.addingTimeInterval(50)
+        
+        let firstDate = dates.first?.startOfDay()
+        let lastDate = dates.last?.startOfDay()
         print("FirstDate: \(firstDate), LastDate: \(lastDate)")
         
-        listPublisher =  Storage.dataStack.publishList(From<Category>().where(\.$createdDate >= firstDate &&
-                                                                    \.$createdDate <= lastDate)
+        listPublisher = Storage.dataStack.publishList(From<Category>().sectionBy(\.$date)
+                                                            .where(
+                                                                \.$createdDate >= firstDate
+                                                                    && \.$createdDate <= lastDate)
                                                                 .orderBy(.descending(\.$createdDate)))
         
         print(listPublisher.count())
@@ -61,12 +68,10 @@ class PeriodListModel {
     func setupTableView(tableView: UITableView) {
         dataSource = EditableListDataSource<String, Category>(tableView: tableView) {[weak self] (tableView, indexPath, _) -> UITableViewCell? in
             guard let self = self else { return nil }
+            
             if let cell: ElementCell = tableView.dequeueCell(indexPath: indexPath) {
-
             let items = self.item(forIndexPath: indexPath)
-                
-            let titles = Array(self.sections[indexPath.section])
-            cell.updateData(titles: titles, category: items)
+                cell.updateData(category: items)
                 return cell
             } else {
                 fatalError()
@@ -77,8 +82,7 @@ class PeriodListModel {
      func loadTableView() {
         listPublisher.addObserver(self) {[weak self] publisher in
             guard let self = self else { return }
-            
-            self.reloadTable(publisher: publisher, flag: true)
+            self.reloadTable(publisher: publisher, flag: false)
             
         }
         dataSource.titleForSection = {[weak self] section in
@@ -126,34 +130,22 @@ class PeriodListModel {
     // MARK: Reload TableView
     private func reloadTable(publisher: ListPublisher<Category>, flag: Bool = false) {
         
-        if sections.count > 0 {
-            sections.removeAll()
-        }
         var snapshot = NSDiffableDataSourceSnapshot<String, Category>()
         let object = publisher.snapshot.compactMap({ $0.object })
         
-        snapshot.appendSections(datemap)
+        if object.isEmpty { return }
         
-        sections = Array(repeating: [], count: datemap.count)
-        var i = 0
-        datemap.forEach { (item) in
-          
-            object.map { (element) in
-
-                let itemDate = item.extractDate
-                
-                if element.date!.hasPrefix(itemDate) {
-                    sections[i].insert(element.type!)
-                    let titles = Array(sections[i])
-                   snapshot.appendItems([element], toSection: item)
-                }
+        for date in datemap {
+            snapshot.appendSections([date])
+            let groupItems = object.filter({
+                                            $0.date == date.extractDate })
+            if groupItems.count > 0 {
+                snapshot.appendItems(groupItems, toSection: date)
             }
-        
-            i += 1
         }
-    
         self.dataSource.apply(snapshot, animatingDifferences: flag)
     }
+    
     // make empty view
     func reloadEmptyView() {
         var snapshot = NSDiffableDataSourceSnapshot<String, Category>()
@@ -190,7 +182,7 @@ class PeriodListModel {
     
     func createEntity(item: Items, config: ValueConfig) {
         let dataManager = CoreDataManager(itemList: listPublisher)
-        dataManager.createEntity(item: item, config: config)
+         dataManager.createEntity(item: item, config: config)
     }
     
     func connectHandler() {

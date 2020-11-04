@@ -64,6 +64,11 @@ class MonthSelectView<Value: CalendarValue>: UIView {
         formatter.dateFormat = self.setting.format
         return formatter
     }()
+    
+    /**
+      The block to execute when getting date
+    */
+    var monthHandler: ((Date?) -> Void)?
 
     var currentValue: Value? {
         didSet {
@@ -126,10 +131,12 @@ class MonthSelectView<Value: CalendarValue>: UIView {
 
     func updateMonth() {
         if let value = self.currentValue as? Date {
+            
+            print("MonthSelectView: \(value)")
             setting.currentDate = value
             lblMonth.text = dateFormatter.string(from: value)
             lblMonth.textColor = setting.textColor
-            NotificationCenter.default.post(name: .updateMonth, object: nil, userInfo: ["usermonth": value])
+            monthHandler?(value)
 
         }
     }

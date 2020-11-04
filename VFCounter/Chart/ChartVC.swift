@@ -17,7 +17,8 @@ class ChartVC: UIViewController {
     var currentVC: UIViewController?
     var strategy: DateStrategy!
     let chartModel = ChartModel()
-    var pickItemVC: PickItemVC!
+    let calendarController = CalendarController(mode: .single)
+    private var mainListModel: MainListModel!
     
     private var currentValue: CalendarValue? {
         didSet {
@@ -43,8 +44,8 @@ class ChartVC: UIViewController {
         setNavigationBar()
         prepareNotificationAddObserver()
         configureDataFilterView()
+        configureCalendar()
         configureSubviews()
-
         uiconfig.periodSegmentCtrl.setIndex(index: 0)
         uiconfig.datafilterView.dataSegmentControl.setIndex(index: 0)
     }
@@ -55,11 +56,11 @@ class ChartVC: UIViewController {
     }
 
     private func configureCalendar() {
-        uiconfig.calendarController.initialValue = self.currentValue as? Date
-        uiconfig.calendarController.minimumDate = Date().getFirstMonthDate()
-        uiconfig.calendarController.maximumDate = Date()
-        uiconfig.calendarController.isRingVisible = true
-        uiconfig.calendarController.isPopupVisible = false
+       calendarController.initialValue = self.currentValue as? Date
+       calendarController.minimumDate = Date().getFirstMonthDate()
+       calendarController.maximumDate = Date()
+       calendarController.isRingVisible = true
+       calendarController.isPopupVisible = false
     }
 
     fileprivate func configureDataFilterView() {
@@ -96,10 +97,10 @@ class ChartVC: UIViewController {
             let weeklyChartVC = WeeklyChartVC(strategy: strategy)
             weeklyChartVC.delegate = self
             vc = weeklyChartVC
-
+            currentVC = weeklyChartVC
+            
         default:
-            configureCalendar()
-            vc = uiconfig.calendarController
+            vc = calendarController
             currentVC = vc
         }
 
@@ -113,28 +114,27 @@ class ChartVC: UIViewController {
             case 0:
                 self.showChildVC(vc)
             default:
-                (uiconfig.calendarController.present(above: self, contentView: uiconfig.contentView))
+                calendarController.present(above: self, contentView: uiconfig.contentView)
+                currentVC = calendarController
             }
         }
     }
 
     fileprivate func prepareNotificationAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateCalendarDate(_:)),
-                                               name: .updateMonth, object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.selectCalendarDate(_:)),
                                                name: .selectDateCalendar, object: nil)
     }
 
     fileprivate func removeNotification() {
-        NotificationCenter.default.removeObserver(self, name: .updateMonth, object: nil)
         NotificationCenter.default.removeObserver(self, name: .selectDateCalendar, object: nil)
     }
-    // MARK: action
-    @objc fileprivate func updateCalendarDate(_ notification: Notification) {
-        if let userDate = notification.userInfo?["usermonth"] as? Date {
-            dateConfigure.calendarDate = userDate
-//            calendarController.refreshCalendar(date: userDate)
+    
+    func connectDatehandler() {
+        calendarController.updateMonthHandler = { value in
+            guard let date = value else { return }
+            self.dateConfigure.calendarDate = date
+            self.calendarController.refreshCalendar(date: date)
         }
     }
     
@@ -142,10 +142,16 @@ class ChartVC: UIViewController {
 
         if let userDate = notification.userInfo?["selectdate"] as? Date {
             dateConfigure.calendarDate = userDate
-            uiconfig.calendarController.refreshCalendar(date: userDate)
+            calendarController.refreshCalendar(date: userDate)
         }
     }
-
+    
+    func connectDateAction() {
+        calendarController.doneHandler = { newDate in
+            self.currentValue = newDate
+        }
+    }
+    
     @objc func tappedAdd(_ sender: VFButton) {
         // haptic feedback with UIImpactFeedbackGenerator
         let generator = UIImpactFeedbackGenerator(style: .light)
@@ -176,6 +182,7 @@ class ChartVC: UIViewController {
         let dataIndex = uiconfig.datafilterView.selectedItem
         
         print("New DateTime: \(dateTime)")
+        
         if periodIndex == 0 {
             dateConfigure.date = dateTime
             valueChangedPeriod(to: periodIndex)
@@ -185,10 +192,8 @@ class ChartVC: UIViewController {
             switch dataIndex {
             case 0:
                 
-                DispatchQueue.main.async {
-                    self.uiconfig.calendarController
-                        .moveToSpecificDate(date: self.dateConfigure.calendarDate)
-                }
+                self.calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
+                
             default:
                 valueChangedPeriod(to: periodIndex)
             }
@@ -197,6 +202,26 @@ class ChartVC: UIViewController {
         guard name.count > 0 else { return }
         displayMessage(name: name, dateTime: dateTime)
     
+    }
+    
+    func updateViews(dateTime: Date?) {
+
+        print("DateTime: \(dateTime)")
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.selectedItem
+       
+        if periodIndex == 0 {
+            dateConfigure.date = dateTime ?? Date()
+            valueChangedPeriod(to: periodIndex)
+        } else {
+            dateConfigure.calendarDate = dateTime ?? Date()
+
+            if dataIndex == 0 {
+                calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
+            } else {
+                valueChangedData(to: dataIndex)
+            }
+        }
     }
     
     func displayMessage(name: String, dateTime: Date) {
@@ -208,7 +233,6 @@ class ChartVC: UIViewController {
     
     func switchViewWithDataFilter(for pIndex: Int) {
         let dfIndex = uiconfig.datafilterView.dataSegmentControl.selectedIndex
-        
         if dfIndex == 0 {
             self.displayCurrentTab(pIndex)
         } else {
@@ -219,6 +243,11 @@ class ChartVC: UIViewController {
     func displayPeriodList() {
         let periodListVC = PeriodListVC(delegate: self, strategy: strategy)
         self.showChildVC(periodListVC)
+    }
+    
+    func publishList(_ date: String, item: Items, config: ValueConfig) {
+        mainListModel = MainListModel(date: date)
+        mainListModel.createEntity(item: item, config: chartModel.valueConfig)
     }
 
 }
@@ -242,18 +271,22 @@ extension ChartVC: CustomSegmentedControlDelegate {
         switch index {
         case 0 :
             removeCurrentVC()
+            // Chart
             self.displayCurrentTab(uiconfig.periodSegmentCtrl.selectedIndex)
 
         default:
+            
+            // List
             removeCurrentVC()
             if uiconfig.periodSegmentCtrl.selectedIndex == 0 {
                 strategy = WeeklyDateStrategy(date: dateConfigure.date)
             } else {
-                
+               
+                print("Date Configure: \(dateConfigure.calendarDate)")
                 if dateConfigure.calendarDate > dateConfigure.date {  dateConfigure.calendarDate = Date() }
-//                strategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
+                strategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
            }
-            
+    
             displayPeriodList()
         }
     }
@@ -281,7 +314,6 @@ extension ChartVC {
             button.addImage(imageName: "add")
             return button
         }()
-        
-        let calendarController = CalendarController(mode: .single)
+    
     }
 }

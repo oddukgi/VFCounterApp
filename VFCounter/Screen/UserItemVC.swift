@@ -51,7 +51,7 @@ class UserItemVC: UIViewController {
         mainListModel.connectHandler()
         mainListModel.loadData()    
     }
-    
+
     func setupLayout() {
         view.addSubview(circularView)
         let height = SizeManager().circularViewHeight

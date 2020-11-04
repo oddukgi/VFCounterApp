@@ -43,10 +43,41 @@ public class MonthlyDateStrategy: DateStrategy {
         formatter.dateFormat = "YYYY MM"
         return formatter
     }()
-
+    
+    public var period: String {
+       return dateFormatter.string(from: date)
+    }
+    
     // MARK: - Object Lifecycle
     public init(date: Date) {
         self.date = date
+    }
+
+    public func getDateMap() -> [Date] {
+        let monthDates = DateProvider.updateDateMap(date: date, isWeekly: false)
+        return monthDates
+    }
+    
+    public var strDateMap: [String] {
+        
+        let datemap = getDateMap()
+        let strDates = datemap.map { $0.changeDateTime(format: .longDate) }
+        return strDates
+    }
+    
+    public func getCommonDate() -> [String] {
+        let strDates = strDateMap
+        let dataManager = CoreDataManager()
+        var items = Set<String>()
+    
+        strDates.forEach { (element) in
+            // get yyyy.MM.dd
+            let shortDate = element.extractDate
+            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
+            items.insert(element)
+        }
+    
+        return Array(items).sorted()
     }
     
     public func fetchedData() {
@@ -79,28 +110,6 @@ public class MonthlyDateStrategy: DateStrategy {
         return queryDict
     }
     
-    public func getDates() -> (String?, [String]?, [String]?) {
-        let strDate = dateFormatter.string(from: date)
-        let datemap = DateProvider.updateDateMap(date: date, isWeekly: false)
-        let commonDate = getCommonDate(datemap: datemap)
-
-        return (strDate, commonDate, datemap)
-    }
-
-    private func getCommonDate(datemap: [String]) -> [String] {
-        var items = Set<String>()
-        let dataManager = CoreDataManager()
-        var shortDate = ""
-        datemap.forEach { (element) in
-            // get yyyy.MM.dd
-            shortDate = element.extractDate
-            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
-            items.insert(element)
-        }
-
-        return Array(items).sorted()
-    }
-
     public func setMinimumDate() {
 
         switch (dateValue.minV, dateValue.minF) {

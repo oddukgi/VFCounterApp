@@ -38,9 +38,15 @@ class WeeklyChartVC: ChartBaseVC {
         return stackView
     }()
     
-    deinit {
-        model.removeobserver()
+    var date: Date? {
+        didSet {
+            if let newDate = date {
+                strategy.date = newDate
+                updatePeriod()
+            }
+        }
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -55,11 +61,11 @@ class WeeklyChartVC: ChartBaseVC {
         self.updatePeriod()
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        model.removeobserver()
-//    }
-
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        model.removeobserver()
+    }
+    
     private func configure() {
         view.addSubViews(weekStackView, lblweek)
         arrowButtons.forEach {
@@ -86,8 +92,6 @@ class WeeklyChartVC: ChartBaseVC {
     
     func displayData() {
         let datemap = strategy.strDateMap
-        
-        print("Chart DateMap: \(datemap)")
         setDataCount(datemap: datemap)
     }
     func connectAction() {
@@ -123,8 +127,6 @@ class WeeklyChartVC: ChartBaseVC {
 
             let customDate = item.extractDate
             let sum = model.getSumItems(date: customDate)
-            
-            print("Chart Sum: \(sum.0), \(sum.1)")
             let item1 = BarChartDataEntry(x: Double(index), y: Double(sum.0))
             let item2 = BarChartDataEntry(x: Double(index), y: Double(sum.1))
 

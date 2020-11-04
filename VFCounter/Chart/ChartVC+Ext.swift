@@ -60,23 +60,51 @@ extension ChartVC {
         uiconfig.contentView.layoutIfNeeded()
     }
     
-    func dismissPopup() {
-        if let vc = pickItemVC {
-            vc.dismiss(animated: true)
+    func updateViewController(item: Items, config: ValueConfig) {
+        
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.selectedItem
+       
+        print("Class Name: \(currentVC?.className)")
+
+        let dateTime = item.entityDT
+        
+        if dataIndex == 1 {
+            dateConfigure.date = dateTime ?? Date()
+            
+            if currentVC?.className == "PeriodListVC" {
+                var periodListVC = currentVC as! PeriodListVC
+                periodListVC.date = dateConfigure.date
+                periodListVC.createEntity(item: item, config: config)
+            }
+            
+        } else {
+            dateConfigure.calendarDate = dateTime ?? Date()
+
+            if periodIndex == 0 {
+                
+                var weeklyChartVC = currentVC as! WeeklyChartVC
+                weeklyChartVC.date =  dateConfigure.calendarDate
+                weeklyChartVC.model.createEntity(item: item, config: config)
+            
+            } else {
+
+                let mainListModel = MainListModel(date: item.date.extractDate)
+                calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
+                mainListModel.createEntity(item: item, config: config)
+            }
+            
         }
     }
+    
 }
-
 extension ChartVC: PickItemProtocol {
     
-    func addItems(item: Items, pickItemVC: PickItemVC?) {
-        let dm = CoreDataManager()
+    func addItems(item: Items) {
+    
         let strDate = item.date.extractDate
-        self.pickItemVC = pickItemVC
         chartModel.checkMaxValueFromDate(date: strDate)
-        self.updateView(name: item.name, dateTime: item.entityDT!)
-        dm.createEntity(item: item, config: chartModel.valueConfig)
-
+        updateViewController(item: item, config: chartModel.valueConfig)
     }
     
     func updateItems(item: Items, oldDate: Date) {

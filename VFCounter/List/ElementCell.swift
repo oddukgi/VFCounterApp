@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreStore
 
 class ElementCell: UITableViewCell, SelfConfigCell {
 
@@ -14,6 +15,8 @@ class ElementCell: UITableViewCell, SelfConfigCell {
 
     var collectionView: UICollectionView!
     let elementModel = ElementModel()
+    // ListPublisher
+    private var model: MainListModel!
     
     var parentVC: PeriodListVC? {
         let parentVC = self.parentViewController as? PeriodListVC
@@ -59,8 +62,8 @@ class ElementCell: UITableViewCell, SelfConfigCell {
         elementModel.setupTitleView(collectionView: collectionView)
     }
     
-    func updateData(titles: [String], category: [Category]) {
-        elementModel.reloadCV(titles: titles, category: category)
+    func updateData(category: [Category]) {
+        elementModel.reloadCV(category: category)
     }
 
 }

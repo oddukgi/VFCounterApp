@@ -8,9 +8,10 @@
 
 import UIKit
 import SnapKit
+import CoreStore
 
 protocol PickItemProtocol: class {
-    func addItems(item: Items, pickItemVC: PickItemVC?)
+    func addItems(item: Items)
     func updateItems(item: Items, oldDate: Date)
 }
 
@@ -40,7 +41,8 @@ class PickItemVC: UIViewController {
     var checkedIndexPath = Set<IndexPath>()
     var model: ItemModel!
     var kindSegmentControl: UISegmentedControl!
-  
+    private var listPublisher: ListPublisher<Category>!
+    
     init(delegate: PickItemProtocol? = nil,
          model: ItemModel, sectionFilter: SectionFilter = .main) {
         super.init(nibName: nil, bundle: nil)
@@ -80,6 +82,7 @@ class PickItemVC: UIViewController {
         configureSubview()
         configureDataSource()
         updateData()
+        publishList()
         applyFetchedItem()
     }
     
@@ -88,6 +91,23 @@ class PickItemVC: UIViewController {
         updateRemainTotalText()
     }
 
+    func publishList() {
+        listPublisher =  Storage.dataStack.publishList(From<Category>()
+                                                        .where(\.$date == model.date)
+                                                                .orderBy(.descending(\.$createdDate)))
+    }
+    
+    func getSumValue() {
+        publishList()
+        
+        let dm = CoreDataManager(itemList: listPublisher)
+        let sumV = dm.getSumEntity(date: newDate, type: "야채") ?? 0
+        let sumF = dm.getSumEntity(date: newDate, type: "과일") ?? 0
+    
+        model.valueConfig.sumVeggies = sumV
+        model.valueConfig.sumFruits = sumF
+    }
+    
     func updateNaviTitle(for type: String) {
         type == "야채" ? (navigationItem.title = NavTitle.veggie.text)
             : (navigationItem.title = NavTitle.fruit.text)
@@ -198,15 +218,8 @@ class PickItemVC: UIViewController {
         if let entityDT = fetchedItem?.entityDT {
             delegate?.updateItems(item: selectedItem, oldDate: entityDT)
         } else {
-            delegate?.addItems(item: selectedItem, pickItemVC: self)
+            delegate?.addItems(item: selectedItem)
         }
-    }
-
-    func getSumValue() {
-        let datamanager = DataManager()
-        let sum = 10
-        model.valueConfig.sumVeggies = sum
-        model.valueConfig.sumFruits = sum
     }
     
     func updateCurrentMaxValue() {

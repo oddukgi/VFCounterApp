@@ -194,5 +194,19 @@ extension Date {
         
         return week
     }
+    
+    func compareDate(date1: Date?) -> Bool {
+        let order = Calendar.current.compare(date1!, to: self, toGranularity: .day)
+        switch order {
+        case .orderedAscending:
+            return true
+            
+        case .orderedDescending:
+            return true
+            
+        default:
+            return false
+        }
+    }
 
 }

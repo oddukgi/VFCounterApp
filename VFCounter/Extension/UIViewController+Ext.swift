@@ -52,4 +52,8 @@ extension UIViewController {
         
         return false
     }
+    
+    var className: String {
+        NSStringFromClass(self.classForCoder).components(separatedBy: ".").last!
+    }
 }
