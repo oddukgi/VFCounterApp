@@ -29,3 +29,21 @@ struct ItemGroup: Hashable {
         self.category = category
     }
 }
+
+enum Status: String {
+    case add, edit, delete, refetch
+    var status: String { return rawValue }
+}
+
+struct UpdateItem {
+    
+    var date: String
+    var itemCount: Int
+    var status: Status
+    
+    init(date: String, itemCount: Int, status: Status) {
+        self.date = date
+        self.itemCount = itemCount
+        self.status = status
+    }
+}

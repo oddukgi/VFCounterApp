@@ -14,6 +14,9 @@ import Foundation
  class Category: CoreStoreObject {
         // MARK: Internal
     
+    @Field.Stored("identifier", dynamicInitialValue: { UUID() })
+    var identifier: UUID
+    
     @Field.Stored("name",
                   customSetter: { object, field, newValue in
                     let fruits = [

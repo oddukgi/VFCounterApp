@@ -16,8 +16,9 @@ class PeriodListVC: UIViewController {
     var strategy: DateStrategy!
     private var model: PeriodListModel!
     var tableView: UITableView!
+    var valueConfig: ValueConfig?
     
-    var listmodel: PeriodListModel? {
+    var listmodel: PeriodListModel {
         return model
     }
     
@@ -30,10 +31,11 @@ class PeriodListVC: UIViewController {
             }
         }
     }
-    init(delegate: UpdateDateDelegate, strategy: DateStrategy) {
+    init(delegate: UpdateDateDelegate, strategy: DateStrategy, valueConfig: ValueConfig) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         self.strategy = strategy
+        self.valueConfig = valueConfig
         self.updatePeriod()
         model = PeriodListModel(strategy: strategy, kind: .list)
 
@@ -51,10 +53,10 @@ class PeriodListVC: UIViewController {
         model.loadTableView()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        model.removeobserver()
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        model.removeobserver()
+//    }
     // MARK: create collectionView layout
     private func configureView() {
         view.backgroundColor = .white
@@ -86,13 +88,14 @@ class PeriodListVC: UIViewController {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(8)
             make.leading.trailing.equalTo(view)
-            make.bottom.equalTo(view.snp.bottom)
+            make.bottom.equalTo(view)
         }
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(ElementCell.self, forCellReuseIdentifier: ElementCell.reuseIdentifier)
         tableView.backgroundColor = ColorHex.iceBlue
         tableView.delegate = self
-        model.setupTableView(tableView: tableView)
+        model.setupTableView(tableView: tableView, periodListVC: self)
     }
 
     func connectAction() {
@@ -123,6 +126,7 @@ class PeriodListVC: UIViewController {
     }
     
     func createEntity(item: Items, config: ValueConfig) {
+        model.updateItem?.status = .add
         model.createEntity(item: item, config: config)
     }
     

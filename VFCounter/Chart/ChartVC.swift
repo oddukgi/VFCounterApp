@@ -17,8 +17,9 @@ class ChartVC: UIViewController {
     var currentVC: UIViewController?
     var strategy: DateStrategy!
     let chartModel = ChartModel()
+    let contentView     = UIView()
     let calendarController = CalendarController(mode: .single)
-    private var mainListModel: MainListModel!
+    private var mainListModel: MainListModel?
     
     private var currentValue: CalendarValue? {
         didSet {
@@ -46,9 +47,15 @@ class ChartVC: UIViewController {
         configureDataFilterView()
         configureCalendar()
         configureSubviews()
+        refreshDate()
         uiconfig.periodSegmentCtrl.setIndex(index: 0)
         uiconfig.datafilterView.dataSegmentControl.setIndex(index: 0)
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        mainListModel?.removeobserver()
+//    }
     
     func removeCurrentVC() {
         self.currentVC?.view.removeFromSuperview()
@@ -79,8 +86,9 @@ class ChartVC: UIViewController {
 
     fileprivate func showChildVC(_ vc: UIViewController) {
         self.addChild(vc)
-        uiconfig.contentView.addSubview(vc.view)
-        vc.view.frame = uiconfig.contentView.bounds
+       
+        contentView.addSubview(vc.view)
+        vc.view.frame = contentView.bounds
         self.currentVC = vc
         vc.didMove(toParent: self)
     }
@@ -114,7 +122,7 @@ class ChartVC: UIViewController {
             case 0:
                 self.showChildVC(vc)
             default:
-                calendarController.present(above: self, contentView: uiconfig.contentView)
+                calendarController.present(above: self, contentView: contentView)
                 currentVC = calendarController
             }
         }
@@ -130,11 +138,12 @@ class ChartVC: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .selectDateCalendar, object: nil)
     }
     
-    func connectDatehandler() {
+    func refreshDate() {
         calendarController.updateMonthHandler = { value in
             guard let date = value else { return }
             self.dateConfigure.calendarDate = date
-            self.calendarController.refreshCalendar(date: date)
+            self.calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
+           
         }
     }
     
@@ -176,54 +185,6 @@ class ChartVC: UIViewController {
         }
     }
 
-    func updateView(name: String, dateTime: Date) {
-        
-        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
-        let dataIndex = uiconfig.datafilterView.selectedItem
-        
-        print("New DateTime: \(dateTime)")
-        
-        if periodIndex == 0 {
-            dateConfigure.date = dateTime
-            valueChangedPeriod(to: periodIndex)
-            
-        } else {
-            dateConfigure.calendarDate = dateTime
-            switch dataIndex {
-            case 0:
-                
-                self.calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
-                
-            default:
-                valueChangedPeriod(to: periodIndex)
-            }
-        }
-        
-        guard name.count > 0 else { return }
-        displayMessage(name: name, dateTime: dateTime)
-    
-    }
-    
-    func updateViews(dateTime: Date?) {
-
-        print("DateTime: \(dateTime)")
-        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
-        let dataIndex = uiconfig.datafilterView.selectedItem
-       
-        if periodIndex == 0 {
-            dateConfigure.date = dateTime ?? Date()
-            valueChangedPeriod(to: periodIndex)
-        } else {
-            dateConfigure.calendarDate = dateTime ?? Date()
-
-            if dataIndex == 0 {
-                calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
-            } else {
-                valueChangedData(to: dataIndex)
-            }
-        }
-    }
-    
     func displayMessage(name: String, dateTime: Date) {
         
         let txtTime = dateTime.changeDateTime(format: .shortDT)
@@ -241,15 +202,61 @@ class ChartVC: UIViewController {
     }
     
     func displayPeriodList() {
-        let periodListVC = PeriodListVC(delegate: self, strategy: strategy)
+        let periodListVC = PeriodListVC(delegate: self, strategy: strategy, valueConfig: chartModel.valueConfig)
         self.showChildVC(periodListVC)
     }
     
-    func publishList(_ date: String, item: Items, config: ValueConfig) {
+    func createEntity(_ date: String, item: Items, config: ValueConfig) {
         mainListModel = MainListModel(date: date)
-        mainListModel.createEntity(item: item, config: chartModel.valueConfig)
+        mainListModel?.createEntity(item: item, config: chartModel.valueConfig)
     }
 
+    fileprivate func calcurateCount(_ periodListVC: PeriodListVC) {
+        let date = dateConfigure.date.changeDateTime(format: .date)
+        let fetchCount = periodListVC.listmodel.itemCount(date: date)
+        periodListVC.listmodel.updateItem = UpdateItem(date: date, itemCount: fetchCount, status: .add)
+    }
+    
+    func updateViewController(item: Items, config: ValueConfig) {
+        
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.selectedItem
+       
+        print("Class Name: \(currentVC?.className)")
+
+        let dateTime = item.entityDT
+        
+        if dataIndex == 1 {
+            dateConfigure.date = dateTime ?? Date()
+            
+            if currentVC?.className == "PeriodListVC" {
+                var periodListVC = currentVC as! PeriodListVC
+                periodListVC.date = dateConfigure.date
+                calcurateCount(periodListVC)
+                periodListVC.createEntity(item: item, config: config)
+                displayMessage(name: item.name, dateTime: item.entityDT!)
+       
+            }
+            
+        } else {
+            dateConfigure.calendarDate = dateTime ?? Date()
+
+            if periodIndex == 0 {
+                var weeklyChartVC = currentVC as! WeeklyChartVC
+                weeklyChartVC.date =  dateConfigure.calendarDate
+                weeklyChartVC.model.createEntity(item: item, config: config)
+            
+            } else {
+
+                let date = item.date.extractDate
+                createEntity(date, item: item, config: config)
+                calendarController.updateMonthHandler?(item.entityDT)
+
+            }
+            
+        }
+    }
+    
 }
 
 extension ChartVC: CustomSegmentedControlDelegate {
@@ -302,8 +309,7 @@ extension ChartVC {
         
     }
     struct UIConfigure {
-        
-        let contentView     = UIView()
+    
         let weeklyChartView = UIView()
         var monthlyChartView: UIView!
         var periodSegmentCtrl: CustomSegmentedControl!

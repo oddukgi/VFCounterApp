@@ -236,7 +236,6 @@ class PickItemVC: UIViewController {
     // MARK: - update max value from UIDatePickerView
     func checkMaxValueFromDate(date: String) {
        
-        let datamanager = DataManager()
         model.date = date
         let maxVeggie = 500
         let maxFruit =  500

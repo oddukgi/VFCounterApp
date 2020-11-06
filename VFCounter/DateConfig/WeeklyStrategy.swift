@@ -19,6 +19,7 @@ public class WeeklyDateStrategy: DateStrategy {
     private var fDates: [String] = []
     private var configs = ValueConfig()
     private var dateValue = DateValue()
+    public var updateDateHandler: ((Date?) -> Void)?
 
     private var mininumDate: Date? {
 
@@ -51,7 +52,7 @@ public class WeeklyDateStrategy: DateStrategy {
         let strDates = datemap.map { $0.changeDateTime(format: .longDate) }
         return strDates
     }
-    
+
     public init(date: Date) {
         self.date = date
     }
@@ -65,7 +66,6 @@ public class WeeklyDateStrategy: DateStrategy {
     }
 
     public func fetchedData() {
-        let dataManager = DataManager()
 
         let type = ["야채", "과일"]
         // 전체 데이터 가져오기
@@ -85,22 +85,6 @@ public class WeeklyDateStrategy: DateStrategy {
         dateValue.maxV = vDates.first?.changeDateTime(format: .date)
         dateValue.maxF = fDates.first?.changeDateTime(format: .date)
 
-    }
-    
-    public func getCommonDate() -> [String] {
-    
-        let strDates = strDateMap
-        let dataManager = CoreDataManager()
-        var items = Set<String>()
-    
-        strDates.forEach { (element) in
-            // get yyyy.MM.dd
-            let shortDate = element.extractDate
-            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
-            items.insert(element)
-        }
-    
-        return Array(items).sorted()
     }
     
     public var period: String {
@@ -183,14 +167,33 @@ public class WeeklyDateStrategy: DateStrategy {
             date = self.date.aDayInNextWeek.startOfWeek()
         }
     }
+    
+    // 날짜가 datamap에 들어 있는지 확인
+    private func checkDateInMap(date: String) -> Bool {
+     
+        var date = date.changeDateTime(format: .longDate).startOfDay()
+        let map = getDateMap()
+        let result = map.filter { $0 <= date && date <= $0 }        
+        return (result.count > 0) ? true : false
         
-//
-//        if date <= maxDate {
-//            print(maxDate)
-//
-//            date = self.date.aDayInNextWeek.startOfWeek()
-//
-//        }
+    }
+    
+    public func updateDateMap(date: String) {
+        if date.count == 0 {
+            return
+        }
+        
+        print("updateDateMap: \(date)")
+     
+        let inputDate = date.getWeekday()
+        let newDate = inputDate.changeDateTime(format: .longDate)
+        if !checkDateInMap(date: inputDate) {
+            self.date = newDate
+
+        }
+        
+        updateDateHandler?(newDate)
+    }
     
     private func updatePeriod() {
         fetchedData()

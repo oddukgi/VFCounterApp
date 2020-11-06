@@ -50,53 +50,16 @@ extension ChartVC {
         uiconfig.btnAdd.addTarget(self, action: #selector(tappedAdd), for: .touchUpInside)
         
         let height = SizeManager().chartHeight
-        view.addSubview(uiconfig.contentView)
-        uiconfig.contentView.snp.makeConstraints {
+        view.addSubview(contentView)
+        contentView.snp.makeConstraints {
             $0.top.equalTo(uiconfig.periodSegmentCtrl.snp.bottom).offset(13)
             $0.left.right.equalToSuperview()
             $0.bottom.equalTo(uiconfig.datafilterView.snp.top).offset(-8)
         }
         
-        uiconfig.contentView.layoutIfNeeded()
+        contentView.layoutIfNeeded()
     }
-    
-    func updateViewController(item: Items, config: ValueConfig) {
-        
-        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
-        let dataIndex = uiconfig.datafilterView.selectedItem
-       
-        print("Class Name: \(currentVC?.className)")
-
-        let dateTime = item.entityDT
-        
-        if dataIndex == 1 {
-            dateConfigure.date = dateTime ?? Date()
-            
-            if currentVC?.className == "PeriodListVC" {
-                var periodListVC = currentVC as! PeriodListVC
-                periodListVC.date = dateConfigure.date
-                periodListVC.createEntity(item: item, config: config)
-            }
-            
-        } else {
-            dateConfigure.calendarDate = dateTime ?? Date()
-
-            if periodIndex == 0 {
-                
-                var weeklyChartVC = currentVC as! WeeklyChartVC
-                weeklyChartVC.date =  dateConfigure.calendarDate
-                weeklyChartVC.model.createEntity(item: item, config: config)
-            
-            } else {
-
-                let mainListModel = MainListModel(date: item.date.extractDate)
-                calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
-                mainListModel.createEntity(item: item, config: config)
-            }
-            
-        }
-    }
-    
+ 
 }
 extension ChartVC: PickItemProtocol {
     

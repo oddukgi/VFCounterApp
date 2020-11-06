@@ -14,7 +14,6 @@ class WeeklyChartVC: ChartBaseVC {
     let lblweek = VFTitleLabel(textAlignment: .center, font: .systemFont(ofSize: SizeManager().dateViewFontSize))
     let chartView = BarChartView()
 
-    private let dataManager = DataManager()
     private var weekday = [String]()    
     weak var delegate: UpdateDateDelegate?
     
@@ -61,10 +60,10 @@ class WeeklyChartVC: ChartBaseVC {
         self.updatePeriod()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        model.removeobserver()
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        model.removeobserver()
+//    }
     
     private func configure() {
         view.addSubViews(weekStackView, lblweek)

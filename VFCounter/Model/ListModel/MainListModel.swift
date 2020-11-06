@@ -25,19 +25,17 @@ class MainListModel {
     private var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Category>!
     private var listPublisher: ListPublisher<Category>!
     private var date: String?
+    var status: Status = .add
+    var dm: CoreDataManager { return CoreDataManager(itemList: listPublisher) }
 
-    private var dataManager: CoreDataManager!
-    
-    var dm: CoreDataManager? {
-        return dataManager
+    deinit {
+        removeobserver()
     }
     
     init(date: String) {
         
         self.date = date
         publishList()
-        dataManager = CoreDataManager(itemList: listPublisher)
-        
     }
 
     func publishList() {
@@ -50,7 +48,7 @@ class MainListModel {
     }
     
     // MARK: create collectionView datasource
-    func configureDataSource(collectionView: UICollectionView) {
+    func configureDataSource(collectionView: UICollectionView, currentVC: UIViewController) {
         dataSource = UICollectionViewDiffableDataSource<Section, Category>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath,
             data: Category) -> UICollectionViewCell? in
@@ -65,7 +63,7 @@ class MainListModel {
             cell.layer.cornerRadius = 10
             cell.layer.borderWidth = 1
             cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
-
+            cell.itemDelegate = currentVC as! ItemCellDelegate
             cell.setDataField(data, updateHandler: nil)
             return cell
         }
@@ -92,13 +90,23 @@ class MainListModel {
         
     }
     
+    fileprivate func updateListPublisher(_ listPublisher: ListPublisher<Category>) {
+        let snapshot = listPublisher.snapshot
+        
+        if self.status == .add || self.status == .refetch
+            || self.status == .edit { 
+            self.update(with: snapshot)
+        } else if self.status == .delete { // DELETE
+            self.update(with: snapshot)
+        }
+    }
+    
     func loadData() {
         
         guard let list = listPublisher else { return }
         list.addObserver(self) { [weak self] listPublisher in
             guard let self = self else { return }
-            let snapshot = listPublisher.snapshot
-            self.update(with: snapshot, flag: true)
+            self.updateListPublisher(listPublisher)
         }
         update(with: list.snapshot)
         
@@ -135,20 +143,9 @@ class MainListModel {
         return arraySum
     }
 
-    func connectHandler() {
-        dataManager.workHandler = { value in
-            if let date = self.date, value == 0 {  // delete
-                self.refetch(date: date)
-            } else {
-                self.loadData()
-            }
-        }
-      
-    }
-
     func itemCount(date: String) -> Int {
-        let dataManager = CoreDataManager(itemList: listPublisher)
-        return dataManager.getEntityCount(date: date)
+//        let dm = CoreDataManager(itemList: listPublisher)
+        return dm.getEntityCount(date: date)
     }
     
     func item(forIndexPath indexPath: IndexPath) -> [Category] {
@@ -170,19 +167,19 @@ class MainListModel {
     func getSumItems(date: String) -> (Int, Int) {
         
         var newDate = date.extractDate
-        let dataManager = CoreDataManager(itemList: listPublisher)
-        let sumV = dataManager.getSumEntity(date: newDate, type: "야채") ?? 0
-        let sumF = dataManager.getSumEntity(date: newDate, type: "과일") ?? 0
+//        let dm = CoreDataManager(itemList: listPublisher)
+        let sumV = dm.getSumEntity(date: newDate, type: "야채") ?? 0
+        let sumF = dm.getSumEntity(date: newDate, type: "과일") ?? 0
         return (sumV, sumF)
     }
     
     func createEntity(item: Items, config: ValueConfig) {
-        let dataManager = CoreDataManager(itemList: listPublisher)
-        dataManager.createEntity(item: item, config: config)
+//        let dm = CoreDataManager(itemList: listPublisher)
+        dm.createEntity(item: item, config: config)
     }
 
     func reloadRingWithMax(config: ValueConfig, strDate: String) {
-        dataManager.reloadRingWithMax(valueConfig: config, strDate: strDate)
+        dm.reloadRingWithMax(valueConfig: config, strDate: strDate)
     }
     
     func removeobserver() {

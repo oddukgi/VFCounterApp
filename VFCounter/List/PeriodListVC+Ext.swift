@@ -13,12 +13,11 @@ extension PeriodListVC {
     @objc func changedIndexSegment(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            listmodel?.setting.selectedIndex = sender.selectedSegmentIndex
+            listmodel.setting.selectedIndex = sender.selectedSegmentIndex
         default:
-            listmodel?.setting.selectedIndex = sender.selectedSegmentIndex
+            listmodel.setting.selectedIndex = sender.selectedSegmentIndex
         }
     }
-
 
     func displayMessage(model: ItemDate, nKind: Int) {
         
@@ -45,7 +44,7 @@ extension PeriodListVC: UITableViewDelegate {
     // MARK: - UITableViewDelegate
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.listmodel?.sectionTitle(forSection: section) == nil ? CGFloat.leastNormalMagnitude : 35
+        return self.listmodel.sectionTitle(forSection: section) == nil ? CGFloat.leastNormalMagnitude : 35
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -56,12 +55,28 @@ extension PeriodListVC: UITableViewDelegate {
         sumheaderView.frame = CGRect(x: 10, y: -2, width: width - 20, height: 35)
         headerView.addSubview(sumheaderView)
         
-        guard let model = listmodel, model.datemaps.count > 0 else { return nil }
-        let date = model.datemaps[section]
-        let sum = model.getSumItems(date: date)
+        guard listmodel.datemaps.count > 0 else { return nil }
+        let date = listmodel.datemaps[section]
+        let sum = listmodel.getSumItems(date: date)
         sumheaderView.updateHeader(date: date, sumV: sum.0, sunF: sum.1)
 
         return headerView
     }
 
+}
+
+extension PeriodListVC: ItemCellDelegate {
+    
+    func updateSelectedItem(item: Items) {
+        guard let config = valueConfig else { return }
+        guard !self.amountWarning(config: config, type: item.type) else { return }
+        let model = ItemModel(date: item.date, type: item.type, config: config)
+        self.displayPickItemVC(model, item, currentVC: self)
+    }
+    
+    func deleteItem(date: String, index: Int, type: String) {
+        
+        listmodel.dm.deleteEntity(date: date, index: index, type: type)
+        
+    }
 }

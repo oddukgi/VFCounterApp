@@ -123,6 +123,22 @@ extension Date {
     var nextMonth: Date {
         return Calendar.current.date(byAdding: .month, value: +1, to: self)!
     }
+    
+    func getWeekday() -> String {
+
+        print(self)
+        var weekday = ""
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = NSLocale(localeIdentifier: "ko_KR") as Locale
+        var weekDays = calendar.shortWeekdaySymbols
+        weekDays.append(weekDays.remove(at: 0))
+        
+        let index = calendar.component(.weekday, from: self)
+        // 일1,  ~ 토 7
+     
+        return (index == 1) ? weekDays[6] : weekDays[index - 2]
+  
+    }
 
 }
 

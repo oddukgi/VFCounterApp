@@ -31,7 +31,7 @@ class DayCell: JTACDayCell {
 
     // MARK: - Variables
     private var setting: CalendarSettings.DayCell = CalendarSettings.default.dayCell
-    private let dataManager = DataManager()
+
     private var mainListModel: MainListModel!
 
     // MARK: - Lifecycle
@@ -253,9 +253,8 @@ class DayCell: JTACDayCell {
         }
     }
 
-    func publishList(_ date: Date) {
-        let strDate = date.changeDateTime(format: .date)
-        mainListModel = MainListModel(date: strDate)
+    func copyListModel(listmodel: MainListModel) {
+        self.mainListModel = listmodel
         
     }
   
@@ -273,7 +272,7 @@ class DayCell: JTACDayCell {
 
     }
 
-    func configure(for config: ViewSettings) {
+    func configure(for config: ViewSettings, listmodel: MainListModel) {
 
         self.isUserInteractionEnabled = config.dateLabelText != nil && config.isDateEnabled
 
@@ -291,9 +290,11 @@ class DayCell: JTACDayCell {
                     if self.ringButton != nil {
                         self.ringButton.isHidden = false
                     }
+                    
+                    self.ringButton.isSelected = !config.isSelectedItem
                 }
-                self.ringButton.isSelected = !config.isSelectedItem
-                publishList(config.state!.date)
+   
+                copyListModel(listmodel: listmodel)
                 updateRing()
 
             } else {

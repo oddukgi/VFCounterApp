@@ -33,7 +33,7 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    func presentAmountWarning(config: ValueConfig, type: String) -> Bool {
+    func amountWarning(config: ValueConfig, type: String) -> Bool {
         
         switch type {
         
@@ -56,4 +56,18 @@ extension UIViewController {
     var className: String {
         NSStringFromClass(self.classForCoder).components(separatedBy: ".").last!
     }
+    
+    func displayPickItemVC(_ model: ItemModel, _ item: Items? = nil, currentVC: UIViewController) {
+       DispatchQueue.main.async {
+           let itemPickVC = PickItemModule.build(currentVC: currentVC, model: model)
+           
+           if let item = item {
+               itemPickVC.items = item.copy() as? Items
+           }
+           
+           let navController = UINavigationController(rootViewController: itemPickVC)
+           self.present(navController, animated: true)
+       }
+   }
+   
 }

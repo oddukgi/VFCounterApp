@@ -21,7 +21,7 @@ struct Storage {
                     Entity<Category>("Section")
                 ],
                 versionLock: [
-                    "Section": [0xd557a0d6006f501, 0x24d0fba6e17727c6, 0x2e798bfc3cabe171, 0x7cd38369cfcfd923]
+                    "Section": [0x383f8045374e8b08, 0xa29659a170998a92, 0xb2ef550dc6ee8dee, 0x8892492b7a9a65de]
                 ]
             )
         )

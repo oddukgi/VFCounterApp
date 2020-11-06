@@ -12,7 +12,7 @@ import Foundation
 class CoreDataManager {
         // MARK: create entity
     private var itemList: ListPublisher<Category>?
-    var workHandler: ((Int?) -> Void)?
+    var deleteDate: ((String?) -> Void)?
 
     init(itemList: ListPublisher<Category>?) {
         self.itemList = itemList
@@ -89,19 +89,21 @@ class CoreDataManager {
                 case .success:
                     print("Success Modify")
                     //refetch
-                    self.workHandler?(1)
                 }
             }
         )
     }
         
-    func deleteEntity(createdDate: Date, type: String) {
+    func deleteEntity(date: String, index: Int, type: String) {
         
+        print("deleteEntity: \(date), \(index)")
+        let createdDate = getCreatedDate(index: index, type: type, date: date)
+   
         Storage.dataStack.perform(asynchronous: { (transaction) in
-            guard let entity =  try? transaction.fetchOne(From<Category>().where(\.$type == type
-                                                                                    && \.$createdDate  == createdDate)) else { return }
-
+            guard let entity =  try? transaction.fetchOne(From<Category>().where(\.$createdDate == createdDate
+                                                                                    &&  \.$type == type)) else { return }
             transaction.delete(entity)
+           
         }, completion: { result in
             
             switch result {
@@ -111,8 +113,8 @@ class CoreDataManager {
                 print("Success")
                 //loaddata
 //                self.workHandler?(0)
+              }
             }
-        }
         )
     }
     
@@ -185,9 +187,7 @@ class CoreDataManager {
             let value = veggieAmounts[i]["amount"] as! Int
             sum[0] += value
             if sum[0] > maxVeggie {
-                // get createdDate
-                let date = getCreatedDate(index: i, type: type[0], date: strDate)
-                self.deleteEntity(createdDate: date, type: type[0])
+                self.deleteEntity(date: strDate, index: i, type: type[0])
             }
         }
         
@@ -195,9 +195,7 @@ class CoreDataManager {
             let value = fruitAmounts[i]["amount"] as! Int
             sum[1] += value
             if sum[1] > maxFruit {
-                // get createdDate
-                let date = getCreatedDate(index: i, type: type[1], date: strDate)
-                self.deleteEntity(createdDate: date, type: type[1])
+                self.deleteEntity(date: strDate, index: i, type: type[1])
             }
         }
         

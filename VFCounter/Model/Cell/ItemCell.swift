@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ItemCellDelegate: class {
+    func updateSelectedItem(item: Items)
+    func deleteItem(date: String, index: Int, type: String) 
+}
+
 class ItemCell: UICollectionViewCell {
     
     // MARK: Internal
@@ -17,19 +22,13 @@ class ItemCell: UICollectionViewCell {
     let lblTime      =  VFSubTitleLabel(font: NanumSquareRound.regular.style(offset: 11))
     let lblName      =  VFSubTitleLabel(font: NanumSquareRound.bold.style(offset: 13))
     let lblAmount    =  VFSubTitleLabel(font: NanumSquareRound.regular.style(offset: 11))
-//    weak var delegate: ItemCellDelegate?
+
+    weak var itemDelegate: ItemCellDelegate?
+    weak var delegate: TitleSupplmentaryViewDelegate?
+    
     private var date     = ""
     private var section = 0
-    weak var delegate: TitleSupplmentaryViewDelegate?
     private var updateHandler: (() -> Void)?
-    
-    // Bool property
-    var type: String {
-        
-        var newType = ""
-        (section == 0) ? (newType = "야채") : (newType = "과일")
-        return newType
-    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,38 +88,31 @@ class ItemCell: UICollectionViewCell {
         lblName.text = field.name
         
         let time = field.createdDate?.changeDateTime(format: .time)
-        // let time = date.trimmingTime(start: 0, end: -11).trimmingTime(start: 5, end: -3)
         lblTime.text = time
         lblAmount.text = "\(field.amount)g"
         self.updateHandler = updateHandler
     }
-    // modify and delete methods work in UserItemVC
+
+    func modifyEntity(date: String, dataManager: CoreDataManager, indexPath: IndexPath) {
     
-    func modifyEntity(parentVC: UserItemVC, indexPath: IndexPath) {
-        section = indexPath.section
-        
-        let strDate = parentVC.itemSetting.stringDate
-        let entityDT = parentVC.mainListModel.dm?
-            .getCreatedDate(index: indexPath.item, type: type, date: strDate)
-        
+        let name = lblName.text ?? ""
+        let type = name.retrieveKind()
+        let createdDate = dataManager.getCreatedDate(index: indexPath.item,
+                                                          type: type, date: date)
         let img = self.imageView.image
-        var strAmount = self.lblAmount.text!
+        var strAmount = self.lblAmount.text ?? ""
         strAmount.removeLast()
         let amount = Int(strAmount) ?? 0
-        var item = Items(name: self.lblName.text!, date: strDate,
-                        image: img, amount: amount, entityDT: entityDT, type: self.type)
-        parentVC.updateSelectedItem(item: item)
-    
+        var item = Items(name: name, date: date,
+                        image: img, amount: amount, entityDT: createdDate, type: type)
+
+        itemDelegate?.updateSelectedItem(item: item)
     }
     
-    func deleteEntity(parentVC: UserItemVC, indexPath: IndexPath) {
-        section = indexPath.section
-        let strDate = parentVC.itemSetting.stringDate
-        if let entityDT = parentVC.mainListModel.dm?.getCreatedDate(index: indexPath.item,
-                                                                    type: type, date: strDate) {
-
-            parentVC.mainListModel.dm?.deleteEntity(createdDate: entityDT, type: self.type)
-        }
+    func deleteEntity(date: String, indexPath: IndexPath) {
+        let name = lblName.text ?? ""
+        let type = name.retrieveKind()
+        itemDelegate?.deleteItem(date: date, index: indexPath.item, type: type)
         
     }
 }

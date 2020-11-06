@@ -46,11 +46,15 @@ class UserItemVC: UIViewController {
         setupLayout()
         configureHierarchy()
         connectHandler()
-        mainListModel.configureDataSource(collectionView: collectionView)
+        mainListModel.configureDataSource(collectionView: collectionView, currentVC: self)
         mainListModel.configureTitleDataSource(delegate: self)
-        mainListModel.connectHandler()
         mainListModel.loadData()    
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        mainListModel.removeobserver()
+//    }
 
     func setupLayout() {
         view.addSubview(circularView)
@@ -109,7 +113,9 @@ class UserItemVC: UIViewController {
                 newDate.removeLast(2)
             }
             itemSetting.stringDate = newDate
+            mainListModel.status = .refetch
             mainListModel.refetch(date: itemSetting.stringDate)
+            
         }
         
     }
@@ -133,27 +139,7 @@ class UserItemVC: UIViewController {
     func updateDateHomeView(date: Date) {
         delegate?.updateDate(date: date, isUpdateCalendar: true)
     }
-    
-     func displayPickItemVC(_ model: ItemModel, _ item: Items? = nil) {
-        DispatchQueue.main.async {
-            let itemPickVC = PickItemModule.build(userVC: self, model: model)
-            
-            if let item = item {
-                itemPickVC.items = item.copy() as? Items
-            }
-            
-            let navController = UINavigationController(rootViewController: itemPickVC)
-            self.present(navController, animated: true)
-        }
-    }
-    
-    func updateSelectedItem(item: Items) {
 
-        guard !self.presentAmountWarning(config: itemSetting.valueConfig, type: item.type) else { return }
-        let model = ItemModel(date: itemSetting.stringDate, type: item.type, config: itemSetting.valueConfig)
-        displayPickItemVC(model, item)
-    }
-    
 }
 
 extension UserItemVC {

@@ -58,7 +58,6 @@
 		127ADC1724E4DF5900E8F3B7 /* UISegmentControl+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */; };
 		128145392547EF8000C89322 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128145382547EF8000C89322 /* ItemCell.swift */; };
 		1281456225481B5500C89322 /* UserItemVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1281456125481B5500C89322 /* UserItemVC+Ext.swift */; };
-		128145D82548322600C89322 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128145D72548322600C89322 /* DataManager.swift */; };
 		1286EA87250F3C7600FDDBE6 /* DataFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286EA86250F3C7600FDDBE6 /* DataFilter.swift */; };
 		1286EA8D250F72A300FDDBE6 /* DataFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */; };
 		128C14D8252432CF00AB62EE /* DateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128C14D7252432CF00AB62EE /* DateModel.swift */; };
@@ -217,7 +216,6 @@
 		127ADC1624E4DF5900E8F3B7 /* UISegmentControl+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISegmentControl+Ext.swift"; sourceTree = "<group>"; };
 		128145382547EF8000C89322 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		1281456125481B5500C89322 /* UserItemVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserItemVC+Ext.swift"; sourceTree = "<group>"; };
-		128145D72548322600C89322 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1286EA86250F3C7600FDDBE6 /* DataFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFilter.swift; sourceTree = "<group>"; };
 		1286EA8C250F72A300FDDBE6 /* DataFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFilterView.swift; sourceTree = "<group>"; };
 		128C14D7252432CF00AB62EE /* DateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateModel.swift; sourceTree = "<group>"; };
@@ -340,6 +338,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1206E8232553F10A0051695A /* ListModel */ = {
+			isa = PBXGroup;
+			children = (
+				1232DCB8254E8F6700633BCA /* ElementModel.swift */,
+				12E4A5A225517D2D0061F57C /* MainListModel.swift */,
+				12A26C07254D51FC00060524 /* PeriodListModel.swift */,
+			);
+			path = ListModel;
+			sourceTree = "<group>";
+		};
 		12143CD424CA93F00080ADFE /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -402,6 +410,7 @@
 		124B918024CACD5D009616A7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				12A26C0C254D527D00060524 /* PickItemCell.swift */,
 				128145382547EF8000C89322 /* ItemCell.swift */,
 				1217CE3E24DA832800521D49 /* SettingItemCell.swift */,
 				124B918124CACD85009616A7 /* TitleSupplementaryView.swift */,
@@ -559,12 +568,10 @@
 			children = (
 				12ED8C152547C3F7002C3DE0 /* Module */,
 				12D155AC254D134900D3A4DD /* ChartModel.swift */,
+				1206E8232553F10A0051695A /* ListModel */,
 				124B918024CACD5D009616A7 /* Cell */,
-				12A26C0C254D527D00060524 /* PickItemCell.swift */,
-				12E4A5A225517D2D0061F57C /* MainListModel.swift */,
 				127A4150254D277E0092DB83 /* CoreDataManager.swift */,
-				128145D72548322600C89322 /* DataManager.swift */,
-				12A26C07254D51FC00060524 /* PeriodListModel.swift */,
+				1278F1D8255016F7003601BD /* ElementGroup.swift */,
 				12BBF92824CABE7B00C11ECD /* VFItemController.swift */,
 				1286EA86250F3C7600FDDBE6 /* DataFilter.swift */,
 				12283B0424CFBDA900AE93E6 /* PickItems.swift */,
@@ -656,11 +663,9 @@
 			children = (
 				12C33A6B254D72D300E123C3 /* EditableListDataSource.swift */,
 				12A26C01254D4E2300060524 /* PeriodListVC.swift */,
-				1232DCB8254E8F6700633BCA /* ElementModel.swift */,
+				1232DC9C254E73EF00633BCA /* PeriodListVC+Ext.swift */,
 				1232DCAE254E86A800633BCA /* ElementCell.swift */,
 				1232DCAF254E86A800633BCA /* ElementCell+Ext.swift */,
-				1232DC9C254E73EF00633BCA /* PeriodListVC+Ext.swift */,
-				1278F1D8255016F7003601BD /* ElementGroup.swift */,
 				123D98EC254FCD4E00E157BB /* HeaderView.swift */,
 			);
 			path = List;
@@ -1035,7 +1040,6 @@
 				1252A684251CD22500906E9B /* MainRingView.swift in Sources */,
 				12283B0524CFBDA900AE93E6 /* PickItems.swift in Sources */,
 				12231D08253436D300847885 /* MaxAmountVeggieCell.swift in Sources */,
-				128145D82548322600C89322 /* DataManager.swift in Sources */,
 				1278F1D9255016F7003601BD /* ElementGroup.swift in Sources */,
 				123D98ED254FCD4E00E157BB /* HeaderView.swift in Sources */,
 				12D155A2254D124200D3A4DD /* DateStrategy.swift in Sources */,

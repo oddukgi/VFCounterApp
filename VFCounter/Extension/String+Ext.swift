@@ -100,10 +100,10 @@ extension String {
         return self.components(separatedBy: " ")[0]
     }
     
-    func retrieveKind() -> Int {
+    func retrieveKind() -> String {
 
+        var type = ""
         let name = self
-        var section = 0
         let fruit = [
                         "사과", "살구", "아보카도", "바나나", "블루베리", "체리",
                         "코코넛", "용과", "포도", "자몽", "아오리", "샤인머스캣",
@@ -114,14 +114,23 @@ extension String {
 
         for item in fruit {
             if item.doesStringContains(input: name) {
-                section = 1
+                type = "과일"
                 break
             } else {
-                section = 0
+                type = "야채"
             }
         }
         
-        return section
+        return type
+    }
+    
+    func getWeekday() -> String {
+        
+        var date = self
+        print("getWeekday: \(date)")
+        let weekday =  date.changeDateTime(format: .date).startOfDay().getWeekday()
+        let fullDate = date + " \(weekday)"
+        return fullDate
     }
 }
 

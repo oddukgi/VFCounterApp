@@ -16,7 +16,7 @@ class ElementCell: UITableViewCell, SelfConfigCell {
     var collectionView: UICollectionView!
     let elementModel = ElementModel()
     // ListPublisher
-    private var model: MainListModel!
+    var pModel: PeriodListModel!
     
     var parentVC: PeriodListVC? {
         let parentVC = self.parentViewController as? PeriodListVC
@@ -49,7 +49,7 @@ class ElementCell: UITableViewCell, SelfConfigCell {
         
         let titleElementKind = "headerView"
         collectionView = UICollectionView(frame: contentView.bounds, collectionViewLayout:
-                                            UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind, isHeader: true, isPaddingForSection: true, nKind: 1))
+                                                  UIHelper.createHorizontalLayout(titleElemendKind: titleElementKind, isHeader: true, isPaddingForSection: true, nKind: 1))
         contentView.addSubview(collectionView)
         collectionView.register(ItemCell.self, forCellWithReuseIdentifier: ItemCell.reuseIdentifier)
         collectionView.register(HeaderView.self, forSupplementaryViewOfKind: titleElementKind, withReuseIdentifier: HeaderView.reuseIdentifier)
@@ -58,12 +58,12 @@ class ElementCell: UITableViewCell, SelfConfigCell {
         }
         collectionView.backgroundColor = .white
         collectionView.delegate = self
-        elementModel.setupCV(collectionView: collectionView)
+        elementModel.setupCV(collectionView: collectionView, elementCell: self)
         elementModel.setupTitleView(collectionView: collectionView)
     }
     
-    func updateData(category: [Category]) {
-        elementModel.reloadCV(category: category)
+    func updateData(category: [Category], flag: Bool = false) {
+        elementModel.reloadCV(category: category, flag: flag)
     }
 
 }

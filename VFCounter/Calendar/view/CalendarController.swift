@@ -9,6 +9,7 @@
 import UIKit
 import JTAppleCalendar
 import SnapKit
+import CoreStore
 
 class CalendarController<Value: CalendarValue>: UIViewController, JTACMonthViewDelegate,
 JTACMonthViewDataSource {
@@ -84,6 +85,8 @@ JTACMonthViewDataSource {
     var doneHandler: ((Value?) -> Void)?
     
     var updateMonthHandler: ((Date?) -> Void)?
+    
+    private var listmodel: MainListModel!
 
     /**
      And initial value which will be selected bu default
@@ -159,6 +162,11 @@ JTACMonthViewDataSource {
             }
         }
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        listmodel.removeobserver()
+//    }
 
     /**
        Present FastisController above current top view controller
@@ -238,9 +246,12 @@ JTACMonthViewDataSource {
 
     private func configureInitialState() {
         self.value = self.initialValue
+        
         if let date = self.value as? Date {
             calendarView.selectDates([date])
             calendarView.scrollToHeaderForDate(date)
+            print("configureInitialState : \(date)")
+            
         } else {
             let nowDate = Date()
             let targetDate = self.privateMaximumDate ?? nowDate
@@ -251,22 +262,23 @@ JTACMonthViewDataSource {
                 calendarView.scrollToHeaderForDate(Date())
             }
         }
-
+        
         calendarView.scrollingMode = .stopAtEachSection
     }
 
     private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath, flag: Bool = false) {
 
+        publishList(date)
         guard let cell = cell as? DayCell else { return }
         if var cachedSettings = self.viewSettings[indexPath] {
             cachedSettings.isRingVisible = privateisRingVisible
-            cell.configure(for: cachedSettings)
+            cell.configure(for: cachedSettings, listmodel: listmodel)
         } else {
             var newSettings = DayCell.makeViewSettings(for: cellState, minimumDate: self.privateMinimumDate, maximumDate: self.privateMaximumDate, rangeValue: self.value as? CalendarRange, flag: flag)
             self.viewSettings[indexPath] = newSettings
             cell.applySettings(self.setting.dayCell)
             newSettings.isRingVisible = isRingVisible
-            cell.configure(for: newSettings)
+            cell.configure(for: newSettings, listmodel: listmodel)
 
         }
     }
@@ -286,6 +298,11 @@ JTACMonthViewDataSource {
         }
     }
 
+    func publishList(_ date: Date) {
+        let strDate = date.changeDateTime(format: .date)
+        listmodel = MainListModel(date: strDate)
+    }
+    
     private func updateAmount(_ cell: JTACDayCell) {
 
         guard let cell = cell as? DayCell else { return }
@@ -354,6 +371,7 @@ JTACMonthViewDataSource {
     }
 
     func calendar(_ calendar: JTACMonthView, didSelectDate date: Date, cell: JTACDayCell?, cellState: CellState, indexPath: IndexPath) {
+       
        if cellState.selectionType == .some(.userInitiated) {
            self.handleDateTap(in: calendar, date: date)
        } else if let cell = cell {

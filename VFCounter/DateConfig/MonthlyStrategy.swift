@@ -10,7 +10,7 @@ import Foundation
 import CoreStore
 
 public class MonthlyDateStrategy: DateStrategy {
-    
+    public var updateDateHandler: ((Date?) -> Void)?
     public var date: Date = Date()
     
     private var privateMinimumDate: Date?
@@ -65,23 +65,22 @@ public class MonthlyDateStrategy: DateStrategy {
         return strDates
     }
     
-    public func getCommonDate() -> [String] {
-        let strDates = strDateMap
-        let dataManager = CoreDataManager()
-        var items = Set<String>()
-    
-        strDates.forEach { (element) in
-            // get yyyy.MM.dd
-            let shortDate = element.extractDate
-            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
-            items.insert(element)
-        }
-    
-        return Array(items).sorted()
-    }
+//    public func getCommonDate() -> [String] {
+//        let strDates = strDateMap
+//        let dataManager = CoreDataManager()
+//        var items = Set<String>()
+//    
+//        strDates.forEach { (element) in
+//            // get yyyy.MM.dd
+//            let shortDate = element.extractDate
+//            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
+//            items.insert(element)
+//        }
+//    
+//        return Array(items).sorted()
+//    }
     
     public func fetchedData() {
-        let dataManager = DataManager()
 
         let type = ["야채", "과일"]
         // 전체 데이터 가져오기
@@ -169,4 +168,7 @@ public class MonthlyDateStrategy: DateStrategy {
         }
     }
 
+    public func updateDateMap(date: String) {
+        
+    }
 }

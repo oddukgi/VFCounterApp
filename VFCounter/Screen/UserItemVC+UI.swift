@@ -88,7 +88,7 @@ extension UserItemVC: UICollectionViewDelegate {
         var itemCount = 0
         let section = indexPath.section
         
-        itemCount = mainListModel.dm?.getEntityCount(date: itemSetting.stringDate) ?? 0
+        itemCount = mainListModel.dm.getEntityCount(date: itemSetting.stringDate) ?? 0
     
         guard indexPath.item < itemCount else {
             return nil
@@ -102,14 +102,18 @@ extension UserItemVC: UICollectionViewDelegate {
                                          image: UIImage(named: "edit")) { [weak self] _ in
                 
                 guard let self = self else { return }
-                cell.modifyEntity(parentVC: self, indexPath: indexPath)
+                let dm = self.mainListModel.dm
+                self.mainListModel.status = .edit
+                cell.modifyEntity(date: self.itemSetting.stringDate, dataManager: dm, indexPath: indexPath)
               }
 
               let deleteAction = UIAction( title: "삭제",
                                            image: UIImage(named: "delete")) { [weak self] _ in
-                
+  
                 guard let self = self else { return }
-                cell.deleteEntity(parentVC: self, indexPath: indexPath)
+                self.mainListModel.status = .delete
+                cell.deleteEntity(date: self.itemSetting.stringDate, indexPath: indexPath)
+                
               }
 
               actions = [editAction, deleteAction]
@@ -131,7 +135,7 @@ extension UserItemVC: UICollectionViewDelegate {
         var itemCount = 0
         
         let section = indexPath.section
-        itemCount = mainListModel.dm?.getEntityCount(date: itemSetting.stringDate) ?? 0
+        itemCount = mainListModel.dm.getEntityCount(date: itemSetting.stringDate) ?? 0
     
         guard indexPath.item < itemCount else {
             return false
@@ -150,7 +154,7 @@ extension UserItemVC: UICollectionViewDelegate {
         var itemCount = 0
         
         let section = indexPath.section
-        itemCount = mainListModel.dm?.getEntityCount(date: itemSetting.stringDate) ?? 0
+        itemCount = mainListModel.dm.getEntityCount(date: itemSetting.stringDate) ?? 0
     
         if action == #selector(modifyTapped) && itemCount > 0 {
             return true
