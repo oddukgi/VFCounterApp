@@ -37,13 +37,9 @@ enum Status: String {
 
 struct UpdateItem {
     
-    var date: String
-    var itemCount: Int
-    var status: Status
-    
-    init(date: String, itemCount: Int, status: Status) {
-        self.date = date
-        self.itemCount = itemCount
-        self.status = status
-    }
+    var olddate: String = ""
+    var date: String = ""
+    var itemCount: Int = 0
+    var status: Status?
+
 }

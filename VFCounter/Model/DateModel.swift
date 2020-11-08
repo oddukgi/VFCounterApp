@@ -15,11 +15,15 @@ protocol CalendarVCDelegate: class {
 struct ItemModel {
     var date: String
     var type: String
+    var minDate: Date?
+    var maxDate: Date?
     var valueConfig: ValueConfig
 
-    init(date: String = "", type: String, config: ValueConfig) {
+    init(date: String = "", type: String, config: ValueConfig, minDate: Date? = nil, maxDate: Date? = nil) {
         self.date = date
         self.type  = type
+        self.minDate = minDate
+        self.maxDate = maxDate
         self.valueConfig = config
         changeDateFormat()
 
@@ -30,11 +34,12 @@ struct ItemModel {
     }
 }
 
-struct ItemDate {
+struct PopupItem {
     var oldItem: String = ""
     var newItem: String = ""
     var oldDate: String = ""
     var newDate: String = ""
+    var indexForEdit: Int = 0
     var entityDT: Date = Date()
     init() { }
 }

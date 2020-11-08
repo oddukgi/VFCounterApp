@@ -86,6 +86,8 @@ JTACMonthViewDataSource {
     
     var updateMonthHandler: ((Date?) -> Void)?
     
+    var sendCurrentDateHandler: ((Date?) -> Void)?
+    
     private var listmodel: MainListModel!
 
     /**
@@ -191,8 +193,8 @@ JTACMonthViewDataSource {
 
     func moveToSpecificDate(date: Date) {
         //default set to todays date
-        calendarView.scrollingMode = .stopAtEachCalendarFrame
-        calendarView.scrollToDate(date)
+//        calendarView.scrollingMode = .stopAtEachCalendarFrame
+//        calendarView.scrollToDate(date)
         refreshCalendar(date: date)
     }
     
@@ -211,12 +213,7 @@ JTACMonthViewDataSource {
         view.addSubViews(self.currentValueView, self.weekdayView, self.calendarView)
 //        view.layer.borderWidth = 1   
     }
-
-    func connectDatehandler() {
-        currentValueView.monthHandler = { value in
-            self.updateMonthHandler?(value)
-        }
-    }
+ 
     private func configureConstraints() {
 
         var screenWidth: CGFloat = 0.0
@@ -420,6 +417,7 @@ JTACMonthViewDataSource {
      private var value: Value? {
          didSet {
              self.currentValueView.currentValue = self.value
+            sendCurrentDateHandler?(self.value as? Date)
          }
      }
 

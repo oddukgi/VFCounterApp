@@ -59,7 +59,12 @@ extension UIViewController {
     
     func displayPickItemVC(_ model: ItemModel, _ item: Items? = nil, currentVC: UIViewController) {
        DispatchQueue.main.async {
-           let itemPickVC = PickItemModule.build(currentVC: currentVC, model: model)
+        
+        var sectionFilter: SectionFilter!
+        
+        if currentVC.className == "PeriodListVC" { sectionFilter = .chart } else { sectionFilter = .main }
+        
+           let itemPickVC = PickItemModule.build(currentVC: currentVC, model: model, filter: sectionFilter)
            
            if let item = item {
                itemPickVC.items = item.copy() as? Items

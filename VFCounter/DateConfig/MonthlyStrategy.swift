@@ -10,9 +10,8 @@ import Foundation
 import CoreStore
 
 public class MonthlyDateStrategy: DateStrategy {
-    public var updateDateHandler: ((Date?) -> Void)?
+  
     public var date: Date = Date()
-    
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
     private var vDates: [String] = []
@@ -30,7 +29,7 @@ public class MonthlyDateStrategy: DateStrategy {
 
    public var maximumDate: Date? {
         set {
-            self.privateMaximumDate = newValue?.endOfMonth()
+            self.privateMaximumDate = newValue?.endOfDay()
         }
         get {
             return self.privateMaximumDate
@@ -64,28 +63,13 @@ public class MonthlyDateStrategy: DateStrategy {
         let strDates = datemap.map { $0.changeDateTime(format: .longDate) }
         return strDates
     }
-    
-//    public func getCommonDate() -> [String] {
-//        let strDates = strDateMap
-//        let dataManager = CoreDataManager()
-//        var items = Set<String>()
-//    
-//        strDates.forEach { (element) in
-//            // get yyyy.MM.dd
-//            let shortDate = element.extractDate
-//            guard dataManager.getEntityCount(date: shortDate) > 0 else { return }
-//            items.insert(element)
-//        }
-//    
-//        return Array(items).sorted()
-//    }
-    
+
     public func fetchedData() {
 
         let type = ["야채", "과일"]
         // 전체 데이터 가져오기
-        let vDatemap = getDateMap(type: type[0])
-        let fDatemap = getDateMap(type: type[1])
+        let vDatemap = getDateDictionary(type: type[0])
+        let fDatemap = getDateDictionary(type: type[1])
         
         vDatemap.forEach { (item) in
             _ = item.compactMap({ if $0 == "date" {  self.vDates.append($1 as? String ?? "" ) } })
@@ -102,7 +86,7 @@ public class MonthlyDateStrategy: DateStrategy {
     }
     
     // MARK: - Setting Date
-    public func getDateMap(type: String) -> [[String: Any]] {
+    private func getDateDictionary(type: String) -> [[String: Any]] {
         guard let queryDict = try? Storage.dataStack
                 .queryAttributes(From<Category>().select(NSDictionary.self, .attribute(\.$date))
                 .where(\.$type == type).orderBy(.descending(\.$date))) else { return [[:]] }
@@ -142,13 +126,14 @@ public class MonthlyDateStrategy: DateStrategy {
     public func previous() {
         
         guard let minDate = privateMinimumDate else { return }
-       
+    
         if date > minDate {
 
             var firstDate = minDate.startOfMonth()
             let map = firstDate.getMonthlyDates()
             
-            if map.contains(date) { return }
+            let dates = map.filter { $0.onlyDate == date.onlyDate }
+            if dates.count > 0 { return }
             
             date = date.lastMonth
 //            DateSettings.default.periodController.monthDate = date
@@ -168,7 +153,4 @@ public class MonthlyDateStrategy: DateStrategy {
         }
     }
 
-    public func updateDateMap(date: String) {
-        
-    }
 }

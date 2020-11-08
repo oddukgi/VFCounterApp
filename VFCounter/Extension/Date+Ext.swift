@@ -190,9 +190,13 @@ extension Date {
         return calendar.date(from: minDateComponent)?.endOfDay()
     }
     
-    func compareTo(date: Date, toGranularity: Calendar.Component ) -> ComparisonResult {
-        var cal = Calendar.current
-        return cal.compare(self, to: date, toGranularity: toGranularity)
+    var onlyDate: Date? {
+        get {
+            let calender = Calendar.current
+            var dateComponents = calender.dateComponents([.year, .month, .day], from: self)
+            dateComponents.timeZone = NSTimeZone.system
+            return calender.date(from: dateComponents)
+        }
     }
     
     func getCurrentWeek() -> [Date] {

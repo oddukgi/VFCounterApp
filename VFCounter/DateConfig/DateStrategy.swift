@@ -20,15 +20,14 @@ public protocol DateStrategy: class {
     var date: Date { get set }
     var strDateMap: [String] { get }
     var period: String { get }
-    var updateDateHandler: ((Date?) -> Void)? { get set }
-    func fetchedData()
 
+    func fetchedData()
     func getDateMap() -> [Date]
     func setMinimumDate()
     func setMaximumDate()
     func previous()
     func next()
-    func updateDateMap(date: String)
+
 }
 
 //    var mininumDate: Date? { get set }

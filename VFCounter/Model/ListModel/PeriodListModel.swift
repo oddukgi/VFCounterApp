@@ -30,18 +30,20 @@ class PeriodListModel {
     private var listPublisher: ListPublisher<Category>!
     private var strategy: DateStrategy!
     private var kind: Kind?
-    var updateItem: UpdateItem?
-   
+    var tableView: UITableView!
+    var updateItem = UpdateItem()
     var dm: CoreDataManager { return CoreDataManager(itemList: listPublisher) }
     
     deinit {
         removeobserver()
     }
+    
+    var itemCount: Int { return updateItem.itemCount }
+    
     init(strategy: DateStrategy, kind: Kind) {
         self.strategy = strategy
         self.kind = kind
         connectRefreshHandler()
-        connectUpdateHandler()
         publishList()
 
     }
@@ -54,7 +56,7 @@ class PeriodListModel {
         let dates = strategy.getDateMap()
         
         let firstDate = dates.first?.startOfDay()
-        let lastDate = dates.last?.startOfDay()
+        let lastDate = dates.last?.endOfDay()
         print("FirstDate: \(firstDate), LastDate: \(lastDate)")
         
         listPublisher = Storage.dataStack.publishList(From<Category>().sectionBy(\.$date)
@@ -85,31 +87,39 @@ class PeriodListModel {
     }
     
     func setupTableView(tableView: UITableView, periodListVC: PeriodListVC) {
+        
+        var flag = false
+        self.tableView = tableView
           dataSource = EditableListDataSource<String, Category>(tableView: tableView) {[weak self] (tableView, indexPath, _) -> UITableViewCell? in
               guard let self = self else { return nil }
-              
-              if let cell: ElementCell = tableView.dequeueCell(indexPath: indexPath) {
-              let items = self.item(forIndexPath: indexPath)
-                   cell.pModel = periodListVC.listmodel
+    
+            guard let cell: ElementCell = tableView.dequeueCell(indexPath: indexPath) else { fatalError() }
+                let items = self.item(forIndexPath: indexPath)
+                cell.pModel = periodListVC.listmodel
+               
+                let status = self.updateItem.status
+                switch status {
                 
-                if self.updateItem?.status == .add || self.updateItem?.status == .delete {
-                    cell.updateData(category: items)
-                } else {
-                   cell.updateData(category: items)
+                case .add:
+                    flag = false
+                 break
+                case .delete:
+                    (self.itemCount == 1) ?  (flag = true) : (flag = false)
+                default:
+                    flag = false
                 }
-                    
-                  return cell
-              } else {
-                  fatalError()
-              }
+                
+                cell.updateData(category: items, flag: flag)
+                
+                return cell
           }
+        
       }
 
      func loadTableView() {
         
         listPublisher.addObserver(self) {[weak self] publisher in
             guard let self = self else { return }
-    
             self.updateTableView(publisher: publisher)
         }
         
@@ -139,63 +149,100 @@ class PeriodListModel {
         return section.count
     }
     
-    fileprivate func deleteListPublisher(_ publisher: ListPublisher<Category>) {
-        let date = self.updateItem?.date ?? ""
+    fileprivate func deleteListPublisher(categoryCnt: Int,
+                                         _ publisher: ListPublisher<Category>) {
+        let date = self.updateItem.date ?? ""
+        var flag = false
+
+        print("DELETE, \(categoryCnt), \(itemCount), \(date)")
         
-        let categoryCount = self.countOfSubs(date: date, publisher)
-        let itemCount = self.updateItem?.itemCount ?? 0
-        print("DELETE, \(categoryCount), \(itemCount), \(date)")
+        switch categoryCnt {
         
-        if categoryCount == 2 {
-            
-            if itemCount == 1 {
-                self.reloadTable(publisher: publisher, flag: true)
-            } else {
-                self.reloadTable(publisher: publisher)
-            }
-        } else {
-            
-            for (index, item) in datemap.enumerated() {
+        case 0:
+           for (index, item) in datemap.enumerated() {
                 if item.contains(date) { datemap.remove(at: index) }
             }
-            if itemCount == 1 {
-                self.reloadTable(publisher: publisher, flag: true)
-            } else {
-                self.reloadTable(publisher: publisher)
-            }
+            self.reloadTable(publisher: publisher, flag: true)
+            break
+
+        case 2:
+            itemCount == 1 ? (flag = true) : (flag = false)
+            self.reloadTable(publisher: publisher, flag: flag)
+            break
             
+        default:
+            self.tableView.rowHeight = SizeManager().getUserItemHeight + 15
+            self.reloadTable(publisher: publisher)
         }
     }
-    
     func updateTableView(publisher: ListPublisher<Category>) {
-        if self.updateItem?.status == .edit ||
-            self.updateItem?.status == .add { // add
-    
-            let date = self.updateItem?.date ?? ""
-            let categoryCount = self.countOfSubs(date: date, publisher)
-            let itemCount = self.updateItem?.itemCount ?? 0
-            print("ADD / EDIT, \(categoryCount), \(itemCount), \(date)")
-            
+        let status = updateItem.status
+        let date = self.updateItem.date ?? ""
+        let categoryCount = self.countOfSubs(date: date, publisher)
+  
+        addDate(date: date)
+        var flag = false
+        
+        print("ADD / EDIT, \(categoryCount), \(itemCount), \(date)")
+        self.tableView.rowHeight = UITableView.automaticDimension
+        
+        switch status {
+        
+        case .add,
+            .edit:
             if categoryCount == 2 {
-                self.reloadTable(publisher: publisher, newDate: date)
-            } else {
-                
-                if itemCount == 0 {
-                    self.reloadTable(publisher: publisher, flag: true, newDate: date)
-                } else {
-                    self.reloadTable(publisher: publisher, newDate: date)
-                }
-                
+                self.reloadTable(publisher: publisher)
+                break
             }
-
-        } else if self.updateItem?.status == .delete {
-            deleteListPublisher(publisher)
+          
+            itemCount == 0 ? (flag = true) : ((status == .edit) ? (flag = true) : (flag = false))
+            self.reloadTable(publisher: publisher, flag: flag)
             
-        } else {
+        case .delete:
+            deleteListPublisher(categoryCnt: categoryCount, publisher)
+        default:
             self.reloadTable(publisher: publisher)
         }
     }
     
+    func addDate(date: String) {
+
+        if date.isEmpty { return }
+        let fullDate = date.getWeekday()
+
+        if updateItem.status == .edit {
+            compareDate()
+        }
+   
+        if !self.datemap.contains(fullDate) {
+            self.datemap.append(fullDate)
+            sortDateMap()
+        }
+        
+    }
+    
+    func compareDate() {
+        
+        let oldDate = updateItem.olddate
+        let newDate = updateItem.date
+        
+        if !oldDate.contains(newDate) {
+            for (index, item) in datemap.enumerated() {
+                if item.hasPrefix(oldDate) {
+                    datemap.remove(at: index)
+                    break
+                }
+            }
+        }
+    }
+    
+    func sortDateMap() {
+    
+        let dates = self.datemap.map { $0.changeDateTime(format: .longDate)}
+        let sortedDates = dates.sorted { $0 < $1 }
+        self.datemap = sortedDates.map { $0.changeDateTime(format: .longDate)}
+    }
+
     func loadChart() {
         listPublisher.addObserver(self) {[weak self] _ in
             guard let self = self else { return }
@@ -205,61 +252,43 @@ class PeriodListModel {
         refreshChartHandler?(true)
     }
     
+    func updateItemInfo(date: String) {
+        let object = listPublisher.snapshot.compactMap({ $0.object })
+        let data = object.filter { $0.date == date }
+        let fetchCount = data.count
+        updateItem.date = date
+        updateItem.itemCount = fetchCount
+    }
+    
     func connectRefreshHandler() {
         refreshHandler = { h_refresh in
             
-            self.updateItem?.status = .refetch
+            self.updateItem.status = .refetch
             guard let h_refresh = h_refresh else { return}
             self.refetch(h_refresh)
         }
     }
-    
-    func connectUpdateHandler() {
-        strategy.updateDateHandler = { (date) in
-            
-            guard let date = date else { return }
-           
-            let stringDate = date.changeDateTime(format: .longDate)
-            if self.datemap.contains(stringDate) { return }
-            self.datemap.append(stringDate)
-            self.refetch(self.strategy)
-        }
-    }
-    
-//    func updateDateMap() {
-//
-//        let dates = self.datemap.map { $0.changeDateTime(format: .longDate)}
-//        let sortedDates = dates.sorted { $0 < $1 }
-//        self.datemap = sortedDates.map { $0.changeDateTime(format: .longDate)}
-//        self.refetch(self.strategy)
-//    }
 
     // MARK: Reload TableView
 
-    private func reloadTable(publisher: ListPublisher<Category>, flag: Bool = false, newDate: String = "") {
+    private func reloadTable(publisher: ListPublisher<Category>, flag: Bool = false) {
     
         var snapshot = NSDiffableDataSourceSnapshot<String, Category>()
         let object = publisher.snapshot.compactMap({ $0.object })
-
-        if newDate.count > 0 {
-            strategy.updateDateMap(date: newDate)
-        }
-
+        
         for date in datemap {
             snapshot.appendSections([date])
-            let groupItems = object.filter({
-                                            $0.date == date.extractDate })
+            let groupItems = object.filter({ $0.date == date.extractDate })
            
             snapshot.appendItems(groupItems, toSection: date)
       
         }
-
         self.dataSource.apply(snapshot, animatingDifferences: flag)
     }
     
     private func updateDeleteTable(publisher: ListPublisher<Category>, flag: Bool = false) {
 
-        let date = updateItem?.date
+        let date = updateItem.date
         var snapshot = NSDiffableDataSourceSnapshot<String, Category>()
         let object = publisher.snapshot.compactMap({ $0.object })
         if object.count == 0 {
@@ -283,10 +312,9 @@ class PeriodListModel {
                                                             \.$date <= lastDate)
                                                     .orderBy(.descending(\.$createdDate)))
         
-        updateItem?.status = .refetch
+        updateItem.status = .refetch
     }
-    
-    ////
+
     func itemCount(date: String) -> Int {
         let dataManager = CoreDataManager(itemList: listPublisher)
         return dataManager.getEntityCount(date: date)
@@ -300,21 +328,37 @@ class PeriodListModel {
     }
 
     func sectionTitle(forSection section: Int) -> String? {
+        
         return self.dataSource?.snapshot().sectionIdentifiers[section]
+    }
+    
+    func findSections(date: String) -> Int {
+        let sections = self.dataSource?.snapshot().sectionIdentifiers ?? []
+        var i = 0
+    
+        for (index, item) in sections.enumerated() {
+            if item.hasPrefix(date) {
+                return index
+            }
+        }
+        
+        return 0
+        
     }
     
     func getSumItems(date: String) -> (Int, Int) {
         
         var newDate = date.extractDate
-//        let dataManager = CoreDataManager(itemList: listPublisher)
         let sumV = dm.getSumEntity(date: newDate, type: "야채") ?? 0
         let sumF = dm.getSumEntity(date: newDate, type: "과일") ?? 0
         return (sumV, sumF)
     }
     
     func createEntity(item: Items, config: ValueConfig) {
-//        let dataManager = CoreDataManager(itemList: listPublisher)
-         dm.createEntity(item: item, config: config)
+        let date = item.date.extractDate
+        updateItemInfo(date: date)
+        updateItem.status = .add
+        dm.createEntity(item: item, config: config)
     }
     
     func removeobserver() {

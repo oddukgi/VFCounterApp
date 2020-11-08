@@ -49,6 +49,7 @@ class PickItemVC: UIViewController {
         self.delegate        = delegate
         self.model           = model
         self.sectionFilter   = sectionFilter
+       
     }
 
     var items: Items? {
@@ -80,6 +81,7 @@ class PickItemVC: UIViewController {
         configureHierarchy()
         configureAmountLabel()
         configureSubview()
+        changeDateRange()
         configureDataSource()
         updateData()
         publishList()
@@ -163,7 +165,7 @@ class PickItemVC: UIViewController {
         }
         
         userDTView = UserDateTimeView(dateTime: model.date,
-                                     entityTime: fetchedItem?.entityDT)
+                                      entityTime: fetchedItem?.entityDT)
     
         userDTView.delegate = self
         view.addSubViews(userDTView, btnAdd)
@@ -197,7 +199,7 @@ class PickItemVC: UIViewController {
         let item = currentSnapshot.itemIdentifiers[indexPath.row]
         
         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
-        model.date = userDTView.dateTime
+        model.date = userDTView.dateTime.extractDate
       
         let remain = pickItemModel?.compareAmount(amount: pickItems.item.amount, type: model.type)
         if let remain = remain, remain > 0 {
@@ -270,12 +272,26 @@ class PickItemVC: UIViewController {
             }
         }
     }
+    
+    func changeDateRange() {
+        if sectionFilter == .chart {
+            
+            print("changeDateRange: \(model.minDate), \(model.maxDate)")
+            if let minDate = model.minDate, let maxDate = model.maxDate {
+                userDTView.changeDateRange(minDate: minDate, maxDate: maxDate)
+            }
+        }
+    }
 
     private var btnAdd = VFButton()
     private var measurementView: MeasurementView!
     private var userDTView: UserDateTimeView!
     private var fetchedItem: Items?
     private var sectionFilter: SectionFilter?
+    
+    var datePickerView: UserDateTimeView {
+        return userDTView
+    }
     
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()

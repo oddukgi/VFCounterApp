@@ -15,6 +15,7 @@ extension ChartVC {
         // segment control 인덱스 가져오기 (0:주, 1:월) / (0: 데이터, 1:리스트)
         let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
         let dataIndex = uiconfig.datafilterView.dataSegmentControl.selectedIndex
+    
         return chartModel.getCurrentDate(periodIndex: periodIndex,
                                          dataIndex: dataIndex, configure: dateConfigure)
     }
@@ -59,7 +60,15 @@ extension ChartVC {
         
         contentView.layoutIfNeeded()
     }
- 
+    
+//    fileprivate func calcurateCount(_ periodListVC: PeriodListVC) {
+//        let date = dateConfigure.date.changeDateTime(format: .date)
+//        let fetchCount = periodListVC.listmodel.itemCount(date: date)
+//
+//        print("FetchCount: \(fetchCount)")
+//        periodListVC.listmodel.updateItem = UpdateItem(date: date, itemCount: fetchCount, status: .add)
+//    }
+//
 }
 extension ChartVC: PickItemProtocol {
     
@@ -70,9 +79,7 @@ extension ChartVC: PickItemProtocol {
         updateViewController(item: item, config: chartModel.valueConfig)
     }
     
-    func updateItems(item: Items, oldDate: Date) {
-        
-    }
+    func updateItems(item: Items, oldDate: Date) { }
 }
 
 extension ChartVC: UpdateDateDelegate {

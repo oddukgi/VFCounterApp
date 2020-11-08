@@ -129,7 +129,7 @@ class UserItemVC: UIViewController {
     func reloadRing(date: String) {
         let sum = mainListModel.getSumItems(date: date)
     
-        self.circularView.updateValue(veggieSum: sum.0, fruitSum: sum.1)
+        self.circularView.updateValue(veggieSum: sum.0, fruitSum: sum.1, date: date)
         itemSetting.valueConfig.sumVeggies = sum.0
         itemSetting.valueConfig.sumFruits = sum.1
     

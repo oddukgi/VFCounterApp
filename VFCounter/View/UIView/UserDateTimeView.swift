@@ -96,4 +96,15 @@ class UserDateTimeView: UIView {
             dtPickerView.date = userDateTime.changeDateTime(format: .dateTime)            
         }
     }
+    
+    func changeDateRange(minDate: Date, maxDate: Date) {
+        
+        let currentTime = Date().changeDateTime(format: .onlyTime)
+        let minDT = minDate.changeDateTime(format: .date) + currentTime
+        let maxDT = maxDate.changeDateTime(format: .date) + currentTime
+        
+        dtPickerView.minimumDate = minDT.changeDateTime(format: .dateTime)
+        dtPickerView.maximumDate = maxDT.changeDateTime(format: .dateTime)
+        
+    }
 }

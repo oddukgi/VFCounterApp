@@ -19,22 +19,57 @@ extension PeriodListVC {
         }
     }
 
-    func displayMessage(model: ItemDate, nKind: Int) {
+    func displayMessage(pItem: PopupItem, nKind: Int) {
         
         var text = ""
         
         switch nKind {
         case 0:
-            text = "\(model.oldItem) 삭제완료"
+            text = "\(pItem.oldItem) 삭제완료"
         case 1:
-            text = "\(model.oldItem) -> \(model.newItem)\n 업데이트"
+            text = "\(pItem.oldItem) -> \(pItem.newItem)\n 업데이트"
         case 2:
-            text = "\(model.oldItem): \(model.oldDate) -> \(model.newDate) \n 업데이트"
+            text = "\(pItem.oldDate) -> \(pItem.newDate) \n 업데이트"
         default:
-            text = "\(model.oldItem) -> \(model.newItem), \(model.newDate) \n 업데이트"
+            text = "\(pItem.oldItem) -> \(pItem.newItem), \(pItem.newDate) \n 업데이트"
         }
             
         self.presentAlertVC(title: "", message: text, buttonTitle: "OK")
+    }
+    
+    func displayPopUpWithComparison() {
+        if popupItem.oldDate == popupItem.newDate {
+            
+            if popupItem.oldItem != popupItem.newItem {
+                displayMessage(pItem: popupItem, nKind: 1)
+            }
+            
+        } else {
+            if popupItem.oldItem == popupItem.newItem {
+                displayMessage(pItem: popupItem, nKind: 2)
+            } else {
+                displayMessage(pItem: popupItem, nKind: 3)
+            }
+        }
+    }
+    
+    func getMinMaxDate() -> [Date] {
+        let datemap = strategy.getDateMap()
+        var minDate: Date?
+        var maxDate: Date?
+        
+        let firstDate = datemap.first
+        var lastDate = datemap.last
+        
+        print("getMinMaxDate: \(firstDate), \(lastDate)")
+        
+        minDate = firstDate
+        if lastDate == Date() {
+            maxDate = lastDate?.dayBefore
+        } else {
+            maxDate = lastDate
+        }
+        return [minDate!, maxDate!]
     }
 }
 
@@ -70,13 +105,38 @@ extension PeriodListVC: ItemCellDelegate {
     func updateSelectedItem(item: Items) {
         guard let config = valueConfig else { return }
         guard !self.amountWarning(config: config, type: item.type) else { return }
-        let model = ItemModel(date: item.date, type: item.type, config: config)
+       
+        popupItem.oldItem = item.name
+        popupItem.oldDate = item.date
+        
+        let arrDate = getMinMaxDate()
+        let model = ItemModel(date: item.date, type: item.type, config: config, minDate: arrDate[0],
+                              maxDate: arrDate[1])
+        print("addItems: \(item.date)")
+        
         self.displayPickItemVC(model, item, currentVC: self)
     }
     
     func deleteItem(date: String, index: Int, type: String) {
-        
         listmodel.dm.deleteEntity(date: date, index: index, type: type)
         
     }
+}
+
+extension PeriodListVC: PickItemProtocol {
+    func addItems(item: Items) { }
+    
+    func updateItems(item: Items, oldDate: Date) {
+        popupItem.newItem = item.name
+        popupItem.newDate = item.date
+        
+        print("addItems: \(item.date)")
+        let newDate = item.date.changeDateTime(format: .date)
+        let strOld = oldDate.changeDateTime(format: .date)
+        listmodel.updateItem.olddate = strOld
+        listmodel.updateItem.date = item.date
+        listmodel.dm.modifyEntity(item: item, oldDate: oldDate, editDate: newDate)
+        displayPopUpWithComparison()
+    }
+
 }

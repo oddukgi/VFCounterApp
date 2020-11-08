@@ -18,7 +18,7 @@ extension VFCircularView {
         let padding = SizeManager().ringViewPadding
         
         ringView.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(20)
+            make.top.equalTo(self).offset(13)
             make.trailing.equalTo(self.snp.trailing).offset(-18)
             make.size.equalTo(sliderSize)
         }

@@ -27,7 +27,7 @@ class ElementModel {
             cell.layer.cornerRadius = 10
             cell.layer.borderWidth = 1
             cell.layer.borderColor = ColorHex.lightlightGrey.cgColor
-            cell.itemDelegate = elementCell.parentVC as! ItemCellDelegate
+            cell.itemDelegate = elementCell.parentVC as? ItemCellDelegate
 //            let itemgroup = item(forIndexPath: indexPath)
             
             let category = data.category!

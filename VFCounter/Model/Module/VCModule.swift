@@ -11,8 +11,9 @@ import UIKit
 enum PickItemModule {
     static func build(currentVC: UIViewController, model: ItemModel,
                       filter: SectionFilter = .main) -> PickItemVC {
-        
+
         let delegate = currentVC as! PickItemProtocol
+       
         var pickItemVC = PickItemVC(delegate: delegate, model: model, sectionFilter: filter)
         let model = PickItemModel(config: model.valueConfig)
         pickItemVC.pickItemModel = model

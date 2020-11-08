@@ -96,14 +96,17 @@ class WeeklyChartVC: ChartBaseVC {
     func connectAction() {
 
         arrowButtons[0].addTargetClosure { _ in
-            self.updatePeriod()
             self.strategy.previous()
+            self.updatePeriod()
             self.changedWeekLabel(period: self.strategy.period)
+            self.model.refreshHandler?(self.strategy)
         }
         arrowButtons[1].addTargetClosure { _ in
-            self.updatePeriod()
+
             self.strategy.next()
+            self.updatePeriod()
             self.changedWeekLabel(period: self.strategy.period)
+            self.model.refreshHandler?(self.strategy)
         }
     }
     
@@ -113,6 +116,9 @@ class WeeklyChartVC: ChartBaseVC {
         }
     }
 
+    func updateStrategy(date: Date) {
+        strategy.date = date
+    }
     func setDataCount(datemap: [String]) {
         let groupSpace = 0.3
         let barSpace = 0.05

@@ -160,6 +160,7 @@ class MainListModel {
 //    }
     
     func refetch(date: String) {
+        self.date = date
         try! listPublisher.refetch(From<Category>().where(\.$date == date)
                                 .orderBy(.descending(\.$createdDate)))
     }

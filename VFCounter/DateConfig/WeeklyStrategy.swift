@@ -12,14 +12,11 @@ import CoreStore
 public class WeeklyDateStrategy: DateStrategy {
 
     public var date: Date = Date()
-
     private var privateMinimumDate: Date?
     private var privateMaximumDate: Date?
     private var vDates: [String] = []
     private var fDates: [String] = []
-    private var configs = ValueConfig()
     private var dateValue = DateValue()
-    public var updateDateHandler: ((Date?) -> Void)?
 
     private var mininumDate: Date? {
 
@@ -57,14 +54,6 @@ public class WeeklyDateStrategy: DateStrategy {
         self.date = date
     }
     
-    private func getDateDictionary(type: String) -> [[String: Any]] {
-        guard let queryDict = try? Storage.dataStack
-                .queryAttributes(From<Category>().select(NSDictionary.self, .attribute(\.$date))
-                                    .where(\.$type == type).orderBy(.descending(\.$date))) else { return [[:]] }
-        
-        return queryDict
-    }
-
     public func fetchedData() {
 
         let type = ["야채", "과일"]
@@ -87,6 +76,14 @@ public class WeeklyDateStrategy: DateStrategy {
 
     }
     
+    private func getDateDictionary(type: String) -> [[String: Any]] {
+        guard let queryDict = try? Storage.dataStack
+                .queryAttributes(From<Category>().select(NSDictionary.self, .attribute(\.$date))
+                                    .where(\.$type == type).orderBy(.descending(\.$date))) else { return [[:]] }
+        
+        return queryDict
+    }
+   
     public var period: String {
         
         let strDates = strDateMap
@@ -112,7 +109,6 @@ public class WeeklyDateStrategy: DateStrategy {
 
     public func setMinimumDate() {
         
-//        print("Min Date: \(dateValue.minV), \(dateValue.minF)")
         switch (dateValue.minV, dateValue.minF) {
         case let (oldVDates?, .none):
             privateMinimumDate = oldVDates
@@ -152,7 +148,7 @@ public class WeeklyDateStrategy: DateStrategy {
 
             print("\(date) is next \(minDate)")
             date = self.date.aDayInLastWeek.startOfWeek()
-  
+            
         }
     }
 
@@ -178,26 +174,4 @@ public class WeeklyDateStrategy: DateStrategy {
         
     }
     
-    public func updateDateMap(date: String) {
-        if date.count == 0 {
-            return
-        }
-        
-        print("updateDateMap: \(date)")
-     
-        let inputDate = date.getWeekday()
-        let newDate = inputDate.changeDateTime(format: .longDate)
-        if !checkDateInMap(date: inputDate) {
-            self.date = newDate
-
-        }
-        
-        updateDateHandler?(newDate)
-    }
-    
-    private func updatePeriod() {
-        fetchedData()
-        setMinimumDate()
-        setMaximumDate()
-    }
 }

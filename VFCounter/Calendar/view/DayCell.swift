@@ -266,7 +266,6 @@ class DayCell: JTACDayCell {
     
         // maxvalue
         
-        print("Sum Value: \(sumValue[0]), \(sumValue[1])")
         self.ringButton.ringProgressView.ring1.progress = Double(sumValue[0]) / Double(maxVeggie)
         self.ringButton.ringProgressView.ring2.progress = Double(sumValue[1]) / Double(maxFruit)
 

@@ -78,17 +78,25 @@ class VFCircularView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func updateValue(veggieSum: Int, fruitSum: Int) {
+    func updateValue(veggieSum: Int, fruitSum: Int, date: String) {
 
-        let maxVeggie = Int(ringView.maxVeggies)
-        let maxFruit = Int(ringView.maxFruits)
+        let type = ["야채", "과일"]
+        // 날짜에 저장된 최댓값이 있는지 보기
+        let vMax = CoreDataManager.queryMax(date: date, type: type[0])
+        let fMax = CoreDataManager.queryMax(date: date, type: type[1])
+        
+        let maxVeggie = (vMax == 0) ? Int(ringView.maxVeggies) : vMax
+        let maxFruit = (fMax == 0) ? Int(ringView.maxFruits) : fMax
         ringView.ringProgressView.ring1.progress = Double(veggieSum) / Double(maxVeggie)
         ringView.ringProgressView.ring2.progress = Double(fruitSum) / Double(maxFruit)
 
         totVeggieLabel.text = "\(veggieSum)g / \(maxVeggie)g"
         totFruitLabel.text =  "\(fruitSum)g / \(maxFruit)g"
     }
-
+    
+    func getMaxValueFromDate(date: String) {
+        
+    }
     func updateMaxValue(tag: Int) {
         let maxVeggie = Int(ringView.maxVeggies)
         let maxFruit = Int(ringView.maxFruits)

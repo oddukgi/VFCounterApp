@@ -48,7 +48,7 @@ class ChartModel {
         let type = ["야채", "과일"]
         var values: [Int] = []
         type.map { type in
-            let value = queryMax(date: date, type: type)
+            let value = CoreDataManager.queryMax(date: date, type: type)
             values.append(value)
         }
         

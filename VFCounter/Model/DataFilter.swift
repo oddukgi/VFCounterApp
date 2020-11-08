@@ -12,15 +12,10 @@ protocol DateProtocol {
     var newDate: String { get set }
 }
 
-enum SectionFilter {
+enum SectionFilter: String {
 
     case main, chart
     var kind: String {
-        switch self {
-        case .main:
-            return "main"
-        default:
-            return "chart"
-        }
+        return rawValue
     }
 }

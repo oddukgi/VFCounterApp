@@ -62,8 +62,16 @@ class CoreDataManager {
         
         return object["total"] as? Int
     }
-     
-    func modifyEntity(item: Items, oldDate: Date) {
+    
+    static func queryMax(date: String, type: String) -> Int {
+        
+        let max = try! Storage.dataStack.queryValue(From<Category>()
+                                                        .select(Int.self, .attribute(\.$max))
+                                                        .where(\.$date == date && \.$type == type)) ?? 0
+        return max
+    }
+    
+    func modifyEntity(item: Items, oldDate: Date, editDate: Date? = nil) {
         
         let date = item.entityDT?.changeDateTime(format: .selectedDT)
         let newDate = date!.replacingOccurrences(of: "-", with: ".").components(separatedBy: " ")
@@ -73,6 +81,8 @@ class CoreDataManager {
                 guard let entity =  try? transaction.fetchOne(From<Category>()
                                                                 .where(\.$createdDate  == oldDate)) else { return }
 
+                let date = editDate ?? Date()
+        
                 let newEntity = transaction.edit(entity)!
                 newEntity.name = item.name
                 newEntity.date = newDate[0]
@@ -95,13 +105,14 @@ class CoreDataManager {
     }
         
     func deleteEntity(date: String, index: Int, type: String) {
-        
-        print("deleteEntity: \(date), \(index)")
+    
         let createdDate = getCreatedDate(index: index, type: type, date: date)
-   
+        print("deleteEntity: \(date), \(index)")
         Storage.dataStack.perform(asynchronous: { (transaction) in
             guard let entity =  try? transaction.fetchOne(From<Category>().where(\.$createdDate == createdDate
                                                                                     &&  \.$type == type)) else { return }
+            
+            print(entity.createdDate?.changeDateTime(format: .dateTime))
             transaction.delete(entity)
            
         }, completion: { result in
@@ -155,6 +166,7 @@ class CoreDataManager {
                     .orderBy(.descending(\.$createdDate))
             )
             let date = queryDict[index]["createdDate"] as! Date
+            print(date.changeDateTime(format: .dateTime))
             return date
 
         } catch {

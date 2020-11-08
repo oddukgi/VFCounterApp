@@ -17,20 +17,12 @@ class PeriodListVC: UIViewController {
     private var model: PeriodListModel!
     var tableView: UITableView!
     var valueConfig: ValueConfig?
+    var popupItem = PopupItem()
     
     var listmodel: PeriodListModel {
         return model
     }
-    
-    var date: Date? {
-        didSet {
-            
-            if let newDate = date {
-                strategy.date = newDate
-                updatePeriod()
-            }
-        }
-    }
+
     init(delegate: UpdateDateDelegate, strategy: DateStrategy, valueConfig: ValueConfig) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
@@ -48,15 +40,10 @@ class PeriodListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        connectAction()
         configureTableView()
         model.loadTableView()
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        model.removeobserver()
-//    }
+
     // MARK: create collectionView layout
     private func configureView() {
         view.backgroundColor = .white
@@ -78,6 +65,8 @@ class PeriodListVC: UIViewController {
             $0.width.equalTo(130)
         }
         
+        arrowButtons[0].addTarget(self, action: #selector(tappedBefore), for: .touchUpInside)
+        arrowButtons[1].addTarget(self, action: #selector(tappedNext), for: .touchUpInside)
         lblPeriod.text = strategy.period
     }
 
@@ -92,44 +81,37 @@ class PeriodListVC: UIViewController {
         }
         
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = SizeManager().getUserItemHeight + 15
         tableView.register(ElementCell.self, forCellReuseIdentifier: ElementCell.reuseIdentifier)
         tableView.backgroundColor = ColorHex.iceBlue
         tableView.delegate = self
         model.setupTableView(tableView: tableView, periodListVC: self)
     }
-
-    func connectAction() {
-
-        arrowButtons[0].addTargetClosure { _ in
-            self.strategy.previous()
-            self.lblPeriod.text = self.strategy.period
-            self.model.refreshHandler?(self.strategy)
-        }
-        arrowButtons[1].addTargetClosure { _ in
-            self.strategy.next()
-            self.lblPeriod.text = self.strategy.period
-            self.model.refreshHandler?(self.strategy)
-        }
+    
+    @objc func tappedBefore() {
+        self.strategy.previous()
+        self.updatePeriod()
+        self.lblPeriod.text = self.strategy.period
+        self.model.refreshHandler?(self.strategy)
     }
 
+    @objc func tappedNext() {
+        self.strategy.next()
+        self.updatePeriod()
+        self.lblPeriod.text = self.strategy.period
+        self.model.refreshHandler?(self.strategy)
+    }
+    
     func updatePeriod() {
         strategy.fetchedData()
         strategy.setMinimumDate()
         strategy.setMaximumDate()
     }
     
-    func fetchedDate() {
-        strategy.getDateMap()
-    }
-    func changeDefaultDate(date: Date) {
+    func updateStrategy(date: Date) {
         strategy.date = date
+        
     }
-    
-    func createEntity(item: Items, config: ValueConfig) {
-        model.updateItem?.status = .add
-        model.createEntity(item: item, config: config)
-    }
-    
     lazy var stackView: UIStackView = {
           let stackView = UIStackView()
           stackView.spacing = 130
