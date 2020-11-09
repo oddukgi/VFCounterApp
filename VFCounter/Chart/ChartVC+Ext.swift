@@ -9,16 +9,6 @@
 import UIKit
 
 extension ChartVC {
-
-    func currentDate() -> String {
-        
-        // segment control 인덱스 가져오기 (0:주, 1:월) / (0: 데이터, 1:리스트)
-        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
-        let dataIndex = uiconfig.datafilterView.dataSegmentControl.selectedIndex
-    
-        return chartModel.getCurrentDate(periodIndex: periodIndex,
-                                         dataIndex: dataIndex, configure: dateConfigure)
-    }
     
     func configureSubviews() {
 
@@ -61,17 +51,6 @@ extension ChartVC {
         contentView.layoutIfNeeded()
     }
     
-}
-extension ChartVC: PickItemProtocol {
-    
-    func addItems(item: Items) {
-    
-        let strDate = item.date.extractDate
-        chartModel.checkMaxValueFromDate(date: strDate)
-        updateViewController(item: item, config: chartModel.valueConfig)
-    }
-    
-    func updateItems(item: Items, oldDate: Date) { }
 }
 
 extension ChartVC: UpdateDateDelegate {

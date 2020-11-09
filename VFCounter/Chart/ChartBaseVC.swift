@@ -16,7 +16,11 @@ class ChartBaseVC: UIViewController, ChartViewDelegate {
 
     var shouldHideData: Bool = false
     var strategy: DateStrategy!
-    var model: PeriodListModel!
+    private var model: PeriodListModel!
+    
+    var pModel: PeriodListModel {
+        return model
+    }
     
     init(strategy: DateStrategy) {
         self.strategy = strategy

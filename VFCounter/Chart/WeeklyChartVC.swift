@@ -56,15 +56,10 @@ class WeeklyChartVC: ChartBaseVC {
         applyChartOption()
         connectHandler()
         configureMarker()
-        model.loadChart()
-        self.updatePeriod()
+        pModel.loadChart()
+
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        model.removeobserver()
-//    }
-    
+
     private func configure() {
         view.addSubViews(weekStackView, lblweek)
         arrowButtons.forEach {
@@ -97,21 +92,19 @@ class WeeklyChartVC: ChartBaseVC {
 
         arrowButtons[0].addTargetClosure { _ in
             self.strategy.previous()
-            self.updatePeriod()
             self.changedWeekLabel(period: self.strategy.period)
-            self.model.refreshHandler?(self.strategy)
+            self.pModel.refreshHandler?(self.strategy)
         }
         arrowButtons[1].addTargetClosure { _ in
 
             self.strategy.next()
-            self.updatePeriod()
             self.changedWeekLabel(period: self.strategy.period)
-            self.model.refreshHandler?(self.strategy)
+            self.pModel.refreshHandler?(self.strategy)
         }
     }
     
     func connectHandler() {
-        model.refreshChartHandler = { h_refresh in
+        pModel.refreshChartHandler = { h_refresh in
             self.displayData()
         }
     }
@@ -119,6 +112,11 @@ class WeeklyChartVC: ChartBaseVC {
     func updateStrategy(date: Date) {
         strategy.date = date
     }
+    
+    func createEntity(item: Items, config: ValueConfig) {
+        pModel.createEntity(item: item, config: config)
+    }
+    
     func setDataCount(datemap: [String]) {
         let groupSpace = 0.3
         let barSpace = 0.05
@@ -131,7 +129,7 @@ class WeeklyChartVC: ChartBaseVC {
         for (index, item) in datemap.enumerated() {
 
             let customDate = item.extractDate
-            let sum = model.getSumItems(date: customDate)
+            let sum = pModel.getSumItems(date: customDate)
             let item1 = BarChartDataEntry(x: Double(index), y: Double(sum.0))
             let item2 = BarChartDataEntry(x: Double(index), y: Double(sum.1))
 
@@ -159,4 +157,5 @@ class WeeklyChartVC: ChartBaseVC {
         chartView.data = data
 
     }
+    
 }

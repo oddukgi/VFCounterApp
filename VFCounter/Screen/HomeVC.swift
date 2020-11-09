@@ -21,10 +21,6 @@ class HomeVC: UIViewController {
     let dateView = DateView()
     let contentView = UIView()
     let userItemView = UIView()
-
-    deinit {
-        removeNotification()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +30,6 @@ class HomeVC: UIViewController {
         setContentView()
         connectTapGesture()
         setupToHideKeyboardOnTapOnView()
-        prepareNotificationAddObserver()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -42,23 +37,6 @@ class HomeVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    // MARK: - notificationCenter
-     fileprivate func prepareNotificationAddObserver() {
-         NotificationCenter.default.addObserver(self, selector: #selector(self.updateDateTime(_:)),
-                                                name: .updateDateTime, object: nil)
-     }
-    // MARK: action
-    @objc fileprivate func updateDateTime(_ notification: Notification) {
-
-        if let userDate = notification.userInfo?["userdate"] as? String {
-            dateView.updateDate(userdate: userDate)
-        }
-    }
-    
-    func removeNotification() {
-        NotificationCenter.default.removeObserver(self, name: .updateDateTime, object: nil)
-    }
-    
     @objc func dateLabelTapped(_ sender: UITapGestureRecognizer) {
         
         let generator = UIImpactFeedbackGenerator(style: .light)
@@ -89,10 +67,6 @@ extension HomeVC: CalendarVCDelegate {
     func updateDate(date: Date, isUpdateCalendar: Bool) {
         let newDate = date.changeDateTime(format: .date)
         dateView.updateDate(userdate: newDate)
-        
-        if isUpdateCalendar {
-            NotificationCenter.default.post(name: .selectDateCalendar, object: nil, userInfo: ["selectdate": date])
-        }
         
     }
 }

@@ -300,11 +300,12 @@ JTACMonthViewDataSource {
         let veggieMaxRate = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
         let fruitMaxRate = SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0
 
-        let veggie = cell.ringButton.ringProgressView.ring1.progress.clean
-        let fruit = cell.ringButton.ringProgressView.ring2.progress.clean
+        let veggie = Float(cell.ringButton.ringProgressView.ring1.progress.clean) ?? 0
+        let fruit = Float(cell.ringButton.ringProgressView.ring2.progress.clean) ?? 0
 
-        let veggieSum = Float(veggie)! * veggieMaxRate
-        let fruitSum = Float(fruit)! * fruitMaxRate
+        if veggie <= 0  || fruit <= 0 { return }
+        let veggieSum = veggie * veggieMaxRate
+        let fruitSum = fruit * fruitMaxRate
         currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.towardZero)), fruitSum: Int(fruitSum.rounded(.towardZero)))
         
     }

@@ -120,7 +120,7 @@ public class MonthlyDateStrategy: DateStrategy {
             guard let maxVeggie = dateValue.maxV, let maxFruit = dateValue.maxF else { return }
             (maxVeggie < maxFruit) ? (privateMaximumDate = maxFruit) : (privateMaximumDate = maxVeggie)
       }
- 
+//        print("Monthly: \(privateMinimumDate),\(privateMaximumDate)")
     }
 
     public func previous() -> Bool {
@@ -167,6 +167,12 @@ public class MonthlyDateStrategy: DateStrategy {
         let result = map.filter { $0 <= date && date <= $0 }
         return (result.count > 0) ? true : false
         
+    }
+    
+    public func updatePeriod() {
+        fetchedData()
+        setMinimumDate()
+        setMaximumDate()
     }
 
 }

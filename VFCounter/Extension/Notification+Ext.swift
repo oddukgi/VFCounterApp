@@ -12,7 +12,5 @@ extension Notification.Name {
 
     static let updateTaskPercent = Notification.Name("updateTaskPercent")
     static let updateFetchingData = Notification.Name("updateFetchingData")
-    static let updateDateTime = Notification.Name("updateDateTime")
-    static let selectDateCalendar = Notification.Name("selectDateCalendar")
-    static let updateMonth    = Notification.Name("updateMonth")
+
 }

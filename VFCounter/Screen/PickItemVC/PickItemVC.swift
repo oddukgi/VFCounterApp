@@ -49,7 +49,6 @@ class PickItemVC: UIViewController {
         self.delegate        = delegate
         self.model           = model
         self.sectionFilter   = sectionFilter
-       
     }
 
     var items: Items? {
@@ -269,12 +268,9 @@ class PickItemVC: UIViewController {
     }
     
     func changeDateRange() {
-        if sectionFilter == .chart {
-            
-//            print("changeDateRange: \(model.minDate), \(model.maxDate)")
-            if let minDate = model.minDate, let maxDate = model.maxDate {
-                userDTView.changeDateRange(minDate: minDate, maxDate: maxDate)
-            }
+
+        if let minDate = model.minDate, let maxDate = model.maxDate {
+            userDTView.changeDateRange(minDate: minDate, maxDate: maxDate)
         }
     }
 

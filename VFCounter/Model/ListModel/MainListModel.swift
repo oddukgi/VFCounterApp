@@ -97,7 +97,7 @@ class MainListModel {
             || self.status == .edit { 
             self.update(with: snapshot)
         } else if self.status == .delete { // DELETE
-            self.update(with: snapshot)
+            self.update(with: snapshot, flag: true)
         }
     }
     

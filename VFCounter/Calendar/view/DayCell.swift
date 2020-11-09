@@ -308,7 +308,7 @@ class DayCell: JTACDayCell {
         } else {
             self.dateLabel.isHidden = true
             self.selectionBackgroundView.isHidden = true
-            if config.isRingVisible {
+            if config.isRingVisible && self.ringButton != nil {
                 self.ringButton.isHidden = true
             }
         }

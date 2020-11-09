@@ -136,7 +136,7 @@ public class WeeklyDateStrategy: DateStrategy {
             (maxVeggie < maxFruit) ? (privateMaximumDate = maxFruit) : (privateMaximumDate = maxVeggie)
       }
 
-//        print("Weekly: \(privateMinimumDate),\(privateMaximumDate)")
+//       print("Weekly: \(privateMinimumDate),\(privateMaximumDate)")
     }
     
     public func previous() -> Bool {
@@ -174,6 +174,12 @@ public class WeeklyDateStrategy: DateStrategy {
         let result = map.filter { $0.onlyDate! <= date && date <= $0.onlyDate! }
         return (result.count > 0) ? true : false
         
+    }
+    
+    public func updatePeriod() {
+       fetchedData()
+       setMinimumDate()
+       setMaximumDate()
     }
     
 }

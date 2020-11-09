@@ -29,10 +29,6 @@ class ChartVC: UIViewController {
         }
     }
 
-    deinit {
-        removeNotification()
-    }
-    
     fileprivate func setNavigationBar() {
         self.title = "데이터"
         self.navigationController?.navigationBar.barTintColor = UIColor.white
@@ -43,7 +39,6 @@ class ChartVC: UIViewController {
         super.viewDidLoad()
         self.currentValue = nil
         setNavigationBar()
-        prepareNotificationAddObserver()
         configureDataFilterView()
         configureCalendar()
         configureSubviews()
@@ -52,11 +47,6 @@ class ChartVC: UIViewController {
         uiconfig.periodSegmentCtrl.setIndex(index: 0)
         uiconfig.datafilterView.dataSegmentControl.setIndex(index: 0)
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        mainListModel?.removeobserver()
-//    }
     
     func removeCurrentVC() {
         self.currentVC?.view.removeFromSuperview()
@@ -126,16 +116,6 @@ class ChartVC: UIViewController {
             }
         }
     }
-
-    fileprivate func prepareNotificationAddObserver() {
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.selectCalendarDate(_:)),
-                                               name: .selectDateCalendar, object: nil)
-    }
-
-    fileprivate func removeNotification() {
-        NotificationCenter.default.removeObserver(self, name: .selectDateCalendar, object: nil)
-    }
     
     func connectMonthHandler() {
         calendarController.updateMonthHandler = { value in
@@ -176,7 +156,7 @@ class ChartVC: UIViewController {
         
         let arrDate = updateMinMaxDate()
         let date = arrDate[0].changeDateTime(format: .longDate).extractDate
-
+        
         let model = ItemModel(date: date, type: type, config: chartModel.valueConfig,
                               minDate: arrDate[0], maxDate: arrDate[1])
         DispatchQueue.main.async {
@@ -210,22 +190,16 @@ class ChartVC: UIViewController {
     
     fileprivate func createWeeklyModel(_ vc: UIViewController, item: Items, config: ValueConfig) {
         
-        var periodModel: PeriodListModel!
-        var dateStrategy: DateStrategy?
-      
         let dataIndex = uiconfig.datafilterView.selectedItem
         
         if vc.className == "PeriodListVC" {
             let periodVC = vc as! PeriodListVC
-            periodModel = periodVC.listmodel
-            periodModel.createEntity(item: item, config: config)
+            periodVC.date = item.entityDT
+            periodVC.createEntity(item: item, config: config)
      
         } else {
             let weeklyChartVC = vc as! WeeklyChartVC
-       
-            periodModel = weeklyChartVC.model
-            periodModel.createEntity(item: item, config: config)
-        
+            weeklyChartVC.createEntity(item: item, config: config)
         }
         
     }
@@ -254,7 +228,7 @@ class ChartVC: UIViewController {
             if currentVC?.className == "PeriodListVC" {
                 let periodListVC = currentVC as! PeriodListVC
                 createWeeklyModel(periodListVC, item: item, config: config)
-                scrollToSection(date: item.date, periodListVC: periodListVC)
+                periodListVC.scrollToSection(date: item.date)
             }
             
         } else {
@@ -276,32 +250,21 @@ class ChartVC: UIViewController {
         displayMessage(name: item.name, dateTime: dateTime)
     }
     
-    func scrollToSection(date: String, periodListVC: PeriodListVC) {
-    
-        let model = periodListVC.listmodel
-        let section = model.findSections(date: date)
-        periodListVC.tableView.scrollToTop(animated: true, section: section)
-    }
-    
     func getMinMaxDate() -> [Date] {
 
         let datemap = strategy.getDateMap()
         var minDate = Date()
         var maxDate = Date()
-        
+
         let firstDate = datemap.first!
         var lastDate = datemap.last!
+
+        let date = datemap.filter { $0.onlyDate == Date().onlyDate }
+        if date.count > 0 { lastDate = Date() }
         
         minDate = firstDate
-        if datemap.count == 7 {
-        
-        if lastDate == Date() { maxDate = lastDate.dayBefore }
-        } else {
-            let date = datemap.filter { $0.onlyDate == Date().onlyDate }
-            if date.count > 0 { lastDate = Date() }
-            
-            maxDate = lastDate
-        }
+        maxDate = lastDate
+
         return [minDate, maxDate]
     }
     
@@ -312,12 +275,10 @@ class ChartVC: UIViewController {
         let dataIndex = uiconfig.datafilterView.selectedItem
         
         if periodIndex == 1 && dataIndex == 0 {
-            
-            strategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
+            strategy.date = dateConfigure.calendarDate
             strategy.fetchedData()
             strategy.setMinimumDate()
             strategy.setMaximumDate()
-            
         }
         dates = getMinMaxDate()
         
@@ -334,8 +295,28 @@ class ChartVC: UIViewController {
         }
     }
     
+    func currentDate() -> String {
+        
+        // segment control 인덱스 가져오기 (0:주, 1:월) / (0: 데이터, 1:리스트)
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.dataSegmentControl.selectedIndex
+    
+        return chartModel.getCurrentDate(periodIndex: periodIndex,
+                                         dataIndex: dataIndex, configure: dateConfigure)
+    }
+    
 }
-
+extension ChartVC: PickItemProtocol {
+    
+    func addItems(item: Items) {
+    
+        let strDate = item.date.extractDate
+        chartModel.checkMaxValueFromDate(date: strDate)
+        updateViewController(item: item, config: chartModel.valueConfig)
+    }
+    
+    func updateItems(item: Items, oldDate: Date) { }
+}
 extension ChartVC: CustomSegmentedControlDelegate {
     
     func valueChangedPeriod(to index: Int) {

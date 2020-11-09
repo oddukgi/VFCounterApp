@@ -87,11 +87,11 @@ class CustomSegmentedControl: UIView {
         }
         
         if resourceType == .timeSection {
-            delegate?.valueChangedPeriod(to: selectedIndex)
             SettingManager.setPeriodSegment(index: selectedIndex)
+            delegate?.valueChangedPeriod(to: selectedIndex)
         } else {
-            delegate?.valueChangedData(to: selectedIndex)
             SettingManager.setDataSegment(index: selectedIndex)
+            delegate?.valueChangedData(to: selectedIndex)
         }
         
     }
@@ -105,11 +105,12 @@ class CustomSegmentedControl: UIView {
                 selectedIndex = buttonIndex
 
                 if resourceType == .timeSection {
-                    delegate?.valueChangedPeriod(to: selectedIndex)
+                  
                     SettingManager.setPeriodSegment(index: selectedIndex)
+                    delegate?.valueChangedPeriod(to: selectedIndex)
                 } else {
-                    delegate?.valueChangedData(to: selectedIndex)
                     SettingManager.setDataSegment(index: selectedIndex)
+                    delegate?.valueChangedData(to: selectedIndex)
                 }
 
                 UIView.animate(withDuration: 0.2) {

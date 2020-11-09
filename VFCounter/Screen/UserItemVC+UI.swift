@@ -70,6 +70,7 @@ extension UserItemVC {
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: itemSetting.titleElementKind,
                                          withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
         collectionView.delegate = self
+        collectionView.isScrollEnabled = false
     }
 
     // MARK: - ContextMenu Action

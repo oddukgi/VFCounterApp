@@ -21,6 +21,7 @@ public protocol DateStrategy: class {
     var strDateMap: [String] { get }
     var period: String { get }
 
+    func updatePeriod()
     func fetchedData()
     func getDateMap() -> [Date]
     func setMinimumDate()

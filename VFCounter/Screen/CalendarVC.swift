@@ -53,6 +53,7 @@ class CalendarVC: UIViewController {
     convenience init(date: Date) {
         self.init()
         self.date = date
+        currentValue = self.date
     }
 
     private func configureUI() {

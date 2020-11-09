@@ -12,11 +12,9 @@ import CoreData
 
 class UserItemVC: UIViewController {
 
-    /// section
+
     let circularView = VFCircularView()
     var collectionView: UICollectionView!
-    /// private
-    private var dateView: DateView!
     var itemSetting = ItemSettings()
     var mainListModel: MainListModel!
     weak var delegate: CalendarVCDelegate?
@@ -32,7 +30,7 @@ class UserItemVC: UIViewController {
     
     deinit {
         removeNotification()
-        mainListModel.removeobserver()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -48,13 +46,15 @@ class UserItemVC: UIViewController {
         connectHandler()
         mainListModel.configureDataSource(collectionView: collectionView, currentVC: self)
         mainListModel.configureTitleDataSource(delegate: self)
-        mainListModel.loadData()    
+
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        mainListModel.removeobserver()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        mainListModel.loadData()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        mainListModel.removeobserver()
+    }
 
     func setupLayout() {
         view.addSubview(circularView)

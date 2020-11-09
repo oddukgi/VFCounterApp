@@ -32,6 +32,7 @@ class PeriodListModel {
     private var kind: Kind?
     var tableView: UITableView!
     var updateItem = UpdateItem()
+    var dateSet = Set<String>()
     var dm: CoreDataManager { return CoreDataManager(itemList: listPublisher) }
     
     deinit {
@@ -53,38 +54,36 @@ class PeriodListModel {
     }
 
     func publishList() {
+        
+        strategy.updatePeriod()
         let dates = strategy.getDateMap()
         
-        let firstDate = dates.first?.startOfDay()
-        let lastDate = dates.last?.endOfDay()
+        let firstDate = dates.first?.onlyDate
+        let lastDate = dates.last?.onlyDate
+        
+//        print("publishList \(firstDate), \(lastDate)")
         
         listPublisher = Storage.dataStack.publishList(From<Category>().sectionBy(\.$date)
                                                             .where(
                                                                 \.$createdDate >= firstDate
                                                                     && \.$createdDate <= lastDate)
                                                                 .orderBy(.descending(\.$createdDate)))
-//        print(listPublisher.count())
-        datemap = getCommonDate(publisher: listPublisher)
-    }
-    
-    func getCommonDate(publisher: ListPublisher<Category>) -> [String] {
-    
-       let strDates = strategy.strDateMap
-        var items = Set<String>()
-        let dataManager = CoreDataManager(itemList: publisher)
         
-        for item in strDates {
-            // get yyyy.MM.dd
-            let shortDate = item.extractDate
+//        print(listPublisher.count())
 
-            if dataManager.getEntityCount(date: shortDate) > 0 {
-                items.insert(item)
-            }
-        }
-    
-        return Array(items).sorted()
     }
-    
+ 
+    func findDate(object: [Category]) {
+        
+        dateSet.removeAll()
+        for item in object {
+            dateSet.insert(item.date!)
+        }
+        
+        datemap = Array(dateSet)
+        sortDateMap(nKind: 1)
+        
+    }
     func setupTableView(tableView: UITableView, periodListVC: PeriodListVC) {
         
         var flag = false
@@ -94,7 +93,7 @@ class PeriodListModel {
     
             guard let cell: ElementCell = tableView.dequeueCell(indexPath: indexPath) else { fatalError() }
                 let items = self.item(forIndexPath: indexPath)
-                cell.pModel = periodListVC.listmodel
+                cell.model = periodListVC.listmodel
                
                 let status = self.updateItem.status
                 switch status {
@@ -161,7 +160,7 @@ class PeriodListModel {
            for (index, item) in datemap.enumerated() {
                 if item.contains(date) { datemap.remove(at: index) }
             }
-            self.reloadTable(publisher: publisher, flag: true)
+            self.reloadTable(publisher: publisher)
             break
 
         case 2:
@@ -179,7 +178,6 @@ class PeriodListModel {
         let date = self.updateItem.date ?? ""
         let categoryCount = self.countOfSubs(date: date, publisher)
   
-        addDate(date: date)
         var flag = false
         
 //        print("ADD / EDIT, \(categoryCount), \(itemCount), \(date)")
@@ -206,6 +204,8 @@ class PeriodListModel {
         case .delete:
             deleteListPublisher(categoryCnt: categoryCount, publisher)
         
+        case .refetch:
+            self.reloadTable(publisher: publisher)
         default:
             self.reloadTable(publisher: publisher)
         }
@@ -222,7 +222,7 @@ class PeriodListModel {
    
         if !self.datemap.contains(fullDate) {
             self.datemap.append(fullDate)
-            sortDateMap()
+            sortDateMap(nKind: 2)
         }
         
     }
@@ -242,11 +242,21 @@ class PeriodListModel {
         }
     }
     
-    func sortDateMap() {
+    func sortDateMap(nKind: Int) {
     
-        let dates = self.datemap.map { $0.changeDateTime(format: .longDate)}
+        var dates = [Date]()
+        var dateformat: Date.Format = .date
+        
+        if nKind == 1 {
+            dateformat = .date
+            dates = self.datemap.map { $0.changeDateTime(format: dateformat)}
+        } else {
+            dateformat = .longDate
+            dates = self.datemap.map { $0.changeDateTime(format: dateformat)}
+        }
         let sortedDates = dates.sorted { $0 < $1 }
-        self.datemap = sortedDates.map { $0.changeDateTime(format: .longDate)}
+        
+        self.datemap = sortedDates.map { $0.changeDateTime(format: dateformat)}
     }
 
     func loadChart() {
@@ -278,15 +288,16 @@ class PeriodListModel {
     // MARK: Reload TableView
 
     private func reloadTable(publisher: ListPublisher<Category>, flag: Bool = false) {
-    
+        
         var snapshot = NSDiffableDataSourceSnapshot<String, Category>()
         let object = publisher.snapshot.compactMap({ $0.object })
         
         var newFlag = flag
         
+        findDate(object: object)
         for date in datemap {
             snapshot.appendSections([date])
-            let groupItems = object.filter({ $0.date == date.extractDate })
+            let groupItems = object.filter({ $0.date == date })
            
             snapshot.appendItems(groupItems, toSection: date)
         }
@@ -317,13 +328,12 @@ class PeriodListModel {
         
         self.strategy = strategy
         let dates = strategy.getDateMap()
-        datemap = getCommonDate(publisher: listPublisher)
- 
-        copyDateToString(strategy, dates)
-        let firstDate = dates.first?.startOfDay()
-        let lastDate = dates.last?.endOfDay()
+
+        let firstDate = dates.first?.onlyDate
+        let lastDate = dates.last?.onlyDate
         
 //        print("refetch: \(firstDate), \(lastDate)")
+
         do {
             try listPublisher?.refetch(From<Category>().where(\.$createdDate >= firstDate &&
                                                             \.$createdDate <= lastDate)
@@ -331,7 +341,7 @@ class PeriodListModel {
         } catch {
             print(error.localizedDescription)
         }
-        
+
 //        print(listPublisher.count())
        
     }
@@ -403,10 +413,3 @@ extension PeriodListModel {
         var isAddedItem = false        
     }
 }
-
-//        if !datemap.contains(newDate) && newDate.count > 0 {
-//
-//            let date = newDate.getWeekday()
-//            datemap.append(date)
-//            datemap.sorted()
-//        }
