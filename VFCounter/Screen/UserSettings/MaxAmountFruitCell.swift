@@ -46,7 +46,7 @@ class MaxAmountFruitCell: UITableViewCell, SelfConfigCell {
         if let value = SettingManager.getAlarmValue(keyName: "FruitAlarm") {
             value ? (fruitSlider.isEnabled = true) : (fruitSlider.isEnabled = false)
         }
-        if let sliderValue = SettingManager.getTaskValue(keyName: "FruitTaskRate") {
+        if let sliderValue = SettingManager.getMaxValue(keyName: "FruitAmount") {
             fruitSlider.value = sliderValue
             maxAmountTF.text = String(format: "%.0f", sliderValue)
         }
@@ -56,7 +56,7 @@ class MaxAmountFruitCell: UITableViewCell, SelfConfigCell {
         let roundedValue = round(amount / step) * step
         fruitSlider.value = roundedValue
         maxAmountTF.text = String(Int(roundedValue))
-        SettingManager.setFruitsTaskRate(percent: amount)
+        SettingManager.setFruitsAmount(percent: amount)
         NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["fruitAmount": Int(roundedValue)])
 
         if flag == true {

@@ -38,7 +38,7 @@ class MainListModel {
         publishList()
     }
 
-    func publishList() {
+    private func publishList() {
 
         listPublisher =  Storage.dataStack.publishList(From<Category>()
                                                         .where(\.$date == date)
@@ -130,7 +130,6 @@ class MainListModel {
         }
         
         dataSource.apply(currentSnapshot, animatingDifferences: flag)
-//        reloadRing(date: itemSetting.stringDate)
         self.updateRingHandler?(date)
     }
     

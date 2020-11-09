@@ -20,19 +20,19 @@ class SettingManager {
         userDefaults?.set(fruitsFlag, forKey: "FruitAlarm")
     }
 
-    class func setVeggieTaskRate(percent: Float) {
-        userDefaults?.set(percent, forKey: "VeggieTaskRate")
+    class func setVeggieAmount(percent: Float) {
+        userDefaults?.set(percent, forKey: "VeggieAmount")
     }
 
-    class func setFruitsTaskRate(percent: Float) {
-        userDefaults?.set(percent, forKey: "FruitTaskRate")
+    class func setFruitsAmount(percent: Float) {
+        userDefaults?.set(percent, forKey: "FruitAmount")
     }
 
     class func getAlarmValue(keyName: String) -> Bool? {
         return userDefaults?.bool(forKey: keyName)
     }
 
-    class func getTaskValue(keyName: String) -> Float? {
+    class func getMaxValue(keyName: String) -> Float? {
         return userDefaults?.float(forKey: keyName)
     }
 

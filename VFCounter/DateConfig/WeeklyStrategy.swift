@@ -136,40 +136,42 @@ public class WeeklyDateStrategy: DateStrategy {
             (maxVeggie < maxFruit) ? (privateMaximumDate = maxFruit) : (privateMaximumDate = maxVeggie)
       }
 
-        print("Weekly: \(privateMinimumDate),\(privateMaximumDate)")
+//        print("Weekly: \(privateMinimumDate),\(privateMaximumDate)")
     }
     
-    public func previous() {
+    public func previous() -> Bool {
 
-        guard let minDate = privateMinimumDate else { return }
-      
-        print("Previous: \(date)")
+        var flag = false
+        guard let minDate = privateMinimumDate else { return flag }
+
         if date >= minDate {
-
-            print("\(date) is next \(minDate)")
             date = self.date.aDayInLastWeek.startOfWeek()
+            flag = true
             
         }
+        
+        return flag
     }
 
-    public func next() {
+    public func next() -> Bool {
         
-        guard let maxDate = privateMaximumDate else { return }
-    
-        print("Next: \(date)")
+        var flag = false
+        guard let maxDate = privateMaximumDate else { return flag }
+
         if date <= maxDate {
-            
-            print("\(date) is before \(maxDate)")
             date = self.date.aDayInNextWeek.startOfWeek()
+            flag = true
         }
+        
+        return flag
     }
     
     // 날짜가 datamap에 들어 있는지 확인
-    private func checkDateInMap(date: String) -> Bool {
+    public func checkDateInMap(date: String) -> Bool {
      
-        var date = date.changeDateTime(format: .longDate).startOfDay()
+        var date = date.changeDateTime(format: .date).onlyDate ?? Date()
         let map = getDateMap()
-        let result = map.filter { $0 <= date && date <= $0 }        
+        let result = map.filter { $0.onlyDate! <= date && date <= $0.onlyDate! }
         return (result.count > 0) ? true : false
         
     }

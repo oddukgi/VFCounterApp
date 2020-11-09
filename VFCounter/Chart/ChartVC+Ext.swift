@@ -61,14 +61,6 @@ extension ChartVC {
         contentView.layoutIfNeeded()
     }
     
-//    fileprivate func calcurateCount(_ periodListVC: PeriodListVC) {
-//        let date = dateConfigure.date.changeDateTime(format: .date)
-//        let fetchCount = periodListVC.listmodel.itemCount(date: date)
-//
-//        print("FetchCount: \(fetchCount)")
-//        periodListVC.listmodel.updateItem = UpdateItem(date: date, itemCount: fetchCount, status: .add)
-//    }
-//
 }
 extension ChartVC: PickItemProtocol {
     

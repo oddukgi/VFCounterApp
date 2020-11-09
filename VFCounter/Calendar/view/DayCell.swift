@@ -261,14 +261,12 @@ class DayCell: JTACDayCell {
     func updateRing() {
 
         let sumValue = mainListModel.updateSum()
-        let maxVeggie = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
-        let maxFruit = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
-    
-        // maxvalue
-        
+        let maxVeggie = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
+        let maxFruit = SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0
+
         self.ringButton.ringProgressView.ring1.progress = Double(sumValue[0]) / Double(maxVeggie)
         self.ringButton.ringProgressView.ring2.progress = Double(sumValue[1]) / Double(maxFruit)
-
+     
     }
 
     func configure(for config: ViewSettings, listmodel: MainListModel) {

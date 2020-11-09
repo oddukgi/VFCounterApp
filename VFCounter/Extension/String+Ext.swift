@@ -127,7 +127,7 @@ extension String {
     func getWeekday() -> String {
         
         var date = self
-        print("getWeekday: \(date)")
+//        print("getWeekday: \(date)")
         let weekday =  date.changeDateTime(format: .date).startOfDay().getWeekday()
         let fullDate = date + " \(weekday)"
         return fullDate

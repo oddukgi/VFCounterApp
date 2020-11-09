@@ -117,7 +117,7 @@ class CalendarVC: UIViewController {
     }
 
     func moveCalendar() {
-        calendarController.moveToSpecificDate(date: date!)
+        calendarController.refreshCalendar(date: date!)
     }
     
 }

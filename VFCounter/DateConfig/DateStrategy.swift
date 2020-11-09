@@ -25,8 +25,9 @@ public protocol DateStrategy: class {
     func getDateMap() -> [Date]
     func setMinimumDate()
     func setMaximumDate()
-    func previous()
-    func next()
+    func previous() -> Bool 
+    func next() -> Bool
+    func checkDateInMap(date: String) -> Bool 
 
 }
 

@@ -21,12 +21,12 @@ extension UserItemVC {
 
     func alreadyLoadingApp() {
 
-        let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
-        SettingManager.setVeggieTaskRate(percent: veggieRate)
+        let veggieRate = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
+        SettingManager.setVeggieAmount(percent: veggieRate)
         itemSetting.valueConfig.maxVeggies = Int(veggieRate)
 
-        let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
-        SettingManager.setFruitsTaskRate(percent: fruitRate)
+        let fruitRate = SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0
+        SettingManager.setFruitsAmount(percent: fruitRate)
         itemSetting.valueConfig.maxFruits = Int(fruitRate)
 
         updateCircularView(veggieValue: Int(veggieRate), fruitValue: Int(fruitRate))
@@ -34,14 +34,14 @@ extension UserItemVC {
 
     func firstLoadingApp() {
 
-        SettingManager.setVeggieTaskRate(percent: Float(defaultRate))
-        SettingManager.setFruitsTaskRate(percent: Float(defaultRate))
+        SettingManager.setVeggieAmount(percent: Float(defaultRate))
+        SettingManager.setFruitsAmount(percent: Float(defaultRate))
         itemSetting.valueConfig.maxVeggies = defaultRate
         itemSetting.valueConfig.maxFruits = defaultRate
-        updateCircularView(veggieValue: defaultRate, fruitValue: defaultRate)
-
+    
         SettingManager.setVeggieAlarm(veggieFlag: true)
         SettingManager.setFruitsAlarm(fruitsFlag: true)
+        updateCircularView(veggieValue: defaultRate, fruitValue: defaultRate)
     }
 
     func getAppLoadingStatus() -> Bool {

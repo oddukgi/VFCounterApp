@@ -69,8 +69,8 @@ class MeasurementView: UIView {
 
     func setSlider() {
 
-        let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
-        let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
+        let veggieRate = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
+        let fruitRate = SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0
 
         if type == "야채" {
             slider.values(min: 1, max: veggieRate, current: 10)

@@ -110,6 +110,7 @@ extension PickItemVC {
         
         let type = SettingManager.getKindSegment(keyName: "KindOfItem") ?? ""
         (type == "야채") ? (kindSegmentControl.selectedSegmentIndex = 0) : (kindSegmentControl.selectedSegmentIndex = 1)
+        changedIndexSegment(sender: kindSegmentControl)
         
     }
 
@@ -179,9 +180,9 @@ extension PickItemVC: UserDateTimeDelegate {
         checkMaxValueFromDate(date: dt)
         updateRemainTotalText()
         
-        NotificationCenter.default.post(name: .updateTaskPercent, object: nil,
-                                        userInfo: ["veggieAmount": model.valueConfig.maxVeggies])
-        NotificationCenter.default.post(name: .updateTaskPercent, object: nil,
-                                        userInfo: ["fruitAmount": model.valueConfig.maxFruits])
+//        NotificationCenter.default.post(name: .updateTaskPercent, object: nil,
+//                                        userInfo: ["veggieAmount": model.valueConfig.maxVeggies])
+//        NotificationCenter.default.post(name: .updateTaskPercent, object: nil,
+//                                        userInfo: ["fruitAmount": model.valueConfig.maxFruits])
     }
 }

@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "126AE54B24C6C6B6000BCF7E"
+               BlueprintIdentifier = "12A0B2312559078A00EADDF3"
                BuildableName = "VFCounterTests.xctest"
                BlueprintName = "VFCounterTests"
                ReferencedContainer = "container:VFCounter.xcodeproj">
@@ -51,9 +51,9 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      buildConfiguration = "Release"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       disableMainThreadChecker = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"

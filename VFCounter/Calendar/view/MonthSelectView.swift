@@ -131,8 +131,6 @@ class MonthSelectView<Value: CalendarValue>: UIView {
 
     func updateMonth() {
         if let value = self.currentValue as? Date {
-            
-            print("MonthSelectView: \(value)")
             setting.currentDate = value
             lblMonth.text = dateFormatter.string(from: value)
             lblMonth.textColor = setting.textColor

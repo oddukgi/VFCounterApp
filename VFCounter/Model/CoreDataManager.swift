@@ -10,7 +10,7 @@ import CoreStore
 import Foundation
 
 class CoreDataManager {
-        // MARK: create entity
+
     private var itemList: ListPublisher<Category>?
     var deleteDate: ((String?) -> Void)?
 
@@ -20,6 +20,14 @@ class CoreDataManager {
     
     convenience init() {
         self.init(itemList: nil)
+    }
+    
+    static func queryMax(date: String, type: String) -> Int {
+        
+        let max = try! Storage.dataStack.queryValue(From<Category>()
+                                                        .select(Int.self, .attribute(\.$max))
+                                                        .where(\.$date == date && \.$type == type)) ?? 0
+        return max
     }
     
     func createEntity(item: Items, config: ValueConfig) {
@@ -44,7 +52,6 @@ class CoreDataManager {
                 print(error.localizedDescription)
             case .success:
                 print("Success")
-//                self.updateView?(item.entityDT)
               }
            }
         )
@@ -61,14 +68,6 @@ class CoreDataManager {
         let object = queryDict[0]
         
         return object["total"] as? Int
-    }
-    
-    static func queryMax(date: String, type: String) -> Int {
-        
-        let max = try! Storage.dataStack.queryValue(From<Category>()
-                                                        .select(Int.self, .attribute(\.$max))
-                                                        .where(\.$date == date && \.$type == type)) ?? 0
-        return max
     }
     
     func modifyEntity(item: Items, oldDate: Date, editDate: Date? = nil) {
@@ -107,7 +106,6 @@ class CoreDataManager {
     func deleteEntity(date: String, index: Int, type: String) {
     
         let createdDate = getCreatedDate(index: index, type: type, date: date)
-        print("deleteEntity: \(date), \(index)")
         Storage.dataStack.perform(asynchronous: { (transaction) in
             guard let entity =  try? transaction.fetchOne(From<Category>().where(\.$createdDate == createdDate
                                                                                     &&  \.$type == type)) else { return }
@@ -122,8 +120,6 @@ class CoreDataManager {
                 print(error)
             case .success:
                 print("Success")
-                //loaddata
-//                self.workHandler?(0)
               }
             }
         )
@@ -148,8 +144,6 @@ class CoreDataManager {
 
                 let itemCount = try! transaction.fetchCount(From<Category>().where(\.$date == date
                                                                 && \.$type == type ))
-                
-                print(itemCount)
                 return itemCount
             }
         )
@@ -166,7 +160,6 @@ class CoreDataManager {
                     .orderBy(.descending(\.$createdDate))
             )
             let date = queryDict[index]["createdDate"] as! Date
-            print(date.changeDateTime(format: .dateTime))
             return date
 
         } catch {

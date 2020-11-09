@@ -157,12 +157,12 @@ JTACMonthViewDataSource {
         configureSubviews()
         configureConstraints()
         configureInitialState()
-
         calendarView.visibleDates { visibleDates in
             if Value.mode == .single {
                 self.value = visibleDates.monthDates.first!.date as? Value
             }
         }
+
     }
     
 //    override func viewWillDisappear(_ animated: Bool) {
@@ -189,13 +189,6 @@ JTACMonthViewDataSource {
         self.view.frame = contentView.bounds
         
         contentView.addSubview(self.view)
-    }
-
-    func moveToSpecificDate(date: Date) {
-        //default set to todays date
-//        calendarView.scrollingMode = .stopAtEachCalendarFrame
-//        calendarView.scrollToDate(date)
-        refreshCalendar(date: date)
     }
     
     func refreshCalendar(date: Date) {
@@ -247,23 +240,25 @@ JTACMonthViewDataSource {
         if let date = self.value as? Date {
             calendarView.selectDates([date])
             calendarView.scrollToHeaderForDate(date)
-            print("configureInitialState : \(date)")
             
         } else {
             let nowDate = Date()
             let targetDate = self.privateMaximumDate ?? nowDate
 
             if targetDate < nowDate {
+                calendarView.selectDates([targetDate])
                 calendarView.scrollToHeaderForDate(targetDate)
             } else {
-                calendarView.scrollToHeaderForDate(Date())
+                calendarView.selectDates([nowDate])
+                calendarView.scrollToHeaderForDate(nowDate)
             }
         }
         
         calendarView.scrollingMode = .stopAtEachSection
     }
 
-    private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath, flag: Bool = false) {
+    private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState,
+                               indexPath: IndexPath, updateItem: Bool = false) {
 
         publishList(date)
         guard let cell = cell as? DayCell else { return }
@@ -271,7 +266,7 @@ JTACMonthViewDataSource {
             cachedSettings.isRingVisible = privateisRingVisible
             cell.configure(for: cachedSettings, listmodel: listmodel)
         } else {
-            var newSettings = DayCell.makeViewSettings(for: cellState, minimumDate: self.privateMinimumDate, maximumDate: self.privateMaximumDate, rangeValue: self.value as? CalendarRange, flag: flag)
+            var newSettings = DayCell.makeViewSettings(for: cellState, minimumDate: self.privateMinimumDate, maximumDate: self.privateMaximumDate, rangeValue: self.value as? CalendarRange)
             self.viewSettings[indexPath] = newSettings
             cell.applySettings(self.setting.dayCell)
             newSettings.isRingVisible = isRingVisible
@@ -282,8 +277,6 @@ JTACMonthViewDataSource {
 
     private func selectValue(_ value: Value?, in calendar: JTACMonthView) {
         if let date = value as? Date {
-            
-            print("Select Value: \(date)")
             calendar.selectDates([date])
         }
     }
@@ -304,8 +297,8 @@ JTACMonthViewDataSource {
 
         guard let cell = cell as? DayCell else { return }
 
-        let veggieMaxRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
-        let fruitMaxRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
+        let veggieMaxRate = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
+        let fruitMaxRate = SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0
 
         let veggie = cell.ringButton.ringProgressView.ring1.progress.clean
         let fruit = cell.ringButton.ringProgressView.ring2.progress.clean

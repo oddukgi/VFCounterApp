@@ -94,9 +94,6 @@ class VFCircularView: UIView {
         totFruitLabel.text =  "\(fruitSum)g / \(maxFruit)g"
     }
     
-    func getMaxValueFromDate(date: String) {
-        
-    }
     func updateMaxValue(tag: Int) {
         let maxVeggie = Int(ringView.maxVeggies)
         let maxFruit = Int(ringView.maxFruits)

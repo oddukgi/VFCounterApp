@@ -75,7 +75,7 @@ class PickItemVC: UIViewController {
                 kindSegmentControl.isHidden = true
             }
         }
-        updateCurrentMaxValue()
+        checkMaxValueFromDate(date: model.date)
         configureBarItem()
         configureMeasurementView()
         configureHierarchy()
@@ -224,32 +224,27 @@ class PickItemVC: UIViewController {
         }
     }
     
-    func updateCurrentMaxValue() {
-        let veggieRate = SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0
-        let fruitRate = SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0
+    func checkMaxValueFromDate(date: String) {
+        let defaultV = Int(SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0)
+        let defaultF = Int(SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0)
+
+        let type = ["야채", "과일"]
+        let newDate = date.extractDate
+        var values: [Int] = []
+        type.map { type in
+           
+            let value = CoreDataManager.queryMax(date: date, type: type)
+            values.append(value)
+        }
         
-        let maxV = (veggieRate > 0) ? Int(veggieRate) : model.valueConfig.maxVeggies
-        let maxF = (fruitRate > 0) ? Int(fruitRate) : model.valueConfig.maxFruits
+        let maxV = (values[0] == 0) ? defaultV : values[0]
+        let maxF = (values[1] == 0) ? defaultF : values[1]
+
         model.valueConfig.maxVeggies = maxV
         model.valueConfig.maxFruits = maxF
         getSumValue()
     }
 
-    // MARK: - update max value from UIDatePickerView
-    func checkMaxValueFromDate(date: String) {
-       
-        model.date = date
-        let maxVeggie = 500
-        let maxFruit =  500
-        
-        SettingManager.setVeggieTaskRate(percent: Float(maxVeggie))
-        SettingManager.setFruitsTaskRate(percent: Float(maxFruit))
-        
-        model.valueConfig.maxVeggies = maxVeggie
-        model.valueConfig.maxFruits = maxFruit
-        getSumValue()
-    }
-    
     // MARK: modify value
     func applyFetchedItem() {
         guard let fetchedItem = fetchedItem else { return }
@@ -276,7 +271,7 @@ class PickItemVC: UIViewController {
     func changeDateRange() {
         if sectionFilter == .chart {
             
-            print("changeDateRange: \(model.minDate), \(model.maxDate)")
+//            print("changeDateRange: \(model.minDate), \(model.maxDate)")
             if let minDate = model.minDate, let maxDate = model.maxDate {
                 userDTView.changeDateRange(minDate: minDate, maxDate: maxDate)
             }

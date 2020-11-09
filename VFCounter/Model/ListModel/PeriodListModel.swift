@@ -57,14 +57,13 @@ class PeriodListModel {
         
         let firstDate = dates.first?.startOfDay()
         let lastDate = dates.last?.endOfDay()
-        print("FirstDate: \(firstDate), LastDate: \(lastDate)")
         
         listPublisher = Storage.dataStack.publishList(From<Category>().sectionBy(\.$date)
                                                             .where(
                                                                 \.$createdDate >= firstDate
                                                                     && \.$createdDate <= lastDate)
                                                                 .orderBy(.descending(\.$createdDate)))
-        print(listPublisher.count())
+//        print(listPublisher.count())
         datemap = getCommonDate(publisher: listPublisher)
     }
     
@@ -154,7 +153,7 @@ class PeriodListModel {
         let date = self.updateItem.date ?? ""
         var flag = false
 
-        print("DELETE, \(categoryCnt), \(itemCount), \(date)")
+//        print("DELETE, \(categoryCnt), \(itemCount), \(date)")
         
         switch categoryCnt {
         
@@ -183,9 +182,9 @@ class PeriodListModel {
         addDate(date: date)
         var flag = false
         
-        print("ADD / EDIT, \(categoryCount), \(itemCount), \(date)")
-        self.tableView.rowHeight = UITableView.automaticDimension
+//        print("ADD / EDIT, \(categoryCount), \(itemCount), \(date)")
         
+        tableView.rowHeight = UITableView.automaticDimension
         switch status {
         
         case .add,
@@ -195,11 +194,18 @@ class PeriodListModel {
                 break
             }
           
-            itemCount == 0 ? (flag = true) : ((status == .edit) ? (flag = true) : (flag = false))
+            // edit 1.1 error (flag =true)
+            if status == .edit {
+                (itemCount > 0) ? (flag = false) : (flag = true)
+            } else {
+                itemCount == 0 ? (flag = true) : (flag = false)
+            }
             self.reloadTable(publisher: publisher, flag: flag)
+            self.scrollToTableView(date: date)
             
         case .delete:
             deleteListPublisher(categoryCnt: categoryCount, publisher)
+        
         default:
             self.reloadTable(publisher: publisher)
         }
@@ -262,9 +268,9 @@ class PeriodListModel {
     
     func connectRefreshHandler() {
         refreshHandler = { h_refresh in
-            
+        
+            guard let h_refresh = h_refresh else { return }
             self.updateItem.status = .refetch
-            guard let h_refresh = h_refresh else { return}
             self.refetch(h_refresh)
         }
     }
@@ -276,14 +282,16 @@ class PeriodListModel {
         var snapshot = NSDiffableDataSourceSnapshot<String, Category>()
         let object = publisher.snapshot.compactMap({ $0.object })
         
+        var newFlag = flag
+        
         for date in datemap {
             snapshot.appendSections([date])
             let groupItems = object.filter({ $0.date == date.extractDate })
            
             snapshot.appendItems(groupItems, toSection: date)
-      
         }
-        self.dataSource.apply(snapshot, animatingDifferences: flag)
+        
+        self.dataSource.apply(snapshot, animatingDifferences: newFlag)
     }
     
     private func updateDeleteTable(publisher: ListPublisher<Category>, flag: Bool = false) {
@@ -296,23 +304,36 @@ class PeriodListModel {
         }
     }
     
+    fileprivate func copyDateToString(_ strategy: DateStrategy, _ dates: [Date]) {
+        if  updateItem.date.count > 0 {
+            if !strategy.checkDateInMap(date: updateItem.date) {
+                let newDate = dates.first?.changeDateTime(format: .date)
+                updateItem.date = newDate!
+            }
+        }
+    }
+    
     func refetch(_ strategy: DateStrategy) {
         
         self.strategy = strategy
-        
         let dates = strategy.getDateMap()
         datemap = getCommonDate(publisher: listPublisher)
  
-        let firstDate = dates.first?.changeDateTime(format: .date)
-        let lastDate = dates.last?.changeDateTime(format: .date)
+        copyDateToString(strategy, dates)
+        let firstDate = dates.first?.startOfDay()
+        let lastDate = dates.last?.endOfDay()
         
-        print("FirstDate: \(firstDate), LastDate: \(lastDate)")
-        
-        try! listPublisher?.refetch(From<Category>().where(\.$date >= firstDate &&
-                                                            \.$date <= lastDate)
+//        print("refetch: \(firstDate), \(lastDate)")
+        do {
+            try listPublisher?.refetch(From<Category>().where(\.$createdDate >= firstDate &&
+                                                            \.$createdDate <= lastDate)
                                                     .orderBy(.descending(\.$createdDate)))
+        } catch {
+            print(error.localizedDescription)
+        }
         
-        updateItem.status = .refetch
+//        print(listPublisher.count())
+       
     }
 
     func itemCount(date: String) -> Int {
@@ -343,7 +364,6 @@ class PeriodListModel {
         }
         
         return 0
-        
     }
     
     func getSumItems(date: String) -> (Int, Int) {
@@ -363,6 +383,12 @@ class PeriodListModel {
     
     func removeobserver() {
         self.listPublisher.removeObserver(self)
+    }
+    
+    func scrollToTableView(date: String) {
+        let section = findSections(date: date)
+        tableView.scrollToTop(animated: true, section: section)
+    
     }
 
 }

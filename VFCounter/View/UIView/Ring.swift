@@ -13,7 +13,6 @@ import UIKit
 
     @IBInspectable var mainColor: UIColor = UIColor.blue {
         didSet {
-             //print("mainColor was set here")
         }
     }
 

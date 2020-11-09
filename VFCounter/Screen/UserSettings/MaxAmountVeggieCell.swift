@@ -47,7 +47,7 @@ class MaxAmountVeggieCell: UITableViewCell, SelfConfigCell {
             value ? (veggieSlider.isEnabled = true) : (veggieSlider.isEnabled = false)
         }
 
-        if let sliderValue = SettingManager.getTaskValue(keyName: "VeggieTaskRate") {
+        if let sliderValue = SettingManager.getMaxValue(keyName: "VeggieAmount") {
             veggieSlider.value = sliderValue
             maxAmountTF.text = String(format: "%.0f", sliderValue)
         }
@@ -58,7 +58,7 @@ class MaxAmountVeggieCell: UITableViewCell, SelfConfigCell {
         veggieSlider.value = roundedValue
         maxAmountTF.text = String(Int(roundedValue))
 
-        SettingManager.setVeggieTaskRate(percent: amount)
+        SettingManager.setVeggieAmount(percent: amount)
         NotificationCenter.default.post(name: .updateTaskPercent, object: nil, userInfo: ["veggieAmount": Int(roundedValue)])
 
         if flag == true {

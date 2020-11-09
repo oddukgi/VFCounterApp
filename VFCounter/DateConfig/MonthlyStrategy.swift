@@ -123,9 +123,10 @@ public class MonthlyDateStrategy: DateStrategy {
  
     }
 
-    public func previous() {
+    public func previous() -> Bool {
         
-        guard let minDate = privateMinimumDate else { return }
+        var flag = false
+        guard let minDate = privateMinimumDate else { return flag }
     
         if date > minDate {
 
@@ -133,15 +134,19 @@ public class MonthlyDateStrategy: DateStrategy {
             let map = firstDate.getMonthlyDates()
             
             let dates = map.filter { $0.onlyDate == date.onlyDate }
-            if dates.count > 0 { return }
+            if dates.count > 0 { return flag }
             
             date = date.lastMonth
-//            DateSettings.default.periodController.monthDate = date
+            flag = true
         }
+        
+        return flag
     }
 
-    public func next() {
-        guard let maxDate = privateMaximumDate else { return }
+    public func next() -> Bool {
+        
+        var flag = false
+        guard let maxDate = privateMaximumDate else { return flag }
         let maxYear = maxDate.getYear
         let maxMonth = maxDate.getMonth
         let year = date.getYear
@@ -149,8 +154,19 @@ public class MonthlyDateStrategy: DateStrategy {
 
         if ((year == maxYear) && (month < maxMonth)) || (year != maxYear) {
             date = date.nextMonth
-//            DateSettings.default.periodController.monthDate = date
+            flag = true
         }
+        
+        return flag
+    }
+    
+    public func checkDateInMap(date: String) -> Bool {
+     
+        var date = date.changeDateTime(format: .date).startOfDay()
+        let map = getDateMap()
+        let result = map.filter { $0 <= date && date <= $0 }
+        return (result.count > 0) ? true : false
+        
     }
 
 }

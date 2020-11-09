@@ -42,8 +42,8 @@ class ChartModel {
     }
     
     func checkMaxValueFromDate(date: String) {
-        let defaultV = Int(SettingManager.getTaskValue(keyName: "VeggieTaskRate") ?? 0)
-        let defaultF = Int(SettingManager.getTaskValue(keyName: "FruitTaskRate") ?? 0)
+        let defaultV = Int(SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0)
+        let defaultF = Int(SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0)
 
         let type = ["야채", "과일"]
         var values: [Int] = []

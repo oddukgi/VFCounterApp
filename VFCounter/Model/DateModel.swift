@@ -19,7 +19,8 @@ struct ItemModel {
     var maxDate: Date?
     var valueConfig: ValueConfig
 
-    init(date: String = "", type: String, config: ValueConfig, minDate: Date? = nil, maxDate: Date? = nil) {
+    init(date: String = "", type: String, config: ValueConfig,
+         minDate: Date? = nil, maxDate: Date? = nil) {
         self.date = date
         self.type  = type
         self.minDate = minDate

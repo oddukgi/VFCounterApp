@@ -100,8 +100,6 @@ class ChartVC: UIViewController {
 
         switch index {
         case 0:
-            
-            print("Chart Date: \(dateConfigure.date)")
             strategy =  WeeklyDateStrategy(date: dateConfigure.date)
             let weeklyChartVC = WeeklyChartVC(strategy: strategy)
             weeklyChartVC.delegate = self
@@ -143,7 +141,7 @@ class ChartVC: UIViewController {
         calendarController.updateMonthHandler = { value in
             guard let date = value else { return }
             self.dateConfigure.calendarDate = date
-            self.calendarController.moveToSpecificDate(date: self.dateConfigure.calendarDate)
+            self.calendarController.refreshCalendar(date: self.dateConfigure.calendarDate)
            
         }
     }
@@ -152,7 +150,6 @@ class ChartVC: UIViewController {
         calendarController.sendCurrentDateHandler = { date in
             guard let date = date else { return }
             self.dateConfigure.calendarDate = date
-            print("curent date: \(date)")
         }
     }
     
@@ -215,15 +212,11 @@ class ChartVC: UIViewController {
         
         var periodModel: PeriodListModel!
         var dateStrategy: DateStrategy?
-        let dataSegmentIndex =
-        print("createWeeklyModel, \(dateConfigure.date)")
       
         let dataIndex = uiconfig.datafilterView.selectedItem
         
         if vc.className == "PeriodListVC" {
             let periodVC = vc as! PeriodListVC
-             // 날짜 업데이트 하고, 엔티티 생성
-            
             periodModel = periodVC.listmodel
             periodModel.createEntity(item: item, config: config)
      
@@ -240,18 +233,21 @@ class ChartVC: UIViewController {
     fileprivate func createMonthlyModel(_ date: String, item: Items, config: ValueConfig) {
         mainListModel = MainListModel(date: date)
         mainListModel?.createEntity(item: item, config: chartModel.valueConfig)
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.selectedItem
+        
+        if periodIndex == 1 && dataIndex == 0 {
+            self.calendarController.updateMonthHandler?(item.entityDT)
+        }
     }
     
     func updateViewController(item: Items, config: ValueConfig) {
         
         let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
         let dataIndex = uiconfig.datafilterView.selectedItem
-       
-        print("Class Name: \(currentVC?.className)")
-
+  
         let dateTime = item.entityDT ?? Date()
         
-        print("DateTime: \(dateTime)")
         if dataIndex == 1 {
             dateConfigure.date = dateTime ?? Date()
             
@@ -273,11 +269,11 @@ class ChartVC: UIViewController {
 
                 let date = item.date.extractDate
                 createMonthlyModel(date, item: item, config: config)
-                calendarController.updateMonthHandler?(item.entityDT)
                 
             }
-            
         }
+        
+        displayMessage(name: item.name, dateTime: dateTime)
     }
     
     func scrollToSection(date: String, periodListVC: PeriodListVC) {
@@ -287,29 +283,26 @@ class ChartVC: UIViewController {
         periodListVC.tableView.scrollToTop(animated: true, section: section)
     }
     
-    func getMinMaxDate(isCalendar: Bool = false) -> [Date] {
+    func getMinMaxDate() -> [Date] {
 
         let datemap = strategy.getDateMap()
-        var minDate: Date?
-        var maxDate: Date?
+        var minDate = Date()
+        var maxDate = Date()
         
-        let firstDate = datemap.first
-        var lastDate = datemap.last
-        
-        print("getMinMaxDate: \(firstDate), \(lastDate)")
+        let firstDate = datemap.first!
+        var lastDate = datemap.last!
         
         minDate = firstDate
-        if lastDate == Date() {
-            maxDate = lastDate?.dayBefore
+        if datemap.count == 7 {
+        
+        if lastDate == Date() { maxDate = lastDate.dayBefore }
         } else {
+            let date = datemap.filter { $0.onlyDate == Date().onlyDate }
+            if date.count > 0 { lastDate = Date() }
             
-            if isCalendar {
-                let date = datemap.filter { $0.onlyDate == Date().onlyDate }
-                if date.count > 0 { lastDate = Date() }
-            }
             maxDate = lastDate
         }
-        return [minDate!, maxDate!]
+        return [minDate, maxDate]
     }
     
     func updateMinMaxDate() -> [Date] {
@@ -325,10 +318,8 @@ class ChartVC: UIViewController {
             strategy.setMinimumDate()
             strategy.setMaximumDate()
             
-            dates = getMinMaxDate(isCalendar: true)
-        } else {
-            dates = getMinMaxDate()
         }
+        dates = getMinMaxDate()
         
         return dates
     }
@@ -338,9 +329,7 @@ class ChartVC: UIViewController {
             strategy = WeeklyDateStrategy(date: dateConfigure.date)
         } else {
             
-            print("Date Configure: \(dateConfigure.calendarDate)")
             if dateConfigure.calendarDate > dateConfigure.date {  dateConfigure.calendarDate = Date() }
-            
             strategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
         }
     }

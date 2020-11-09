@@ -67,7 +67,7 @@ class UserItemVC: UIViewController {
     }
 
     fileprivate func prepareNotificationAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTaskRate(_:)),
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateAmount(_:)),
                                                name: .updateTaskPercent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateFetchingData(_:)),
                                                name: .updateFetchingData, object: nil)
@@ -87,7 +87,7 @@ class UserItemVC: UIViewController {
         }
     }
 
-    @objc fileprivate func updateTaskRate(_ notification: Notification) {
+    @objc fileprivate func updateAmount(_ notification: Notification) {
 
         if let veggieAmount = notification.userInfo?["veggieAmount"] as? Int {
             itemSetting.valueConfig.maxVeggies = veggieAmount
@@ -135,7 +135,6 @@ class UserItemVC: UIViewController {
     
     }
 
-    // MARK: Delegate
     func updateDateHomeView(date: Date) {
         delegate?.updateDate(date: date, isUpdateCalendar: true)
     }

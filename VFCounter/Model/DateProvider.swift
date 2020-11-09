@@ -12,6 +12,18 @@ protocol UpdateDateDelegate: class {
     func sendChartDate(date: Date)
 }
 
+protocol DateProtocol {
+    var newDate: String { get set }
+}
+
+enum SectionFilter: String {
+
+    case main, chart
+    var kind: String {
+        return rawValue
+    }
+}
+
 struct ValueConfig {
     var maxVeggies: Int = 0
     var maxFruits: Int  = 0

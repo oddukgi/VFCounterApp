@@ -120,8 +120,6 @@ class CustomSlider: UISlider {
         //round : 소수점 이하 반올림
         let roundedValue = round(sender.value / step) * step
         sender.value = roundedValue
-
-//        print("Slider Value: \(roundedValue)")      
         delegate?.sliderValueChanged(value: sender.value, tag: sender.tag)
     }
 
