@@ -169,6 +169,7 @@ extension PeriodListVC {
     
     @objc func tappedBefore() {
         let value = self.strategy.previous()
+        strategy.updatePeriod()
         if value {
             self.lblPeriod.text = self.strategy.period
             self.model.refreshHandler?(self.strategy)
@@ -178,9 +179,10 @@ extension PeriodListVC {
     @objc func tappedNext() {
 
         let value = self.strategy.next()
+        strategy.updatePeriod()
         if value {
-        self.lblPeriod.text = self.strategy.period
-        self.model.refreshHandler?(self.strategy)
+       	 self.lblPeriod.text = self.strategy.period
+         self.model.refreshHandler?(self.strategy)
         }
     }
 }
@@ -193,7 +195,7 @@ extension PeriodListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.model.sectionTitle(forSection: section) == nil ? CGFloat.leastNormalMagnitude : 35
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         let sumheaderView = SumHeaderView()

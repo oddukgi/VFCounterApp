@@ -169,9 +169,15 @@ class ChartVC: UIViewController {
 
     func displayMessage(name: String, dateTime: Date) {
         
+        let periodIndex = uiconfig.periodSegmentCtrl.selectedIndex
+        let dataIndex = uiconfig.datafilterView.selectedItem
+        var additionalTxt = ""
+        if periodIndex == 1 && dataIndex == 0 {
+            additionalTxt = "원을 터치해주세요!"
+        }
         let txtTime = dateTime.changeDateTime(format: .shortDT)
-        let text = "\(name), \(txtTime) \n 추가완료"
-        self.presentAlertVC(title: "알림", message: text, buttonTitle: "OK")
+        let text = "\(name),\(txtTime) \n \(additionalTxt)"
+        self.presentAlertVC(title: "추가완료", message: text, buttonTitle: "OK")
     }
     
     func switchViewWithDataFilter(for pIndex: Int) {
@@ -291,6 +297,7 @@ class ChartVC: UIViewController {
         } else {
             
             if dateConfigure.calendarDate > dateConfigure.date {  dateConfigure.calendarDate = Date() }
+        
             strategy = MonthlyDateStrategy(date: dateConfigure.calendarDate)
         }
     }

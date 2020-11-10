@@ -134,8 +134,8 @@ extension SettingVC {
 
     func navigateVC(to item: Int) {
 
-        let subviewController = [ AlarmSettingVC()]
-        navigationController?.pushViewController(subviewController[item], animated: true)
+        let subviewController = AlarmSettingVC()
+        navigationController?.pushViewController(subviewController, animated: true)
     }
 
     // send feedback for developer

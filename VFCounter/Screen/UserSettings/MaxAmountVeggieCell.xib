@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,7 +47,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YVL-IU-SJL"/>
                     </stackView>
-                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="DFP-jW-qg9" userLabel="amountSlider">
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="500" minValue="10" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="DFP-jW-qg9" userLabel="amountSlider">
                         <rect key="frame" x="109" y="8" width="232" height="42"/>
                         <color key="minimumTrackTintColor" systemColor="systemGreenColor"/>
                         <color key="maximumTrackTintColor" red="0.70196078431372544" green="0.72156862745098038" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>

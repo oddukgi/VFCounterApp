@@ -94,6 +94,7 @@ JTACMonthViewDataSource {
      And initial value which will be selected bu default
      */
     var initialValue: Value?
+    var sumValues = [Int]()
 
     /**
      Minimal selection date. Dates less then current will be markes as unavailable
@@ -194,6 +195,7 @@ JTACMonthViewDataSource {
     func refreshCalendar(date: Date) {
         self.value = date as? Value
         self.selectValue(self.value, in: self.calendarView)
+        
     }
 
     // MARK: - Configure
@@ -256,28 +258,41 @@ JTACMonthViewDataSource {
         
         calendarView.scrollingMode = .stopAtEachSection
     }
+    
+    private func getSumItem(date: Date) -> [Int] {
+
+        let date = date.changeDateTime(format: .date)
+        let values = listmodel.getSumItems(date: date)
+        return [ values.0, values.1 ]
+        
+    }
 
     private func configureCell(_ cell: JTACDayCell, forItemAt date: Date, cellState: CellState,
                                indexPath: IndexPath, updateItem: Bool = false) {
 
         publishList(date)
+   
         guard let cell = cell as? DayCell else { return }
+        
+        if isRingVisible == true { sumValues = self.getSumItem(date: date) }
+        
         if var cachedSettings = self.viewSettings[indexPath] {
             cachedSettings.isRingVisible = privateisRingVisible
-            cell.configure(for: cachedSettings, listmodel: listmodel)
+            cell.configure(for: cachedSettings, values: sumValues)
         } else {
             var newSettings = DayCell.makeViewSettings(for: cellState, minimumDate: self.privateMinimumDate, maximumDate: self.privateMaximumDate, rangeValue: self.value as? CalendarRange)
             self.viewSettings[indexPath] = newSettings
             cell.applySettings(self.setting.dayCell)
             newSettings.isRingVisible = isRingVisible
-            cell.configure(for: newSettings, listmodel: listmodel)
-
+            cell.configure(for: newSettings, values: sumValues)
         }
+
     }
 
     private func selectValue(_ value: Value?, in calendar: JTACMonthView) {
         if let date = value as? Date {
             calendar.selectDates([date])
+            
         }
     }
 
@@ -292,21 +307,18 @@ JTACMonthViewDataSource {
         let strDate = date.changeDateTime(format: .date)
         listmodel = MainListModel(date: strDate)
     }
-    
-    private func updateAmount(_ cell: JTACDayCell) {
+   
+    private func updateAmount(_ cell: JTACDayCell, sum: [Int]) {
 
-        guard let cell = cell as? DayCell else { return }
-
+        guard let cell = cell as? DayCell, sum.count > 0 else { return }
+        
         let veggieMaxRate = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
         let fruitMaxRate = SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0
 
-        let veggie = Float(cell.ringButton.ringProgressView.ring1.progress.clean) ?? 0
-        let fruit = Float(cell.ringButton.ringProgressView.ring2.progress.clean) ?? 0
-
-        if veggie <= 0  || fruit <= 0 { return }
-        let veggieSum = veggie * veggieMaxRate
-        let fruitSum = fruit * fruitMaxRate
-        currentValueView.updateAmount(veggieSum: Int(veggieSum.rounded(.towardZero)), fruitSum: Int(fruitSum.rounded(.towardZero)))
+        var veggie = sum[0]
+        var fruit = sum[1]
+        
+        currentValueView.updateAmount(veggieSum: veggie, fruitSum: fruit)
         
     }
 
@@ -369,7 +381,7 @@ JTACMonthViewDataSource {
            self.configureCell(cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
 
         if privateisRingVisible == true {
-            self.updateAmount(cell)
+            self.updateAmount(cell, sum: sumValues)
         } else {
             self.updateDate(date: date)
 

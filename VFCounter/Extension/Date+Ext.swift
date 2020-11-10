@@ -126,7 +126,6 @@ extension Date {
     
     func getWeekday() -> String {
 
-        print(self)
         var weekday = ""
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = NSLocale(localeIdentifier: "ko_KR") as Locale
@@ -134,8 +133,7 @@ extension Date {
         weekDays.append(weekDays.remove(at: 0))
         
         let index = calendar.component(.weekday, from: self)
-        // 일1,  ~ 토 7
-     
+        // 일1,  ~ 토 7     
         return (index == 1) ? weekDays[6] : weekDays[index - 2]
   
     }

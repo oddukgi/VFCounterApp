@@ -36,7 +36,7 @@ class PickItemVC: UIViewController {
     var currentSnapshot: NSDiffableDataSourceSnapshot<Section, PickItems.Element>! = nil
 
     weak var delegate: PickItemProtocol?
-    weak var pickItemModel: PickItemModel?
+    var pickItemModel: PickItemModel!
     let pickItems = PickItems()
     var checkedIndexPath = Set<IndexPath>()
     var model: ItemModel!
@@ -49,6 +49,8 @@ class PickItemVC: UIViewController {
         self.delegate        = delegate
         self.model           = model
         self.sectionFilter   = sectionFilter
+        pickItemModel = PickItemModel(config: model.valueConfig)
+     
     }
 
     var items: Items? {
@@ -69,6 +71,7 @@ class PickItemVC: UIViewController {
         super.viewDidLoad()
         if sectionFilter == .chart {
             configureSegmentControl()
+            changeSegmentBySection()
         } else {
             if kindSegmentControl != nil {
                 kindSegmentControl.isHidden = true
@@ -192,29 +195,37 @@ class PickItemVC: UIViewController {
     
     // MARK: Add Button
     
-    func copyItem() -> Items {
+    func copyItem() -> Items? {
             
-        let indexPath = checkedIndexPath.first!
+        guard let indexPath = checkedIndexPath.first else { return nil }
         let item = currentSnapshot.itemIdentifiers[indexPath.row]
         
         pickItems.item.amount = Int(measurementView.gramTF.text!) ?? 0
         model.date = userDTView.dateTime.extractDate
+        var copyItems: Items?
       
-        let remain = pickItemModel?.compareAmount(amount: pickItems.item.amount, type: model.type)
-        if let remain = remain, remain > 0 {
-            self.presentAlertVC(title: "알림", message: "\(remain)g 추가할 수 있습니다.", buttonTitle: "OK")
+        let remain = pickItemModel.compareAmount(amount: pickItems.item.amount,
+                                                 type: model.type, config: model.valueConfig)
+        if remain >= 0 {
+            copyItems = Items(name: item.name, date: model.date,
+                                          image: item.image, amount: pickItems.item.amount,
+                                          entityDT: userDTView.dtPickerView.date, type: model.type)
+            
+        } else {
+            
+            let overrange = remain.magnitude
+            self.presentAlertVC(title: "범위초과", message: "😮 \(overrange)g 더 넣었네요!", buttonTitle: "OK")
+            copyItems = nil
         }
         
-         return Items(name: item.name, date: model.date,
-                                      image: item.image, amount: pickItems.item.amount,
-                                      entityDT: userDTView.dtPickerView.date, type: model.type)
+        return copyItems
     }
     
     @objc func pressedAdd() {
+        guard let selectedItem = copyItem(),
+              !checkedIndexPath.isEmpty else { return }
         
-        guard !checkedIndexPath.isEmpty else { return }
-        let selectedItem = copyItem()
-        dismiss(animated: true)
+        dismissVC()
         
         if let entityDT = fetchedItem?.entityDT {
             delegate?.updateItems(item: selectedItem, oldDate: entityDT)
@@ -273,12 +284,28 @@ class PickItemVC: UIViewController {
             userDTView.changeDateRange(minDate: minDate, maxDate: maxDate)
         }
     }
-
+    
+    fileprivate func changeSegmentBySection() {
+        if sectionFilter == .chart {
+            if model.type == "야채" {
+                kindSegmentControl.selectedSegmentIndex = 0
+            } else {
+                kindSegmentControl.selectedSegmentIndex = 1
+            }
+            
+            return
+        }
+        
+        let type = SettingManager.getKindSegment(keyName: "KindOfItem") ?? ""
+        (type == "야채") ? (kindSegmentControl.selectedSegmentIndex = 0) : (kindSegmentControl.selectedSegmentIndex = 1)
+        changedIndexSegment(sender: kindSegmentControl)
+    }
+    
     private var btnAdd = VFButton()
     private var measurementView: MeasurementView!
     private var userDTView: UserDateTimeView!
     private var fetchedItem: Items?
-    private var sectionFilter: SectionFilter?
+    var sectionFilter: SectionFilter?
     
     var datePickerView: UserDateTimeView {
         return userDTView

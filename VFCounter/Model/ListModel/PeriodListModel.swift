@@ -53,6 +53,7 @@ class PeriodListModel {
         return datemap
     }
 
+    
     func publishList() {
         
         strategy.updatePeriod()
@@ -151,8 +152,6 @@ class PeriodListModel {
                                          _ publisher: ListPublisher<Category>) {
         let date = self.updateItem.date ?? ""
         var flag = false
-
-//        print("DELETE, \(categoryCnt), \(itemCount), \(date)")
         
         switch categoryCnt {
         
@@ -164,15 +163,16 @@ class PeriodListModel {
             break
 
         case 2:
-            itemCount == 1 ? (flag = true) : (flag = false)
+          
+            (itemCount == 1) ? (flag = true) : (flag = false)
             self.reloadTable(publisher: publisher, flag: flag)
             break
             
         default:
-            self.tableView.rowHeight = SizeManager().getUserItemHeight + 15
             self.reloadTable(publisher: publisher)
         }
     }
+
     func updateTableView(publisher: ListPublisher<Category>) {
         let status = updateItem.status
         let date = self.updateItem.date ?? ""
@@ -180,9 +180,6 @@ class PeriodListModel {
   
         var flag = false
         
-//        print("ADD / EDIT, \(categoryCount), \(itemCount), \(date)")
-        
-        tableView.rowHeight = UITableView.automaticDimension
         switch status {
         
         case .add,
@@ -191,13 +188,13 @@ class PeriodListModel {
                 self.reloadTable(publisher: publisher)
                 break
             }
-          
-            // edit 1.1 error (flag =true)
+            
             if status == .edit {
-                (itemCount > 0) ? (flag = false) : (flag = true)
+                (itemCount > 0) ? (flag = false) : (flag = false)
             } else {
-                itemCount == 0 ? (flag = true) : (flag = false)
+                (itemCount == 0) ? (flag = true) : (flag = false)
             }
+            
             self.reloadTable(publisher: publisher, flag: flag)
             self.scrollToTableView(date: date)
             

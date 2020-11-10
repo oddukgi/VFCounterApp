@@ -16,9 +16,9 @@ class PickItemModel {
     init(config: ValueConfig) {
         self.config = config
     }
-    func compareAmount(amount: Int, type: String) -> Int {
+    
+    func compareAmount(amount: Int, type: String, config: ValueConfig) -> Int {
 
-        let config = self.config!
         var remain = 0
         var sum = 0
         var maxValue = 0
@@ -33,12 +33,8 @@ class PickItemModel {
             sum = config.sumFruits
         }
         var simulatedSum =  sum + amount
-        remain = max - sum
+        remain = max - simulatedSum
         
-        if (simulatedSum > max) && amount > 0 {
-            return remain
-        }
-            
-        return 0
+        return remain
     }
 }

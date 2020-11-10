@@ -25,11 +25,17 @@ class MainListModel {
     private var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Category>!
     private var listPublisher: ListPublisher<Category>!
     private var date: String?
+
     var status: Status = .add
     var dm: CoreDataManager { return CoreDataManager(itemList: listPublisher) }
-
+    
+    private var sums = [0, 0]
     deinit {
         removeobserver()
+    }
+    
+    var sumArray: [Int] {
+        return sums
     }
     
     init(date: String) {
@@ -94,7 +100,7 @@ class MainListModel {
         let snapshot = listPublisher.snapshot
         
         if self.status == .add || self.status == .refetch
-            || self.status == .edit { 
+            || self.status == .edit {
             self.update(with: snapshot)
         } else if self.status == .delete { // DELETE
             self.update(with: snapshot, flag: true)
@@ -107,7 +113,7 @@ class MainListModel {
         list.addObserver(self) { [weak self] listPublisher in
             guard let self = self else { return }
             self.updateListPublisher(listPublisher)
-        }
+         }
         update(with: list.snapshot)
         
     }
@@ -133,6 +139,21 @@ class MainListModel {
         self.updateRingHandler?(date)
     }
     
+    func updateSumValue(with listPublisher: ListSnapshot<Category>) {
+        let items = listPublisher.compactMap({ $0.object })
+        let dateItem = items.filter { $0.date == date }
+        
+        var sum = [0, 0]
+        for element in dateItem {
+            if element.type == "야채" {
+                sum[0] += element.amount
+            } else {
+                sum[1] += element.amount
+            }
+            
+        }
+
+    }
     func updateSum() -> [Int] {
         var arraySum = [Int]()
         
@@ -153,11 +174,7 @@ class MainListModel {
         
         return items
     }
-    
-//    func sectionTitle(forSection section: Int) -> String? {
-//        return self.dataSource?.snapshot().sectionIdentifiers[section]
-//    }
-    
+
     func refetch(date: String) {
         self.date = date
         try! listPublisher.refetch(From<Category>().where(\.$date == date)
@@ -167,12 +184,11 @@ class MainListModel {
     func getSumItems(date: String) -> (Int, Int) {
         
         var newDate = date.extractDate
-//        let dm = CoreDataManager(itemList: listPublisher)
         let sumV = dm.getSumEntity(date: newDate, type: "야채") ?? 0
         let sumF = dm.getSumEntity(date: newDate, type: "과일") ?? 0
         return (sumV, sumF)
     }
-    
+
     func createEntity(item: Items, config: ValueConfig) {
 //        let dm = CoreDataManager(itemList: listPublisher)
         dm.createEntity(item: item, config: config)

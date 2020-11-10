@@ -15,8 +15,7 @@ enum PickItemModule {
         let delegate = currentVC as! PickItemProtocol
        
         var pickItemVC = PickItemVC(delegate: delegate, model: model, sectionFilter: filter)
-        let model = PickItemModel(config: model.valueConfig)
-        pickItemVC.pickItemModel = model
+
         return pickItemVC
     }
 }

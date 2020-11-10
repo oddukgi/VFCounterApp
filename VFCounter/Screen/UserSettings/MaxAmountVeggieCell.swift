@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MaxAmoutVeggieCellDelegate: class {
-    func displayAlertMessageV(value: Float)
+    func displayAlertMessage(value: Float)
     func textField(editingDidBeginIn cell: MaxAmountVeggieCell)
     func textField(editingChangedInTextField newText: String, in cell: MaxAmountVeggieCell)
 }
@@ -23,7 +23,7 @@ class MaxAmountVeggieCell: UITableViewCell, SelfConfigCell {
     @IBOutlet weak var veggieSlider: UISlider!
 
     let maxLength = 3
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         loadedDefaultValue()
@@ -125,7 +125,7 @@ extension MaxAmountVeggieCell: UITextFieldDelegate {
 
             guard veggieSlider.minimumValue <= amount && veggieSlider.maximumValue >= amount
             else {
-                delegate?.displayAlertMessageV(value: amount)
+                delegate?.displayAlertMessage(value: amount)
                 return false
 
             }

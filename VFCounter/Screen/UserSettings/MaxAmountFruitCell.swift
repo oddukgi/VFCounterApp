@@ -28,6 +28,7 @@ class MaxAmountFruitCell: UITableViewCell, SelfConfigCell {
         super.awakeFromNib()
         loadedDefaultValue()
         setupViews()
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

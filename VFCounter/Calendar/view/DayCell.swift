@@ -29,12 +29,7 @@ class DayCell: JTACDayCell {
     var ringButton: RingItemButton!
     var isFirstLoaded = true
 
-    // MARK: - Variables
     private var setting: CalendarSettings.DayCell = CalendarSettings.default.dayCell
-
-    private var mainListModel: MainListModel!
-
-    // MARK: - Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,7 +50,6 @@ class DayCell: JTACDayCell {
         self.setting = setting
         self.dateLabel.font = setting.dateLabelFont
         self.selectionBackgroundView.backgroundColor = setting.selectedBackgroundColor
-//        self.dateLabel.textColor = setting.dateLabelColor
     }
 
     func setOnSubviews() {
@@ -66,6 +60,7 @@ class DayCell: JTACDayCell {
         self.dateLabel.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+        self.ringButton.sendActions(for: .touchUpInside)
 
     }
 
@@ -252,24 +247,16 @@ class DayCell: JTACDayCell {
             }
         }
     }
-
-    func copyListModel(listmodel: MainListModel) {
-        self.mainListModel = listmodel
-        
-    }
   
-    func updateRing() {
-
-        let sumValue = mainListModel.updateSum()
-        let maxVeggie = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
+    func updateRing(sum: [Int]) {
+   		let maxVeggie = SettingManager.getMaxValue(keyName: "VeggieAmount") ?? 0
         let maxFruit = SettingManager.getMaxValue(keyName: "FruitAmount") ?? 0
+        self.ringButton.ringProgressView.ring1.progress = Double(sum[0]) / Double(maxVeggie)
+        self.ringButton.ringProgressView.ring2.progress = Double(sum[1]) / Double(maxFruit)
 
-        self.ringButton.ringProgressView.ring1.progress = Double(sumValue[0]) / Double(maxVeggie)
-        self.ringButton.ringProgressView.ring2.progress = Double(sumValue[1]) / Double(maxFruit)
-     
     }
 
-    func configure(for config: ViewSettings, listmodel: MainListModel) {
+    func configure(for config: ViewSettings, values: [Int]) {
 
         self.isUserInteractionEnabled = config.dateLabelText != nil && config.isDateEnabled
 
@@ -280,20 +267,21 @@ class DayCell: JTACDayCell {
             
             if config.isRingVisible {
 
-                if config.state!.dateBelongsTo == .thisMonth && config.state!.date > Date() {
+                let theFuture = Date().addingTimeInterval(100)
+                if config.state!.dateBelongsTo == .thisMonth && config.state!.date > theFuture {
                     self.ringButton.isHidden = true
                 } else {
                     
                     if self.ringButton != nil {
                         self.ringButton.isHidden = false
                     }
-                    
                     self.ringButton.isSelected = !config.isSelectedItem
+                    
+                    if values.count > 0 {
+                        updateRing(sum: values)
+                    }
                 }
    
-                copyListModel(listmodel: listmodel)
-                updateRing()
-
             } else {
 
                 let theFuture = Date().addingTimeInterval(100)
@@ -302,6 +290,7 @@ class DayCell: JTACDayCell {
                 } else {
                     self.selectionBackgroundView.isHidden = config.isSelectedItem
                 }
+                
             }
             selectedDate(config)
 

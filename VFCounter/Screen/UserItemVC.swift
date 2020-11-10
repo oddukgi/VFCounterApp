@@ -12,7 +12,6 @@ import CoreData
 
 class UserItemVC: UIViewController {
 
-
     let circularView = VFCircularView()
     var collectionView: UICollectionView!
     var itemSetting = ItemSettings()

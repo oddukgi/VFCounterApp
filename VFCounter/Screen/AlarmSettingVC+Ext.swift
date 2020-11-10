@@ -73,7 +73,7 @@ extension AlarmSettingVC: UITableViewDataSource {
 
 extension AlarmSettingVC: MaxAmoutVeggieCellDelegate {
 
-    func displayAlertMessageV(value: Float) {
+    func displayAlertMessage(value: Float) {
         let message = "\(value)는 1 ~ 500 사이의 값이 아닙니다."
         self.presentAlertVC(title: "범위 초과", message: message, buttonTitle: "OK")
     }

@@ -51,7 +51,6 @@ class WeeklyChartVC: ChartBaseVC {
 
         view.backgroundColor = .white
         configure()
-        connectAction()
         configureChart()
         applyChartOption()
         connectHandler()
@@ -92,12 +91,14 @@ class WeeklyChartVC: ChartBaseVC {
 
         arrowButtons[0].addTargetClosure { _ in
             self.strategy.previous()
+            self.updatePeriod()
             self.changedWeekLabel(period: self.strategy.period)
             self.pModel.refreshHandler?(self.strategy)
         }
+        
         arrowButtons[1].addTargetClosure { _ in
-
             self.strategy.next()
+            self.updatePeriod()
             self.changedWeekLabel(period: self.strategy.period)
             self.pModel.refreshHandler?(self.strategy)
         }

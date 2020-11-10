@@ -17,6 +17,7 @@ extension UserItemVC {
     fileprivate func updateCircularView(veggieValue: Int, fruitValue: Int) {
         circularView.ringView.maxVeggies = Double(veggieValue)
         circularView.ringView.maxFruits = Double(fruitValue)
+//        circularView.updateValue(veggieSum: veggieValue, fruitSum: fruitValue, date: itemSetting.stringDate)
     }
 
     func alreadyLoadingApp() {
@@ -36,12 +37,14 @@ extension UserItemVC {
 
         SettingManager.setVeggieAmount(percent: Float(defaultRate))
         SettingManager.setFruitsAmount(percent: Float(defaultRate))
+        
         itemSetting.valueConfig.maxVeggies = defaultRate
         itemSetting.valueConfig.maxFruits = defaultRate
     
         SettingManager.setVeggieAlarm(veggieFlag: true)
         SettingManager.setFruitsAlarm(fruitsFlag: true)
         updateCircularView(veggieValue: defaultRate, fruitValue: defaultRate)
+        circularView.updateValue(veggieSum: defaultRate, fruitSum: defaultRate, date: itemSetting.stringDate)
     }
 
     func getAppLoadingStatus() -> Bool {
