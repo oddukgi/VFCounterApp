@@ -1,4 +1,7 @@
 # VFCounterApp 🥦🥬🍓🍉
+
+ <p align="center"><a href="https://apps.apple.com/us/app/vfcounter/id1536570378"><img alt='Download on the App Store' src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store-kr.svg" width="150" /></a></p>
+
 [![license](https://img.shields.io/github/license/oddukgi/VFCounterApp)](https://github.com/oddukgi/VFCounterApp/blob/master/LICENSE) 
 [![platform](https://img.shields.io/badge/platform-iOS_13+-lightgrey.svg)](https://img.shields.io/badge/platform-iOS_13+-lightgrey.svg)\
 하루에 섭취한 야채, 과일의 양을 기록할 수 있는 앱입니다.
